@@ -44,7 +44,9 @@ function BaseWars.Factions.Leave(ply, disband)
 		
 	end
 	
-	local faction = BaseWars.Factions.FactionTable[ply:GetFaction()]
+	local Table = BaseWars.Factions.FactionTable
+	local Fac = ply:GetFaction()
+	local Faction = Table[Fac]
 	
 	if not faction then
 	
@@ -54,11 +56,29 @@ function BaseWars.Factions.Leave(ply, disband)
 		
 	end
 
-	if disband and faction.leader ~= ply:SteamID() then
+	if disband and (Faction.leader ~= ply:SteamID() or not ply:IsAdmin()) then
 	
 		BaseWars.Util_Player.Notification(ply, BaseWars.LANG.FactionCantDisband, BASEWARS_NOTIFICATION_ERROR)
 		
 		return
+		
+	end
+	
+	if disband then
+	
+		for k, v in next, Faction.members do
+			
+			BaseWars.Factions.Leave(v, false)
+			
+		end
+		
+		Table[Fac] = nil
+		
+	else
+		
+		ply:SetNWString(tag, "")
+		
+		Table[Fac].members[ply:SteamID()] = nil
 		
 	end
 
