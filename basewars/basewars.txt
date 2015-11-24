@@ -1,0 +1,17 @@
+"basewars"
+{
+	"base"		"sandbox"
+	"title"		"BaseWars"
+	"version"	"-1"
+
+	"author_name"	"Q2F2"
+	"author_email"	""
+	"author_url"	""
+	
+	"icon"		""
+	"info"		""
+	"hide"		"0"
+	"menusystem"	"1"
+    "selectable"	"1"
+    "description"	"Oh no its retarded"
+}
