@@ -33,7 +33,7 @@ do
 	
 	IncludeCS("shared/player_util.lua")
 	IncludeCS("shared/karma.lua")
-	IncludeCS("shared/factions.lua")
+	--IncludeCS("shared/factions.lua")
 	IncludeCS("shared/money.lua")
 
 end

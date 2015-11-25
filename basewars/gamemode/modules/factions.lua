@@ -1,42 +1,61 @@
-BaseWars.Factions = {FactionTable = {}}
+MODULE.Name 	= "Factions"
+MODULE.Author 	= "Q2F2 & Ghosty"
+MODULE.FactionTable = {}
 
 local tag = "BaseWars.Factions"
 local PLAYER = debug.getregistry().Player
+
+local function Curry(f)
+
+	local MODULE = MODULE
+	local function curriedFunction(...)
+		return f(MODULE, ...)
+	end
+
+	return curriedFunction
+
+end
 
 if SERVER then
 
 	util.AddNetworkString(tag)
 	
-	function BaseWars.Factions.HandleNetMessage(len, ply)
+	-- Modes:
+	-- Set -> 0
+	-- Leave -> 1
+	-- Create -> 2
+
+	function MODULE:HandleNetMessage(len, ply)
 	
-		local Mode = net.ReadString()
+		local Mode = net.ReadUInt(1)
 		
-		if Mode == "Set" then
+		if Mode == 0 then
 			
 			local value = net.ReadString()
 			local password = net.ReadString()
 			
-			BaseWars.Factions.Set(ply, value, password, false)
+			self:Set(ply, value, password, false)
 		
-		elseif Mode == "Leave" then
+		elseif Mode == 1 then
 		
 			local disband = net.ReadBool()
 		
-			BaseWars.Factions.Leave(ply, password, disband)
+			self:Leave(ply, password, disband)
 		
-		elseif Mode == "Create" then
+		elseif Mode == 2 then
 		
 			local value = net.ReadString()
 			local password = net.ReadString()
 			
 			if password:Trim() == "" then password = nil end
 			
-			BaseWars.Factions.Create(ply, value, password)
+			self:Create(ply, value, password)
 			
 		end
 		
 	end
-	net.Receive(tag, BaseWars.Factions.HandleNetMessage)
+
+	net.Receive(tag, Curry(MODULE.HandleNetMessage))
 	
 	for k, v in next, player.GetAll() do
 		
@@ -46,14 +65,15 @@ if SERVER then
 	
 end
 
-function BaseWars.Factions.Get(ply)
+function MODULE:Get(ply)
 
 	return ply:GetNWString(tag, "")
 
 end
-PLAYER.GetFaction = BaseWars.Factions.Get
 
-function BaseWars.Factions.Set(ply, value, password, force)
+PLAYER.GetFaction = Curry(MODULE.GetFaction)
+
+function MODULE:Set(ply, value, password, force)
 
 	if not value or not isstring(value) then
 	
@@ -67,7 +87,7 @@ function BaseWars.Factions.Set(ply, value, password, force)
 	if CLIENT then
 	
 		net.Start(tag)
-			net.WriteString("Set")
+			net.WriteUInt(0,1)
 			net.WriteString(value)
 			net.WriteString(password or "")
 		net.SendToServer()
@@ -76,7 +96,7 @@ function BaseWars.Factions.Set(ply, value, password, force)
 	
 	end
 	
-	local Table = BaseWars.Factions.FactionTable
+	local Table = MODULE.FactionTable
 	local Faction = Table[value]
 	
 	if not Faction then
@@ -104,20 +124,21 @@ function BaseWars.Factions.Set(ply, value, password, force)
 	
 	end
 	
-	
 	Faction.members[ply:SteamID()] = ply
 	ply:SetNWString(tag, value)
 
 end
-PLAYER.SetFaction = BaseWars.Factions.Set
-PLAYER.JoinFaction = BaseWars.Factions.Set
 
-function BaseWars.Factions.Leave(ply, disband, forcedisband)
+local setFaction = Curry(MODULE.GetFaction)
+PLAYER.SetFaction = setFaction
+PLAYER.JoinFaction = setFaction
+
+function MODULE:Leave(ply, disband, forcedisband)
 
 	if CLIENT then
 	
 		net.Start(tag)
-			net.WriteString("Leave")
+			net.WriteUInt(1,1)
 			net.WriteBool(disband)
 		net.SendToServer()
 		
@@ -176,9 +197,9 @@ function BaseWars.Factions.Leave(ply, disband, forcedisband)
 	end
 
 end
-PLAYER.LeaveFaction = BaseWars.Factions.Leave
+PLAYER.LeaveFaction = Curry(MODULE.Leave)
 
-function BaseWars.Factions.InFaction(ply, name, leader)
+function MODULE:InFaction(ply, name, leader)
 	
 	local Table = BaseWars.Factions.FactionTable
 	local Fac = ply:GetFaction()
@@ -195,9 +216,9 @@ function BaseWars.Factions.InFaction(ply, name, leader)
 	return Fac == name and Leader
 	
 end
-PLAYER.InFaction = BaseWars.Factions.InFaction
+PLAYER.InFaction = Curry(MODULE.InFaction)
 
-function BaseWars.Factions.Clean(ply)
+function MODULE:Clean(ply)
 
 	local Table = BaseWars.Factions.FactionTable
 	local Fac = ply:GetFaction()
@@ -206,9 +227,9 @@ function BaseWars.Factions.Clean(ply)
 	BaseWars.Factions.Leave(ply, Faction.leader == ply:SteamID())
 	
 end
-hook.Add("PlayerDisconnect", tag .. ".Clean", BaseWars.Factions.Clean)
+hook.Add("PlayerDisconnect", tag .. ".Clean", Curry(MODULE.Clean))
 
-function BaseWars.Factions.Create(ply, name, password, color)
+function MODULE:Create(ply, name, password, color)
 
 	if not name or not isstring(name) or (password and not isstring(password)) then
 	
@@ -222,7 +243,7 @@ function BaseWars.Factions.Create(ply, name, password, color)
 	if CLIENT then
 	
 		net.Start(tag)
-			net.WriteString("Create")
+			net.WriteUInt(2,1)
 			net.WriteString(name)
 			net.WriteString(password or "")
 		net.SendToServer()
