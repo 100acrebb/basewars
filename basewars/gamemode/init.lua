@@ -21,4 +21,10 @@ function BaseWars.UTIL.CleanupMap()
 	end
 	
 end
+
+include("modules.lua")
+AddCSLuaFile("modules.lua")
+
+BaseWars.ModuleLoader:Load()
+
 hook.Add("InitPostEntity", tag .. ".CleanupMap", BaseWars.UTIL.CleanupMap)

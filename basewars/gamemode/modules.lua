@@ -1,0 +1,146 @@
+--[[
+
+	BaseWars Module Loader
+	Coded by Ghosty
+
+]]--
+
+local BW = BaseWars
+
+local colorRed 		= Color(255, 0, 0)
+local colorWhite 	= Color(255, 255, 255)
+
+local function Log(...)
+
+	MsgC(colorRed, "[BWML] ", colorWhite, ...)
+
+end
+
+if not BW then -- Woah, no BaseWars table? This should be loaded AFTER the table's created!
+
+	Log("No BaseWars table??")
+	return
+
+end
+
+if not BW.UTIL then -- Woah, no UTIL table? This should be loaded AFTER the table's created!
+
+	Log("No BaseWars.UITL table??")
+	return
+
+end
+
+local ModuleLoader = {}
+local fileFind = file.Find
+local next = next
+
+function ModuleLoader:IterateFiles(folder, realm)
+
+	local files = fileFind("basewars/" .. folder .. "/*", realm or "LUA")
+
+	if #files == 0 then
+
+		files = fileFind(folder .. "/*", realm or "LUA")
+
+	end
+
+	local newFiles = {}
+
+	for _, fileName in next, files do
+
+		newFiles[#newFiles + 1] = folder .. "/" .. fileName
+
+	end
+
+	local i = 0
+
+	local function iter()
+
+		i = i + 1
+		return newFiles[i]
+
+	end
+
+	return iter
+end
+
+local getFn = string.GetFileFromFilename
+
+local function loadModule()
+
+	BW[MODULE.Name] = MODULE
+	MODULE = nil
+
+end
+
+function ModuleLoader:Load()
+
+	local oldTime = SysTime()
+	local moduleCount = 0
+
+	for fName in self:IterateFiles("modules") do
+
+		MODULE = {}
+		local ok, err = pcall(include,fName)
+
+		if not ok then
+			
+			local name = MODULE.Name or getFn(fName)
+			Log("There was an error loading the module ", colorGreen, "\"", name, "\"", colorWhite, ".",
+				"The error is:\n", err)
+
+			continue
+
+		end
+
+		if not MODULE.Name then
+
+			Log("Module with empty name: ", getFn(fName), ", ignoring.")
+			continue
+
+		end
+
+		local realm = MODULE.Realm
+
+		if realm == 2 then
+				
+			if SERVER then
+				
+				AddCSLuaFile(fName)
+
+			else
+
+				loadModule()
+
+			end
+				
+		elseif realm == 1 then
+
+			if SERVER then
+				
+				loadModule()
+
+			end
+
+		elseif not realm or realm == 3 then
+
+			if SERVER then
+				
+				AddCSLuaFile(fName)
+
+			end
+
+			loadModule()
+
+		end
+
+		moduleCount = moduleCount + 1
+
+	end
+
+	local newTime = SysTime()
+	Log("STATS: Loaded ", tostring(moduleCount), " modules in ", tostring(newTime - oldTime), " seconds.")
+
+end
+
+BW.ModuleLoader = ModuleLoader
