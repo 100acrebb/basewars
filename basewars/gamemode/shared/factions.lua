@@ -1,4 +1,4 @@
-BaseWars.Factions = {}
+BaseWars.Factions = {FactionTable = {}}
 
 local tag = "BaseWars.Factions"
 local PLAYER = debug.getregistry().Player
@@ -6,10 +6,8 @@ local PLAYER = debug.getregistry().Player
 if SERVER then
 
 	util.AddNetworkString(tag)
-
-	BaseWars.Factions.FactionTable = {}
 	
-	function BaseWars.Factions.HandleNetMessage(ply, len)
+	function BaseWars.Factions.HandleNetMessage(len, ply)
 	
 		local Mode = net.ReadString()
 		
@@ -24,7 +22,7 @@ if SERVER then
 		
 			local disband = net.ReadBool()
 		
-			BaseWars.Factions.Leave(password, disband)
+			BaseWars.Factions.Leave(ply, password, disband)
 		
 		elseif Mode == "Create" then
 		
@@ -39,6 +37,12 @@ if SERVER then
 		
 	end
 	net.Receive(tag, BaseWars.Factions.HandleNetMessage)
+	
+	for k, v in next, player.GetAll() do
+		
+		v:SetNWString(tag, "")
+		
+	end
 	
 end
 
@@ -65,7 +69,7 @@ function BaseWars.Factions.Set(ply, value, password, force)
 		net.Start(tag)
 			net.WriteString("Set")
 			net.WriteString(value)
-			net.WriteString(password)
+			net.WriteString(password or "")
 		net.SendToServer()
 	
 		return
@@ -76,7 +80,8 @@ function BaseWars.Factions.Set(ply, value, password, force)
 	local Faction = Table[value]
 	
 	if not Faction then
-	
+		
+		
 		BaseWars.Util_Player.Notification(ply, BaseWars.LANG.FactionNotExist, BASEWARS_NOTIFICATION_ERROR)
 	
 		return
@@ -116,9 +121,9 @@ function BaseWars.Factions.Leave(ply, disband, forcedisband)
 	local Fac = ply:GetFaction()
 	local Faction = Table[Fac]
 	
-	if not faction then
+	if not Faction then
 	
-		BaseWars.Util_Player.Notification(ply, BaseWars.LANG.FactionNotExist, BASEWARS_NOTIFICATION_ERROR)
+		ply:SetNWString(tag, "")
 		
 		return
 		
@@ -137,6 +142,8 @@ function BaseWars.Factions.Leave(ply, disband, forcedisband)
 		BaseWars.UTIL.Log("Faction disband for ", Fac, ". ", #Faction.members, " members.")
 	
 		for k, v in next, Faction.members do
+			
+			if v == ply then continue end
 			
 			BaseWars.Factions.Leave(v, false)
 			
@@ -163,6 +170,13 @@ function BaseWars.Factions.Leave(ply, disband, forcedisband)
 end
 PLAYER.LeaveFaction = BaseWars.Factions.Leave
 
+function BaseWars.Factions.InFaction(ply)
+	
+	return ply:GetFaction() ~= ""
+	
+end
+PLAYER.InFaction = BaseWars.Factions.InFaction
+
 function BaseWars.Factions.Clean(ply)
 
 	local Table = BaseWars.Factions.FactionTable
@@ -176,7 +190,7 @@ hook.Add("PlayerDisconnect", tag .. ".Clean", BaseWars.Factions.Clean)
 
 function BaseWars.Factions.Create(ply, name, password, color)
 
-	if not name or not istring(name) or (password and not isstring(password)) then
+	if not name or not isstring(name) or (password and not isstring(password)) then
 	
 		ErrorNoHalt("Error creating Faction, invalid name or password.")
 		debug.Trace()
@@ -216,6 +230,6 @@ function BaseWars.Factions.Create(ply, name, password, color)
 		color = color or color_white,
 	}
 		
-	ply:SetFaction(name)
+	ply:SetFaction(name, nil, true)
 
 end

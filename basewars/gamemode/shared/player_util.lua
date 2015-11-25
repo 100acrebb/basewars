@@ -2,20 +2,57 @@ BaseWars.Util_Player = {}
 
 local tag = "BaseWars.Util_Player"
 
+if SERVER then
+
+	util.AddNetworkString(tag)
+	
+end
+	
+function BaseWars.Util_Player.HandleNetMessage(len, ply)
+
+	local Mode = net.ReadString()
+	
+	if CLIENT then
+	
+		local ply = LocalPlayer()
+	
+		if Mode == "Notify" then
+		
+			local text = net.ReadString()
+			local col = net.ReadColor()
+		
+			BaseWars.Util_Player.Notification(ply, text, col)
+		
+		end
+	
+	end
+	
+end
+net.Receive(tag, BaseWars.Util_Player.HandleNetMessage)
+
 function BaseWars.Util_Player.Notification(ply, text, col)
 
+	if SERVER then
+		
+		net.Start(tag)
+			net.WriteString("Notify")
+			net.WriteString(text)
+			net.WriteColor(col)
+		if ply then net.Send(ply) else net.Broadcast() end
+		
+		return
+		
+	end
 	
-
+	-- Temporary for tests
+	chat.AddText(col, text)
+	
 end
 Notify = BaseWars.Util_Player.Notification
 
 function BaseWars.Util_Player.NotificationAll(text, col)
 
-	for k, v in next, player.GetAll() do
-	
-		BaseWars.Util_Player.Notification(v, text, col)
-		
-	end
+	BaseWars.Util_Player.Notification(nil, text, col)
 
 end
 NotifyAll = BaseWars.Util_Player.NotificationAll
