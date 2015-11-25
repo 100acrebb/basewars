@@ -40,6 +40,8 @@ function BaseWars.Util_Player.Notification(ply, text, col)
 			net.WriteColor(col)
 		if ply then net.Send(ply) else net.Broadcast() end
 		
+		BaseWars.UTIL.Log(ply, " -> ", text)
+		
 		return
 		
 	end

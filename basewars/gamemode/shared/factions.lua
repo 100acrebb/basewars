@@ -79,11 +79,22 @@ function BaseWars.Factions.Set(ply, value, password, force)
 	local Table = BaseWars.Factions.FactionTable
 	local Faction = Table[value]
 	
+	local OldFac = ply:GetFaction()
+	local OldFaction = Table[OldFac]
+	
 	if not Faction then
 		
 		
 		BaseWars.Util_Player.Notification(ply, BaseWars.LANG.FactionNotExist, BASEWARS_NOTIFICATION_ERROR)
 	
+		return
+		
+	end
+	
+	if OldFaction and OldFaction.leader == ply:SteamID() then
+	
+		BaseWars.Util_Player.Notification(ply, BaseWars.LANG.FactionCantLeaveLeader, BASEWARS_NOTIFICATION_ERROR)
+		
 		return
 		
 	end
@@ -170,9 +181,21 @@ function BaseWars.Factions.Leave(ply, disband, forcedisband)
 end
 PLAYER.LeaveFaction = BaseWars.Factions.Leave
 
-function BaseWars.Factions.InFaction(ply)
+function BaseWars.Factions.InFaction(ply, name, leader)
 	
-	return ply:GetFaction() ~= ""
+	local Table = BaseWars.Factions.FactionTable
+	local Fac = ply:GetFaction()
+	local Faction = Table[Fac]
+	
+	local Leader = (not leader or Faction.leader == ply:SteamID())
+	
+	if not name then
+	
+		return Fac ~= "" and Leader
+		
+	end
+	
+	return Fac == name and Leader
 	
 end
 PLAYER.InFaction = BaseWars.Factions.InFaction
@@ -221,7 +244,7 @@ function BaseWars.Factions.Create(ply, name, password, color)
 		
 	end
 	
-	BaseWars.UTIL.Log("Faction created for ", name, ". Leader: ", ply:Nick(), ". Password ", password, ".")
+	BaseWars.UTIL.Log("Faction created for ", name, ". Leader: ", ply:Nick(), ". Password: ", password, ".")
 	
 	Table[name] = {
 		leader = ply:SteamID(),
