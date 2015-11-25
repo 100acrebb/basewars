@@ -5,5 +5,5 @@ BaseWars.LANG = {
 	FactionWrongPass		= "That is not the correct password!",
 	FactionCantLeaveLeader	= "You cannot leave the faction as its leader, you must disband it!",
 	
-	
+	GenericCheat 			= "Nice try! That doesn't work clientside :)",
 }
