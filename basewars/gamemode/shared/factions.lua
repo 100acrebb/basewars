@@ -79,9 +79,6 @@ function BaseWars.Factions.Set(ply, value, password, force)
 	local Table = BaseWars.Factions.FactionTable
 	local Faction = Table[value]
 	
-	local OldFac = ply:GetFaction()
-	local OldFaction = Table[OldFac]
-	
 	if not Faction then
 		
 		
@@ -91,7 +88,7 @@ function BaseWars.Factions.Set(ply, value, password, force)
 		
 	end
 	
-	if OldFaction and OldFaction.leader == ply:SteamID() then
+	if ply:InFaction(nil, true) then
 	
 		BaseWars.Util_Player.Notification(ply, BaseWars.LANG.FactionCantLeaveLeader, BASEWARS_NOTIFICATION_ERROR)
 		
@@ -140,7 +137,7 @@ function BaseWars.Factions.Leave(ply, disband, forcedisband)
 		
 	end
 
-	if not forcedisband and disband and (Faction.leader ~= ply:SteamID() or not ply:IsAdmin()) then
+	if not forcedisband and disband and (Faction.leader ~= ply:SteamID() and not ply:IsAdmin()) then
 	
 		BaseWars.Util_Player.Notification(ply, BaseWars.LANG.FactionCantDisband, BASEWARS_NOTIFICATION_ERROR)
 		
@@ -187,7 +184,7 @@ function BaseWars.Factions.InFaction(ply, name, leader)
 	local Fac = ply:GetFaction()
 	local Faction = Table[Fac]
 	
-	local Leader = (not leader or Faction.leader == ply:SteamID())
+	local Leader = (not leader or Faction and Faction.leader == ply:SteamID())
 	
 	if not name then
 	
