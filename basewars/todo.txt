@@ -1,0 +1,8 @@
+Todo:
+[ ][1] - Add Money
+[ ][1] - Raid Logic
+[ ][2] - Cleanup and Rewrite 'Base Classes'
+[ ][2] - Remake Entities / Cleanup Existing
+[ ][3] - Finish Karma
+[ ][3] - Rewrite the 'Spawnmenu Tab'
+[ ][3] - Faction GUI
