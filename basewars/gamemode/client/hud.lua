@@ -2,6 +2,8 @@ BaseWars.HUD = {}
 
 local tag = "BaseWars.HUD"
 
+BaseWars.HUD.Credits = "Based on geist by ghosty; https://github.com/TrenchFroast/ghostys-server-stuff/blob/master/lua/autorun/client/geist_hud.lua"
+
 local zer = math.rad(0)
 
 function BaseWars.HUD.Circle(x, y, bg, radius, seg)
@@ -77,82 +79,118 @@ function BaseWars.HUD.Dial(x, y, bg, radius, seg, val, max, col, name, font, txt
 	
 end
 
-local BackColor = Color(255, 255, 255, 60)
-local LineColor = Color(255, 0, 0, 255)
-local LineColor2 = Color(255, 0, 0, 160)
-local FrontColor = color_black
-
-surface.CreateFont(tag .. "_Large", {
-	font = "Tahoma",
+surface.CreateFont(tag, {
+	font = "Roboto",
 	size = 16,
-	weight = 1000,
+	weight = 800,
 })
 
-surface.CreateFont(tag .. "_Small", {
-	font = "Tahoma",
-	size = 11,
-	weight = 1000,
-})
+local clamp = math.Clamp
+local floor = math.floor
+local round = math.Round
+
+local function Calc(real, max, min, w)
+
+	real = clamp(real,min or 0,max)
+	real = real / max
+	
+	if w then
+	
+		local calw = w * real
+		
+		return calw, w - calw
+		
+	else
+	
+		return real
+		
+	end
+	
+end
+
+local oldhW = 0
+local oldHP = 0
+
+local oldaW = 0
+local oldAM = 0
+
+local shade = Color(0, 0, 0, 140)
 
 function BaseWars.HUD.Paint()
 
-	local ply = LocalPlayer()
-	
-	local BaseFont 		= tag .. "_Large"
-	local SubFont		= tag .. "_Small"
+	local me = LocalPlayer()
+	if not me:IsPlayer() or not IsValid(me) then return end
 
-	local BaseSize 		= 60
-	local Offset 		= 20
-	local SegResolution = 64
+	local hp, su = me:Health(), me:Armor()
+
+	if not me:Alive() then su = 0 end
+
+	local hpF = Lerp(0.15,oldHP,hp)
+	oldHP = hpF
+
+	local suF = Lerp(0.15,oldAM,su)
+	oldAM = suF
+
+	local pbarW, pbarH = 256, 6
+
+	local sW, sH = ScrW(), ScrH()
+
+	local hW = Calc(hp, 100, 0, pbarW)
+	local aW = Calc(su, 100, 0, pbarW)
+
+	local nhW,naW = 0,0
+
+	hW = Lerp(0.15,oldhW,hW)
+	oldhW = hW
+	nhW = pbarW - hW
+
+	aW = Lerp(0.15,oldaW,aW)
+	oldaW = aW
+	naW = pbarW - aW
+
+	-- Health
+
+	draw.DrawText("HP", tag, 64 + 18, sH - 128 - 32 - 8, shade, TEXT_ALIGN_RIGHT)
+	draw.DrawText("HP", tag, 64 + 16, sH - 128 - 32 - 10, Color(255,255,255,150), TEXT_ALIGN_RIGHT)
+
+	if hW > 0.01 then
 	
-	local SubSize 		= BaseSize * 0.7
-	local SubOffset		= SubSize * 0.2
+		draw.RoundedBox(0, 64 + 24, sH - 128 - 32 - 4, hW, pbarH, Color(1,159,1,150))
+		draw.RoundedBox(0, 64 + 24 - nhW + pbarW, sH - 128 - 32 - 4, nhW, pbarH, Color(159,1,1,150))
+		
+	else
 	
-	--[[local Points = {
-		{x = 0, y = ScrH()},
-		{x = 0, y = ScrH() - BaseSize * 2 - Offset * 2},
-		{x = BaseSize * 5, y = ScrH() - BaseSize * 2 - Offset * 2},
-		{x = BaseSize * 7, y = ScrH()},
-	}
+		draw.RoundedBox(0, 64 + 24, sH - 128 - 32 - 4, pbarW, pbarH, Color(159,1,1,150))
+		
+	end
 	
-	surface.SetDrawColor(LineColor2)
-	surface.DrawPoly(Points)
+	draw.DrawText(round(hpF), tag, pbarW + 98, sH - 128 - 32 - 8, shade, TEXT_ALIGN_LEFT)	
+	draw.DrawText(round(hpF), tag, pbarW + 96, sH - 128 - 32 - 10, Color(255,255,255,150), TEXT_ALIGN_LEFT)	
+
+	-- Armor
+	draw.DrawText("SUIT", tag, 64 + 18, sH - 128 - 16 - 8, shade, TEXT_ALIGN_RIGHT)
+	draw.DrawText("SUIT", tag, 64 + 16, sH - 128 - 16 - 10, Color(255,255,255,150), TEXT_ALIGN_RIGHT)
 	
-	local outline = 6
+	if aW > 0.01 then
 	
-	Points = {
-		{x = 0, y = ScrH()},
-		{x = 0, y = ScrH() - BaseSize * 2 - Offset * 2 + outline},
-		{x = BaseSize * 5 - outline, y = ScrH() - BaseSize * 2 - Offset * 2 + outline},
+		draw.RoundedBox(0, 64 + 24, sH - 128 - 16 - 4, aW, pbarH, Color(90,120,200,150))
+		draw.RoundedBox(0, 64 + 24 - naW + pbarW, sH - 128 - 16 - 4, naW, pbarH, Color(10,40,150,150))
+		
+	else
 	
-	
-	surface.SetDrawColor(BackColor)
-	surface.DrawPoly(Points)	{x = BaseSize * 7 - outline, y = ScrH()},
-	}]]
-	
-	local cx, cy 	= Offset + BaseSize, Offset + BaseSize
-	
-	local Health 	= ply:Health()
-	local Armour 	= ply:Armor()
-	local Karma 	= ply:GetKarma()
-	
-	BaseWars.HUD.Dial(cx, cy, BackColor, BaseSize, 64, Health, 100, LineColor, "HP", BaseFont, FrontColor)
-	
-	cx = cx + BaseSize + SubSize + SubOffset
-	cy = cy - (BaseSize - SubSize)
-	
-	BaseWars.HUD.Dial(cx, cy, BackColor, SubSize, 64, Armour, 100, LineColor, "AM", SubFont, FrontColor)
-	
-	cx = cx + BaseSize + SubSize - SubOffset
-	
-	BaseWars.HUD.Dial(cx, cy, BackColor, SubSize, 64, Karma, 100, LineColor, "KM", SubFont, FrontColor)
+		draw.RoundedBox(0, 64 + 24, sH - 128 - 16 - 4, pbarW, pbarH, Color(10,40,150,150))
+		
+	end
+
+	draw.DrawText(round(suF), tag, pbarW + 98, sH - 128 - 16 - 8, shade, TEXT_ALIGN_LEFT)
+	draw.DrawText(round(suF), tag, pbarW + 96, sH - 128 - 16 - 10, Color(255,255,255,150), TEXT_ALIGN_LEFT)
 
 end
 hook.Add("HUDPaint", tag .. ".Paint", BaseWars.HUD.Paint)
 
 local function HideHUD(name)
 
-    for k, v in next, {"CHudHealth", "CHudBattery", "CHudAmmo", "CHudSecondaryAmmo"} do
+    for k, v in next, {"CHudHealth", "CHudBattery", --[["CHudAmmo", "CHudSecondaryAmmo"]]} do
 	
         if name == v then
 		

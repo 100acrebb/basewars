@@ -34,11 +34,13 @@ do
 	IncludeCS("shared/player_util.lua")
 	IncludeCS("shared/karma.lua")
 	IncludeCS("shared/factions.lua")
+	IncludeCS("shared/money.lua")
 
 end
 
 do
 
 	LoadFileCS("client/hud.lua")
+	LoadFileCS("client/playtime_money.lua")
 
 end

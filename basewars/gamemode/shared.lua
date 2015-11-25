@@ -1,5 +1,5 @@
 ﻿GM.Name 	= "BaseWars"
-GM.Author 	= "Q2F2, Liquid"
+GM.Author 	= "Q2F2, Liquid, Ghosty"
 GM.Website 	= "http://hexahedronic.org/"
 GM.Description = "Fuck luke"
 

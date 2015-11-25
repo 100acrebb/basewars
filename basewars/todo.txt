@@ -1,5 +1,6 @@
 Todo:
-[ ][1] - Add Money
+[X][1] - Add Money
+[X][1] - Redo HUD
 [ ][1] - Raid Logic
 [ ][2] - Cleanup and Rewrite 'Base Classes'
 [ ][2] - Remake Entities / Cleanup Existing
