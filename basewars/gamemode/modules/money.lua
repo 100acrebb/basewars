@@ -1,10 +1,21 @@
-BaseWars.Money = {}
+MODULE.Name 	= "Money"
+MODULE.Author 	= "Q2F2, Ghosty and Tenrys"
+MODULE.Credits 	= "Based on sh_money by Tenrys; https://github.com/Tenrys/tenrys-scripts/blob/master/lua/autorun/sh_money.lua"
 
 local tag = "BaseWars.Money"
 local tag_escaped = "BaseWars_Money"
 local PLAYER = debug.getregistry().Player
 
-BaseWars.Money.Credits = "Based on sh_money by Tenrys; https://github.com/Tenrys/tenrys-scripts/blob/master/lua/autorun/sh_money.lua"
+local function Curry(f)
+
+	local MODULE = MODULE
+	local function curriedFunction(...)
+		return f(MODULE, ...)
+	end
+
+	return curriedFunction
+
+end
 
 local function isPlayer(ply)
 
@@ -12,7 +23,7 @@ local function isPlayer(ply)
 	
 end
 
-function BaseWars.Money.GetMoney(ply)
+function MODULE:GetMoney(ply)
 
 	if SERVER then
 	
@@ -27,12 +38,11 @@ function BaseWars.Money.GetMoney(ply)
 	end
 	
 end
-PLAYER.GetMoney = BaseWars.Money.GetMoney
+PLAYER.GetMoney = Curry(MODULE.GetMoney)
 
 if SERVER then
 
-
-	function BaseWars.Money.InitMoney(ply)
+	function MODULE:InitMoney(ply)
 	
 		local dirName = isPlayer(ply) and ply:UniqueID() or (isstring(ply) and ply or nil)
 		
@@ -42,74 +52,74 @@ if SERVER then
 		return dirName
 		
 	end
-	PLAYER.InitMoney = BaseWars.Money.InitMoney
+	PLAYER.InitMoney = Curry(MODULE.InitMoney)
 
 	for k, v in next,player.GetAll() do
 		
-		BaseWars.Money.InitMoney(v)
+		MODULE:InitMoney(v)
 	
 	end
 
-	function BaseWars.Money.SaveMoney(ply, amount)
+	function MODULE:SaveMoney(ply, amount)
 	
-		local dirName = BaseWars.Money.InitMoney(ply)
-		file.Write(tag_escaped .. "/" .. dirName .. "/money.txt", amount or BaseWars.Money.GetMoney(ply))
+		local dirName = self:InitMoney(ply)
+		file.Write(tag_escaped .. "/" .. dirName .. "/money.txt", amount or self:GetMoney(ply))
 		
 	end
-	PLAYER.SaveMoney = BaseWars.Money.SaveMoney
+	PLAYER.SaveMoney = Curry(MODULE.SaveMoney)
 	
-	function BaseWars.Money.LoadMoney(ply)
+	function MODULE:LoadMoney(ply)
 	
-		BaseWars.Money.InitMoney(ply)
-		ply:SetNWString(tag, tostring(BaseWars.Money.GetMoney(ply)))
+		self:InitMoney(ply)
+		ply:SetNWString(tag, tostring(self:GetMoney(ply)))
 		
 	end
-	PLAYER.LoadMoney = BaseWars.Money.LoadMoney
+	PLAYER.LoadMoney = Curry(MODULE.LoadMoney)
 
-	function BaseWars.Money.SetMoney(ply, amount)
+	function MODULE:SetMoney(ply, amount)
 	
 		if not isnumber(amount) or amount < 0 then amount = 0 end
 		if amount > 10^12 then amount = 10^12 end
 		
 		amount = math.Round(amount)
-		BaseWars.Money.SaveMoney(ply, amount)
+		self:SaveMoney(ply, amount)
 		
 		ply:SetNWString(tag, tostring(amount))
 		
 	end
-	PLAYER.SetMoney = BaseWars.Money.SetMoney
+	PLAYER.SetMoney = Curry(MODULE.SetMoney)
 
-	function BaseWars.Money.GiveMoney(ply, amount)
+	function MODULE:GiveMoney(ply, amount)
 	
-		BaseWars.Money.SetMoney(ply, BaseWars.Money.GetMoney(ply) + amount)
+		self:SetMoney(ply, self:GetMoney(ply) + amount)
 		
 	end
-	PLAYER.GiveMoney = BaseWars.Money.GiveMoney
+	PLAYER.GiveMoney = Curry(MODULE.GiveMoney)
 	
-	function BaseWars.Money.TakeMoney(ply, amount)
+	function MODULE:TakeMoney(ply, amount)
 	
-		BaseWars.Money.SetMoney(ply, BaseWars.Money.GetMoney(ply) - amount)
+		self:SetMoney(ply, self:GetMoney(ply) - amount)
 		
 	end
-	PLAYER.TakeMoney = BaseWars.Money.TakeMoney
+	PLAYER.TakeMoney = Curry(MODULE.TakeMoney)
 
-	function BaseWars.Money.TransferMoney(ply1, amount, ply2)
+	function MODULE:TransferMoney(ply1, amount, ply2)
 	
-		BaseWars.Money.TakeMoney(ply1, amount)
-		BaseWars.Money.GiveMoney(ply2, amount)
+		self:TakeMoney(ply1, amount)
+		self:GiveMoney(ply2, amount)
 		
 	end
-	PLAYER.TransferMoney = BaseWars.Money.TransferMoney
+	PLAYER.TransferMoney = Curry(MODULE.TransferMoney)
 
-	hook.Add("PlayerAuthed", tag .. ".Load", BaseWars.Money.LoadMoney)
-	hook.Add("PlayerDisconnected", tag .. ".Save", BaseWars.Money.SaveMoney)
+	hook.Add("PlayerAuthed", tag .. ".Load", Curry(MODULE.LoadMoney))
+	hook.Add("PlayerDisconnected", tag .. ".Save", Curry(MODULE.SaveMoney))
 
 	if easylua and aowl then
 	
 		local hookNames = {
-			[BaseWars.Money.GiveMoney] = ".Give",
-			[BaseWars.Money.TakeMoney] = ".Take",
-			[BaseWars.Money.SetMoney] = ".Set",
+			[MODULE.GiveMoney] = ".Give",
+			[MODULE.TakeMoney] = ".Take",
+			[MODULE.SetMoney] = ".Set",
 		}
 
 		local function MoneyExcitement(amount)
@@ -132,14 +142,14 @@ if SERVER then
 		end
 
 		local stringsCaller = {
-			[BaseWars.Money.GiveMoney] = "You gave $%s to %s%s (hax)",
-			[BaseWars.Money.TakeMoney] = "You took $%s from %s%s",
-			[BaseWars.Money.SetMoney] = "You set $%s as %s money%s",
+			[MODULE.GiveMoney] = "You gave $%s to %s%s (hax)",
+			[MODULE.TakeMoney] = "You took $%s from %s%s",
+			[MODULE.SetMoney] = "You set $%s as %s money%s",
 		}
 		local stringsTarget = {
-			[BaseWars.Money.GiveMoney] = "%s gave you $%s%s (hax)",
-			[BaseWars.Money.TakeMoney] = "%s took $%s from yourself%s",
-			[BaseWars.Money.SetMoney] = "%s set your money to $%s%s (hax)",
+			[MODULE.GiveMoney] = "%s gave you $%s%s (hax)",
+			[MODULE.TakeMoney] = "%s took $%s from yourself%s",
+			[MODULE.SetMoney] = "%s set your money to $%s%s (hax)",
 		}
 
 		local function MoneyManagementCommand(caller, amount, ply, func)
@@ -216,7 +226,7 @@ if SERVER then
 				
 			end
 			
-			BaseWars.Money.TransferMoney(caller, amount, ply)
+			MODULE:TransferMoney(caller, amount, ply)
 			hook.Run(tag .. ".Transfer", caller, amount, ply)
 			
 			BaseWars.Util_Player.Notification(caller,"You gave " .. ply:Nick() .. " $" .. amount .. MoneyExcitement(amount), BASEWARS_NOTIFICATION_MONEY)
@@ -226,19 +236,19 @@ if SERVER then
 
 		aowl.AddCommand("givemoney", function(caller, _, amount, ply)
 		
-			return MoneyManagementCommand(caller, amount, ply, BaseWars.Money.GiveMoney)
+			return MoneyManagementCommand(caller, amount, ply, Curry(MODULE.GiveMoney))
 			
 		end, "admins")
 
 		aowl.AddCommand("takemoney", function(caller, _, amount, ply)
 		
-			return MoneyManagementCommand(caller, amount, ply, BaseWars.Money.TakeMoney)
+			return MoneyManagementCommand(caller, amount, ply, Curry(MODULE.TakeMoney))
 			
 		end, "admins")
 
 		aowl.AddCommand("setmoney", function(caller, _, amount, ply)
 		
-			return MoneyManagementCommand(caller, amount, ply, BaseWars.Money.SetMoney)
+			return MoneyManagementCommand(caller, amount, ply, Curry(MODULE.SetMoney))
 			
 		end, "admins")
 		

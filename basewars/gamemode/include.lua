@@ -31,10 +31,12 @@ do
 	IncludeCS("shared.lua")
 	IncludeCS("language.lua")
 	
-	IncludeCS("shared/player_util.lua")
-	IncludeCS("shared/karma.lua")
+	--IncludeCS("shared/player_util.lua")
+	--IncludeCS("shared/karma.lua")
 	--IncludeCS("shared/factions.lua")
-	IncludeCS("shared/money.lua")
+	--IncludeCS("shared/money.lua")
+	
+	IncludeCS("shared/cppi.lua")
 
 end
 
