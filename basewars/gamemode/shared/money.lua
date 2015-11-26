@@ -61,7 +61,7 @@ if SERVER then
 	function BaseWars.Money.LoadMoney(ply)
 	
 		BaseWars.Money.InitMoney(ply)
-		ply:SetNWString(tag, tostring(GetMoney(ply)))
+		ply:SetNWString(tag, tostring(BaseWars.Money.GetMoney(ply)))
 		
 	end
 	PLAYER.LoadMoney = BaseWars.Money.LoadMoney
