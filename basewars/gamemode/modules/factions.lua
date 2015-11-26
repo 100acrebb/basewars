@@ -27,7 +27,7 @@ if SERVER then
 
 	function MODULE:HandleNetMessage(len, ply)
 	
-		local Mode = net.ReadUInt(1)
+		local Mode = net.ReadUInt(2)
 		
 		if Mode == 0 then
 			
@@ -87,7 +87,7 @@ function MODULE:Set(ply, value, password, force)
 	if CLIENT then
 	
 		net.Start(tag)
-			net.WriteUInt(0,1)
+			net.WriteUInt(0, 2)
 			net.WriteString(value)
 			net.WriteString(password or "")
 		net.SendToServer()
@@ -96,21 +96,20 @@ function MODULE:Set(ply, value, password, force)
 	
 	end
 	
-	local Table = self.FactionTable
+	local Table = BaseWars.Factions.FactionTable
 	local Faction = Table[value]
 	
 	if not Faction then
 		
-		
-		BaseWars.Util_Player.Notification(ply, BaseWars.LANG.FactionNotExist, BASEWARS_NOTIFICATION_ERROR)
+		ply:Notify(BaseWars.LANG.FactionNotExist, BASEWARS_NOTIFICATION_ERROR)
 	
 		return
 		
 	end
 	
-	if ply:InFaction(nil, true) then
+	if not force and ply:InFaction(nil, true) then
 	
-		BaseWars.Util_Player.Notification(ply, BaseWars.LANG.FactionCantLeaveLeader, BASEWARS_NOTIFICATION_ERROR)
+		ply:Notify(BaseWars.LANG.FactionCantLeaveLeader, BASEWARS_NOTIFICATION_ERROR)
 		
 		return
 		
@@ -118,7 +117,7 @@ function MODULE:Set(ply, value, password, force)
 	
 	if Faction.password and Faction.password ~= password and not force then
 	
-		BaseWars.Util_Player.Notification(ply, BaseWars.LANG.FactionWrongPass, BASEWARS_NOTIFICATION_ERROR)
+		ply:Notify(BaseWars.LANG.FactionWrongPass, BASEWARS_NOTIFICATION_ERROR)
 	
 		return
 	
@@ -138,7 +137,7 @@ function MODULE:Leave(ply, disband, forcedisband)
 	if CLIENT then
 	
 		net.Start(tag)
-			net.WriteUInt(1,1)
+			net.WriteUInt(1, 2)
 			net.WriteBool(disband)
 		net.SendToServer()
 		
@@ -146,7 +145,7 @@ function MODULE:Leave(ply, disband, forcedisband)
 		
 	end
 	
-	local Table = self.FactionTable
+	local Table = BaseWars.Factions.FactionTable
 	local Fac = ply:GetFaction()
 	local Faction = Table[Fac]
 	
@@ -160,7 +159,7 @@ function MODULE:Leave(ply, disband, forcedisband)
 
 	if not forcedisband and disband and (Faction.leader ~= ply:SteamID() and not ply:IsAdmin()) then
 	
-		BaseWars.Util_Player.Notification(ply, BaseWars.LANG.FactionCantDisband, BASEWARS_NOTIFICATION_ERROR)
+		ply:Notify(BaseWars.LANG.FactionCantDisband, BASEWARS_NOTIFICATION_ERROR)
 		
 		return
 		
@@ -168,7 +167,7 @@ function MODULE:Leave(ply, disband, forcedisband)
 	
 	if forcedisband or disband then
 	
-		BaseWars.UTIL.Log("Faction disband for ", Fac, ". ", #Faction.members, " members.")
+		BaseWars.UTIL.Log("Faction disband for ", Fac, ". ", table.Count(Faction.members), " members.")
 	
 		for k, v in next, Faction.members do
 			
@@ -184,7 +183,7 @@ function MODULE:Leave(ply, disband, forcedisband)
 	
 		if Faction.leader == ply:SteamID() then
 		
-			BaseWars.Util_Player.Notification(ply, BaseWars.LANG.FactionCantLeaveLeader, BASEWARS_NOTIFICATION_ERROR)
+			ply:Notify(BaseWars.LANG.FactionCantLeaveLeader, BASEWARS_NOTIFICATION_ERROR)
 			
 			return
 			
@@ -201,7 +200,7 @@ PLAYER.LeaveFaction = Curry(MODULE.Leave)
 
 function MODULE:InFaction(ply, name, leader)
 	
-	local Table = self.FactionTable
+	local Table = BaseWars.Factions.FactionTable
 	local Fac = ply:GetFaction()
 	local Faction = Table[Fac]
 	
@@ -220,7 +219,7 @@ PLAYER.InFaction = Curry(MODULE.InFaction)
 
 function MODULE:Clean(ply)
 
-	local Table = self.FactionTable
+	local Table = BaseWars.Factions.FactionTable
 	local Fac = ply:GetFaction()
 	local Faction = Table[Fac]
 	
@@ -243,7 +242,7 @@ function MODULE:Create(ply, name, password, color)
 	if CLIENT then
 	
 		net.Start(tag)
-			net.WriteUInt(2,1)
+			net.WriteUInt(2, 2)
 			net.WriteString(name)
 			net.WriteString(password or "")
 		net.SendToServer()
@@ -252,17 +251,17 @@ function MODULE:Create(ply, name, password, color)
 		
 	end
 	
-	local Table = self.FactionTable
+	local Table = BaseWars.Factions.FactionTable
 	
 	if Table[name] then
 	
-		BaseWars.Util_Player.Notification(ply, BaseWars.LANG.FactionNameTaken, BASEWARS_NOTIFICATION_ERROR)
+		ply:Notify(BaseWars.LANG.FactionNameTaken, BASEWARS_NOTIFICATION_ERROR)
 	
 		return
 		
 	end
 	
-	BaseWars.UTIL.Log("Faction created for ", name, ". Leader: ", ply:Nick(), ". Password: ", password, ".")
+	BaseWars.UTIL.Log("Faction created for ", name, ". Leader: ", ply:Nick(), ". Password: ", (password and password ~= "" or "<NONE>"), ".")
 	
 	Table[name] = {
 		leader = ply:SteamID(),
@@ -274,3 +273,4 @@ function MODULE:Create(ply, name, password, color)
 	ply:SetFaction(name, nil, true)
 
 end
+PLAYER.CreateFaction = Curry(MODULE.Create)

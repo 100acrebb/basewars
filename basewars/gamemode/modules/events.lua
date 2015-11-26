@@ -19,12 +19,26 @@ if SERVER then
 
 	function MODULE:PayDay(ply)
 		
+		if not ply then
+		
+			for k,v in next, player.GetAll() do
+			
+				v:PayDay()
+				
+			end
+			
+			return
+			
+		end
+		
 		local Money 		= ply:GetMoney()
 		
 		local BaseRate 		= BaseWars.Config.PayDayBase
 		local Thousands  	= math.floor(Money / BaseWars.Config.PayDayDivisor)
 		
 		local Final 		= math.max(BaseWars.Config.PayDayMin, BaseRate - Thousands)
+		
+		ply:Notify(string.format(BaseWars.LANG.PayDay, Final), BASEWARS_NOTIFICATION_ERROR)
 		
 		ply:GiveMoney(Final)
 

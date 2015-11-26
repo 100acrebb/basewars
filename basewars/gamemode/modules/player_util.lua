@@ -2,6 +2,7 @@ MODULE.Name 	= "Util_Player"
 MODULE.Author 	= "Q2F2 & Ghosty"
 
 local tag = "BaseWars.Util_Player"
+local PLAYER = debug.getregistry().Player
 
 local function Curry(f)
 
@@ -62,7 +63,9 @@ function MODULE:Notification(ply, text, col)
 	chat.AddText(col, text)
 	
 end
-Notify = Curry(MODULE.Notification)
+local notification = Curry(MODULE.Notification)
+Notify = notification
+PLAYER.Notify = notification
 
 function MODULE:NotificationAll(text, col)
 
