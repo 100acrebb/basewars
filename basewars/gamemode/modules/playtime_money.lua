@@ -1,6 +1,22 @@
-BaseWars.HUD.PlayTime_Money = {}
+MODULE.Name 	= "PlayTime_Money"
+MODULE.Author 	= "Q2F2 & Ghosty"
+MODULE.Realm 	= 2
 
-local tag = "BaseWars.HUD.PlayTime_Money"
+local tag = "BaseWars.PlayTime_Money"
+
+local function Curry(f)
+
+	local MODULE = MODULE
+	local function curriedFunction(...)
+		return f(MODULE, ...)
+	end
+
+	return curriedFunction
+
+end
+
+resource.AddFile("materials/icon32/clock_wh32.png")
+resource.AddFile("materials/icon32/money_wh32.png")
 
 local TimeMat 	= Material("icon32/clock_wh32.png", "nocull noclamp smooth")
 local MoneyMat 	= Material("icon32/money_wh32.png", "nocull noclamp smooth")
@@ -83,7 +99,7 @@ end
 local green = Color(42, 255, 0)
 local red = Color(255, 0, 0)
 
-function BaseWars.HUD.PlayTime_Money.Paint()
+function MODULE:Paint()
 
 	local sW, sH = ScrW(), ScrH()
 	local cT = CurTime()
@@ -184,4 +200,4 @@ function BaseWars.HUD.PlayTime_Money.Paint()
 	drawEffects()
 
 end
-hook.Add("HUDPaint", tag .. ".Paint", BaseWars.HUD.PlayTime_Money.Paint)
+hook.Add("HUDPaint", tag .. ".Paint", Curry(MODULE.Paint))
