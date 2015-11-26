@@ -1,4 +1,4 @@
-MODULE.Name 	= "Util_Player"
+MODULE.Name 	= "Events"
 MODULE.Author 	= "Q2F2 & Ghosty"
 
 local tag = "BaseWars.Events"
