@@ -53,7 +53,7 @@ if SERVER then
 	function BaseWars.Money.SaveMoney(ply, amount)
 	
 		local dirName = BaseWars.Money.InitMoney(ply)
-		file.Write(tag_escaped .. "/" .. dirName .. "/money.txt", amount or GetMoney(ply))
+		file.Write(tag_escaped .. "/" .. dirName .. "/money.txt", amount or BaseWars.Money.GetMoney(ply))
 		
 	end
 	PLAYER.SaveMoney = BaseWars.Money.SaveMoney

@@ -71,7 +71,7 @@ function MODULE:Get(ply)
 
 end
 
-PLAYER.GetFaction = Curry(MODULE.GetFaction)
+PLAYER.GetFaction = Curry(MODULE.Get)
 
 function MODULE:Set(ply, value, password, force)
 
@@ -96,7 +96,7 @@ function MODULE:Set(ply, value, password, force)
 	
 	end
 	
-	local Table = MODULE.FactionTable
+	local Table = self.FactionTable
 	local Faction = Table[value]
 	
 	if not Faction then
@@ -129,7 +129,7 @@ function MODULE:Set(ply, value, password, force)
 
 end
 
-local setFaction = Curry(MODULE.GetFaction)
+local setFaction = Curry(MODULE.Set)
 PLAYER.SetFaction = setFaction
 PLAYER.JoinFaction = setFaction
 
@@ -146,7 +146,7 @@ function MODULE:Leave(ply, disband, forcedisband)
 		
 	end
 	
-	local Table = BaseWars.Factions.FactionTable
+	local Table = self.FactionTable
 	local Fac = ply:GetFaction()
 	local Faction = Table[Fac]
 	
@@ -174,7 +174,7 @@ function MODULE:Leave(ply, disband, forcedisband)
 			
 			if v == ply then continue end
 			
-			BaseWars.Factions.Leave(v, false)
+			self:Leave(v, false)
 			
 		end
 		
@@ -201,7 +201,7 @@ PLAYER.LeaveFaction = Curry(MODULE.Leave)
 
 function MODULE:InFaction(ply, name, leader)
 	
-	local Table = BaseWars.Factions.FactionTable
+	local Table = self.FactionTable
 	local Fac = ply:GetFaction()
 	local Faction = Table[Fac]
 	
@@ -220,11 +220,11 @@ PLAYER.InFaction = Curry(MODULE.InFaction)
 
 function MODULE:Clean(ply)
 
-	local Table = BaseWars.Factions.FactionTable
+	local Table = self.FactionTable
 	local Fac = ply:GetFaction()
 	local Faction = Table[Fac]
 	
-	BaseWars.Factions.Leave(ply, Faction.leader == ply:SteamID())
+	self:Leave(ply, Faction.leader == ply:SteamID())
 	
 end
 hook.Add("PlayerDisconnect", tag .. ".Clean", Curry(MODULE.Clean))
@@ -252,7 +252,7 @@ function MODULE:Create(ply, name, password, color)
 		
 	end
 	
-	local Table = BaseWars.Factions.FactionTable
+	local Table = self.FactionTable
 	
 	if Table[name] then
 	

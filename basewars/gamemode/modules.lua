@@ -8,11 +8,13 @@
 local BW = BaseWars
 
 local colorRed 		= Color(255, 0, 0)
+local colorBlue 	= Color(0, 0, 255)
 local colorWhite 	= Color(255, 255, 255)
 
 local function Log(...)
 
-	MsgC(colorRed, "[BWML] ", colorWhite, ...)
+	MsgC(SERVER and colorRed or colorBlue, "[BWML] ", colorWhite, ...)
+	MsgN("")
 
 end
 
@@ -23,7 +25,7 @@ if not BW then -- Woah, no BaseWars table? This should be loaded AFTER the table
 
 end
 
-if not BW.UTIL then -- Woah, no UTIL table? This should be loaded AFTER the table's created!
+if SERVER and not BW.UTIL then -- Woah, no UTIL table? This should be loaded AFTER the table's created!
 
 	Log("No BaseWars.UITL table??")
 	return
@@ -36,7 +38,7 @@ local next = next
 
 function ModuleLoader:IterateFiles(folder, realm)
 
-	local files = fileFind("basewars/" .. folder .. "/*", realm or "LUA")
+	local files = fileFind("basewars/gamemode/" .. folder .. "/*", realm or "LUA")
 
 	if #files == 0 then
 
@@ -68,7 +70,7 @@ local getFn = string.GetFileFromFilename
 
 local function loadModule()
 
-	BW[MODULE.Name] = MODULE
+	BW[MODULE.Name] = table.Copy(MODULE)
 	MODULE = nil
 
 end
@@ -81,7 +83,7 @@ function ModuleLoader:Load()
 	for fName in self:IterateFiles("modules") do
 
 		MODULE = {}
-		local ok, err = pcall(include,fName)
+		local ok, err = pcall(include, fName)
 
 		if not ok then
 			
@@ -139,7 +141,7 @@ function ModuleLoader:Load()
 	end
 
 	local newTime = SysTime()
-	Log("STATS: Loaded ", tostring(moduleCount), " modules in ", tostring(newTime - oldTime), " seconds.")
+	Log("STATS: Loaded ", tostring(moduleCount), " modules in ", tostring(math.Round(newTime - oldTime, 5)), " seconds.")
 
 end
 
