@@ -4,68 +4,43 @@ AddCSLuaFile( "shared.lua" )
 include('shared.lua')
 
 function ENT:Initialize()
+
 	self:CPPISetOwner(self.Owner)
 	
-	self:SetModel("models/props_c17/TrapPropeller_Engine.mdl")
+	self.BaseClass:Initialize()
+	
+	self:SetModel(BaseWars.Config.Ents.Turret.Model)
+	
 	self:PhysicsInit(SOLID_VPHYSICS)
 	self:SetMoveType(MOVETYPE_VPHYSICS)
 	self:SetSolid(SOLID_VPHYSICS)
 	
-	self:SetNWInt("Health", 75)
-	self:SetLevel(0)
+	self:SetNWInt("Health", BaseWars.Config.Ents.Turret.Health)
 	
 	local phys = self:GetPhysicsObject()
-	if (phys:IsValid()) then
+	if phys:IsValid() then
+	
 		phys:Wake()
 		phys:SetMass(1000)
 		phys:EnableMotion(false)
+		
 	end
 	
-	self:SetNWBool("IsActive", false)
-	self.Build = 50
-	self.LastUsed = CurTime()
-
-	util.PrecacheSound("ambient/energy/spark1.wav")
-	util.PrecacheSound("ambient/energy/spark2.wav")
-	util.PrecacheSound("ambient/energy/spark3.wav")
-	util.PrecacheSound("ambient/energy/spark4.wav")
-	
 	self.AllyTable = {}
+	
+	self.LastUsed = CurTime()
+	self.Build = 50
+	
 	self:SetNWBool("NotBuilt", true)
-	self:SetNWInt("power", 0)
-	self.CurrentValue = self.Price
+	self:SetNWBool("IsActive", false)
 	
-end
-
-function ENT:SpawnFunction(ply, tr)
-	if ( !tr.Hit ) then return end
-	
-	local SpawnPos = tr.HitPos + tr.HitNormal * 20
-	
-	local ent = ents.Create("auto_turret")
-		ent:SetPos(SpawnPos)
-	ent:Spawn()
-	ent:Activate()
-	
-	local head = ents.Create("auto_turret_gun")
-	if (not IsValid(head)) then return end
-		head:SetPos(SpawnPos + Vector(0, 0, 18))
-		head:SetParent(ent)
-		head:SetOwner(ply)
-	head:Spawn()
-	head:Activate()
-	
-	head.Body = ent
-	ent.Head = head
-	
-	head.Owner = ply
-	
-	return ent
 end
 
 function ENT:Explode()
+
 	self.BaseClass:Explode()
 	self.Head:Remove()
+	
 end
 
 function ENT:Use(ply, caller)
