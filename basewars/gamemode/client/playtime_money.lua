@@ -150,7 +150,6 @@ function BaseWars.HUD.PlayTime_Money.Paint()
 		local posX,posY = 64 + 42, sH - 128 + 51 + 4
 		local change = 4
 		local fDiff = diff
-		local font = font
 
 		local function effectDraw(i)
 
@@ -171,7 +170,7 @@ function BaseWars.HUD.PlayTime_Money.Paint()
 			change = change / 1.08
 			
 			draw.DrawText(
-				(fDiff > 0 and "+ $" or " $") .. diff, font,
+				(fDiff > 0 and "+ $" or " $") .. diff, tag,
 				posX, posY, color, TEXT_ALIGN_LEFT
 			)
 			posY = posY + change
