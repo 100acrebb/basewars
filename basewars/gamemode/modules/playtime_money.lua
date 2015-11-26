@@ -13,6 +13,7 @@ local function Curry(f)
 	return curriedFunction
 
 end
+
 if SERVER then
 
 	resource.AddFile("materials/icon32/clock_wh32.png")
@@ -29,11 +30,15 @@ local abs 		= math.abs
 local floor 	= math.floor
 local clamp 	= math.Clamp
 
-surface.CreateFont(tag, {
-	font = "Roboto",
-	weight = 800,
-	size = 24,
-})
+function MODULE:__INIT()
+
+	surface.CreateFont(tag, {
+		font = "Roboto",
+		weight = 800,
+		size = 24,
+	})
+
+end
 
 local function playTime(n)
 

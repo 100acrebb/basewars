@@ -71,7 +71,12 @@ local getFn = string.GetFileFromFilename
 local function loadModule()
 
 	BW[MODULE.Name] = table.Copy(MODULE)
-	MODULE = nil
+	
+	if MODULE.__INIT then
+	
+		MODULE:__INIT()
+		
+	end
 
 end
 
@@ -139,6 +144,8 @@ function ModuleLoader:Load()
 		moduleCount = moduleCount + 1
 
 	end
+	
+	MODULE = nil
 
 	local newTime = SysTime()
 	Log("STATS: Loaded ", tostring(moduleCount), " modules in ", tostring(math.Round(newTime - oldTime, 5)), " seconds.")

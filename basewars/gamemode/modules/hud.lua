@@ -16,11 +16,15 @@ local function Curry(f)
 
 end
 
-surface.CreateFont(tag, {
-	font = "Roboto",
-	size = 16,
-	weight = 800,
-})
+function MODULE:__INIT()
+
+	surface.CreateFont(tag, {
+		font = "Roboto",
+		size = 16,
+		weight = 800,
+	})
+
+end
 
 local clamp = math.Clamp
 local floor = math.floor

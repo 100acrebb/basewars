@@ -11,6 +11,10 @@ BaseWars.Config = {
 		DoubleJump = {
 			JumpHeight = Vector(0, 0, 320),
 		},
+		Steroid = {
+			Walk = 330,
+			Run = 550,
+		},
 	},
 	
 	PayDayBase 			= 500,

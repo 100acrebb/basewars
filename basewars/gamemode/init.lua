@@ -82,11 +82,11 @@ function GM:EntityTakeDamage(ent, dmginfo)
 	
 	--[[
 	local ignoredrug = false
-	if inflictor:GetClass()=="env_fire" || inflictor:GetClass()=="env_physexplosion" || inflictor:GetClass()=="auto_turret_gun" || inflictor:GetClass()=="weapon_molotov" || inflictor:GetClass()=="weapon_flamethrower" ||inflictor:GetClass()=="weapon_knife2" || inflictor:GetClass()=="weapon_gasgrenade" || inflictor:GetClass()=="weapon_tranqgun" || inflictor:GetClass()=="bigbomb" then
+	if inflictor:GetClass()=="env_fire" or inflictor:GetClass()=="env_physexplosion" or inflictor:GetClass()=="auto_turret_gun" or inflictor:GetClass()=="weapon_molotov" or inflictor:GetClass()=="weapon_flamethrower" orinflictor:GetClass()=="weapon_knife2" or inflictor:GetClass()=="weapon_gasgrenade" or inflictor:GetClass()=="weapon_tranqgun" or inflictor:GetClass()=="bigbomb" then
 		ignoredrug = true
 	end
 	local scaler = 1
-	if (inflictor:GetClass()=="env_physexplosion" || inflictor:GetClass()=="env_fire") && IsValid(inflictor.attacker) then
+	if (inflictor:GetClass()=="env_physexplosion" or inflictor:GetClass()=="env_fire") && IsValid(inflictor.attacker) then
 		attacker = inflictor.attacker
 	end
 	if (attacker.Amp == true && not inflictor:IsPlayer() && inflictor:GetClass()~="auto_turret_gun" && inflictor:GetClass()~="weapon_knife2" && inflictor:GetClass()~="weapon_gasgrenade" && inflictor:GetClass()~="weapon_tranqgun" && inflictor:GetClass()~="bigbomb") then
@@ -96,7 +96,7 @@ function GM:EntityTakeDamage(ent, dmginfo)
 	-- before even applying painkiller or anything, take the max damage it can be, then bounce back part of that.
 	-- dont bounce knife damage because we dont want to risk bouncing poison
 	-- dont bounce burning damage because itl get annoying for people to have to burn with other people
-	if (ply.Mirror == true && attacker~=ply && not inflictor:IsPlayer() && ((dmginfo:IsExplosionDamage() && inflictor:GetClass()~="bigbomb" ) || not ignoredrug)) then
+	if (ply.Mirror == true && attacker~=ply && not inflictor:IsPlayer() && ((dmginfo:IsExplosionDamage() && inflictor:GetClass()~="bigbomb" ) or not ignoredrug)) then
 		attacker:TakeDamage(scaler*damage*0.25, ply, ply)
 	end
 	if (ply.PainKillered == true && attacker:IsPlayer() && attacker~=ply && inflictor:IsPlayer()==false) then
@@ -107,11 +107,11 @@ function GM:EntityTakeDamage(ent, dmginfo)
 	if (attacker~=nil && attacker:IsPlayer()==false) then
 		local class = attacker:GetClass()
 		local donotwant = false
-		if class== "entityflame" || inflictor:IsVehicle() || attacker:IsVehicle() || class==v || (class==v && v=="bigbomb" && not dmginfo:IsExplosionDamage()) || (inflictor:IsWorld() && (not dmginfo:IsFallDamage() || ply.Knockbacked)) then
+		if class== "entityflame" or inflictor:IsVehicle() or attacker:IsVehicle() or class==v or (class==v && v=="bigbomb" && not dmginfo:IsExplosionDamage()) or (inflictor:IsWorld() && (not dmginfo:IsFallDamage() or ply.Knockbacked)) then
 			donotwant = true
 		end
 		for k, v in ipairs(BaseWars.Physgunables) do
-			if (class==v && v~="bigbomb") || (class==v && v=="bigbomb" && not dmginfo:IsExplosionDamage()) || (inflictor:IsWorld() && not dmginfo:IsFallDamage()) then
+			if (class==v && v~="bigbomb") or (class==v && v=="bigbomb" && not dmginfo:IsExplosionDamage()) or (inflictor:IsWorld() && not dmginfo:IsFallDamage()) then
 				donotwant = true
 			end
 		end
@@ -123,7 +123,7 @@ function GM:EntityTakeDamage(ent, dmginfo)
 	if (inflictor~=nil && inflictor:IsPlayer()==false) then
 		local class = inflictor:GetClass()
 		local donotwant = false
-		if class== "entityflame" || inflictor:IsVehicle() || attacker:IsVehicle() || class==v || (class==v && v=="bigbomb" && not dmginfo:IsExplosionDamage()) || (inflictor:IsWorld() && (not dmginfo:IsFallDamage() || ply.Knockbacked)) then
+		if class== "entityflame" or inflictor:IsVehicle() or attacker:IsVehicle() or class==v or (class==v && v=="bigbomb" && not dmginfo:IsExplosionDamage()) or (inflictor:IsWorld() && (not dmginfo:IsFallDamage() or ply.Knockbacked)) then
 			donotwant = true
 		end
 		if donotwant then
@@ -131,7 +131,7 @@ function GM:EntityTakeDamage(ent, dmginfo)
 			scaler = 0
 		end
 	end
-	if (ply:IsPlayer() || ply:IsNPC()) && attacker:IsPlayer() && not inflictor:IsPlayer() && not ignoredrug && attacker.Knockbacked && math.Rand(0,1)>.3 then
+	if (ply:IsPlayer() or ply:IsNPC()) && attacker:IsPlayer() && not inflictor:IsPlayer() && not ignoredrug && attacker.Knockbacked && math.Rand(0,1)>.3 then
 		local origin = inflictor:GetPos()
 		local pos = ply:GetPos()+Vector(0,0,50)
 		local yomomma = (pos-origin)
@@ -167,7 +167,7 @@ function GM:EntityTakeDamage(ent, dmginfo)
 		dmginfo:ScaleDamage(scaler)
 	end
 	-- let leech heal the attacker, but only if they hit a player or npc, and its not poison or returned damage
-	if (ply:IsPlayer() || ply:IsNPC()) && attacker:IsPlayer() && not inflictor:IsPlayer() && not ignoredrug && attacker.Leeched && attacker:Health()<attacker:GetMaxHealth() then
+	if (ply:IsPlayer() or ply:IsNPC()) && attacker:IsPlayer() && not inflictor:IsPlayer() && not ignoredrug && attacker.Leeched && attacker:Health()<attacker:GetMaxHealth() then
 		attacker:SetHealth(attacker:Health()+(tdamage*.35))
 		if attacker:Health()>attacker:GetMaxHealth() then
 			attacker:SetHealth(attacker:GetMaxHealth())
@@ -184,13 +184,13 @@ function GM:PlayerShouldTakeDamage(ply, atk)
 
 	--[[
 	for k, v in ipairs( ents.FindInSphere(ply:GetPos(), 500) ) do
-		if (v:GetClass() == "info_player_deathmatch" || v:GetClass() == "info_player_rebel" || v:GetClass() == "gmod_player_start" || v:GetClass() == "info_player_start" || v:GetClass() == "info_player_allies" || v:GetClass() == "info_player_axis" || v:GetClass() == "info_player_counterterrorist" || v:GetClass() == "info_player_terrorist") then
+		if (v:GetClass() == "info_player_deathmatch" or v:GetClass() == "info_player_rebel" or v:GetClass() == "gmod_player_start" or v:GetClass() == "info_player_start" or v:GetClass() == "info_player_allies" or v:GetClass() == "info_player_axis" or v:GetClass() == "info_player_counterterrorist" or v:GetClass() == "info_player_terrorist") then
 			if IsValid(atk) and atk:IsPlayer() then Notify( atk, 4, 3, "Do not attempt to spawnkill" ) end
 			return false
 		end
 	end
 	for k, v in ipairs( ents.FindInSphere(atk:GetPos(), 500) ) do
-		if (v:GetClass() == "info_player_deathmatch" || v:GetClass() == "info_player_rebel" || v:GetClass() == "gmod_player_start" || v:GetClass() == "info_player_start" || v:GetClass() == "info_player_allies" || v:GetClass() == "info_player_axis" || v:GetClass() == "info_player_counterterrorist" || v:GetClass() == "info_player_terrorist") then
+		if (v:GetClass() == "info_player_deathmatch" or v:GetClass() == "info_player_rebel" or v:GetClass() == "gmod_player_start" or v:GetClass() == "info_player_start" or v:GetClass() == "info_player_allies" or v:GetClass() == "info_player_axis" or v:GetClass() == "info_player_counterterrorist" or v:GetClass() == "info_player_terrorist") then
 			if IsValid(atk) and atk:IsPlayer() then Notify( atk, 4, 3, "Do not attempt to spawncamp" ) end
 			return false
 		end
@@ -202,24 +202,87 @@ function GM:PlayerShouldTakeDamage(ply, atk)
 	
 end
 
---[[
-timer.Create("SpawnPropProtection", 2, 0, function()
+local LastThink = CurTime()
+local Spawns 	= {}
 
-	for _, s in epairs() do
-		local class = s:GetClass()
-		if not (class == "info_player_deathmatch" || class == "info_player_rebel" || class == "gmod_player_start" || class == "info_player_start" || class == "info_player_allies" || class == "info_player_axis" || class == "info_player_counterterrorist" || class == "info_player_terrorist") then
-			continue
+local function ScanEntities()
+
+	Spawns = {}
+
+	for k, v in next, ents.GetAll() do
+
+		local Class = v:GetClass()
+		
+		if 
+			Class == "info_player_deathmatch" or 		Class == "info_player_rebel" or
+			Class == "gmod_player_start" or 			Class == "info_player_start" or
+			Class == "info_player_allies" or 			Class == "info_player_axis" or
+			Class == "info_player_counterterrorist" or 	Class == "info_player_terrorist" then
+			
+			Spawns[#Spawns+1] =  v
+			
 		end
-		for _, v in next, ents.FindInSphere(s:GetPos(), 700) do
-			if (v:GetClass() == "prop_physics" and v:CPPIGetOwner() and not v.BeingRemoved and not v.NoFizz) then
-				v.BeingRemoved = true
-				v:Remove()
-				Notify(v:CPPIGetOwner(), 4, 3, "Do not build props around spawn.")
-			end
-		end
+		
 	end
-end)
+	
+end
 
+function GM:Think()
+
+	local State = self.BaseClass:Think()
+	
+	if LastThink < CurTime() - 3 then
+	
+		for k, s in next, Spawns do
+		
+			for _, v in next, ents.FindInSphere(s:GetPos(), 700) do
+			
+				if v.BeingRemoved or v.NoFizz then
+				
+					continue
+					
+				end
+			
+				local Owner = v:CPPIGetOwner()
+				
+				if not Owner or not IsValid(Owner) or not Owner:IsPlayer() then
+				
+					continue
+					
+				end
+			
+				if v:GetClass() == "prop_physics" then
+				
+					v.BeingRemoved = true
+					v:Remove()
+					
+					Owner:Notify(BaseWars.LANG.DontBuildSpawn, BASEWARS_NOTIFICATION_ERROR)
+					
+				end
+				
+			end
+			
+		end
+	
+	end
+	
+	return State
+	
+end
+
+function GM:InitPostEntity()
+
+	local State = self.BaseClass:InitPostEntity()
+	
+	ScanEntities()
+	
+	return State
+	
+end
+
+ScanEntities()
+
+--[[
 function GM:PlayerNoClip(ply, state)
 	return ply.OnDuty
 end

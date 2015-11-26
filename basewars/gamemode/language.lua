@@ -8,4 +8,5 @@ BaseWars.LANG = {
 	GenericCheat 			= "Nice try! That doesn't work clientside :)",
 	
 	PayDay					= "PayDay! You received $%d!",
+	DontBuildSpawn			= "Do not build props around spawn.",
 }
