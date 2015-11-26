@@ -87,7 +87,7 @@ function MODULE:Spawn(ply)
 	ply:SetWeaponColor(col)
 
 end
-hook.Add("PlayerSpawn", tag .. ".Spawn", MODULE:Spawn)
+hook.Add("PlayerSpawn", tag .. ".Spawn", Curry(MODULE.Spawn))
 
 function MODULE:EnableFlashlight(ply)
 
