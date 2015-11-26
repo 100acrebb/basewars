@@ -30,6 +30,7 @@ do
 
 	IncludeCS("shared.lua")
 	IncludeCS("language.lua")
+	IncludeCS("config.lua")
 	
 	--IncludeCS("shared/player_util.lua")
 	--IncludeCS("shared/karma.lua")
