@@ -43,7 +43,7 @@ end
 
 do
 
-	LoadFileCS("client/hud.lua")
-	LoadFileCS("client/playtime_money.lua")
+	--LoadFileCS("client/hud.lua")
+	--LoadFileCS("client/playtime_money.lua")
 
 end

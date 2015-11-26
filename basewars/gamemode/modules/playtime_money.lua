@@ -1,6 +1,5 @@
 MODULE.Name 	= "PlayTime_Money"
 MODULE.Author 	= "Q2F2 & Ghosty"
-MODULE.Realm 	= 2
 
 local tag = "BaseWars.PlayTime_Money"
 
@@ -14,10 +13,15 @@ local function Curry(f)
 	return curriedFunction
 
 end
+if SERVER then
 
-resource.AddFile("materials/icon32/clock_wh32.png")
-resource.AddFile("materials/icon32/money_wh32.png")
+	resource.AddFile("materials/icon32/clock_wh32.png")
+	resource.AddFile("materials/icon32/money_wh32.png")
 
+	return
+	
+end
+	
 local TimeMat 	= Material("icon32/clock_wh32.png", "nocull noclamp smooth")
 local MoneyMat 	= Material("icon32/money_wh32.png", "nocull noclamp smooth")
 
