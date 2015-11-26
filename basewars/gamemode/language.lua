@@ -7,5 +7,5 @@ BaseWars.LANG = {
 	
 	GenericCheat 			= "Nice try! That doesn't work clientside :)",
 	
-	PayDay					= "PayDay! You received %x!",
+	PayDay					= "PayDay! You received %d!",
 }
