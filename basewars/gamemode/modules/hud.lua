@@ -65,12 +65,12 @@ function MODULE:Paint()
 
 	local hp, su = me:Health(), me:Armor()
 
-	if not me:Alive() then su = 0 end
+	if not me:Alive() then hp = 0 su = 0 end
 
-	local hpF = Lerp(0.15,oldHP,hp)
+	local hpF = Lerp(0.15, oldHP, hp)
 	oldHP = hpF
 
-	local suF = Lerp(0.15,oldAM,su)
+	local suF = Lerp(0.15, oldAM, su)
 	oldAM = suF
 
 	local pbarW, pbarH = 256, 6

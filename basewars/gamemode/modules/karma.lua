@@ -1,42 +1,75 @@
-BaseWars.Karma = {}
+MODULE.Name 	= "Karma"
+MODULE.Author 	= "Q2F2 & Ghosty"
 
 local tag = "BaseWars.Karma"
 local PLAYER = debug.getregistry().Player
 
-function BaseWars.Karma.Get(ply)
+local function Curry(f)
 
-	return 50
-
-end
-PLAYER.GetKarma = BaseWars.Karma.Get
-
-function BaseWars.Karma.Set(ply, value)
-
-	if not value or not isnumber(value) then
-	
-		ErrorNoHalt("Error setting Karma, invalid value.")
-		debug.Trace()
-	
-		return
-	
+	local MODULE = MODULE
+	local function curriedFunction(...)
+		return f(MODULE, ...)
 	end
 
-	if CLIENT then
+	return curriedFunction
+
+end
+
+function MODULE:Get(ply)
+
+	return ply:GetNWString(tag)
+
+end
+PLAYER.GetKarma = Curry(MODULE.Get)
+
+if SERVER then
+
+	function MODULE:Set(ply, value)
+
+		if not value or not isnumber(value) then
+		
+			ErrorNoHalt("Error setting Karma, invalid value.")
+			debug.Trace()
+		
+			return
+		
+		end
+
+		if CLIENT then
+		
+			ErrorNoHalt("Cannot set Karma clientside.")
+		
+			return
+		
+		end
+
+	end
+	PLAYER.SetKarma = Curry(MODULE.Set)
+
+	function MODULE:Add(ply, amount)
+		
+		local Value = ply:GetKarma()
+		
+		ply:SetKarma(Value + amount)
+		
+	end
+	PLAYER.AddKarma = Curry(MODULE.Add)
 	
-		ErrorNoHalt("Cannot set Karma clientside.")
+	function MODULE:Load(ply, amount)
+		
+
+		
+	end
+	PLAYER.AddKarma = Curry(MODULE.Load)
 	
-		return
+	function MODULE:Save(ply, amount)
+
+
 	
 	end
-
-end
-PLAYER.SetKarma = BaseWars.Karma.Set
-
-function BaseWars.Karma.Add(ply, amount)
+	PLAYER.AddKarma = Curry(MODULE.Save)
 	
-	local Value = ply:GetKarma()
-	
-	ply:SetKarma(Value + amount)
+	hook.Add("PlayerAuthed", tag .. ".Load", Curry(MODULE.Load))
+	hook.Add("PlayerDisconnected", tag .. ".Save", Curry(MODULE.Save))
 	
 end
-PLAYER.AddKarma = BaseWars.Karma.Add

@@ -60,7 +60,7 @@ function MODULE:Notification(ply, text, col)
 	end
 	
 	-- Temporary for tests
-	chat.AddText(col, text)
+	BaseWars.Notify:Add(text, col)
 	
 end
 local notification = Curry(MODULE.Notification)

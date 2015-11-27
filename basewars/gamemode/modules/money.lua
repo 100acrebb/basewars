@@ -47,7 +47,7 @@ if SERVER then
 		local dirName = isPlayer(ply) and ply:UniqueID() or (isstring(ply) and ply or nil)
 		
 		if not file.IsDir(tag_escaped .. "/" .. dirName, "DATA") then file.CreateDir(tag_escaped .. "/" .. dirName) end
-		if not file.Exists(tag_escaped .. "/" .. dirName .. "/money.txt", "DATA") then file.Write(tag_escaped .. "/" .. dirName .. "/money.txt", "0") end
+		if not file.Exists(tag_escaped .. "/" .. dirName .. "/money.txt", "DATA") then file.Write(tag_escaped .. "/" .. dirName .. "/money.txt", tostring(BaseWars.Config.StartMoney)) end
 		
 		return dirName
 		
@@ -79,7 +79,7 @@ if SERVER then
 	function MODULE:SetMoney(ply, amount)
 	
 		if not isnumber(amount) or amount < 0 then amount = 0 end
-		if amount > 10^12 then amount = 10^12 end
+		if amount > 2^63 then amount = 2^63 end
 		
 		amount = math.Round(amount)
 		self:SaveMoney(ply, amount)

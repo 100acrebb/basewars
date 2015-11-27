@@ -24,8 +24,6 @@ BaseWars.ModuleLoader:Load()
 function GM:GetFallDamage(ply, speed)
 
 	local Velocity = speed - 526.5
-	
-	print(Velocity * 0.225)
 
 	return Velocity * 0.225
 	
@@ -66,7 +64,7 @@ function GM:KeyPress(ply, code)
 		
 	end
 	
-	local State = self.BaseClass:KeyPress(ply, code)
+	self.BaseClass:KeyPress(ply, code)
 
 	if BaseWars.Drugs and code == IN_JUMP and ply.DoubleJump_OnGround and not ply:IsOnGround() and ply:HasDrug("DoubleJump") then
 	
@@ -74,8 +72,6 @@ function GM:KeyPress(ply, code)
 		ply.DoubleJump_OnGround = false
 		
 	end
-	
-	--return State
 	
 end
 
@@ -91,7 +87,7 @@ function GM:EntityTakeDamage(ent, dmginfo)
 	
 		dmginfo:SetDamage(0)
 		
-		return State
+		return
 		
 	end
 	

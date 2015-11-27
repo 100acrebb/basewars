@@ -131,7 +131,7 @@ function MODULE:Paint()
 
 	old = money
 
-	money = string.Comma(money)
+	money = BaseWars.NumberFormat(money)
 
 	surface.SetDrawColor(0, 0, 0, 150)
 	surface.SetMaterial(TimeMat)

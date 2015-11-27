@@ -38,7 +38,7 @@ if SERVER then
 		
 		local Final 		= math.max(BaseWars.Config.PayDayMin, BaseRate - Thousands)
 		
-		ply:Notify(string.format(BaseWars.LANG.PayDay, Final), BASEWARS_NOTIFICATION_MONEY)
+		ply:Notify(string.format(BaseWars.LANG.PayDay, BaseWars.NumberFormat(Final)), BASEWARS_NOTIFICATION_MONEY)
 		
 		ply:GiveMoney(Final)
 

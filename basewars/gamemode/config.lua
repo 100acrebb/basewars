@@ -17,10 +17,18 @@ BaseWars.Config = {
 		},
 	},
 	
+	Notifications = {
+		LinesAmount = 11,
+		Width		= 570,
+		BackColor	= Color(30, 30, 30, 140),
+		OpenTime	= 10,
+	},
+	
 	PayDayBase 			= 500,
 	PayDayMin			= 100,
 	PayDayDivisor		= 1000,
 	PayDayRate 			= 180,
 	
+	StartMoney 			= 5000,
 	
 }
