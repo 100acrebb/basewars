@@ -36,7 +36,7 @@ if SERVER then
 		local BaseRate 		= BaseWars.Config.PayDayBase
 		local Thousands  	= math.floor(Money / BaseWars.Config.PayDayDivisor)
 		
-		local Final 		= math.max(BaseWars.Config.PayDayMin, BaseRate - Thousands)
+		local Final 		= math.max(BaseWars.Config.PayDayMin, BaseRate - Thousands + math.random(-BaseWars.Config.PayDayRandom, BaseWars.Config.PayDayRandom))
 		
 		ply:Notify(string.format(BaseWars.LANG.PayDay, BaseWars.NumberFormat(Final)), BASEWARS_NOTIFICATION_MONEY)
 		

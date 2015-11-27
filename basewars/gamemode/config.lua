@@ -25,9 +25,10 @@ BaseWars.Config = {
 	},
 	
 	PayDayBase 			= 500,
-	PayDayMin			= 100,
+	PayDayMin			= 50,
 	PayDayDivisor		= 1000,
 	PayDayRate 			= 180,
+	PayDayRandom		= 50,
 	
 	StartMoney 			= 5000,
 	
