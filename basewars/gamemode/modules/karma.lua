@@ -63,7 +63,7 @@ if SERVER then
 	function MODULE:Save(ply, amount)
 	
 		local dirName = self:Init(ply)
-		file.Write(tag_escaped .. "/" .. dirName .. "/karma.txt", amount or self:GetMoney(ply))
+		file.Write(tag_escaped .. "/" .. dirName .. "/karma.txt", amount or self:Get(ply))
 		
 	end
 	PLAYER.SaveKarma = Curry(MODULE.Save)
@@ -71,7 +71,7 @@ if SERVER then
 	function MODULE:Load(ply)
 	
 		self:Init(ply)
-		ply:SetNWString(tag, tostring(self:GetKarma(ply)))
+		ply:SetNWString(tag, tostring(self:Get(ply)))
 		
 	end
 	PLAYER.LoadKarma = Curry(MODULE.Load)
