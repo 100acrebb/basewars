@@ -24,6 +24,8 @@ BaseWars.ModuleLoader:Load()
 function GM:GetFallDamage(ply, speed)
 
 	local Velocity = speed - 526.5
+	
+	print(Velocity * 0.225)
 
 	return Velocity * 0.225
 	
@@ -73,19 +75,19 @@ function GM:KeyPress(ply, code)
 		
 	end
 	
-	return State
+	--return State
 	
 end
 
 function GM:EntityTakeDamage(ent, dmginfo)
-
+	
+	self.BaseClass:EntityTakeDamage(ent, dmginfo)
+	
 	local Inflictor = dmginfo:GetInflictor()
 	local Attacker 	= dmginfo:GetAttacker()
 	local Damage 	= dmginfo:GetDamage()
 	
-	local State = self.BaseClass:EntityTakeDamage(ent, dmginfo)
-	
-	if ent:IsPlayer() and dmginfo:IsDamageType(DMG_CRUSH) and Attacker:IsWorld() or (IsValid(Attacker) and not Attacker:CreatedByMap()) then
+	if ent:IsPlayer() and not Attacker:IsPlayer() and dmginfo:IsDamageType(DMG_CRUSH) and (Attacker:IsWorld() or (IsValid(Attacker) and not Attacker:CreatedByMap())) then
 	
 		dmginfo:SetDamage(0)
 		
@@ -189,32 +191,57 @@ function GM:EntityTakeDamage(ent, dmginfo)
 			attacker:SetHealth(attacker:GetMaxHealth())
 		end
 	end]]
-	
-	return State
-	
+
 end
+
+local SpawnClasses = {
+	["info_player_deathmatch"] = true,
+	["info_player_rebel"] = true,
+	["gmod_player_start"] = true,
+	["info_player_start"] = true,
+	["info_player_allies"] = true,
+	["info_player_axis"] = true,
+	["info_player_counterterrorist"] = true,
+	["info_player_terrorist"] = true,
+}
 
 function GM:PlayerShouldTakeDamage(ply, atk)
 	
-	local State = self.BaseClass:PlayerShouldTakeDamage(ply, atk)
-
-	--[[
-	for k, v in ipairs( ents.FindInSphere(ply:GetPos(), 500) ) do
-		if (v:GetClass() == "info_player_deathmatch" or v:GetClass() == "info_player_rebel" or v:GetClass() == "gmod_player_start" or v:GetClass() == "info_player_start" or v:GetClass() == "info_player_allies" or v:GetClass() == "info_player_axis" or v:GetClass() == "info_player_counterterrorist" or v:GetClass() == "info_player_terrorist") then
-			if IsValid(atk) and atk:IsPlayer() then Notify( atk, 4, 3, "Do not attempt to spawnkill" ) end
-			return false
-		end
-	end
-	for k, v in ipairs( ents.FindInSphere(atk:GetPos(), 500) ) do
-		if (v:GetClass() == "info_player_deathmatch" or v:GetClass() == "info_player_rebel" or v:GetClass() == "gmod_player_start" or v:GetClass() == "info_player_start" or v:GetClass() == "info_player_allies" or v:GetClass() == "info_player_axis" or v:GetClass() == "info_player_counterterrorist" or v:GetClass() == "info_player_terrorist") then
-			if IsValid(atk) and atk:IsPlayer() then Notify( atk, 4, 3, "Do not attempt to spawncamp" ) end
-			return false
-		end
-	end
-	self.BaseClass:PlayerShouldTakeDamage( ply, atk )
-	return true]]
+	if not IsValid(atk) or not atk:IsPlayer() or ply == atk then
 	
-	return State
+		return true
+		
+	end
+
+	for k, v in next, ents.FindInSphere(ply:GetPos(), 500) do
+	
+		local Class = v:GetClass()
+	
+		if SpawnClasses[Class] then
+		
+			atk:Notify(BaseWars.LANG.SpawnKill, BASEWARS_NOTIFICATION_ERROR)
+			
+			return false
+			
+		end
+		
+	end
+	
+	for k, v in next, ents.FindInSphere(atk:GetPos(), 500) do
+	
+		local Class = v:GetClass()
+	
+		if SpawnClasses[Class] then
+		
+			atk:Notify(BaseWars.LANG.SpawnCamp, BASEWARS_NOTIFICATION_ERROR)
+			
+			return false
+			
+		end
+		
+	end
+	
+	return true
 	
 end
 
@@ -229,11 +256,7 @@ local function ScanEntities()
 
 		local Class = v:GetClass()
 		
-		if 
-			Class == "info_player_deathmatch" or 		Class == "info_player_rebel" or
-			Class == "gmod_player_start" or 			Class == "info_player_start" or
-			Class == "info_player_allies" or 			Class == "info_player_axis" or
-			Class == "info_player_counterterrorist" or 	Class == "info_player_terrorist" then
+		if SpawnClasses[Class] then
 			
 			Spawns[#Spawns+1] =  v
 			
@@ -255,7 +278,7 @@ function GM:Think()
 			
 				ScanEntities()
 				
-				return
+				return State
 				
 			end
 			
@@ -306,26 +329,10 @@ end
 
 function GM:InitPostEntity()
 
-	local State = self.BaseClass:InitPostEntity()
+	self.BaseClass:InitPostEntity()
 	
 	ScanEntities()
-	
-	return State
 	
 end
 
 ScanEntities()
-
-function GM:PlayerNoClip(ply, state)
-
-	local Admin = ply:IsAdmin()
-	
-	if aowl and not Admin and not State and not ply.__is_being_physgunned then
-	
-		return true
-		
-	end
-	
-	return Admin
-	
-end

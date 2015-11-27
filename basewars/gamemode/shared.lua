@@ -13,3 +13,21 @@ BASEWARS_NOTIFICATION_GENRL = Color(255, 0, 255, 255)
 
 local PlayersCol = Color(125, 125, 125, 255)
 team.SetUp(1, "Players", PlayersCol)
+
+function GM:PlayerNoClip(ply, state)
+
+	local Admin = ply:IsAdmin()
+	
+	if SERVER then
+	
+		if aowl and not Admin and not State and not ply.__is_being_physgunned then
+		
+			return true
+			
+		end
+	
+	end
+	
+	return Admin
+	
+end
