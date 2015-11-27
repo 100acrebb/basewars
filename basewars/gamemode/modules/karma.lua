@@ -2,6 +2,7 @@ MODULE.Name 	= "Karma"
 MODULE.Author 	= "Q2F2 & Ghosty"
 
 local tag = "BaseWars.Karma"
+local tag_escaped = "BaseWars_Karma"
 local PLAYER = debug.getregistry().Player
 
 local function Curry(f)
@@ -15,34 +16,76 @@ local function Curry(f)
 
 end
 
+
+local function isPlayer(ply)
+
+	return (IsValid(ply) and ply:IsPlayer())
+	
+end
+
 function MODULE:Get(ply)
 
-	return ply:GetNWString(tag)
-
+	if SERVER then
+	
+		local dirName = self:Init(ply)
+		local karma = tonumber(file.Read(tag_escaped .. "/" .. dirName .. "/karma.txt", "DATA"))
+		return karma
+		
+	elseif CLIENT then
+	
+		return tonumber(ply:GetNWString(tag)) or 0
+		
+	end
+	
 end
 PLAYER.GetKarma = Curry(MODULE.Get)
 
 if SERVER then
 
-	function MODULE:Set(ply, value)
+	function MODULE:Init(ply)
+	
+		local dirName = isPlayer(ply) and ply:UniqueID() or (isstring(ply) and ply or nil)
+		
+		if not file.IsDir(tag_escaped .. "/" .. dirName, "DATA") then file.CreateDir(tag_escaped .. "/" .. dirName) end
+		if not file.Exists(tag_escaped .. "/" .. dirName .. "/karma.txt", "DATA") then file.Write(tag_escaped .. "/" .. dirName .. "/karma.txt", 50) end
+		
+		return dirName
+		
+	end
+	PLAYER.InitKarma = Curry(MODULE.Init)
 
-		if not value or not isnumber(value) then
+	for k, v in next, player.GetAll() do
 		
-			ErrorNoHalt("Error setting Karma, invalid value.")
-			debug.Trace()
-		
-			return
-		
-		end
+		MODULE:Init(v)
+	
+	end
 
-		if CLIENT then
+	function MODULE:Save(ply, amount)
+	
+		local dirName = self:Init(ply)
+		file.Write(tag_escaped .. "/" .. dirName .. "/karma.txt", amount or self:GetMoney(ply))
 		
-			ErrorNoHalt("Cannot set Karma clientside.")
+	end
+	PLAYER.SaveKarma = Curry(MODULE.Save)
+	
+	function MODULE:Load(ply)
+	
+		self:Init(ply)
+		ply:SetNWString(tag, tostring(self:GetKarma(ply)))
 		
-			return
-		
-		end
+	end
+	PLAYER.LoadKarma = Curry(MODULE.Load)
 
+	function MODULE:Set(ply, amount)
+
+		if not isnumber(amount) or amount < 0 then amount = 0 end
+		if amount > 100 then amount = 100 end
+		
+		amount = math.Round(amount)
+		self:Save(ply, amount)
+		
+		ply:SetNWString(tag, tostring(amount))
+		
 	end
 	PLAYER.SetKarma = Curry(MODULE.Set)
 
@@ -54,20 +97,6 @@ if SERVER then
 		
 	end
 	PLAYER.AddKarma = Curry(MODULE.Add)
-	
-	function MODULE:Load(ply, amount)
-		
-
-		
-	end
-	PLAYER.AddKarma = Curry(MODULE.Load)
-	
-	function MODULE:Save(ply, amount)
-
-
-	
-	end
-	PLAYER.AddKarma = Curry(MODULE.Save)
 	
 	hook.Add("PlayerAuthed", tag .. ".Load", Curry(MODULE.Load))
 	hook.Add("PlayerDisconnected", tag .. ".Save", Curry(MODULE.Save))

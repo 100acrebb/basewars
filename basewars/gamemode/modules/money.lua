@@ -27,7 +27,7 @@ function MODULE:GetMoney(ply)
 
 	if SERVER then
 	
-		local dirName = isPlayer(ply) and ply:UniqueID() or (isstring(ply) and ply or nil)
+		local dirName = self:InitMoney(ply)
 		local money = tonumber(file.Read(tag_escaped .. "/" .. dirName .. "/money.txt", "DATA"))
 		return money
 		
