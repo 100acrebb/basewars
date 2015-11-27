@@ -21,6 +21,14 @@ AddCSLuaFile("modules.lua")
 
 BaseWars.ModuleLoader:Load()
 
+function GM:GetFallDamage(ply, speed)
+
+	local Velocity = speed - 526.5
+
+	return Velocity * 0.225
+	
+end
+
 function GM:SetupMove(ply, move)
 
 	local State = self.BaseClass:SetupMove(ply, move)
@@ -71,11 +79,19 @@ end
 
 function GM:EntityTakeDamage(ent, dmginfo)
 
-	local inflictor = dmginfo:GetInflictor()
-	local attacker 	= dmginfo:GetAttacker()
-	local damage 	= dmginfo:GetDamage()
+	local Inflictor = dmginfo:GetInflictor()
+	local Attacker 	= dmginfo:GetAttacker()
+	local Damage 	= dmginfo:GetDamage()
 	
 	local State = self.BaseClass:EntityTakeDamage(ent, dmginfo)
+	
+	if ent:IsPlayer() and dmginfo:IsDamageType(DMG_CRUSH) and Attacker:IsWorld() or (IsValid(Attacker) and not Attacker:CreatedByMap()) then
+	
+		dmginfo:SetDamage(0)
+		
+		return State
+		
+	end
 	
 	-- What the fuck is this
 	-- Todo, rewrite this
@@ -235,7 +251,23 @@ function GM:Think()
 	
 		for k, s in next, Spawns do
 		
-			for _, v in next, ents.FindInSphere(s:GetPos(), 700) do
+			if not s or not IsValid(s) then
+			
+				ScanEntities()
+				
+				return
+				
+			end
+			
+			local Ents = ents.FindInSphere(s:GetPos(), 700)
+			
+			if #Ents < 2 then
+			
+				continue
+				
+			end
+		
+			for _, v in next, Ents do
 			
 				if v.BeingRemoved or v.NoFizz then
 				
@@ -263,6 +295,8 @@ function GM:Think()
 			end
 			
 		end
+		
+		LastThink = CurTime()
 	
 	end
 	
@@ -282,26 +316,16 @@ end
 
 ScanEntities()
 
---[[
 function GM:PlayerNoClip(ply, state)
-	return ply.OnDuty
-end
 
-hook.Add("EntityTakeDamage", "BaseWars_APROP", function(pl, dmg)
-	if (
-		pl:IsPlayer() and (dmg:GetAttacker():IsWorld() or
-		(IsValid(dmg:GetAttacker()) and not dmg:GetAttacker():CreatedByMap())) and
-		dmg:IsDamageType(DMG_CRUSH)
-	)then
-		if (
-			dmg:GetAttacker():IsVehicle() or (dmg:GetAttacker():IsPlayer() and
-			dmg:GetAttacker():InVehicle()) or pl:InVehicle()
-		) then 
-			dmg:SetDamage(dmg:GetDamage()/2)
-			return
-		end
+	local Admin = ply:IsAdmin()
+	
+	if aowl and not Admin and not State and not ply.__is_being_physgunned then
+	
+		return true
 		
-		dmg:SetDamage(0)
-		return false
 	end
-end)]]
+	
+	return Admin
+	
+end
