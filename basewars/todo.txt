@@ -1,10 +1,39 @@
 Todo:
-[X][1] - Add Money
-[X][1] - Redo HUD
-[X][1] - Events, EG PayDay
-[ ][1] - Raid Logic
-[ ][2] - Cleanup and Rewrite 'Base Classes'
-[ ][2] - Remake Entities / Cleanup Existing
-[ ][3] - Finish Karma
-[ ][3] - Rewrite the 'Spawnmenu Tab'
-[ ][3] - Faction GUI
+	Modules:
+		RAID		[X][1]
+		KARMA		[X][1]
+		AFK 		[ ][2]
+		BOUNTY		[ ][2]
+		DRUGS		[ ][3]
+		ENT LEVEL	[ ][3]
+		ENT POWER	[ ][3]
+	GUI:
+		FACTIONS	[X][1]
+		RAID HUD	[X][1]
+		ENTITIES	[ ][1]
+		KARMA HUD	[ ][2]
+	GM:
+		???			[ ][?]
+	GENERAL:
+		MOR DFNSV	[ ][4]
+			- Balistic Turrets
+			- Tesla coils
+			- Laser Turrets
+			- Electric Fence
+			- Frag Mines
+		MOR CNFG	[ ][4]
+			- DisallowRDM
+			- Level + UG requirements for everything
+			- ^ allows for pay2win "owners"
+		IMP KARMA	[ ][3]
+			- We have karma now, implement it.
+	BIG IDEAS:
+		PLAYER LVL	[ ][5]
+			- Rather than 'Level based unlocks'
+			- Have 'skill points' that you use
+			- To choose what to unlock?
+
+		[Are you sure you wish to unlock this?]
+		[Costs: 2 Faggot Points]
+			[YES]					[NO ]
+			
