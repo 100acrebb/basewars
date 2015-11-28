@@ -38,11 +38,25 @@ do
 	--IncludeCS("shared/money.lua")
 	
 	IncludeCS("shared/cppi.lua")
+	if BaseWars.Config.CustomChat then
+		IncludeCS("shared/chitchat.lua")
+	end
+	
+	if BaseWars.Config.ExtraStuff then
+		IncludeCS("shared/playuhr.lua")
+		IncludeCS("shared/customnick.lua")
+		IncludeCS("shared/hostnamefix.lua")
+	end
 
 end
 
 do
 
+	if BaseWars.Config.CustomChat then
+		LoadFileCS("client/qchat.lua")
+	end
+	
+	LoadFileCS("client/spawnmenu.lua")
 	--LoadFileCS("client/hud.lua")
 	--LoadFileCS("client/playtime_money.lua")
 
