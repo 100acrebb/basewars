@@ -26,6 +26,19 @@ function BaseWars.UTIL.Log(...)
 	
 end
 
+function BaseWars.UTIL.TimerAdv(name, spacing, reps, tickf, endf)
+
+	timer.Create(name, spacing * reps, 1, endf)
+	timer.Create(name .. ".Tick", spacing, reps, tickf)
+	
+end
+
+function BaseWars.UTIL.TimerAdvDestroy(name)
+
+	timer.Destroy(name)
+	timer.Destroy(name .. ".Tick")
+	
+end
 
 local NumTable = {
 	[5] = {10^6 , "Million"},

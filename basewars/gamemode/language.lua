@@ -12,4 +12,13 @@ BaseWars.LANG = {
 	DontBuildSpawn			= "Do not build props around spawn.",
 	SpawnKill				= "Do not attempt to spawnkill.",
 	SpawnCamp				= "Do not attempt to spawncamp.",
+	
+	RaidOngoing				= "There is allready a raid ongoing!",
+	RaidSelfUnraidable		= "You are not raidable youself!",
+	RaidTargetUnraidable	= "Your target is not raidable!",
+	RaidOver				= "The raid between %s and %s has ENDED!",
+	RaidStart				= "Raid started between %s and %s!",
+	RaidTargNoFac			= "You cannot raid a factionless player as a faction!",
+	RaidSelfNoFac			= "You cannot raid a faction as a factionless player!",
+	RaidNoFaction			= "Cannot use faction functions during a raid!",
 }

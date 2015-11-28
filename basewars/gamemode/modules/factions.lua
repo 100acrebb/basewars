@@ -107,6 +107,16 @@ function MODULE:Set(ply, value, password, force)
 		
 	end
 	
+	local Call, Error = hook.Run("CanJoinFaction", ply, value, password)
+	
+	if Call == false then
+	
+		ply:Notify(Error, BASEWARS_NOTIFICATION_ERROR)
+		
+		return
+		
+	end
+	
 	if not force and ply:InFaction(nil, true) then
 	
 		ply:Notify(BaseWars.LANG.FactionCantLeaveLeader, BASEWARS_NOTIFICATION_ERROR)
@@ -156,6 +166,16 @@ function MODULE:Leave(ply, disband, forcedisband)
 		return
 		
 	end
+	
+	local Call, Error = hook.Run("CanLeaveFaction", ply, disband)
+	
+	if Call == false then
+	
+		ply:Notify(Error, BASEWARS_NOTIFICATION_ERROR)
+		
+		return
+		
+	end
 
 	if not forcedisband and disband and (Faction.leader ~= ply:SteamID() and not ply:IsAdmin()) then
 	
@@ -177,6 +197,8 @@ function MODULE:Leave(ply, disband, forcedisband)
 			
 		end
 		
+		ply:SetNWString(tag, "")
+		
 		Table[Fac] = nil
 		
 	else
@@ -192,6 +214,14 @@ function MODULE:Leave(ply, disband, forcedisband)
 		ply:SetNWString(tag, "")
 		
 		Table[Fac].members[ply:SteamID()] = nil
+		
+		if table.Count(Table[Fac].members) < 1 then
+		
+			BaseWars.UTIL.Log("Faction disband for ", Fac, ". All members left. <Leader must have D/C'ed>")
+		
+			Table[Fac] = nil
+			
+		end
 		
 	end
 
@@ -216,6 +246,29 @@ function MODULE:InFaction(ply, name, leader)
 	
 end
 PLAYER.InFaction = Curry(MODULE.InFaction)
+
+function MODULE:FactionExist(name)
+
+	if CLIENT then
+		
+		ErrorNoHalt("Error checking Faction, cannot check clienside.")
+		debug.Trace()
+		
+		return
+		
+	end
+
+	local Table = BaseWars.Factions.FactionTable
+	
+	if Table[name] then
+		
+		return true
+		
+	end
+	
+	return false
+	
+end
 
 function MODULE:Clean(ply)
 
@@ -261,7 +314,17 @@ function MODULE:Create(ply, name, password, color)
 		
 	end
 	
-	BaseWars.UTIL.Log("Faction created for ", name, ". Leader: ", ply:Nick(), ". Password: ", (password and password ~= "" or "<NONE>"), ".")
+	local Call, Error = hook.Run("CanCreateFaction", ply, name, password)
+	
+	if Call == false then
+	
+		ply:Notify(Error, BASEWARS_NOTIFICATION_ERROR)
+		
+		return
+		
+	end
+	
+	BaseWars.UTIL.Log("Faction created for ", name, ". Leader: ", ply:Nick(), ". Password: ", (password ~= "" and password or "<NONE>"), ".")
 	
 	Table[name] = {
 		leader = ply:SteamID(),

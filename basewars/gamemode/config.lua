@@ -24,6 +24,10 @@ BaseWars.Config = {
 		OpenTime	= 10,
 	},
 	
+	Raid = {
+		Time = 360,
+	},
+	
 	PayDayBase 			= 500,
 	PayDayMin			= 50,
 	PayDayDivisor		= 1000,
@@ -32,4 +36,6 @@ BaseWars.Config = {
 	
 	StartMoney 			= 5000,
 	
+	CustomChat			= true,
+	ExtraStuff			= true,
 }

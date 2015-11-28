@@ -14,3 +14,357 @@ local function Curry(f)
 	return curriedFunction
 
 end
+
+if SERVER then
+
+	util.AddNetworkString(tag)
+	
+else
+
+	surface.CreateFont(tag, {
+		font = "Roboto",
+		size = 30,
+		weight = 800,
+		antialias = true
+	})
+	
+end
+	
+function MODULE:HandleNetMessage(len, ply)
+
+	local Mode = net.ReadUInt(2)
+	
+	if CLIENT then
+	
+		local ply = LocalPlayer()
+	
+		if Mode == 0 then
+		
+			local time 		= net.ReadInt(16)
+			local versus 	= net.ReadEntity()
+			local versus2 	= net.ReadEntity()
+			local faction	= net.ReadBool()
+		
+			self:CLIENT_SetupRaid(time, versus, versus2, faction)
+		
+		elseif Mode == 1 then
+		
+			self:EndRaid()
+			
+		end
+	
+	else
+	
+		if Mode == 0 then
+		
+			local versus 	= net.ReadEntity()
+			
+			self:Start(ply, versus)
+			
+		end
+	
+	end
+	
+end
+net.Receive(tag, Curry(MODULE.HandleNetMessage))
+
+local TimeRemaining = 0
+local IsFaction		= false
+local Participant1	= nil
+local Participant2	= nil
+local P1Faction		= nil
+local P2Faction		= nil
+
+function MODULE:CheckForNULL()
+
+	if not Participant1 or not Participant2 or not IsValid(Participant1) or not IsValid(Participant2) then
+	
+		return false
+		
+	end
+	
+	if IsFaction and (not BaseWars.Factions:FactionExist(P1Faction) or not BaseWars.Factions:FactionExist(P2Faction)) then
+	
+		return false
+		
+	end
+	
+	return true
+	
+end
+
+function MODULE:IsOnGoing()
+
+	return TimeRemaining > 0 and TimeRemaining
+
+end
+
+function MODULE:PlayerInvolved(ply)
+
+	if not self:IsOnGoing() then
+	
+		return false
+		
+	end
+	
+	if Participant1 == ply or Participant2 == ply then
+	
+		return true
+		
+	end
+	
+	if IsFaction and (ply:InFaction(P1Faction) or ply:InFaction(P2Faction)) then
+	
+		return true
+		
+	end
+	
+	return false
+	
+end
+PLAYER.InRaid = Curry(MODULE.PlayerInvolved)
+
+function MODULE:CheckRaidable(ply)
+
+	--hook.Run("CheckRaidableFoundRaidable", ply, ent) ???
+	-- Check cooldown
+
+	local Call, Message = hook.Run("PlayerIsRaidable", ply)
+	
+	if Call == false then
+	
+		return false
+		
+	end
+
+	return true
+	
+end
+PLAYER.Raidable = Curry(MODULE.CheckRaidable)
+
+function MODULE:TimerTick()
+
+	if SERVER then
+	
+		if not self:CheckForNULL() then
+		
+			self:EndRaid()
+			
+			return
+			
+		end
+	
+	end
+	
+	if TimeRemaining > 0 then
+	
+		TimeRemaining = TimeRemaining - 1
+		
+	end
+	
+end
+local tick = Curry(MODULE.TimerTick)
+
+function MODULE:TimerEnd()
+
+	self:EndRaid()
+	
+end
+local fend = Curry(MODULE.TimerEnd)
+
+function MODULE:Start(ply, target)
+
+	if not target or not target:IsPlayer() then
+	
+		ErrorNoHalt("RaidStart, invalid target.")
+		debug.Trace()
+		
+		return
+		
+	end
+	
+	if CLIENT then
+	
+		net.Start(tag)
+			net.WriteUInt(0, 2)
+			net.WriteEntity(target)
+		net.SendToServer()
+		
+		return
+	
+	end
+
+	if self:IsOnGoing() then
+	
+		ply:Notify(BaseWars.LANG.RaidOngoing, BASEWARS_NOTIFICATION_RAID)
+		
+		return
+		
+	end
+
+	if not self:CheckRaidable(ply) then
+	
+		ply:Notify(BaseWars.LANG.RaidSelfUnraidable, BASEWARS_NOTIFICATION_RAID)
+		
+		return
+		
+	end
+	
+	if not self:CheckRaidable(target) then
+	
+		ply:Notify(BaseWars.LANG.RaidTargetUnraidable, BASEWARS_NOTIFICATION_RAID)
+		
+		return
+		
+	end
+	
+	if ply:InFaction() and not target:InFaction() then
+	
+		ply:Notify(BaseWars.LANG.RaidTargNoFac, BASEWARS_NOTIFICATION_RAID)
+	
+		return
+		
+	end
+	
+	if target:InFaction() and not ply:InFaction() then
+	
+		ply:Notify(BaseWars.LANG.RaidSelfNoFac, BASEWARS_NOTIFICATION_RAID)
+	
+		return
+		
+	end
+	
+	IsFaction = ply:InFaction()
+
+	hook.Run("RaidStart")
+	
+	Participant1 = ply
+	Participant2 = target
+	
+	P1Faction = Participant1:GetFaction()
+	P2Faction = Participant2:GetFaction()
+	
+	TimeRemaining = BaseWars.Config.Raid.Time
+	
+	net.Start(tag)
+		net.WriteUInt(0, 2)
+		net.WriteInt(TimeRemaining, 16)
+		net.WriteEntity(ply)
+		net.WriteEntity(target)
+		net.WriteBool(IsFaction)
+	net.Broadcast()
+	
+	BaseWars.UTIL.TimerAdv(tag, 1, BaseWars.Config.Raid.Time, tick, fend)
+	
+	local name1, name2 = self:GetVersus()
+	
+	BaseWars.Util_Player:NotificationAll(string.format(BaseWars.LANG.RaidStart, name1, name2), BASEWARS_NOTIFICATION_RAID)
+
+end
+PLAYER.StartRaid = Curry(MODULE.Start)
+
+function MODULE:GetVersus()
+
+	if not self:CheckForNULL() then
+	
+		return "<NONE>", "<NONE>"
+		
+	end
+
+	local name1, name2
+
+	if IsFaction then
+	
+		name1 = Participant1:GetFaction():Trim():sub(1, 12)
+		name2 = Participant2:GetFaction():Trim():sub(1, 12)
+		
+	else
+	
+		name1 = Participant1:Nick():Trim():sub(1, 12)
+		name2 = Participant2:Nick():Trim():sub(1, 12)
+		
+	end
+	
+	return name1, name2
+
+end
+
+function MODULE:EndRaid()
+
+	if not self:IsOnGoing() then return end
+	
+	hook.Run("RaidEnd")
+	
+	if SERVER then
+	
+		net.Start(tag)
+			net.WriteUInt(1, 2)
+		net.Broadcast()
+		
+		local name1, name2 = self:GetVersus()
+		BaseWars.Util_Player:NotificationAll(string.format(BaseWars.LANG.RaidOver, name1, name2), BASEWARS_NOTIFICATION_RAID)
+		
+	end
+
+	TimeRemaining = 0
+	Participant1 = nil
+	Participant2 = nil
+	
+	BaseWars.UTIL.TimerAdvDestroy(tag)
+
+end
+
+local PaintVS = ""
+
+function MODULE:CLIENT_SetupRaid(t, versus, versus2, faction)
+
+	hook.Run("RaidStart")
+
+	TimeRemaining 	= t
+	IsFaction		= faction
+	Participant1	= versus
+	Participant2	= versus2
+	
+	local name1, name2 = self:GetVersus()
+	
+	P1Faction = Participant1:GetFaction()
+	P2Faction = Participant2:GetFaction()
+	
+	PaintVS = name1 .. " vs " .. name2
+	
+	--chat.AddText("STARTING RAID TIMER CLIENTSIDE", tostring(TimeRemaining))
+	
+	BaseWars.UTIL.TimerAdv(tag, 1, BaseWars.Config.Raid.Time, tick, function() end)
+
+end
+
+function MODULE:Paint()
+
+	if not self:IsOnGoing() then return end
+	
+	surface.SetTextColor(color_white)
+
+	surface.SetFont(tag)
+	local w, h = surface.GetTextSize(PaintVS)
+	
+	surface.SetTextPos(ScrW() / 2 - w / 2, ScrH() - h - 1)
+	surface.DrawText(PaintVS)
+	
+	local text = tostring(TimeRemaining) .. "s Remaining"
+	
+	local w2, h2 = surface.GetTextSize(text)
+	
+	surface.SetTextPos(ScrW() / 2 - w2 / 2, ScrH() - h - h2 - 2)
+	surface.DrawText(text)
+	
+end
+hook.Add("HUDPaint", tag .. ".Paint", Curry(MODULE.Paint))
+
+local function FalseInRaid(ply)
+
+	if ply:InRaid() then return false, BaseWars.LANG.RaidNoFaction end
+	
+end
+hook.Add("CanCreateFaction", tag, FalseInRaid)
+hook.Add("CanLeaveFaction", tag, FalseInRaid)
+hook.Add("CanJoinFaction", tag, FalseInRaid)
