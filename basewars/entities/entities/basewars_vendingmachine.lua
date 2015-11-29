@@ -65,8 +65,6 @@ if SERVER then
 
 		self:PhysWake()
 
-		self:Activate()
-
 		self:SetUseType(SIMPLE_USE)
 
 		self:Init()
@@ -114,12 +112,23 @@ if SERVER then
 
 			if activator:GetEyeTrace().Entity ~= self then return end
 
-			local hisx, myx = (math.abs(activator:GetAngles().y) + 180) % 360, math.abs(self:GetAngles().y)
+			local fw = self:GetAngles():Forward() * 100
+			fw.z = 0
 
-			--print(hisx,myx)
+			local trace = {}
+			local t = {}
+			t.start = self:GetPos()
+			t.endpos = self:GetPos() + fw
+			t.maxs = Vector(16, 16, 16)
+			t.minxs = Vector(-16, -16, -16)
+			t.filter = self
+			t.ignoreworld = true
+			t.output = trace
 
-			if not (hisx >= myx - 50 and hisx <= myx + 50) then return end
+			util.TraceHull(t)
 
+			if not trace.Hit then return end
+			if not IsValid(trace.Entity) then return end
 
 			if self.Busy or activator:GetMoney() < self.Items.soda.Price then
 				
@@ -132,8 +141,6 @@ if SERVER then
 			self.Busy = true
 			self.Time = CurTime()
 			self.Item = "soda"
-
-			activator:Freeze(true)
 
 		end
 
@@ -162,10 +169,17 @@ if SERVER then
 
 		end
 
+		if self.Time and self.Time >= CurTime() + 4 then
+
+			self.Busy = nil
+		
+		end		
+
+
 	end
 
 else
 
-	-- Nothing yet
+	-- Nothing yet.
 
 end

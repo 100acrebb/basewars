@@ -424,7 +424,7 @@ if SERVER then
 
 	end)
 
-	hook.Add("PlayerSpawnObject", "BaseWars.Disallow_Spawning", function(ply)
+	local function Disallow_Spawning(ply)
 
 		if not ply:IsAdmin()  then
 			
@@ -433,7 +433,11 @@ if SERVER then
 
 		end
 
-	end)
+	end
+
+	hook.Add("PlayerSpawnObject", "BaseWars.Disallow_Spawning",Disallow_Spawning)
+	hook.Add("PlayerSpawnSENT", "BaseWars.Disallow_Spawning",Disallow_Spawning)
+	hook.Add("PlayerSpawnVehicle", "BaseWars.Disallow_Spawning",Disallow_Spawning)
 
 return end
 
@@ -700,96 +704,107 @@ local Panels = {
 
 			local cat = cats:Add("Create faction")
 
-			local cont = vgui.Create("DListLayout")
-			cont:Dock(FILL)
-			cont:DockPadding(8, 8, 8, 8)
+			local function make()
 
-			local fnLabel = cont:Add("DLabel")
+				local cont = vgui.Create("DListLayout")
+				cont:Dock(FILL)
+				cont:DockPadding(8, 8, 8, 8)
 
-			fnLabel:SetDark(true)
-			fnLabel:SetText("Faction name")
-			fnLabel:SizeToContents()
+				local fnLabel = cont:Add("DLabel")
 
-			local fnTEntry = cont:Add("BaseWars.ErrorCheckTextEntry")
+				fnLabel:SetDark(true)
+				fnLabel:SetText("Faction name")
+				fnLabel:SizeToContents()
 
-			function fnTEntry:OnChange()
+				local fnTEntry = cont:Add("BaseWars.ErrorCheckTextEntry")
 
-				local text = self:GetValue()
+				function fnTEntry:OnChange()
 
-				if not text then return end
+					local text = self:GetValue()
 
-				local errored = false
+					if not text then return end
 
-				text = text:Trim()
+					local errored = false
 
-				if #text <= 3 or #text > 20 then errored = true end
-				if text == "" then errored = false end
+					text = text:Trim()
 
-				self.Erroring = errored
+					if #text <= 3 or #text > 20 then errored = true end
+					if text == "" then errored = false end
+
+					self.Erroring = errored
+
+				end
+
+				function fnTEntry:CheckError()
+
+					return self.Erroring
+
+				end
+
+				local pwLabel = cont:Add("DLabel")
+
+				pwLabel:SetDark(true)
+				pwLabel:SetText("Password (optional)")
+				pwLabel:SizeToContents()
+
+				local pwTEntry = cont:Add("BaseWars.ErrorCheckTextEntry")
+
+				pwTEntry.OnChange = fnTEntry.OnChange
+
+				function pwTEntry:CheckError()
+
+					return self.Erroring
+
+				end
+
+				local buttonpar = cont:Add("DPanel")
+				buttonpar:SetTall(24)
+
+				function buttonpar:Paint() end
+
+				local OKButton = buttonpar:Add("DButton")
+
+				OKButton:SetSize(64, 24)
+				OKButton:SetText("Create")
+
+				function OKButton:DoClick()
+
+					if fnTEntry:CheckError() or pwTEntry:CheckError() then return end
+
+					local name, pw = fnTEntry:GetValue():Trim(), pwTEntry:GetValue():Trim()
+
+					if #pw == 0 then pw = nil end
+
+					LocalPlayer():CreateFaction(name, pw)
+
+					fnTEntry:SetValue("")
+					pwTEntry:SetValue("")
+
+					LocalPlayer():Notify("Attempting to create faction \"" .. name .. "\" Password: " .. (pw and ("\"" .. pw .. "\"" ) or "no"), 
+					Color(0, 255, 0))
+
+				end
+
+				function OKButton:Think()
+
+					if fnTEntry:CheckError() or pwTEntry:CheckError() then self:SetDisabled(true) return else self:SetDisabled(false) end
+
+					local name, pw = fnTEntry:GetValue():Trim(), pwTEntry:GetValue():Trim()
+
+					if name == "" then self:SetDisabled(true) else self:SetDisabled(false) end
+
+				end
+
+				if cat.Contents then
+					cat.Contents:Remove()
+					cat.Contents = nil
+				end
+				cat:SetContents(cont)
 
 			end
 
-			function fnTEntry:CheckError()
+			function cat:OnToggle() make() end
 
-				return self.Erroring
-
-			end
-
-			local pwLabel = cont:Add("DLabel")
-
-			pwLabel:SetDark(true)
-			pwLabel:SetText("Password (optional)")
-			pwLabel:SizeToContents()
-
-			local pwTEntry = cont:Add("BaseWars.ErrorCheckTextEntry")
-
-			pwTEntry.OnChange = fnTEntry.OnChange
-
-			function pwTEntry:CheckError()
-
-				return self.Erroring
-
-			end
-
-			local buttonpar = cont:Add("DPanel")
-			buttonpar:SetTall(24)
-
-			function buttonpar:Paint() end
-
-			local OKButton = buttonpar:Add("DButton")
-
-			OKButton:SetSize(64, 24)
-			OKButton:SetText("Create")
-
-			function OKButton:DoClick()
-
-				if fnTEntry:CheckError() or pwTEntry:CheckError() then return end
-
-				local name, pw = fnTEntry:GetValue():Trim(), pwTEntry:GetValue():Trim()
-
-				if #pw == 0 then pw = nil end
-
-				LocalPlayer():CreateFaction(name, pw)
-
-				fnTEntry:SetValue("")
-				pwTEntry:SetValue("")
-
-				LocalPlayer():Notify("Attempting to create faction \"" .. name .. "\" Password: " .. (pw and ("\"" .. pw .. "\"" ) or "no"), 
-				Color(0, 255, 0))
-
-			end
-
-			function OKButton:Think()
-
-				if fnTEntry:CheckError() or pwTEntry:CheckError() then self:SetDisabled(true) return else self:SetDisabled(false) end
-
-				local name, pw = fnTEntry:GetValue():Trim(), pwTEntry:GetValue():Trim()
-
-				if name == "" then self:SetDisabled(true) else self:SetDisabled(false) end
-
-			end
-
-			cat:SetContents(cont)
 			cat:SetExpanded(false)
 
 		end
@@ -798,91 +813,104 @@ local Panels = {
 
 			local cat = cats:Add("Join faction")
 
-			local cont = vgui.Create("DListLayout")
-			cont:Dock(FILL)
-			cont:DockPadding(8, 8, 8, 8)
+			local function make()
 
-			local fnLabel = cont:Add("DLabel")
+				local cont = vgui.Create("DListLayout")
+				cont:Dock(FILL)
+				cont:DockPadding(8, 8, 8, 8)
 
-			fnLabel:SetDark(true)
-			fnLabel:SetText("Faction name")
-			fnLabel:SizeToContents()
+				local fnLabel = cont:Add("DLabel")
 
-			local fnTEntry = cont:Add("BaseWars.ErrorCheckTextEntry")
+				fnLabel:SetDark(true)
+				fnLabel:SetText("Faction name")
+				fnLabel:SizeToContents()
 
-			function fnTEntry:OnChange()
+				local fnTEntry = cont:Add("BaseWars.ErrorCheckTextEntry")
 
-				local text = self:GetValue()
+				function fnTEntry:OnChange()
 
-				if not text then return end
+					local text = self:GetValue()
 
-				local errored = false
+					if not text then return end
 
-				text = text:Trim()
+					local errored = false
 
-				if #text <= 3 or #text > 20 then errored = true end
-				if text == "" then errored = false end
+					text = text:Trim()
 
-				self.Erroring = errored
+					if #text <= 3 or #text > 20 then errored = true end
+					if text == "" then errored = false end
+
+					self.Erroring = errored
+
+				end
+
+				function fnTEntry:CheckError()
+
+					return self.Erroring
+
+				end
+
+				local pwLabel = cont:Add("DLabel")
+
+				pwLabel:SetDark(true)
+				pwLabel:SetText("Password (optional)")
+				pwLabel:SizeToContents()
+
+				local pwTEntry = cont:Add("BaseWars.ErrorCheckTextEntry")
+
+				pwTEntry.OnChange = fnTEntry.OnChange
+
+				function pwTEntry:CheckError()
+
+					return self.Erroring
+
+				end
+
+				local buttonpar = cont:Add("DPanel")
+				buttonpar:SetTall(24)
+
+				function buttonpar:Paint() end
+
+				local OKButton = buttonpar:Add("DButton")
+
+				OKButton:SetSize(64, 24)
+				OKButton:SetText("Join")
+
+				function OKButton:DoClick()
+
+					if fnTEntry:CheckError() or pwTEntry:CheckError() then return end
+
+					local name, pw = fnTEntry:GetValue():Trim(), pwTEntry:GetValue():Trim()
+
+					LocalPlayer():JoinFaction(name, pw)
+
+					fnTEntry:SetValue("")
+					pwTEntry:SetValue("")
+
+				end
+
+				function OKButton:Think()
+
+					if fnTEntry:CheckError() or pwTEntry:CheckError() then self:SetDisabled(true) return else self:SetDisabled(false) end
+
+					local name, pw = fnTEntry:GetValue():Trim(), pwTEntry:GetValue():Trim()
+
+					if name == "" then self:SetDisabled(true) else self:SetDisabled(false) end
+
+				end
+
+				if cat.Contents then
+					cat.Contents:Remove()
+					cat.Contents = nil
+				end
+				cat:SetContents(cont)
 
 			end
 
-			function fnTEntry:CheckError()
+			function cat:OnToggle() make() end
 
-				return self.Erroring
+			make()
 
-			end
-
-			local pwLabel = cont:Add("DLabel")
-
-			pwLabel:SetDark(true)
-			pwLabel:SetText("Password (optional)")
-			pwLabel:SizeToContents()
-
-			local pwTEntry = cont:Add("BaseWars.ErrorCheckTextEntry")
-
-			pwTEntry.OnChange = fnTEntry.OnChange
-
-			function pwTEntry:CheckError()
-
-				return self.Erroring
-
-			end
-
-			local buttonpar = cont:Add("DPanel")
-			buttonpar:SetTall(24)
-
-			function buttonpar:Paint() end
-
-			local OKButton = buttonpar:Add("DButton")
-
-			OKButton:SetSize(64, 24)
-			OKButton:SetText("Join")
-
-			function OKButton:DoClick()
-
-				if fnTEntry:CheckError() or pwTEntry:CheckError() then return end
-
-				local name, pw = fnTEntry:GetValue():Trim(), pwTEntry:GetValue():Trim()
-
-				LocalPlayer():JoinFaction(name, pw)
-
-				fnTEntry:SetValue("")
-				pwTEntry:SetValue("")
-
-			end
-
-			function OKButton:Think()
-
-				if fnTEntry:CheckError() or pwTEntry:CheckError() then self:SetDisabled(true) return else self:SetDisabled(false) end
-
-				local name, pw = fnTEntry:GetValue():Trim(), pwTEntry:GetValue():Trim()
-
-				if name == "" then self:SetDisabled(true) else self:SetDisabled(false) end
-
-			end
-
-			cat:SetContents(cont)
 			cat:SetExpanded(true)
 
 		end
@@ -891,57 +919,68 @@ local Panels = {
 
 			local cat = cats:Add("Leave faction")
 
-			local cont = vgui.Create("DListLayout")
-			cont:Dock(FILL)
-			cont:DockPadding(8, 8, 8, 8)
+			local function make()
 
-			local fnLabel = cont:Add("DLabel")
+				local cont = vgui.Create("DListLayout")
+				cont:Dock(FILL)
+				cont:DockPadding(8, 8, 8, 8)
 
-			fnLabel:SetDark(true)
-			function fnLabel:Think()
-				local fac = LocalPlayer():GetFaction()
-				self:SetText("Your faction: " .. (#fac > 0 and fac or " (NONE)"))
+				local fnLabel = cont:Add("DLabel")
+
+				fnLabel:SetDark(true)
+				function fnLabel:Think()
+					local fac = LocalPlayer():GetFaction()
+					self:SetText("Your faction: " .. (#fac > 0 and fac or " (NONE)"))
+				end
+				fnLabel:SizeToContents()
+
+				local pwLabel = cont:Add("DLabel")
+
+				pwLabel:SetDark(true)
+				function pwLabel:Think()
+					local fac = LocalPlayer():GetFaction()
+					self:SetText(#fac > 0 and "Are you sure you want to leave your faction?\nIf you are the owner of it, you will disband it." or "You don't have a faction yet!")
+					self:SizeToContents()
+				end
+				
+
+				local buttonpar = cont:Add("DPanel")
+
+				buttonpar:SetTall(24)
+
+				function buttonpar:Paint() end
+
+				local OKButton = buttonpar:Add("DButton")
+
+				OKButton:SetSize(64, 24)
+				OKButton:SetText("Leave")
+
+				function OKButton:DoClick()
+
+					local fac = LocalPlayer():GetFaction()
+					if #fac == 0 then return end
+
+					LocalPlayer():LeaveFaction(true)
+
+				end
+
+				function OKButton:Think()
+
+					local fac = LocalPlayer():GetFaction()
+					if #fac == 0 then self:SetDisabled(true) return else self:SetDisabled(false) end
+
+				end
+
+				if cat.Contents then
+					cat.Contents:Remove()
+					cat.Contents = nil
+				end
+				cat:SetContents(cont)
+
 			end
-			fnLabel:SizeToContents()
 
-			local pwLabel = cont:Add("DLabel")
+			function cat:OnToggle() make() end
 
-			pwLabel:SetDark(true)
-			function pwLabel:Think()
-				local fac = LocalPlayer():GetFaction()
-				self:SetText(#fac > 0 and "Are you sure you want to leave your faction?\nIf you are the owner of it, you will disband it." or "You don't have a faction yet!")
-				self:SizeToContents()
-			end
-			
-
-			local buttonpar = cont:Add("DPanel")
-
-			buttonpar:SetTall(24)
-
-			function buttonpar:Paint() end
-
-			local OKButton = buttonpar:Add("DButton")
-
-			OKButton:SetSize(64, 24)
-			OKButton:SetText("Leave")
-
-			function OKButton:DoClick()
-
-				local fac = LocalPlayer():GetFaction()
-				if #fac == 0 then return end
-
-				LocalPlayer():LeaveFaction(true)
-
-			end
-
-			function OKButton:Think()
-
-				local fac = LocalPlayer():GetFaction()
-				if #fac == 0 then self:SetDisabled(true) return else self:SetDisabled(false) end
-
-			end
-
-			cat:SetContents(cont)
 			cat:SetExpanded(false)
 
 		end	
