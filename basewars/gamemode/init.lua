@@ -57,12 +57,6 @@ end
 
 function GM:KeyPress(ply, code)
 
-	if BaseWars.AFK then
-	
-		ply:ClearAFK()
-		
-	end
-	
 	self.BaseClass:KeyPress(ply, code)
 
 	if BaseWars.Drugs and code == IN_JUMP and ply.DoubleJump_OnGround and not ply:IsOnGround() and ply:HasDrug("DoubleJump") then
