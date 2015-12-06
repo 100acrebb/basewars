@@ -48,14 +48,17 @@ function GM:SetupMove(ply, move)
 	
 end
 
+local Jump = Sound("npc/zombie/claw_miss1.wav")
 function GM:KeyPress(ply, code)
 
 	self.BaseClass:KeyPress(ply, code)
 
-	if BaseWars.Drugs and code == IN_JUMP and ply.DoubleJump_OnGround and not ply:IsOnGround() and ply:HasDrug("DoubleJump") then
+	if BaseWars.Drugs and code == IN_JUMP and ply.DoubleJump_OnGround and not ply:IsOnGround() and ply:HasDrug("DoubleJump") and ply:GetMoveType() == MOVETYPE_WALK then
 	
 		ply:SetVelocity(ply:GetForward() * 100 + BaseWars.Config.Drugs.DoubleJump.JumpHeight)
 		ply.DoubleJump_OnGround = false
+		
+		ply:EmitSound(Jump)
 		
 	end
 	

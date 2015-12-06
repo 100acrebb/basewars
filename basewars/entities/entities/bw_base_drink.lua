@@ -1,5 +1,3 @@
---easylua.StartEntity("bw_base_drink")
-
 ENT.Base = "base_gmodentity"
 ENT.Type = "anim"
 
@@ -37,6 +35,10 @@ if SERVER then
 		self:Init()
 
 	end
+	
+	function ENT:OnDrink(ply)
+	
+	end
 
 	function ENT:Drink(ply)
 
@@ -47,7 +49,9 @@ if SERVER then
 			ply:SetHealth(math.Clamp(ply:Health() + self.HealAmount, self.MinHealth, self.MaxHealth))
 
 		end
-
+		
+		self:OnDrink(ply)
+		
 		self:Remove()
 
 	end
@@ -71,5 +75,3 @@ else
 	end
 
 end
-
---easylua.EndEntity()

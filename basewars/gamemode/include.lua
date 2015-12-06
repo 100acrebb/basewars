@@ -32,7 +32,7 @@ do
 	IncludeCS("language.lua")
 	IncludeCS("config.lua")
 	
-	LoadFileCS("shared/spawnmenu.lua")
+	IncludeCS("shared/spawnmenu.lua")
 	
 	--IncludeCS("shared/player_util.lua")
 	--IncludeCS("shared/karma.lua")

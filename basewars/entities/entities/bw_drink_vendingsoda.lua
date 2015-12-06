@@ -1,10 +1,12 @@
-ENT.Base = "basewars_base_drink"
+ENT.Base = "bw_base_drink"
 ENT.HealAmount = 5
 ENT.Random = false
 
 ENT.Model = "models/props_junk/PopCan01a.mdl"
 
 if SERVER then
+
+	AddCSLuaFile()
 
 	function ENT:Init()
 
