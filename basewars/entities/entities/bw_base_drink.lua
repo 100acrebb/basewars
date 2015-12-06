@@ -1,3 +1,5 @@
+--easylua.StartEntity("bw_base_drink")
+
 ENT.Base = "base_gmodentity"
 ENT.Type = "anim"
 
@@ -14,6 +16,8 @@ function ENT:Init()
 end
 
 if SERVER then
+
+	AddCSLuaFile()
 	
 	function ENT:Initialize()
 
@@ -67,3 +71,5 @@ else
 	end
 
 end
+
+--easylua.EndEntity()

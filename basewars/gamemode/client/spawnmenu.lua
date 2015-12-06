@@ -63,7 +63,7 @@ SpawnList.Models = {
 		["Beds and Mattresses"] = {
 			["Metal bedframe"]		= M"models/props_c17/FurnitureBed001a.mdl",
 			["Prison bedframe"]		= M"models/props_wasteland/prison_bedframe001b.mdl",
-			["Mattress"]			= M("models/props_c17/FurnitureMattress001a.mdl",0,"prop_ragdoll"),
+			["Mattress"]			= M("models/props_c17/FurnitureMattress001a.mdl",50,"prop_ragdoll"),
 		},
 
 		["Chairs and Benches"] = {
@@ -929,8 +929,9 @@ local Panels = {
 
 				fnLabel:SetDark(true)
 				function fnLabel:Think()
+					local inf = LocalPlayer():InFaction()
 					local fac = LocalPlayer():GetFaction()
-					self:SetText("Your faction: " .. (#fac > 0 and fac or " (NONE)"))
+					self:SetText("Your faction: " .. (infac and fac or " <NONE>"))
 				end
 				fnLabel:SizeToContents()
 
@@ -957,8 +958,8 @@ local Panels = {
 
 				function OKButton:DoClick()
 
-					local fac = LocalPlayer():GetFaction()
-					if #fac == 0 then return end
+					local infac = LocalPlayer():InFaction()
+					if not infac then return end
 
 					LocalPlayer():LeaveFaction(true)
 
@@ -966,8 +967,8 @@ local Panels = {
 
 				function OKButton:Think()
 
-					local fac = LocalPlayer():GetFaction()
-					if #fac == 0 then self:SetDisabled(true) return else self:SetDisabled(false) end
+					local infac = LocalPlayer():InFaction()
+					if not infac then self:SetDisabled(true) else self:SetDisabled(false) end
 
 				end
 
@@ -982,6 +983,211 @@ local Panels = {
 			function cat:OnToggle() make() end
 
 			cat:SetExpanded(false)
+
+		end	
+
+	end,
+
+	Raids = function(pnl)
+
+		local lbl = pnl:Add("ContentHeader")
+
+		lbl:SetPos(16, 0)
+
+		lbl:SetText("Raids")
+
+		local cats = pnl:Add("DCategoryList")
+
+		cats:Dock(TOP)
+		cats:DockMargin(0, 68, 0, 0)
+		cats:SetTall(200)
+
+		function cats:Think()
+
+			local w,h = self:GetSize()
+			self:SizeToContents()
+			local _,h2 = self:GetSize()
+
+			self:SetSize(w, h2)
+			self:SetTall(h2)
+
+		end
+
+		do -- Start raid
+
+			local cat = cats:Add("Start a raid")
+
+			local function make()
+
+				local cont = vgui.Create("DListLayout")
+				cont:Dock(FILL)
+				cont:DockPadding(8, 8, 8, 8)
+
+				local fnLabel = cont:Add("DLabel")
+
+				fnLabel:SetDark(true)
+				fnLabel:SetText("Choose a player")
+				fnLabel:SizeToContents()
+
+				local ls = cont:Add("DListView")
+
+				ls:AddColumn("Player")
+				ls:AddColumn("Faction")
+				ls:SetMultiSelect(false)
+
+				local function LineHasItem(self, t)
+
+					for k, pnl in next, self.Sorted do
+
+						if pnl:GetColumnText(1) == t then return pnl end
+
+					end
+
+					return false
+
+				end
+
+				local function PlayerExs(t)
+
+					for _, ply in next, player.GetHumans() do
+
+						if ply:Nick() == t then return ply end
+
+					end
+
+					return false
+
+				end	
+
+				local function GetPlayer(t)
+
+					for _,ply in next, player.GetHumans() do
+
+						if ply:Nick() == t then
+						return ply end
+
+					end
+					
+					return false
+
+				end		
+
+				function ls:RefreshPlayers()
+
+					for k, ply in next, player.GetHumans() do
+
+						local nick = ply:Nick()
+						local faction = ply:InFaction() and ply:GetFaction() or "<NONE>"
+						local pnl = LineHasItem(self, nick)
+
+						if not pnl then
+							
+							self:AddLine(nick, faction)
+
+						end
+
+					end
+
+					for k, pnl in next, self.Sorted do
+
+						if not PlayerExs(pnl:GetColumnText(1)) then
+
+							table.remove(self.Sorted, k)
+							pnl:Remove()
+
+						else
+
+							local ply = GetPlayer(pnl:GetColumnText(1))
+							if ply then
+								
+								pnl:SetColumnText(2, ply:InFaction() and ply:GetFaction() or "<NONE>")
+
+							end
+
+						end
+
+					end
+
+				end
+
+				ls:SetTall(400)
+
+				function ls:Think()
+
+					self:RefreshPlayers()
+
+				end
+
+				local buttonpar = cont:Add("DPanel")
+
+				buttonpar:SetTall(24)
+
+				function buttonpar:Paint() end
+
+				local OKButton = buttonpar:Add("DButton")
+
+				OKButton:SetSize(64, 24)
+				OKButton:SetText("Leave")
+
+				function OKButton:DoClick()
+
+					local infac = LocalPlayer():InFaction()
+					if not infac then return end
+
+					LocalPlayer():LeaveFaction(true)
+
+				end
+
+				function OKButton:Think()
+
+					local infac = LocalPlayer():InFaction()
+					if not infac then self:SetDisabled(true) else self:SetDisabled(false) end
+
+				end			
+
+				if cat.Contents then
+					cat.Contents:Remove()
+					cat.Contents = nil
+				end
+				cat:SetContents(cont)
+
+			end
+
+			function cat:OnToggle() make() end
+
+			cat:SetExpanded(true)
+			make()
+
+		end
+
+		do -- Stop raid
+
+			local cat = cats:Add("End current raid")
+
+			local function make()
+
+				local cont = vgui.Create("DListLayout")
+				cont:Dock(FILL)
+				cont:DockPadding(8, 8, 8, 8)
+
+				local fnLabel = cont:Add("DLabel")
+
+				fnLabel:SetDark(true)
+				fnLabel:SetText("COMING SOON")
+				fnLabel:SizeToContents()
+
+				if cat.Contents then
+					cat.Contents:Remove()
+					cat.Contents = nil
+				end
+				cat:SetContents(cont)
+
+			end
+
+			function cat:OnToggle() make() end
+
+			cat:SetExpanded(false)
+			cat:SetDisabled(true)
 
 		end	
 
@@ -1088,6 +1294,12 @@ local function MakeSpawnList()
 	local raidsNode = tree:AddNode("Raids")
 
 	raidsNode:SetIcon("icon16/gun.png")
+
+	function raidsNode:OnNodeSelected()
+
+		rightPanel:SwitchTo("Raids")
+
+	end
 
 	local entitiesNode = tree:AddNode("Entities")
 
