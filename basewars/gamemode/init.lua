@@ -23,8 +23,15 @@ end
 function GM:GetFallDamage(ply, speed)
 
 	local Velocity = speed - 526.5
+	local Armor = math.Clamp(ply:Armor(), 0, 100)
 
-	return Velocity * 0.225
+	if Armor > 0 and Velocity > 0 then
+		
+		ply:SetArmor(ply:Armor() - Velocity * 0.025)
+
+	end
+
+	return Velocity * 0.225 * ((200 - Armor) / 500)
 	
 end
 
