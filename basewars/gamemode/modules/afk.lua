@@ -151,7 +151,13 @@ local tickclear = function()
 
 	local ply = LocalPlayer()
 	
-	if ply:IsAFK() and ply:GetAngles() ~= oa then
+	if not IsValid(ply) then
+		
+		return
+	
+	end
+	
+	if ply.IsAFK and ply:IsAFK() and ply:GetAngles() ~= oa then
 	
 		clear()
 		

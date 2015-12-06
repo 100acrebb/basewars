@@ -165,8 +165,8 @@ function MODULE:Paint()
 	
 	moneyColor = ColorAlpha(moneyColor,150)
 
-	draw.DrawText("$\xe2\x80\x8a" .. money, tag, 64 + 44, sH - 128 + 40 + 6, shade, TEXT_ALIGN_LEFT)
-	draw.DrawText("$\xe2\x80\x8a" .. money, tag, 64 + 42, sH - 128 + 40 + 4, moneyColor, TEXT_ALIGN_LEFT)
+	draw.DrawText(BaseWars.LANG.CURRENCY .. "\xe2\x80\x8a" .. money, tag, 64 + 44, sH - 128 + 40 + 6, shade, TEXT_ALIGN_LEFT)
+	draw.DrawText(BaseWars.LANG.CURRENCY .. "\xe2\x80\x8a" .. money, tag, 64 + 42, sH - 128 + 40 + 4, moneyColor, TEXT_ALIGN_LEFT)
 	
 	if triggered then
 
@@ -181,7 +181,6 @@ function MODULE:Paint()
 			local color = not loss and green or red
 			local cT = CurTime()
 			local alpha = clamp(fLast - cT,0,1) * 150
-			local diff = string.Comma(fDiff)
 			
 			if abs(alpha) <= 0.01 then
 			
@@ -191,11 +190,11 @@ function MODULE:Paint()
 				
 			end 
 			
-			color = ColorAlpha(color,alpha)
+			color = ColorAlpha(color, alpha)
 			change = change / 1.08
 			
 			draw.DrawText(
-				(fDiff > 0 and "+ $" or " $") .. diff, tag,
+				(fDiff > 0 and "+ " .. BaseWars.LANG.CURRENCY or " " .. BaseWars.LANG.CURRENCY) .. BaseWars.NumberFormat(fDiff), tag,
 				posX, posY, color, TEXT_ALIGN_LEFT
 			)
 			posY = posY + change

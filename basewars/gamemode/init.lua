@@ -8,7 +8,7 @@ BaseWars.ModuleLoader:Load()
 
 function GM:SetupPlayerVisibility(ply)
 
-	for _, v in next, ents.FindByClass("bigbomb") do
+	for _, v in next, ents.FindByClass("bw_bigbomb") do
 	
 		if v:GetNWBool("armed") then
 		
@@ -44,13 +44,6 @@ function GM:SetupMove(ply, move)
 		
 	end
 	
-	if BaseWars.Drugs and ply:HasDrug("Steroid") then
-	
-		ply:SetWalkSpeed(BaseWars.Config.Drugs.Steroid.Walk)
-		ply:SetRunSpeed(BaseWars.Config.Drugs.Steroid.Run)
-		
-	end
-	
 	return State
 	
 end
@@ -76,111 +69,79 @@ function GM:EntityTakeDamage(ent, dmginfo)
 	local Attacker 	= dmginfo:GetAttacker()
 	local Damage 	= dmginfo:GetDamage()
 	
-	if ent:IsPlayer() and not Attacker:IsPlayer() and dmginfo:IsDamageType(DMG_CRUSH) and (Attacker:IsWorld() or (IsValid(Attacker) and not Attacker:CreatedByMap())) then
+	local Scale = 1
 	
-		dmginfo:SetDamage(0)
+	if Attacker:IsPlayer() and Attacker:HasDrug("Rage") and Attacker ~= ent and not Inflictor.IsRaidDevice then
+	
+		Scale = Scale * BaseWars.Config.Drugs.Rage.Mult
 		
-		return
+	end
+	
+	if ent:IsPlayer() then
+	
+		if not Attacker:IsPlayer() and dmginfo:IsDamageType(DMG_CRUSH) and (Attacker:IsWorld() or (IsValid(Attacker) and not Attacker:CreatedByMap())) then
 		
-	end
-	
-	-- What the fuck is this
-	-- Todo, rewrite this
-	
-	--[[
-	local ignoredrug = false
-	if inflictor:GetClass()=="env_fire" or inflictor:GetClass()=="env_physexplosion" or inflictor:GetClass()=="auto_turret_gun" or inflictor:GetClass()=="weapon_molotov" or inflictor:GetClass()=="weapon_flamethrower" orinflictor:GetClass()=="weapon_knife2" or inflictor:GetClass()=="weapon_gasgrenade" or inflictor:GetClass()=="weapon_tranqgun" or inflictor:GetClass()=="bigbomb" then
-		ignoredrug = true
-	end
-	local scaler = 1
-	if (inflictor:GetClass()=="env_physexplosion" or inflictor:GetClass()=="env_fire") && IsValid(inflictor.attacker) then
-		attacker = inflictor.attacker
-	end
-	if (attacker.Amp == true && not inflictor:IsPlayer() && inflictor:GetClass()~="auto_turret_gun" && inflictor:GetClass()~="weapon_knife2" && inflictor:GetClass()~="weapon_gasgrenade" && inflictor:GetClass()~="weapon_tranqgun" && inflictor:GetClass()~="bigbomb") then
-		--dmginfo:ScaleDamage(1.5)
-		scaler = scaler*1.4
-	end
-	-- before even applying painkiller or anything, take the max damage it can be, then bounce back part of that.
-	-- dont bounce knife damage because we dont want to risk bouncing poison
-	-- dont bounce burning damage because itl get annoying for people to have to burn with other people
-	if (ply.Mirror == true && attacker~=ply && not inflictor:IsPlayer() && ((dmginfo:IsExplosionDamage() && inflictor:GetClass()~="bigbomb" ) or not ignoredrug)) then
-		attacker:TakeDamage(scaler*damage*0.25, ply, ply)
-	end
-	if (ply.PainKillered == true && attacker:IsPlayer() && attacker~=ply && inflictor:IsPlayer()==false) then
-		--dmginfo:ScaleDamage(0.675)
-		scaler = scaler*.675
-	end
-	-- fuck the mingebags and thier propfaggotry. only thing that would be left is prop pushing, but at least you dont die and lose your gun.
-	if (attacker~=nil && attacker:IsPlayer()==false) then
-		local class = attacker:GetClass()
-		local donotwant = false
-		if class== "entityflame" or inflictor:IsVehicle() or attacker:IsVehicle() or class==v or (class==v && v=="bigbomb" && not dmginfo:IsExplosionDamage()) or (inflictor:IsWorld() && (not dmginfo:IsFallDamage() or ply.Knockbacked)) then
-			donotwant = true
+			dmginfo:SetDamage(0)
+			
+			return
+			
 		end
-		for k, v in ipairs(BaseWars.Physgunables) do
-			if (class==v && v~="bigbomb") or (class==v && v=="bigbomb" && not dmginfo:IsExplosionDamage()) or (inflictor:IsWorld() && not dmginfo:IsFallDamage()) then
-				donotwant = true
+		
+		local FriendlyFire = BaseWars.Config.AllowFriendlyFire
+		local Team = ent:GetFaction()
+		
+		if not FriendlyFire and ent:InFaction() and Attacker:IsPlayer() and Attacker:InFaction(Team) then
+			
+			dmginfo:SetDamage(0)
+			
+			return
+			
+		end
+		
+		if ent:HasDrug("PainKiller") and Attacker:IsPlayer() and Attacker ~= ent then
+		
+			Scale = Scale * BaseWars.Config.Drugs.PainKiller.Mult
+			
+		end
+		
+		local TakeDamage = Damage * Scale
+		
+		if TakeDamage >= ent:Health() and ent:HasDrug("Shield") and not ent.ShieldOn then
+		
+			ent.ShieldOn = true
+			ent:RemoveDrug("Shield")
+			
+			local TID = ent:SteamID64() .. ".ShieldGod"
+			local f = function()
+			
+				if not IsValid(ent) then return end
+				
+				ent.ShieldOn = nil
+				
 			end
-		end
-		if donotwant then
-			--dmginfo:ScaleDamage(0)
-			scaler = 0
-		end
+			timer.Create(TID, 0.5, 1, f)
+			
+			if Attacker:IsPlayer() and Attacker ~= ent then
+			
+				Attacker:Notify(BaseWars.LANG.ShieldSave, BASEWARS_NOTIFICATION_DRUG)
+				
+			end
+			
+			dmginfo:SetDamage(math.min(ent:Health() * 0.9, ent:Health() - 1))
+			dmginfo:ScaleDamage(1)
+			
+			return
+			
+		elseif ent.ShieldOn then
+		
+			dmginfo:ScaleDamage(0)
+			
+		return end
+		
 	end
-	if (inflictor~=nil && inflictor:IsPlayer()==false) then
-		local class = inflictor:GetClass()
-		local donotwant = false
-		if class== "entityflame" or inflictor:IsVehicle() or attacker:IsVehicle() or class==v or (class==v && v=="bigbomb" && not dmginfo:IsExplosionDamage()) or (inflictor:IsWorld() && (not dmginfo:IsFallDamage() or ply.Knockbacked)) then
-			donotwant = true
-		end
-		if donotwant then
-			--dmginfo:ScaleDamage(0)
-			scaler = 0
-		end
-	end
-	if (ply:IsPlayer() or ply:IsNPC()) && attacker:IsPlayer() && not inflictor:IsPlayer() && not ignoredrug && attacker.Knockbacked && math.Rand(0,1)>.3 then
-		local origin = inflictor:GetPos()
-		local pos = ply:GetPos()+Vector(0,0,50)
-		local yomomma = (pos-origin)
-		yomomma:Normalize()
-		local force = (dmginfo:GetDamage()*5)
-		if force<100 then force = 100 end
-		if force>700 then force = 700 end
-		local knockdirection = yomomma*force+Vector(0,0,20)
-		ply:SetVelocity(knockdirection)
-		StunPlayer(ply, math.ceil(dmginfo:GetDamage()*0.1))
-	end
-	local tdamage = damage*scaler
-	if not ply:IsPlayer() then return end
-	if (scaler>0 && tdamage>=(ply:Health()+ply:Armor()) && ply.Shielded) then
-		ply.Shieldon = true
-		local IDSteam = BaseWars.FormatID(ply:SteamID())
-		timer.Create(IDSteam .. "shield", 0.25, 1, function() if not IsValid(ply) then return end UnShield(ply) end)
-		Notify(ply, 1, 3, "Snipe Shield Activated")
-		ply:SetNWBool("shielded", false)
-		ply.Shielded = false
-		-- this is here so that fags can stop making bullshit claims about godmode.
-		if (attacker:IsPlayer() && attacker~=ply) then
-			Notify(attacker, 1, 3, "Target survived using Snipe Shieldnot ")
-		end
-		dmginfo:SetDamage((ply:Health()+ply:Armor())-1)
-		dmginfo:ScaleDamage(1)
-	elseif (ply.Shieldon) then
-		-- for that 4th of a second, godmode them just so that this works against shotguns.
-		--dmginfo:SetDamage(0)
-		scaler = 0
-		dmginfo:ScaleDamage(0)
-	else
-		dmginfo:ScaleDamage(scaler)
-	end
-	-- let leech heal the attacker, but only if they hit a player or npc, and its not poison or returned damage
-	if (ply:IsPlayer() or ply:IsNPC()) && attacker:IsPlayer() && not inflictor:IsPlayer() && not ignoredrug && attacker.Leeched && attacker:Health()<attacker:GetMaxHealth() then
-		attacker:SetHealth(attacker:Health()+(tdamage*.35))
-		if attacker:Health()>attacker:GetMaxHealth() then
-			attacker:SetHealth(attacker:GetMaxHealth())
-		end
-	end]]
-
+	
+	dmginfo:ScaleDamage(Scale)
+	
 end
 
 local SpawnClasses = {
@@ -193,6 +154,29 @@ local SpawnClasses = {
 	["info_player_counterterrorist"] = true,
 	["info_player_terrorist"] = true,
 }
+
+local LastThink = CurTime()
+local Spawns 	= {}
+
+local function ScanEntities()
+
+	Spawns = {}
+
+	for k, v in next, ents.GetAll() do
+	
+		if not v or not IsValid(v) or k < 1 then continue end
+
+		local Class = v:GetClass()
+		
+		if SpawnClasses[Class] then
+			
+			Spawns[#Spawns+1] =  v
+			
+		end
+		
+	end
+	
+end
 
 function GM:PlayerShouldTakeDamage(ply, atk)
 	
@@ -231,27 +215,6 @@ function GM:PlayerShouldTakeDamage(ply, atk)
 	end
 	
 	return true
-	
-end
-
-local LastThink = CurTime()
-local Spawns 	= {}
-
-local function ScanEntities()
-
-	Spawns = {}
-
-	for k, v in next, ents.GetAll() do
-
-		local Class = v:GetClass()
-		
-		if SpawnClasses[Class] then
-			
-			Spawns[#Spawns+1] =  v
-			
-		end
-		
-	end
 	
 end
 
