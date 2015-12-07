@@ -378,6 +378,8 @@ if SERVER then
 
 		if not prop then prop = ents.Create(ent or "prop_physics") end
 		if not noundo then undo.Create("prop") end
+		
+		if not prop or not IsValid(prop) then return end
 
 		prop:SetPos(SpawnPos)
 		prop:SetAngles(SpawnAng)
@@ -931,7 +933,7 @@ local Panels = {
 				function fnLabel:Think()
 					local inf = LocalPlayer():InFaction()
 					local fac = LocalPlayer():GetFaction()
-					self:SetText("Your faction: " .. (infac and fac or " <NONE>"))
+					self:SetText("Your faction: " .. (inf and fac or " <NONE>"))
 				end
 				fnLabel:SizeToContents()
 
@@ -1070,7 +1072,7 @@ local Panels = {
 					
 					return false
 
-				end		
+				end	
 
 				function ls:RefreshPlayers()
 
@@ -1088,12 +1090,11 @@ local Panels = {
 
 					end
 
-					for k, pnl in next, self.Sorted do
+					for k, pnl in next, self.Lines do
 
 						if not PlayerExs(pnl:GetColumnText(1)) then
 
-							table.remove(self.Sorted, k)
-							pnl:Remove()
+							self:RemoveLine(k)
 
 						else
 
@@ -1117,6 +1118,16 @@ local Panels = {
 					self:RefreshPlayers()
 
 				end
+				
+				local SelectedPly
+				
+				function ls:OnRowSelected(id, panel)
+				
+					if not panel or not IsValid(panel) then return end
+				
+					SelectedPly = GetPlayer(panel:GetColumnText(1))
+				
+				end
 
 				local buttonpar = cont:Add("DPanel")
 
@@ -1127,21 +1138,20 @@ local Panels = {
 				local OKButton = buttonpar:Add("DButton")
 
 				OKButton:SetSize(64, 24)
-				OKButton:SetText("Leave")
+				OKButton:SetText("START!")
 
 				function OKButton:DoClick()
 
-					local infac = LocalPlayer():InFaction()
-					if not infac then return end
-
-					LocalPlayer():LeaveFaction(true)
+					LocalPlayer():StartRaid(SelectedPly)
 
 				end
 
 				function OKButton:Think()
 
+					local valid = SelectedPly and IsValid(SelectedPly) and SelectedPly:IsPlayer()
 					local infac = LocalPlayer():InFaction()
-					if not infac then self:SetDisabled(true) else self:SetDisabled(false) end
+					local infac2 = valid and SelectedPly:InFaction() and not (SelectedPly:InFaction(LocalPlayer():GetFaction()))
+					if (infac and not infac2) or (infac2 and not infac) or not valid then self:SetDisabled(true) else self:SetDisabled(false) end
 
 				end			
 

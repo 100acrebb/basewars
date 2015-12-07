@@ -1,10 +1,10 @@
-ENT.Base = "base_gmodentity"
+ENT.Base = "bw_base_electronics"
 ENT.Type = "anim"
 
 ENT.Items 		= {
 	soda = {
 		Price = 5,
-		Entity = "basewars_drink_vendingsoda",
+		Entity = "bw_drink_vendingsoda",
 		Skin = 1,
 	},
 }
@@ -50,26 +50,14 @@ ENT.PlayedStages = {}
 
 function ENT:Init()
 
+	self:AddEffects(EF_ITEM_BLINK)
+	self:SetHealth(300)
+
 end
 
 if SERVER then
 
-	function ENT:Initialize()
-
-		self:SetModel(self.Model)
-		self:SetSkin(self.Skin)
-
-		self:PhysicsInit(SOLID_VPHYSICS)
-		self:SetSolid(SOLID_VPHYSICS)
-		self:SetMoveType(MOVETYPE_VPHYSICS)
-
-		self:PhysWake()
-
-		self:SetUseType(SIMPLE_USE)
-
-		self:Init()
-
-	end
+	AddCSLuaFile()
 
 	function ENT:SpawnItem(id)
 
@@ -130,7 +118,7 @@ if SERVER then
 			if not trace.Hit then return end
 			if not IsValid(trace.Entity) then return end
 
-			if self.Busy or activator:GetMoney() < self.Items.soda.Price then
+			if self.Busy or activator:GetMoney() < self.Items.soda.Price or self:BadlyDamaged() then
 				
 				self:EmitSound("buttons/button10.wav")
 
@@ -146,7 +134,7 @@ if SERVER then
 
 	end
 
-	function ENT:Think()
+	function ENT:ThinkFunc()
 
 		if self.Busy then
 			
@@ -169,7 +157,7 @@ if SERVER then
 
 		end
 
-		if self.Time and self.Time >= CurTime() + 4 then
+		if self.Time and CurTime() - self.Time >= 4 then
 
 			self.Busy = nil
 		

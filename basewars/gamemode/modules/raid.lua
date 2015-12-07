@@ -218,6 +218,14 @@ function MODULE:Start(ply, target)
 		
 	end
 	
+	if ply == target then
+	
+		ply:Notify(BaseWars.LANG.CantRaidSelf, BASEWARS_NOTIFICATION_RAID)
+		
+		return
+		
+	end
+	
 	if ply:InFaction() and not target:InFaction() then
 	
 		ply:Notify(BaseWars.LANG.RaidTargNoFac, BASEWARS_NOTIFICATION_RAID)
@@ -235,6 +243,14 @@ function MODULE:Start(ply, target)
 	end
 	
 	IsFaction = ply:InFaction()
+	
+	if IsFaction and target:InFaction(ply:GetFaction()) then
+	
+		ply:Notify(BaseWars.LANG.CantRaidSelf, BASEWARS_NOTIFICATION_RAID)
+	
+		return
+		
+	end
 
 	hook.Run("RaidStart")
 	

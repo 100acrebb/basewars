@@ -31,9 +31,9 @@ if SERVER then
 		self:Activate()
 
 		self:SetUseType(SIMPLE_USE)
-
-		self:Init()
 		self:SetHealth(100)
+		
+		self:Init()
 
 	end
 
@@ -148,7 +148,13 @@ if SERVER then
 		SafeRemoveEntityDelayed(ex,0.1)
 
 	end
+	
+	function ENT:BadlyDamaged()
+	
+		return self:Health() <= 25
 
+	end
+	
 end
 
 --easylua.EndEntity()

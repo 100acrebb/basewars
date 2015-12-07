@@ -25,6 +25,7 @@ BaseWars.LANG = {
 	RaidTargNoFac			= "You cannot raid a factionless player as a faction!",
 	RaidSelfNoFac			= "You cannot raid a faction as a factionless player!",
 	RaidNoFaction			= "Cannot use faction functions during a raid!",
+	CantRaidSelf			= "You can't raid yourself or your faction!",
 	
 	SteroidEffect			= "You feel full of energy...",
 	SteroidRemove			= "Your energy passes...",
