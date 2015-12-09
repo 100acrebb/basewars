@@ -11,7 +11,10 @@ META.EngineNick = META.OldNick
 META.RealName = META.OldNick
 
 local function GoodNick(nick)
-	return tostring(nick or ""):sub(1,50):Trim()
+
+	local nick = utf8.force(tostring(nick or ""):Trim())
+
+	return utf8.sub(nick, 1, 40)
 end
 
 function META:Nick()
@@ -52,11 +55,11 @@ if SERVER then
 	function META:SetNick(nick)
 		if not nick then
 			nick = self:OldNick()
-			self:SetNWString(Tag,tostring(nick or ""):sub(1,50))
+			self:SetNWString(Tag, GoodNick(nick))
 			self:RemovePData(Tag)
 			return
 		end
-		self:SetNWString(Tag,tostring(nick or ""):sub(1,50))
+		self:SetNWString(Tag, GoodNick(nick))
 		self:SetPData(Tag,nick)
 	end
 

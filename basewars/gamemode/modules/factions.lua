@@ -228,6 +228,30 @@ function MODULE:Leave(ply, disband, forcedisband)
 end
 PLAYER.LeaveFaction = Curry(MODULE.Leave)
 
+function MODULE:ChangePass(ply, newpass)
+
+	-- not done dont use
+
+	local Table = BaseWars.Factions.FactionTable
+	
+	if not Table[name] then
+	
+		ply:Notify(BaseWars.LANG.FactionNotExist, BASEWARS_NOTIFICATION_ERROR)
+	
+		return
+		
+	end
+
+	if Faction.leader ~= ply:SteamID() then
+	
+		ply:Notify(BaseWars.LANG.FactionCantPassword, BASEWARS_NOTIFICATION_ERROR)
+		
+		return
+		
+	end
+	
+end
+
 function MODULE:InFaction(ply, name, leader)
 	
 	local Table = BaseWars.Factions.FactionTable

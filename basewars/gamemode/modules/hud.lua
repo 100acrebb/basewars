@@ -57,11 +57,120 @@ local oldAM = 0
 
 local shade = Color(0, 0, 0, 140)
 local trans = Color(255, 255, 255, 150)
+local textc = Color(100, 150, 200, 255)
+local hpbck = Color(255, 0  , 0  , 100)
+local pwbck = Color(0  , 0  , 255, 100)
+
+function MODULE:DrawStructureInfo(ent)
+	local Pos = ent:GetPos()
+	Pos.z = Pos.z + 14
+	
+	Pos = Pos:ToScreen()
+	
+	local name = (ent.PrintName or (ent.GetName and ent:GetName()) or (ent.Nick and ent:Nick()) or ent:GetClass()):Trim()
+	local W = 185
+	local H = 30
+	
+	local oldx, oldy = Pos.x, Pos.y
+	local curx, cury = Pos.x, Pos.y
+	local w, h
+	local Font = BaseWars.Config.HUD.EntFont
+	local Padding = 5
+	local EndPad = -Padding * 2
+	
+	curx = curx - W / 2
+	cury = cury - H / 2
+	
+	surface.SetDrawColor(shade)
+	surface.DrawRect(curx, cury, W, H)
+	
+	surface.SetFont(Font)
+	w, h = surface.GetTextSize(name)
+	
+	draw.DrawText(name, Font, oldx - w / 2, cury + 2, shade)
+	draw.DrawText(name, Font, oldx - w / 2, cury + 2, textc)
+	
+	if ent:Health() > 0 then
+	
+		cury = cury + H + 1
+	
+		surface.SetDrawColor(shade)
+		surface.DrawRect(curx, cury, W, H)
+		
+		local MaxHealth = ent:MaxHealth() or 100
+		local HealthStr = ent:Health() .. "/" .. MaxHealth .. " HP"
+	
+		local HPLen = W * (ent:Health() / MaxHealth)
+		
+		draw.RoundedBox(0, curx + Padding, cury + Padding, HPLen + EndPad, H + EndPad, hpbck)
+
+		surface.SetFont(Font)
+		w, h = surface.GetTextSize(HealthStr)
+		
+		draw.DrawText(HealthStr, Font, oldx - w / 2, cury + Padding - 2, shade)
+		draw.DrawText(HealthStr, Font, oldx - w / 2, cury + Padding - 2, color_white)
+		
+	end
+	
+	if ent.Power then
+	
+		cury = cury + H + 1
+	
+		surface.SetDrawColor(shade)
+		surface.DrawRect(curx, cury, W, H)
+		
+		local MaxPower = ent:MaxPower() or 100
+		local PowerStr = (ent:Power() > 0 and ent:Power() .. "/" .. MaxPower .. " PW") or BaseWars.LANG.PowerFailure
+	
+		local PWLen = W * (ent:Power() / MaxPower)
+		
+		draw.RoundedBox(0, curx + Padding, cury + Padding, PWLen + EndPad, H + EndPad, pwbck)
+
+		surface.SetFont(Font)
+		w, h = surface.GetTextSize(PowerStr)
+		
+		draw.DrawText(PowerStr, Font, oldx - w / 2, cury + Padding - 2, shade)
+		draw.DrawText(PowerStr, Font, oldx - w / 2, cury + Padding - 2, color_white)
+		
+	end
+	
+	if ent:BadlyDamaged() then
+	
+		cury = cury + H + 1
+	
+		surface.SetDrawColor(shade)
+		surface.DrawRect(curx, cury, W, H)
+		
+		local Str = BaseWars.LANG.HealthFailure
+
+		surface.SetFont(Font)
+		w, h = surface.GetTextSize(Str)
+		
+		draw.DrawText(Str, Font, oldx - w / 2, cury + Padding - 1, shade)
+		draw.DrawText(Str, Font, oldx - w / 2, cury + Padding - 1, color_white)
+		
+	end
+end
+
+function MODULE:DrawDisplay()
+
+	local me = LocalPlayer()
+	local Ent = me:GetEyeTrace().Entity
+
+	if BaseWars.Ents:ValidClose(Ent, me, 200) and (Ent.IsElectronic or Ent.IsGenerator or Ent.DrawStructureDisplay) then
+		
+		self:DrawStructureInfo(Ent)
+		
+	end
+	
+end
 
 function MODULE:Paint()
 
 	local me = LocalPlayer()
 	if not me:IsPlayer() or not IsValid(me) then return end
+	
+	self:DrawDisplay()
 
 	local hp, su = me:Health(), me:Armor()
 

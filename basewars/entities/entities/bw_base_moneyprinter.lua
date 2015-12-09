@@ -1,5 +1,3 @@
---easylua.StartEntity("bw_base_moneyprinter")
-
 local fontName = "BaseWars.MoneyPrinter"
 
 ENT.Base = "bw_base_electronics"
@@ -61,30 +59,15 @@ local function GSAT(name, var, min, max)
 
 end
 
-GSAT("Capacity","Capacity")
-GSAT("Money","Money",0,"Capacity")
-GSAT("Paper","Paper",0,1000)
+GSAT("Capacity", "Capacity")
+GSAT("Money", "Money", 0, "Capacity")
+GSAT("Paper", "Paper", 0, 1000)
 
 if SERVER then
 
 	AddCSLuaFile()
 
-	function ENT:Initialize()
-
-		self:SetModel(self.Model)
-		self:SetSkin(self.Skin)
-
-		self:PhysicsInit(SOLID_VPHYSICS)
-		self:SetSolid(SOLID_VPHYSICS)
-		self:SetMoveType(MOVETYPE_VPHYSICS)
-
-		self:PhysWake()
-
-		self:Activate()
-
-		self:SetUseType(SIMPLE_USE)
-
-		self:Init()
+	function ENT:Init()
 
 		self.time = CurTime()
 		self.time_p = CurTime()
@@ -131,7 +114,7 @@ if SERVER then
 
 	end
 
-	function ENT:Use(activator, caller, usetype, value)
+	function ENT:UseFuncBypass(activator, caller, usetype, value)
 
 		if self.Disabled then return end
 
@@ -279,5 +262,3 @@ else
 	end
 
 end
-
---easylua.EndEntity()

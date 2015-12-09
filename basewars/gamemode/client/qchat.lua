@@ -2,6 +2,14 @@ if qchat and IsValid(qchat.pPanel) then
 	qchat:Close()
 end
 
+surface.CreateFont("QChatFont", {
+	font = "Verdana",
+	size = 14,
+	weight = 600,
+	antialias = true,
+	shadow = true,
+})
+
 qchat = {}
 
 qchat.TimeStamps = false
@@ -113,7 +121,7 @@ function qchat:CreateChatTab()
 	self.chatTab.pFeed 	= vgui.Create("RichText", self.chatTab)
 	self.chatTab.pFeed:Dock(FILL)
 
-	self.chatTab.pFeed.Font = "ChatFont"
+	self.chatTab.pFeed.Font = "QChatFont"
 
 	self.chatTab.pFeed.PerformLayout = function(pan)
 		pan:SetFontInternal(pan.Font)

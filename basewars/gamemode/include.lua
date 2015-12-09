@@ -47,11 +47,15 @@ do
 		
 	end
 	
-	if BaseWars.Config.ExtraStuff then
+	IncludeCS("shared/utf8_extender.lua")
 	
+	if BaseWars.Config.ExtraStuff then
+		
 		IncludeCS("shared/playuhr.lua")
 		IncludeCS("shared/customnick.lua")
 		IncludeCS("shared/hostnamefix.lua")
+		
+		IncludeCS("shared/MetaStruct/anime.lua")
 		
 	end
 
@@ -60,6 +64,10 @@ end
 do
 
 	if BaseWars.Config.CustomChat then
+	
+		LoadFileCS("shared/MetaStruct/markup.lua")
+		LoadFileCS("shared/MetaStruct/expression.lua")
+		LoadFileCS("shared/MetaStruct/ch.lua")
 	
 		LoadFileCS("client/qchat.lua")
 		

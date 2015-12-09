@@ -1,3 +1,5 @@
+BASEWARS_CHOSEN_LANGUAGE = "ENGLISH"
+
 BaseWars.Config = {
 	Ents = {
 		Electronics = {
@@ -12,7 +14,10 @@ BaseWars.Config = {
 			Model 		= "models/props_c17/oildrum001.mdl",
 			Skin		= 1,
 			Sound		= "weapons/c4/c4_beep1.wav",
-		}
+		},
+		SpawnPoint = {
+			Offset 		= Vector(0, 0, 16),
+		},
 	},
 	
 	Drugs = {
@@ -44,17 +49,22 @@ BaseWars.Config = {
 	
 	Notifications = {
 		LinesAmount = 11,
-		Width		= 570,
+		Width		= 582,
 		BackColor	= Color(30, 30, 30, 140),
 		OpenTime	= 10,
 	},
 	
 	Raid = {
-		Time = 360,
+		Time 			= 360,
+		CoolDownTime	= 60 * 15,
 	},
 	
 	AFK  = {
 		Time = 30,
+	},
+	
+	HUD = {
+		EntFont = "TargetID",
 	},
 	
 	PayDayBase 			= 500,

@@ -1,6 +1,11 @@
 ENT.Base = "bw_base_electronics"
 ENT.Type = "anim"
 
+ENT.PrintName = "Vending Machine"
+
+ENT.PowerRequired = 2
+ENT.PowerCapacity = 3000
+
 ENT.Items 		= {
 	soda = {
 		Price = 5,
@@ -94,7 +99,7 @@ if SERVER then
 
 	end
 
-	function ENT:Use(activator, caller, usetype, value)
+	function ENT:UseFunc(activator, caller, usetype, value)
 
 		if activator:IsPlayer() and caller:IsPlayer() then
 
@@ -118,7 +123,7 @@ if SERVER then
 			if not trace.Hit then return end
 			if not IsValid(trace.Entity) then return end
 
-			if self.Busy or activator:GetMoney() < self.Items.soda.Price or self:BadlyDamaged() then
+			if self.Busy or activator:GetMoney() < self.Items.soda.Price then
 				
 				self:EmitSound("buttons/button10.wav")
 

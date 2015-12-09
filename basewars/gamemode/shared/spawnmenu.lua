@@ -127,7 +127,7 @@ SpawnList.Models = {
 
 			["Washing machine"]			= M2("models/props_c17/FurnitureWashingmachine001a.mdl", 5),
 			["Radiator"]				= M2("models/props_interiors/Radiator01a.mdl", 5),
-			["Vending machine"]			= M2("models/props_interiors/VendingMachineSoda01a.mdl", 10, "basewars_vendingmachine"),
+			["Vending machine"]			= M2("models/props_interiors/VendingMachineSoda01a.mdl", 10),
 			["Fridge"]					= M2("models/props_wasteland/kitchen_fridge001a.mdl", 5),
 			["Stove"]					= M2("models/props_wasteland/kitchen_stove001a.mdl", 5),
 			["Big stove"]				= M2("models/props_wasteland/kitchen_stove002a.mdl", 10),
@@ -312,14 +312,14 @@ if SERVER then
 
 			if plyMoney < price then
 				
-				BaseWars.Util_Player:Notification(ply, "You don't have enough money for that.", Color(255, 0, 0))
+				ply:Notify(BaseWars.LANG.SpawnMenuMoney, Color(255, 0, 0))
 
 			return end
 
 			ply:SetMoney(plyMoney - price)
 			ply:EmitSound("mvm/mvm_money_pickup.wav")
 
-			BaseWars.Util_Player:Notification(ply, "You bought a(n) \"" .. item .. "\" for £" .. price .. ".", Color(0, 255, 0))
+			ply:Notify(string.format(BaseWars.LANG.SpawnMenuBuy, item, price), Color(0, 255, 0))
 
 		end
 

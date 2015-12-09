@@ -80,6 +80,10 @@ chitchat.MessageModes = {
 			return r:IsAdmin()
 		end,
 	},
+	{
+	 -- OOC
+		PrintName 	= "OOC",
+	},
 }
 
 if SERVER then
@@ -89,11 +93,15 @@ if SERVER then
 	util.AddNetworkString(Tag)
 
 	function GM:ChangeChatMode(ply,msg,msgmode)
-		if msg:StartWith("//") then
-			return 1,msg:gsub("^//%s?","")
-		end
 		if msg:StartWith("@") then
 			return 6,msg:gsub("^@","")
+		end
+		if msg:StartWith("//") then
+			return 7,msg:gsub("^//%s?","")
+		end
+		
+		if msg:StartWith("/ooc") then
+			return 7,msg:gsub("^/ooc%s?","")
 		end
 	end
 
@@ -238,7 +246,7 @@ else
 		elseif msg:match("^[\"'].+[\"']") then
 			tbl[#tbl + 1] = Color(255,200,200)		
 		end
-		tbl[#tbl + 1] = msg
+		tbl[#tbl + 1] = string.fullwidth and string.fullwidth(msg) or msg
 
 		chat.AddText(unpack(tbl))
 

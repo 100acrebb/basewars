@@ -124,10 +124,22 @@ function MODULE:PlayerInvolved(ply)
 end
 PLAYER.InRaid = Curry(MODULE.PlayerInvolved)
 
-function MODULE:CheckRaidable(ply)
+function MODULE:CheckRaidable(ply, nocool)
 
-	--hook.Run("CheckRaidableFoundRaidable", ply, ent) ???
-	-- Check cooldown
+	if not nocool then
+	
+		local Table = BaseWars.Factions.FactionTable
+		local Faction = Table[ply:GetFaction()]
+
+		if CurTime() - (Faction and Faction.__RaidCoolDown or ply.__RaidCoolDown or 0) < BaseWars.Config.Raid.CoolDownTime then
+		
+			print("__RaidCoolDown", __RaidCoolDown)
+		
+			return false
+			
+		end
+		
+	end
 
 	local Call, Message = hook.Run("PlayerIsRaidable", ply)
 	
@@ -202,7 +214,7 @@ function MODULE:Start(ply, target)
 		
 	end
 
-	if not self:CheckRaidable(ply) then
+	if not self:CheckRaidable(ply, true) then
 	
 		ply:Notify(BaseWars.LANG.RaidSelfUnraidable, BASEWARS_NOTIFICATION_RAID)
 		
@@ -260,7 +272,16 @@ function MODULE:Start(ply, target)
 	P1Faction = Participant1:GetFaction()
 	P2Faction = Participant2:GetFaction()
 	
+	local Table = BaseWars.Factions.FactionTable
+	local Faction = Table[P1Faction]
+	
+	if Faction then Faction.__RaidCoolDown = 0 else ply.__RaidCoolDown = 0 end
+	
 	TimeRemaining = BaseWars.Config.Raid.Time
+	
+	local Faction = Table[P1Faction]
+	
+	if Faction then Faction.__RaidCoolDown = CurTime() + TimeRemaining else ply.__RaidCoolDown = CurTime() + TimeRemaining end
 	
 	net.Start(tag)
 		net.WriteUInt(0, 2)
@@ -286,19 +307,32 @@ function MODULE:GetVersus()
 		return "<NONE>", "<NONE>"
 		
 	end
-
-	local name1, name2
-
-	if IsFaction then
 	
-		name1 = Participant1:GetFaction():Trim():sub(1, 12)
-		name2 = Participant2:GetFaction():Trim():sub(1, 12)
+	local TrimTo = 18
+	local name1, name2
+	
+	if IsFaction then
+		
+		name1 = Participant1:GetFaction():Trim()
+		name2 = Participant2:GetFaction():Trim()
 		
 	else
 	
-		name1 = Participant1:Nick():Trim():sub(1, 12)
-		name2 = Participant2:Nick():Trim():sub(1, 12)
+		name1 = Participant1:Nick():Trim()
+		name2 = Participant2:Nick():Trim()
 		
+	end
+	
+	if utf8.sub then
+	
+		name1 = utf8.sub(name1, 1, TrimTo):Trim() .. (utf8.len(name1) > TrimTo and "..." or "")
+		name2 = utf8.sub(name2, 1, TrimTo):Trim() .. (utf8.len(name2) > TrimTo and "..." or "")
+
+	else
+		
+		name1 = name1:sub(1, TrimTo):Trim() .. (string.len(name1) > TrimTo and "..." or "")
+		name2 = name2:sub(1, TrimTo):Trim() .. (string.len(name2) > TrimTo and "..." or "")
+	
 	end
 	
 	return name1, name2

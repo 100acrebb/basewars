@@ -290,4 +290,20 @@ function GM:InitPostEntity()
 	
 end
 
+function GM:PlayerSpawn(ply)
+
+	self.BaseClass:PlayerSpawn(ply)
+	self:SetPlayerSpeed(ply, BaseWars.Config.DefaultWalk, BaseWars.Config.DefaultRun)
+	
+	local Spawn = ply.SpawnPoint
+	if BaseWars.Ents:Valid(Spawn) and (not Spawn.IsPowered or Spawn:IsPowered()) then
+	
+		local Pos = Spawn:GetPos() + BaseWars.Config.Ents.SpawnPoint.Offset
+	
+		ply:SetPos(Pos)
+		
+	end
+	
+end
+
 ScanEntities()

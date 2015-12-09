@@ -1,13 +1,16 @@
 ENT.Base = "base_gmodentity"
 ENT.Type = "anim"
-ENT.PrintName = "Base Electricals"
+ENT.PrintName = "Base Generator"
 
-ENT.Model = "models/props_c17/metalPot002a.mdl"
+ENT.Model = "models/props_wasteland/laundry_washer003.mdl"
 ENT.Skin = 0
 
-ENT.IsElectronic = true
-ENT.PowerRequired = 5
+ENT.IsGenerator = true
+
+ENT.PowerGenerated = 15
 ENT.PowerCapacity = 1000
+ENT.TransmitRadius = 600
+ENT.TransmitRate = 20
 
 function ENT:Init()
 
@@ -75,14 +78,10 @@ do
 		return end
 
 	return self:GetNWBool("MaxPower") end
-
-	function ENT:DrainPower(val)
 	
-		if not self:IsPowered(val) then return false end
+	function ENT:DrainPower(val)
 
-		self:Power(self:Power() - (val or self.PowerRequired))
-		
-		return true
+		self:Power(self:Power() - val)
 		
 	end
 
@@ -90,13 +89,29 @@ do
 	
 		if val < 1 then return end
 
-		self:Power(self:Power() + val)
+		return self:Power(self:Power() + val)
 
 	end
+
+	function ENT:TransmitPower()
 	
-	function ENT:IsPowered(val)
+		local Ents = ents.FindInSphere(self:GetPos(), self.TransmitRadius)
 	
-		return self:Power() >= (val or self.PowerRequired)
+		for k, v in next, Ents do
+		
+			if not v or not IsValid(v) or v == self then continue end
+			if not v.IsElectronic or not v.ReceivePower then continue end
+			if v:Power() >= v:MaxPower() then continue end
+			
+			local Transmit = math.min(self.TransmitRate, self:Power())
+			Transmit = math.min(Transmit, (v:MaxPower() - v:Power()))
+			
+			v:ReceivePower(Transmit)
+			
+			local Drain = Transmit - (PowerNotUsed or 0)
+			self:DrainPower(Drain)
+			
+		end
 		
 	end
 	
@@ -141,7 +156,8 @@ if SERVER then
 
 	function ENT:Think()
 	
-		if not self:DrainPower() then return end
+		self:ReceivePower(self.PowerGenerated)
+		self:TransmitPower()
 
 		if self:Health() <= 25 and math.random(0, 10) == 0 then
 			
@@ -185,7 +201,7 @@ if SERVER then
 	
 		self:UseFuncBypass(activator, caller, usetype, value)
 	
-		if not self:IsPowered() or self:BadlyDamaged() then 
+		if self:BadlyDamaged() then 
 		
 			self:EmitSound("buttons/button10.wav")
 

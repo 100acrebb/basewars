@@ -15,11 +15,17 @@ local function Curry(f)
 
 end
 
+function MODULE:Valid(ent)
+
+	return ent and isentity(ent) and IsValid(ent)
+	
+end
+
 function MODULE:ValidOwner(ent)
 
-	local Owner = ent.Owner or (ent.CPPIGetOwner and ent:CPPIGetOwner())
+	local Owner = ent and ent.Owner or (ent and ent.CPPIGetOwner and ent:CPPIGetOwner())
 	
-	return Owner and IsValid(Owner) and Owner:IsPlayer()
+	return self:Valid(Owner) and Owner:IsPlayer()
 	
 end
 
@@ -27,4 +33,10 @@ function MODULE:ValidPlayer(ply)
 
 	return ply and IsValid(ply) and ply:IsPlayer()
 	
+end
+
+function MODULE:ValidClose(ent, ent2, dist)
+
+	return self:Valid(ent) and ent:GetPos():Distance(ent2:GetPos()) <= dist
+
 end

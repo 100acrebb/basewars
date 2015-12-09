@@ -6,7 +6,7 @@ Todo:
 		BOUNTY		[ ][2] <-
 		DRUGS		[X][2] <-
 		ENT LEVEL	[ ][3]
-		ENT POWER	[ ][3]
+		ENT POWER	[X][3]
 	GUI:
 		FACTIONS	[X][1]
 		RAID HUD	[X][1]
@@ -37,4 +37,12 @@ Todo:
 		[Are you sure you wish to unlock this?]
 		[Costs: 2 Faggot Points]
 			[YES]					[NO ]
-			
+
+Ents To Make:
+	bw_base_turret,
+	bw_bigbomb,
+	bw_druglab,
+	bw_nuke,
+	bw_landmine,
+	bw_spawnpoint,
+	bw_base_dispenser,
