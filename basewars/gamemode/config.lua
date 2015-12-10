@@ -60,11 +60,13 @@ BaseWars.Config = {
 	},
 	
 	AFK  = {
-		Time = 30,
+		Time 	= 30,
 	},
 	
 	HUD = {
-		EntFont = "TargetID",
+		EntFont = "BudgetLabel",
+		EntW	= 175,
+		EntH	= 25,
 	},
 	
 	PayDayBase 			= 500,

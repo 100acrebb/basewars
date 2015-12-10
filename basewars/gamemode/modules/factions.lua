@@ -40,7 +40,7 @@ if SERVER then
 		
 			local disband = net.ReadBool()
 		
-			self:Leave(ply, password, disband)
+			self:Leave(ply, disband)
 		
 		elseif Mode == 2 then
 		
@@ -117,11 +117,11 @@ function MODULE:Set(ply, value, password, force)
 		
 	end
 	
-	if not force and ply:InFaction(nil, true) then
+	local Lead = ply:InFaction(nil, true)
 	
-		ply:Notify(BaseWars.LANG.FactionCantLeaveLeader, BASEWARS_NOTIFICATION_ERROR)
-		
-		return
+	if ply:InFaction() then
+	
+		ply:LeaveFaction(Lead)
 		
 	end
 	
@@ -179,9 +179,7 @@ function MODULE:Leave(ply, disband, forcedisband)
 
 	if not forcedisband and disband and (Faction.leader ~= ply:SteamID() and not ply:IsAdmin()) then
 	
-		ply:Notify(BaseWars.LANG.FactionCantDisband, BASEWARS_NOTIFICATION_ERROR)
-		
-		return
+		disband = false
 		
 	end
 	

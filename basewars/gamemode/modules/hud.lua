@@ -68,8 +68,8 @@ function MODULE:DrawStructureInfo(ent)
 	Pos = Pos:ToScreen()
 	
 	local name = (ent.PrintName or (ent.GetName and ent:GetName()) or (ent.Nick and ent:Nick()) or ent:GetClass()):Trim()
-	local W = 185
-	local H = 30
+	local W = BaseWars.Config.HUD.EntW
+	local H = BaseWars.Config.HUD.EntH
 	
 	local oldx, oldy = Pos.x, Pos.y
 	local curx, cury = Pos.x, Pos.y
@@ -87,8 +87,8 @@ function MODULE:DrawStructureInfo(ent)
 	surface.SetFont(Font)
 	w, h = surface.GetTextSize(name)
 	
-	draw.DrawText(name, Font, oldx - w / 2, cury + 2, shade)
-	draw.DrawText(name, Font, oldx - w / 2, cury + 2, textc)
+	draw.DrawText(name, Font, oldx - w / 2, cury, shade)
+	draw.DrawText(name, Font, oldx - w / 2, cury, textc)
 	
 	if ent:Health() > 0 then
 	
@@ -107,8 +107,8 @@ function MODULE:DrawStructureInfo(ent)
 		surface.SetFont(Font)
 		w, h = surface.GetTextSize(HealthStr)
 		
-		draw.DrawText(HealthStr, Font, oldx - w / 2, cury + Padding - 2, shade)
-		draw.DrawText(HealthStr, Font, oldx - w / 2, cury + Padding - 2, color_white)
+		draw.DrawText(HealthStr, Font, oldx - w / 2, cury + Padding, shade)
+		draw.DrawText(HealthStr, Font, oldx - w / 2, cury + Padding, color_white)
 		
 	end
 	
@@ -129,8 +129,8 @@ function MODULE:DrawStructureInfo(ent)
 		surface.SetFont(Font)
 		w, h = surface.GetTextSize(PowerStr)
 		
-		draw.DrawText(PowerStr, Font, oldx - w / 2, cury + Padding - 2, shade)
-		draw.DrawText(PowerStr, Font, oldx - w / 2, cury + Padding - 2, color_white)
+		draw.DrawText(PowerStr, Font, oldx - w / 2, cury + Padding, shade)
+		draw.DrawText(PowerStr, Font, oldx - w / 2, cury + Padding, color_white)
 		
 	end
 	

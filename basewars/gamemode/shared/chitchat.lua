@@ -246,7 +246,7 @@ else
 		elseif msg:match("^[\"'].+[\"']") then
 			tbl[#tbl + 1] = Color(255,200,200)		
 		end
-		tbl[#tbl + 1] = string.fullwidth and string.fullwidth(msg) or msg
+		tbl[#tbl + 1] = msg
 
 		chat.AddText(unpack(tbl))
 
