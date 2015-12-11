@@ -61,6 +61,10 @@ function MODULE:HandleNetMessage(len, ply)
 			
 			self:Start(ply, versus)
 			
+		elseif Mode == 1 then
+		
+			self:ConceedRaid(ply)
+			
 		end
 	
 	end
@@ -131,13 +135,7 @@ function MODULE:CheckRaidable(ply, nocool)
 		local Table = BaseWars.Factions.FactionTable
 		local Faction = Table[ply:GetFaction()]
 
-		if CurTime() - (Faction and Faction.__RaidCoolDown or ply.__RaidCoolDown or 0) < BaseWars.Config.Raid.CoolDownTime then
-		
-			print("__RaidCoolDown", __RaidCoolDown)
-		
-			return false
-			
-		end
+		if CurTime() - (Faction and Faction.__RaidCoolDown or ply.__RaidCoolDown or 0) < BaseWars.Config.Raid.CoolDownTime then return false end
 		
 	end
 
@@ -279,9 +277,9 @@ function MODULE:Start(ply, target)
 	
 	TimeRemaining = BaseWars.Config.Raid.Time
 	
-	local Faction = Table[P1Faction]
+	local Faction2 = Table[P2Faction]
 	
-	if Faction then Faction.__RaidCoolDown = CurTime() + TimeRemaining else ply.__RaidCoolDown = CurTime() + TimeRemaining end
+	if Faction2 then Faction2.__RaidCoolDown = CurTime() + TimeRemaining else target.__RaidCoolDown = CurTime() + TimeRemaining end
 	
 	net.Start(tag)
 		net.WriteUInt(0, 2)
@@ -299,6 +297,25 @@ function MODULE:Start(ply, target)
 
 end
 PLAYER.StartRaid = Curry(MODULE.Start)
+
+function MODULE:ConceedRaid(ply)
+
+	if not ply:InRaid() then return end
+	if IsFaction and not ply:InFaction(P1Faction, true) then return end
+	if not IsFaction and ply ~= Participant1 then return end
+
+	if CLIENT then
+	
+		net.Start(tag)
+			net.WriteUInt(1, 2)
+		net.SendToServer()
+	
+	return end
+	
+	self:EndRaid()
+	
+end
+PLAYER.ConceedRaid = Curry(MODULE.ConceedRaid)
 
 function MODULE:GetVersus()
 
@@ -359,6 +376,9 @@ function MODULE:EndRaid()
 	TimeRemaining = 0
 	Participant1 = nil
 	Participant2 = nil
+	
+	P1Faction = nil
+	P2Faction = nil
 	
 	BaseWars.UTIL.TimerAdvDestroy(tag)
 

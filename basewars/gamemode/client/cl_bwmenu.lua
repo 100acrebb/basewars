@@ -797,13 +797,13 @@ local function MakeMenu(mainFrame, tabPanel, ftionTab, raidsTab, equipTab, store
 
 		function btnConceed:DoClick()
 		
-			self:SetDisabled(true)
+			me:ConceedRaid()
 
 		end
 		
 		function btnConceed:Think()
 		
-			local Disabled = not BaseWars.Raid:IsOnGoing()
+			local Disabled = not (me:InRaid() and (not me:InFaction() or me:InFaction(nil, true))) 
 			
 			self:SetDisabled(Disabled)
 			
