@@ -63,6 +63,8 @@ end
 
 do
 
+	LoadFileCS("client/cl_bwmenu.lua")
+
 	if BaseWars.Config.CustomChat then
 	
 		LoadFileCS("shared/MetaStruct/markup.lua")

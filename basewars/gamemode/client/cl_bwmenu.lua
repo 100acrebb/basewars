@@ -122,64 +122,23 @@ local function MakePlayerList(pnl)
 	plyList:Dock(FILL)
 
 	plyList.PlayerLines = {}
+	
+	local function GetPlayer(t)
 
-	function plyList:AddPlayers()
+		for _,ply in next, player.GetAll() do
 
-		local myFaction, inFaction = me:GetFaction(), me:InFaction()
-		local plys = player.GetHumans()
-
-		if inFaction then
-			
-			local plysNotInMyFaction = {}
-
-			for _, ply in pairs(plys) do
-
-				if ply == me then continue end
-
-				local plyInFaction, plyFaction = ply:InFaction(), ply:GetFaction()
-				
-				if plyInFaction and plyFaction == myFaction then
-
-					local line = self:AddLine(ply:Nick(), plyInFaction and plyFaction or "<NONE>")
-					self.PlayerLines[ply] = line
-
-				else
-
-					plysNotInMyFaction[ply] = true
-					
-				end
-
-			end
-
-			for ply in pairs(plysNotInMyFaction) do
-
-				local plyInFaction, plyFaction = ply:InFaction(), ply:GetFaction()
-				
-				local line = self:AddLine(ply:Nick(), plyInFaction and plyFaction or "<NONE>")
-				self.PlayerLines[ply] = line
-
-			end
-
-		else
-
-			for _, ply in pairs(plys) do
-
-				if ply == me then continue end
-
-				local plyInFaction, plyFaction = ply:InFaction(), ply:GetFaction()
-
-				local line = self:AddLine(ply:Nick(), plyInFaction and plyFaction or "<NONE>")
-				self.PlayerLines[ply] = line
-
-			end
+			if ply:Nick() == t then
+			return ply end
 
 		end
+		
+		return false
 
-	end
+	end	
 
 	function plyList:UpdatePlayers()
 
-		local plys = player.GetHumans()
+		local plys = player.GetAll()
 
 		for _, ply in pairs(plys) do
 			
@@ -189,7 +148,7 @@ local function MakePlayerList(pnl)
 
 			if not self.PlayerLines[ply] then
 				
-				self:AddLine(ply:Nick(), plyInFaction and plyFaction or "<NONE>")
+				local line = self:AddLine(ply:Nick(), plyInFaction and plyFaction or "<NONE>")
 				self.PlayerLines[ply] = line
 
 			end
@@ -235,8 +194,18 @@ local function MakePlayerList(pnl)
 		self:UpdatePlayers()
 
 	end
+	
+	function plyList:OnRowSelected(id, panel)
+	
+		if not panel or not IsValid(panel) then return end
+	
+		self.SelectedPly = GetPlayer(panel:GetColumnText(1))
+		
+		chat.AddText(self.SelectedPly:Nick())
+	
+	end
 
-	plyList:AddPlayers()
+	plyList:UpdatePlayers()
 
 	return plyList
 
@@ -495,7 +464,7 @@ local dialogs = {
 
 			function createButton:DoClick()
 
-				me:LeaveFaction(me:InFaction(nil, true))
+				me:LeaveFaction(true)
 
 				pnl:Close()
 
@@ -744,13 +713,120 @@ local function MakeMenu(mainFrame, tabPanel, ftionTab, raidsTab, equipTab, store
 		end
 
 	end
+	
+	do -- Raids tab
+
+		raidsTab:DockPadding(16, 8, 16, 16)
+		local raidLabel = raidsTab:Add("DLabel")
+
+		raidLabel:Dock(TOP)
+		raidLabel:SetText("Raids")
+		raidLabel:SetFont(bigFont)
+		raidLabel:SetBright(true)
+		raidLabel:SetExpensiveShadow(2, shadowColor)
+		raidLabel:SizeToContents()
+
+		local yourfLabel = raidsTab:Add("DLabel")
+
+		yourfLabel:SetPos(128 + 8, 20)
+		yourfLabel:SetText("")
+		yourfLabel:SetFont(medFont)
+		yourfLabel:SetDark(true)
+		yourfLabel:SizeToContents()
+
+		function yourfLabel:Think()
+
+			local inFaction, myFaction = me:InFaction(), me:GetFaction()
+
+			if not inFaction then
+				
+				self:SetText("You're not currently in a faction.")
+				
+			else
+				
+				self:SetText("Your faction: " .. myFaction)
+
+			end
+
+			self:SizeToContents()
+
+		end
+
+		local plyList = MakePlayerList(raidsTab)
+
+		local btns = raidsTab:Add("DPanel")
+
+		btns:Dock(BOTTOM)
+		btns:DockMargin(0, 8, 0, 0)
+		btns:SetTall(32)
+
+		function btns:Paint() end
+
+		local btnStart = btns:Add("DButton")
+
+		btnStart:Dock(LEFT)
+		btnStart:SetWide(128)
+		btnStart:SetImage("icon16/building_go.png")
+		btnStart:SetText("Start Raid")
+
+		function btnStart:DoClick()
+
+			me:StartRaid(self.Enemy)
+
+		end
+		
+		function btnStart:Think()
+
+			local Enemy 	= plyList.SelectedPly
+			Enemy = BaseWars.Ents:ValidPlayer(Enemy) and Enemy
+			
+			local InFac 	= me:InFaction()
+			local InFac2 	= Enemy and Enemy:InFaction() and not (Enemy:InFaction(me:GetFaction()))
+		
+			if not Enemy or (InFac and not InFac2) or (InFac2 and not InFac) then self:SetDisabled(true) else self:SetDisabled(false) self.Enemy = Enemy end
+			
+		end
+		
+		local btnConceed = btns:Add("DButton")
+
+		btnConceed:DockMargin(8, 0, 0, 0)
+		btnConceed:Dock(LEFT)
+		btnConceed:SetWide(128)
+		btnConceed:SetImage("icon16/building_error.png")
+		btnConceed:SetText("Conceed Raid")
+
+		function btnConceed:DoClick()
+		
+			self:SetDisabled(true)
+
+		end
+		
+		function btnConceed:Think()
+		
+			local Disabled = not BaseWars.Raid:IsOnGoing()
+			
+			self:SetDisabled(Disabled)
+			
+		end
+
+	end
+	
+	mainFrame:SetVisible(false)
 
 	return mainFrame
 
 end
 
-local pnl = MakeMenu(PrepMenu())
-pnl:Hide()
+local pnl
+
+local function MakeNotExist()
+
+	if pnl and IsValid(pnl) then return end
+
+	pnl = MakeMenu(PrepMenu())
+	pnl:Hide()
+	
+end
 
 local a
 
@@ -761,6 +837,8 @@ hook.Add("Think", "BaseWars.Menu.Open", function()
 	if input.IsKeyDown(KEY_F3) then
 		
 		if not a then
+			
+			MakeNotExist()
 			
 			a = true
 

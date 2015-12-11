@@ -252,6 +252,8 @@ end
 
 function MODULE:InFaction(ply, name, leader)
 	
+	if not BaseWars.Factions then return false end
+	
 	local Table = BaseWars.Factions.FactionTable
 	local Fac = ply:GetFaction()
 	local Faction = Table[Fac]
