@@ -7,11 +7,14 @@ ENT.Skin = 0
 
 ENT.Capacity 		= 10000
 ENT.Money 			= 0
-ENT.Paper 			= 1000
+ENT.Paper 			= 10000
 ENT.PrintInterval 	= 1
-ENT.PrintAmount		= 50
+ENT.PrintAmount		= 30
 
 ENT.PrintName = "Base Money Printer"
+
+ENT.FontColor = color_white
+ENT.BackColor = color_black
 
 local Clamp = math.Clamp
 local function GSAT(name, var, min, max)
@@ -61,7 +64,7 @@ end
 
 GSAT("Capacity", "Capacity")
 GSAT("Money", "Money", 0, "Capacity")
-GSAT("Paper", "Paper", 0, 1000)
+GSAT("Paper", "Paper", 0, 10000)
 
 if SERVER then
 
@@ -73,7 +76,7 @@ if SERVER then
 		self.time_p = CurTime()
 
 		self:SetCapacity(self.Capacity)
-		self:SetPaper(100)
+		self:SetPaper(10000)
 
 		self:SetHealth(100)
 
@@ -176,31 +179,50 @@ else
 
 	})
 
+	
+	local WasPowered
 	function ENT:DrawDisplay(pos, ang, scale)
 
 		local w, h = 216 * 2, 136 * 2
 		local disabled = self:GetNWBool("printer_disabled")
 
-		draw.RoundedBox(4, 0, 0, w, h, Color(0, 0, 0))
+		draw.RoundedBox(4, 0, 0, w, h, self.BackColor)
+		
+		local Pw = self:IsPowered()
+		
+		if not Pw then
+		
+			if WasPowered then
+			
+				WasPowered = false
+				self:EmitSound("ambient/machines/thumper_shutdown1.wav")
+				self:Spark()
+				
+			end
+			
+		return end
+		
+		WasPowered = true
+		
 		if disabled then
 			
-			draw.DrawText("This printer has been", fontName, w / 2, h / 2 - 48, Color(255,255,255), TEXT_ALIGN_CENTER)
+			draw.DrawText("This printer has been", fontName, w / 2, h / 2 - 48, self.FontColor, TEXT_ALIGN_CENTER)
 			draw.DrawText("DISABLED", fontName .. ".Huge", w / 2, h / 2 - 32, Color(255,0,0), TEXT_ALIGN_CENTER)
 
 		return end
-		draw.DrawText(self.PrintName, fontName, w / 2, 4, Color(255,255,255), TEXT_ALIGN_CENTER)
+		draw.DrawText(self.PrintName, fontName, w / 2, 4, self.FontColor, TEXT_ALIGN_CENTER)
 
 		if disabled then return end
 
-		draw.RoundedBox(0, 0, 30, w, 1, Color(255, 255, 255))
-		draw.DrawText("LEVEL: 0", fontName .. ".Big", 4, 32, Color(255,255,255), TEXT_ALIGN_LEFT)
-		draw.RoundedBox(0, 0, 68, w, 1, Color(255, 255, 255))
+		draw.RoundedBox(0, 0, 30, w, 1, self.FontColor)
+		draw.DrawText("LEVEL: 0", fontName .. ".Big", 4, 32, self.FontColor, TEXT_ALIGN_LEFT)
+		draw.RoundedBox(0, 0, 68, w, 1, self.FontColor)
 
-		draw.DrawText("CASH", fontName .. ".Big", 4, 72, Color(255,255,255), TEXT_ALIGN_LEFT)
-		draw.RoundedBox(0, 0, 72 + 32, w, 1, Color(255, 255, 255))
+		draw.DrawText("CASH", fontName .. ".Big", 4, 72, self.FontColor, TEXT_ALIGN_LEFT)
+		draw.RoundedBox(0, 0, 72 + 32, w, 1, self.FontColor)
 		
 		local boxw = 128 - 40
-		draw.RoundedBox(0, boxw, 74, w - boxw * 2.75, 24, Color(255, 255, 255))
+		draw.RoundedBox(0, boxw, 74, w - boxw * 2.75, 24, self.FontColor)
 
 		local money = tonumber(self:GetMoney()) or 0
 		local cap = tonumber(self:GetCapacity()) or 0
@@ -209,7 +231,7 @@ else
 			local ww = math.floor(w - boxw * 2.75 - 4)
 			local www = ww * mc
 
-			draw.RoundedBox(0, boxw + 188, 76, www - ww, 24 - 4, Color(0, 0, 0))
+			draw.RoundedBox(0, boxw + 188, 76, www - ww, 24 - 4, self.BackColor)
 		end
 
 		local text = "£" .. BaseWars.NumberFormat(money)
@@ -227,10 +249,10 @@ else
 		local fh = draw.GetFontHeight(font)
 
 		draw.DrawText(text, font,
-			w - 4, (font == fontName .. ".Big" and 71 or 70 + fh / 4), Color(255, 255, 255), TEXT_ALIGN_RIGHT)
+			w - 4, (font == fontName .. ".Big" and 71 or 70 + fh / 4), self.FontColor, TEXT_ALIGN_RIGHT)
 
-		local paper = math.floor(self:GetPaper() * 60)
-		draw.DrawText("Paper: " .. paper .. " sheets", fontName .. ".MedBig", 4, 84 + 24, Color(255,255,255), TEXT_ALIGN_LEFT)
+		local paper = math.floor(self:GetPaper())
+		draw.DrawText("Paper: " .. paper .. " sheets", fontName .. ".MedBig", 4, 84 + 24, self.FontColor, TEXT_ALIGN_LEFT)
 
 	end
 

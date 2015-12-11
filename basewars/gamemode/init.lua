@@ -80,6 +80,21 @@ function GM:EntityTakeDamage(ent, dmginfo)
 		
 	end
 	
+	local Owner = ent.CPPIGetOwner and ent:CPPIGetOwner()
+	if (not ent.AllwaysRaidable) and (Owner and BaseWars.Ents:ValidPlayer(Owner)) then
+	
+		local RaidLogic 	= (Attacker == Owner and Owner:InRaid()) or (Owner:InFaction() and Attacker:InFaction(Owner:GetFaction()))
+		local RaidLogic2 	= Attacker ~= Owner and (not Owner:InRaid() or not Attacker:InRaid())
+	
+		if RaidLogic or RaidLogic2 then
+	
+			dmginfo:ScaleDamage(0)
+			dmginfo:SetDamage(0)
+		
+		return false end
+		
+	end
+	
 	if ent:IsPlayer() then
 	
 		if not Attacker:IsPlayer() and dmginfo:IsDamageType(DMG_CRUSH) and (Attacker:IsWorld() or (IsValid(Attacker) and not Attacker:CreatedByMap())) then

@@ -19,6 +19,29 @@ if SERVER then
 		self:SetAngles(ForceAngle)
 		
 	end
+	
+	function ENT:SpawnFunction(ply, tr, class)
+	
+		local pos = ply:GetPos()
+		
+		local ent = ents.Create(class)
+			ent:CPPISetOwner(ply)
+			ent:SetPos(pos)
+			ply:SetPos(pos + Vector(0,0,3))
+		ent:Spawn()
+		ent:Activate()
+		
+		local phys = ent:GetPhysicsObject()
+		
+		if IsValid(phys) then
+
+			phys:EnableMotion(false)
+
+		end	
+		
+		return ent
+	
+	end
 
 	function ENT:UseFunc(activator, caller, usetype, value)
 

@@ -1,3 +1,5 @@
+AddCSLuaFile()
+
 ENT.Base = "base_gmodentity"
 ENT.Type = "anim"
 ENT.PrintName = "Base Generator"
@@ -156,7 +158,12 @@ if SERVER then
 
 	function ENT:Think()
 	
-		self:ReceivePower(self.PowerGenerated)
+		if not self:BadlyDamaged() then
+		
+			self:ReceivePower(self.PowerGenerated)
+			
+		end
+		
 		self:TransmitPower()
 
 		if self:Health() <= 25 and math.random(0, 10) == 0 then

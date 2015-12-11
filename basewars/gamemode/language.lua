@@ -4,6 +4,9 @@ BaseWars.LANG.__LANGUAGELOOK = {}
 
 BaseWars.LANG.__LANGUAGELOOK.ENGLISH = {
 	CURRENCY				= CURRENCY,
+	
+	Yes 					= "Yes",
+	No						= "No",
 
 	FactionNameTaken 		= "This faction name is already in use!",
 	FactionNotExist			= "That faction does not exist!",
@@ -55,6 +58,8 @@ BaseWars.LANG.__LANGUAGELOOK.ENGLISH = {
 	
 	SpawnMenuMoney			= "You don't have enough money for that.",
 	SpawnMenuBuy			= "You bought a(n) \"%s\" for " .. CURRENCY .. "%s.",
+	SpawnMenuBuyConfirm		= "Are you sure you want to by a(n) \"%s\" for " .. CURRENCY .. "%s?",
+	SpawnMenuConf			= "Purchase Confirmation",
 }
 
 local INVALID_LANGUAGE 	= "INVALID LANGUAGE SELECTED! NOTIFY THE SERVER ADMIN!"
