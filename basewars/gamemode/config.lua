@@ -197,14 +197,12 @@ BaseWars.SpawnList.Models = {
 
 			["Washing machine"]			= BaseWars.GenSpawnList("models/props_c17/FurnitureWashingmachine001a.mdl", 5),
 			["Radiator"]				= BaseWars.GenSpawnList("models/props_interiors/Radiator01a.mdl", 5),
-			["Broken Vending machine"]	= BaseWars.GenSpawnList("models/props_interiors/VendingMachineSoda01a.mdl", 10),
 			["Fridge"]					= BaseWars.GenSpawnList("models/props_wasteland/kitchen_fridge001a.mdl", 5),
 			["Stove"]					= BaseWars.GenSpawnList("models/props_wasteland/kitchen_stove001a.mdl", 5),
 			["Big stove"]				= BaseWars.GenSpawnList("models/props_wasteland/kitchen_stove002a.mdl", 10),
 			["Rusty tumble dryer"]		= BaseWars.GenSpawnList("models/props_wasteland/laundry_dryer001.mdl", 1),
 			["Tumble dryer"]			= BaseWars.GenSpawnList("models/props_wasteland/laundry_dryer002.mdl", 5),
 			["Launderette washer"]		= BaseWars.GenSpawnList("models/props_wasteland/laundry_washer001a.mdl", 10),
-			["Generator"]				= BaseWars.GenSpawnList("models/props_wasteland/laundry_washer003.mdl", 20),
 			["Spotlight"]				= BaseWars.GenSpawnList("models/props_wasteland/light_spotlight01_lamp.mdl", 5),
 			["Prison light"]			= BaseWars.GenSpawnList("models/props_wasteland/prison_lamp001c.mdl", 1),
 
@@ -396,7 +394,10 @@ BaseWars.SpawnList.Models = {
 		
 		["Weapons"] = {
 		
-			["SMG"] 		= BaseWars.GenWeapon("models/weapons/w_smg1.mdl", 1000, "weapon_smg1")
+			["SMG"] 		= BaseWars.GenWeapon("models/weapons/w_smg1.mdl", 1000, "weapon_smg1"),
+			["AR2"] 		= BaseWars.GenWeapon("models/weapons/w_irifle.mdl", 2250, "weapon_ar2"),
+			["Crowbar"] 	= BaseWars.GenWeapon("models/weapons/w_crowbar.mdl", 300, "weapon_crowbar"),
+			["Frag"]		= BaseWars.GenWeapon("models/weapons/w_grenade.mdl", 12500, "weapon_frag"),
 		
 		},
 	

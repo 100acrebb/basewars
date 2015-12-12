@@ -4,6 +4,43 @@ AddCSLuaFile("include.lua")
 include("modules.lua")
 AddCSLuaFile("modules.lua")
 
+local function MakePortalFunc()
+
+	local Map = game.GetMap()
+	if Map == "gm_excess_island" then
+
+		local PortalBox = ents.GetMapCreatedEntity(2086)
+		local On 		= false
+		
+		function BaseWars.ToggleMapPortal()
+		
+			if On then
+			
+				On = false
+			
+				PortalBox:Fire("InValue", "13")
+				
+			else
+			
+				On = true
+			
+				PortalBox:Fire("InValue", "12")
+				
+			end
+		
+		end
+		
+	else
+
+		function BaseWars.ToggleMapPortal() end
+		
+	end
+
+end
+
+hook.Add("InitPostEntity", "BaseWars.MapPortal", MakePortalFunc)
+MakePortalFunc()
+
 BaseWars.ModuleLoader:Load()
 
 function GM:SetupPlayerVisibility(ply)

@@ -205,13 +205,16 @@ else
 			
 				WasPowered = false
 				self:EmitSound("ambient/machines/thumper_shutdown1.wav")
-				self:Spark()
 				
 			end
 			
 		return end
 		
-		WasPowered = true
+		if self:Power() > 15 then
+		
+			WasPowered = true
+			
+		end
 		
 		if disabled then
 			
