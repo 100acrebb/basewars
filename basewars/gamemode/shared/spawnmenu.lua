@@ -186,6 +186,15 @@ surface.CreateFont(overlayFont,{
 
 })
 
+local overlayFont2 = "BaseWars.SpawnList.Overlay.Small"
+surface.CreateFont(overlayFont2,{
+
+	font = "Roboto",
+	size = 12,
+	weight = 800,
+
+})
+
 local PANEL = {}
 
 function PANEL:Init()
@@ -296,7 +305,7 @@ local function MakeTab(type)
 			iLayout:SetSpaceX(4)
 			iLayout:SetSpaceY(4)
 
-			for name, tab in SortedPairs(subT) do
+			for name, tab in SortedPairsByMemberValue(subT, "Price") do
 
 				local model = tab.Model
 				local money = tab.Price
@@ -351,21 +360,32 @@ local function MakeTab(type)
 							draw.RoundedBox(4, 1, 1, w - 2, h - 2, myMoney >= money and canBuy or cantBuy)
 
 						end
+						
+				end
 
-						local pO = icon.PaintOver
+				local pO = icon.PaintOver
 
-						function icon:PaintOver(w, h)
+				function icon:PaintOver(w, h)
 
-							pO(self, w, h)
+					pO(self, w, h)
+					
+					local text
 
-							local text = BaseWars.LANG.CURRENCY .. BaseWars.NumberFormat(money)
+					if money > 0 then
+					
+						text = BaseWars.LANG.CURRENCY .. BaseWars.NumberFormat(money)
 
-							draw.DrawText(text, overlayFont, w - 2, h - 14, shade, TEXT_ALIGN_RIGHT)
-							draw.DrawText(text, overlayFont, w - 4, h - 16, white, TEXT_ALIGN_RIGHT)					
-
-						end
-
+						draw.DrawText(text, overlayFont, w - 2, h - 14, shade, TEXT_ALIGN_RIGHT)
+						draw.DrawText(text, overlayFont, w - 4, h - 16, white, TEXT_ALIGN_RIGHT)
+						
 					end
+					
+					text = (utf8.sub and utf8.sub(name, 1, 10) or string.sub(name, 1, 10)) .. ((utf8.len and utf8.len(name) or string.len(name)) <= 10 and "" or "...")
+
+					draw.DrawText(text, overlayFont2, 4, 4, shade, TEXT_ALIGN_LEFT)
+					draw.DrawText(text, overlayFont2, 2, 2, white, TEXT_ALIGN_LEFT)
+
+				end
 
 			end
 

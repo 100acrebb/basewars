@@ -8,6 +8,8 @@ ENT.Model 		= "models/props_junk/garbage_newspaper001a.mdl"
 
 ENT.PaperAmount = 1000
 
+if CLIENT then return end
+
 function ENT:Initialize()
 
 	self.BaseClass:Initialize()

@@ -6,6 +6,8 @@ ENT.PrintName 	= "Repair Kit"
 
 ENT.Model 		= "models/Items/car_battery01.mdl"
 
+if CLIENT then return end
+
 function ENT:Initialize()
 
 	self.BaseClass:Initialize()

@@ -11,10 +11,9 @@ ENT.Paper 			= 10000
 ENT.PrintInterval 	= 1
 ENT.PrintAmount		= 30
 
-ENT.PrintName = "Base Money Printer"
+ENT.PrintName = "Basic Printer"
 
-ENT.FontColor = color_white
-ENT.BackColor = color_black
+ENT.IsValidRaidable = false
 
 local Clamp = math.Clamp
 local function GSAT(name, var, min, max)
@@ -81,6 +80,9 @@ if SERVER then
 		self:SetHealth(100)
 
 		self.rtb = 0
+		
+		self.FontColor = color_white
+		self.BackColor = color_black
 
 	end
 
@@ -138,6 +140,13 @@ if SERVER then
 	
 else
 
+	function ENT:Initialize()
+	
+		if not self.FontColor then self.FontColor = color_white end
+		if not self.BackColor then self.BackColor = color_black end
+		
+	end
+
 	surface.CreateFont(fontName, {
 
 		font = "Roboto",
@@ -186,9 +195,9 @@ else
 		local w, h = 216 * 2, 136 * 2
 		local disabled = self:GetNWBool("printer_disabled")
 
-		draw.RoundedBox(4, 0, 0, w, h, self.BackColor)
-		
 		local Pw = self:IsPowered()
+		
+		draw.RoundedBox(4, 0, 0, w, h, Pw and self.BackColor or color_black)
 		
 		if not Pw then
 		

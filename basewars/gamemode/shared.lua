@@ -28,6 +28,26 @@ BASEWARS_NOTIFICATION_RAID 	= Color(255, 255, 0, 255)
 BASEWARS_NOTIFICATION_GENRL = Color(255, 0, 255, 255)
 BASEWARS_NOTIFICATION_DRUG	= Color(0, 255, 255, 255)
 
+function BaseWars.PrinterCheck(ply)
+
+	local Ents = ents.GetAll()
+
+	for k, v in next, Ents do
+	
+		if not BaseWars.Ents:Valid(v) or not v.CPPIGetOwner then continue end
+		
+		local Owner = v:CPPIGetOwner()
+		if not BaseWars.Ents:ValidPlayer(Owner) or Owner ~= ply then continue end
+		
+		local Raidable = v.IsValidRaidable
+		
+		if Raidable then return true end
+		
+	end
+
+return false end
+hook.Add("PlayerIsRaidable", "BaseWars.Raidability.PrinterCheck", BaseWars.PrinterCheck)
+
 local tag = "BaseWars.UTIL"
 
 BaseWars.UTIL = {}

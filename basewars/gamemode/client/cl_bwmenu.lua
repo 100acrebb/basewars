@@ -200,8 +200,6 @@ local function MakePlayerList(pnl)
 		if not panel or not IsValid(panel) then return end
 	
 		self.SelectedPly = GetPlayer(panel:GetColumnText(1))
-		
-		chat.AddText(self.SelectedPly:Nick())
 	
 	end
 

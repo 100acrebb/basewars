@@ -380,13 +380,16 @@ BaseWars.SpawnList.Models = {
 
 			["Spawnpoint"]			= M2("models/props_trainstation/trainstation_clock001.mdl", 10000, "bw_spawnpoint", true),
 			["Repair Kit"]			= M("models/Items/car_battery01.mdl", 2000, "bw_repairkit"),
+			["Printer Paper"]		= M("models/props_junk/garbage_newspaper001a.mdl", 250, "bw_printerpaper"),
 
 		},
 		
 		["Printers"] = {
 
 			["Basic Printer"]			= M2("models/props_lab/reciever01a.mdl", 2000, "bw_base_moneyprinter"),
-			["Printer Paper"]			= M("models/props_junk/garbage_newspaper001a.mdl", 200, "bw_printerpaper"),
+			["Copper Printer"]			= M2("models/props_lab/reciever01a.mdl", 5000, "bw_printer_copper"),
+			["Silver Printer"]			= M2("models/props_lab/reciever01a.mdl", 15000, "bw_printer_silver"),
+			["Gold Printer"]			= M2("models/props_lab/reciever01a.mdl", 30000, "bw_printer_gold"),
 
 		},
 
