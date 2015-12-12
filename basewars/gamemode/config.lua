@@ -69,6 +69,11 @@ BaseWars.Config = {
 		EntH	= 25,
 	},
 	
+	Rules = {
+		IsHTML 	= false,
+		HTML	= "http://www.hexahedronic.org/databackup/faq.html#Rules",
+	},
+	
 	PayDayBase 			= 500,
 	PayDayMin			= 50,
 	PayDayDivisor		= 1000,

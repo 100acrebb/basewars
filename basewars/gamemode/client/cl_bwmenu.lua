@@ -809,6 +809,60 @@ local function MakeMenu(mainFrame, tabPanel, ftionTab, raidsTab, equipTab, store
 
 	end
 	
+	do -- Equipment tab
+
+		equipTab:DockPadding(16, 8, 16, 16)
+		local equipmentLabel = equipTab:Add("DLabel")
+
+		equipmentLabel:Dock(TOP)
+		equipmentLabel:SetText("Equipment - WORK IN PROGRESS!")
+		equipmentLabel:SetFont(bigFont)
+		equipmentLabel:SetBright(true)
+		equipmentLabel:SetExpensiveShadow(2, shadowColor)
+		equipmentLabel:SizeToContents()
+		
+	end
+	
+	do -- Store tab
+
+		storeTab:DockPadding(16, 8, 16, 16)
+		local storeLabel = storeTab:Add("DLabel")
+
+		storeLabel:Dock(TOP)
+		storeLabel:SetText("Store - WORK IN PROGRESS!")
+		storeLabel:SetFont(bigFont)
+		storeLabel:SetBright(true)
+		storeLabel:SetExpensiveShadow(2, shadowColor)
+		storeLabel:SizeToContents()
+		
+	end
+	
+	do -- Rules tab
+
+		rulesTab:DockPadding(16, 8, 16, 16)
+		local rulesLabel = rulesTab:Add("DLabel")
+
+		rulesLabel:Dock(TOP)
+		rulesLabel:SetText("Server Rules")
+		rulesLabel:SetFont(bigFont)
+		rulesLabel:SetBright(true)
+		rulesLabel:SetExpensiveShadow(2, shadowColor)
+		rulesLabel:SizeToContents()
+		
+		local rulesHTML = rulesTab:Add("DHTML")
+		rulesHTML:Dock(FILL)
+		if BaseWars.Config.Rules.IsHTML then
+		
+			rulesHTML:SetHTML(BaseWars.Config.Rules.HTML or [[Error Loading HTML]])
+			
+		else
+		
+			rulesHTML:OpenURL(BaseWars.Config.Rules.HTML)
+			
+		end
+		
+	end
+	
 	mainFrame:SetVisible(false)
 
 	return mainFrame
