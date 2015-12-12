@@ -5,10 +5,8 @@ ENT.Model = "models/props_lab/reciever01a.mdl"
 ENT.Skin = 0
 
 ENT.Capacity 		= 25000
-ENT.Money 			= 0
-ENT.Paper 			= 10000
 ENT.PrintInterval 	= 0.9
-ENT.PrintAmount		= 60
+ENT.PrintAmount		= 50
 
 ENT.PrintName = "Silver Printer"
 

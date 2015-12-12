@@ -3,6 +3,25 @@ local SpawnList = {}
 
 SpawnList = BaseWars.SpawnList
 
+local function LimitDeduct(self, ent, ply)
+
+	self.o_OnRemove = self.OnRemove
+	
+	self.OnRemove = function(e)
+		
+		local ply = BaseWars.Ents:ValidPlayer(ply)
+		
+		if ply then
+			ply:GetTable()["limit_" .. ent] = ply:GetTable()["limit_" .. ent] - 1
+		end
+		
+		e:o_OnRemove()
+	end
+	
+	ply:GetTable()["limit_" .. ent] = ply:GetTable()["limit_" .. ent] + 1
+	
+end
+
 if SERVER then 
 
 	local function Spawn(ply, cat, subcat, item)
@@ -25,7 +44,8 @@ if SERVER then
 
 		if not i then return end
 
-		local model, price, ent, sf = i.Model, i.Price, i.ClassName, i.UseSpawnFunc
+		local model, price, ent, sf, lim = i.Model, i.Price, i.ClassName, i.UseSpawnFunc, i.Limit
+		local gun, drug = i.Gun, i.Drug
 
 		local tr
 		
@@ -46,6 +66,25 @@ if SERVER then
 			if not tr.Hit then return end
 		
 		end
+		
+		local SpawnPos = tr.HitPos + tr.HitNormal * 60
+		local SpawnAng = ply:EyeAngles()
+		SpawnAng.p = 0
+		SpawnAng.y = SpawnAng.y + 180
+		SpawnAng.y = math.Round(SpawnAng.y / 45) * 45
+		
+		if lim then
+		
+			local Amount = ply:GetTable()["limit_" .. ent] or 0
+			ply:GetTable()["limit_" .. ent] = Amount
+					
+			if lim and lim <= Amount then
+			
+				ply:Notify(string.format(BaseWars.LANG.EntLimitReached, ent), BASEWARS_NOTIFICATION_ERROR)
+			
+			return end
+			
+		end
 
 		if price > 0 then
 			
@@ -53,16 +92,46 @@ if SERVER then
 
 			if plyMoney < price then
 				
-				ply:Notify(BaseWars.LANG.SpawnMenuMoney, Color(255, 0, 0))
+				ply:Notify(BaseWars.LANG.SpawnMenuMoney, BASEWARS_NOTIFICATION_ERROR)
 
 			return end
 
 			ply:SetMoney(plyMoney - price)
 			ply:EmitSound("mvm/mvm_money_pickup.wav")
 
-			ply:Notify(string.format(BaseWars.LANG.SpawnMenuBuy, item, price), Color(0, 255, 0))
+			ply:Notify(string.format(BaseWars.LANG.SpawnMenuBuy, item, price), BASEWARS_NOTIFICATION_MONEY)
 
 		end
+		
+		if gun then
+		
+			local Ent = ents.Create("bw_weapon")
+				Ent.WeaponClass = ent
+				Ent.Model = model
+				Ent:SetPos(SpawnPos)
+				Ent:SetAngles(SpawnAng)
+			Ent:Spawn()
+			Ent:Activate()
+		
+		return end
+		
+		if drug then 
+		
+			local Rand = (ent == "Random")
+			local Ent = ents.Create("bw_drink_drug")
+				if not Rand then
+				
+					Ent.DrugEffect = ent
+					Ent.Random = false
+					
+				end
+				
+				Ent:SetPos(SpawnPos)
+				Ent:SetAngles(SpawnAng)
+			Ent:Spawn()
+			Ent:Activate()
+		
+		return end
 
 		local prop
 		local noundo
@@ -72,6 +141,12 @@ if SERVER then
 			local newEnt = ents.Create(ent)
 
 			if not newEnt then return end
+			
+			if lim then
+		
+				LimitDeduct(newEnt, ent, ply)
+				
+			end
 
 			if newEnt.SpawnFunction and sf then
 			
@@ -103,12 +178,6 @@ if SERVER then
 
 		end
 
-		local SpawnPos = tr.HitPos + tr.HitNormal * 60
-		local SpawnAng = ply:EyeAngles()
-		SpawnAng.p = 0
-		SpawnAng.y = SpawnAng.y + 180
-		SpawnAng.y = math.Round(SpawnAng.y / 45) * 45
-
 		if not prop then prop = ents.Create(ent or "prop_physics") end
 		if not noundo then undo.Create("prop") end
 		
@@ -121,6 +190,12 @@ if SERVER then
 
 			prop:SetModel(model)
 
+		end
+		
+		if lim and not ent then
+		
+			LimitDeduct(prop, ent, ply)
+			
 		end
 
 		prop:Spawn()
@@ -430,6 +505,8 @@ local Panels = {
 	Junk = MakeTab("Junk"),
 	
 	Entities = MakeTab("Entities"),
+	
+	Loadout = MakeTab("Loadout"),
 
 }
 
@@ -464,7 +541,13 @@ local Tabs = {
 		AssociatedPanel = "Entities",
 		Icon = "icon16/bricks.png",
 	},
-
+	
+	loadout = {
+		Name = "Loadout",
+		AssociatedPanel = "Loadout",
+		Icon = "icon16/gun.png",
+	},
+	
 }
 
 local function MakeSpawnList()

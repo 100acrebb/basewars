@@ -5,8 +5,6 @@ ENT.Model = "models/props_lab/reciever01a.mdl"
 ENT.Skin = 0
 
 ENT.Capacity 		= 100000
-ENT.Money 			= 0
-ENT.Paper 			= 10000
 ENT.PrintInterval 	= 0.8
 ENT.PrintAmount		= 100
 

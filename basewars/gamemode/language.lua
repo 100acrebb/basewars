@@ -60,6 +60,8 @@ BaseWars.LANG.__LANGUAGELOOK.ENGLISH = {
 	SpawnMenuBuy			= "You bought a(n) \"%s\" for " .. CURRENCY .. "%s.",
 	SpawnMenuBuyConfirm		= "Are you sure you want to by a(n) \"%s\" for " .. CURRENCY .. "%s?",
 	SpawnMenuConf			= "Purchase Confirmation",
+	
+	EntLimitReached			= "You have reached the limit of \"%s\"s.",
 }
 
 local INVALID_LANGUAGE 	= "INVALID LANGUAGE SELECTED! NOTIFY THE SERVER ADMIN!"

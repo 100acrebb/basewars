@@ -7,8 +7,8 @@ ENT.Skin = 0
 
 ENT.Capacity 		= 10000
 ENT.Money 			= 0
-ENT.Paper 			= 10000
-ENT.PrintInterval 	= 1
+ENT.Paper 			= 500
+ENT.PrintInterval 	= 1.1
 ENT.PrintAmount		= 30
 
 ENT.PrintName = "Basic Printer"
@@ -63,7 +63,7 @@ end
 
 GSAT("Capacity", "Capacity")
 GSAT("Money", "Money", 0, "Capacity")
-GSAT("Paper", "Paper", 0, 10000)
+GSAT("Paper", "Paper", 0, ENT.Paper)
 
 if SERVER then
 
@@ -75,7 +75,7 @@ if SERVER then
 		self.time_p = CurTime()
 
 		self:SetCapacity(self.Capacity)
-		self:SetPaper(10000)
+		self:SetPaper(self.Paper)
 
 		self:SetHealth(100)
 

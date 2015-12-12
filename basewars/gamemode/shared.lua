@@ -21,6 +21,47 @@ stick it.
 
 BaseWars = {}
 
+function BaseWars.GenSpawnList(model, price, ent, sf, lim)
+
+	return {
+
+		Model = model,
+		Price = price or 0,
+		ClassName = ent,
+		UseSpawnFunc = sf,
+		Limit = lim or (ent and BaseWars.Config.DefaultLimit) or nil,
+		ShouldFreeze = true,
+
+	}
+	
+end
+
+function BaseWars.GenWeapon(model, price, class)
+
+	return {
+	
+		Gun = true,
+		Model = model,
+		Price = price or 0,
+		ClassName = class,
+
+	}
+	
+end
+
+function BaseWars.GenDrug(price, effect)
+
+	return {
+	
+		Drug = true,
+		Model = "models/props_junk/PopCan01a.mdl",
+		Price = price or 0,
+		ClassName = effect,
+
+	}
+	
+end
+
 BASEWARS_NOTIFICATION_ADMIN = color_white
 BASEWARS_NOTIFICATION_ERROR = Color(255, 0, 0, 255)
 BASEWARS_NOTIFICATION_MONEY = Color(0, 255, 0, 255)
