@@ -71,7 +71,7 @@ BaseWars.Config = {
 	
 	Rules = {
 		IsHTML 	= false,
-		HTML	= "http://www.hexahedronic.org/databackup/faq.html#Rules",
+		HTML	= "http://www.hexahedronic.org/faq.html",
 	},
 	
 	PayDayBase 			= 500,
