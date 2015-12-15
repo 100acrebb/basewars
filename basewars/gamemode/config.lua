@@ -82,6 +82,10 @@ BaseWars.Config = {
 		["bw_spawnpoint"] = true,
 	},
 	
+	NPC = {
+		FadeOut = 400,
+	},
+	
 	PayDayBase 			= 500,
 	PayDayMin			= 50,
 	PayDayDivisor		= 1000,

@@ -1,7 +1,7 @@
 AddCSLuaFile()
 
-ENT.Base 		= "base_gmodentity"
-ENT.Type 		= "anim"--e
+ENT.Base 		= "base_ai"
+ENT.Type 		= "ai"
 
 ENT.PrintName 	= "Weiss Schnee"
 
@@ -12,53 +12,46 @@ ENT.Offset 		= Vector(0, 0, -3)
 ENT.Offset2		= Vector(0, 0, 4)
 
 ENT.TextColor	= Color(0, 150, 255, 255)
+ENT.IsBWNPC		= true
 
-if CLIENT then
+if CLIENT then return end
 
-	local font = "BaseWars.NPCs.Weiss"
-	surface.CreateFont(font, {
-		font = "Segoe UI",
-		size = 72,
-		weight = 1200,
-	})
+ENT.Cap 		= bit.bor(CAP_ANIMATEDFACE, CAP_TURN_HEAD)
+ENT.UsedTime 	= CurTime()
 
-	function ENT:Draw()
+function ENT:OnUse(ply, caller)
 
-		self.Entity:DrawModel()
+	net.Start("BaseWars.NPCs.Menu")
+		net.WriteEntity(self)
+	net.Send(ply)
 
-		local Ang = self:GetAngles()
+end
 
-		Ang:RotateAroundAxis(Ang:Forward(), 90)
-		Ang:RotateAroundAxis(Ang:Right(), -90)
+function ENT:AcceptInput(Name, ply, caller)
+
+	if Name == "Use" and ply:IsPlayer() and CurTime() - 1 > self.UsedTime then
 		
-		local Tall = self:OBBMaxs()
-		Tall.y = 0
-		Tall.x = 0
-
-		cam.Start3D2D(self:GetPos() + Tall - self:GetUp(), Ang, 0.095)
-		
-			draw.SimpleTextOutlined(self.PrintName, font, 0, 0, self.TextColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_BOTTOM, 0.85, color_black)	
-			
-		cam.End3D2D()
-
-	end
-
-return end
-
-function ENT:OnUse(ply)
-
-
-
+		self:OnUse(ply, caller)
+		self.UsedTime = CurTime()
+	
+	return end
+	
 end
 
 function ENT:Initialize()
 
 	self:SetModel(self.Model)
-
-	self:PhysicsInit(SOLID_OBB)
-	self:SetSolid(SOLID_OBB)
+	
+	self:PhysicsInit(SOLID_BBOX)
+	self:SetSolid(SOLID_BBOX)
 	self:SetMoveType(MOVETYPE_NONE)
+	
+	self:SetNPCState(NPC_STATE_SCRIPT)
+	self:CapabilitiesAdd(self.Cap)
 
+	self:SetMaxYawSpeed(90)
+	self:SetUseType(USE_SIMPLE)
+	
 	self:Activate()
 
 	self.IDLESequence = 17--self:LookupSequence("idle_angry")

@@ -1,7 +1,5 @@
--- BaseWars Menu for things and shit
--- by Ghosty
-
 local me = LocalPlayer()
+local tag = "BaseWars.NPCs.Menu"
 
 local grayTop 		= Color(128, 128, 128, 250)
 local grayBottom 	= Color(96, 96, 96, 250)
@@ -9,9 +7,9 @@ local grayBottom 	= Color(96, 96, 96, 250)
 local nodePanelBg	= Color(192, 192, 192, 250)
 local shadowColor 	= Color(0, 0, 0, 200)
 
-local bigFont = "BW.NPCMenu.BigFont"
-local medFont = "BW.NPCMenu.MedFont"
-local smallFont = "BW.NPCMenu.SmallFont"
+local bigFont = tag .. ".BigFont"
+local medFont = tag .. ".MedFont"
+local smallFont = tag .. ".SmallFont"
 
 surface.CreateFont(bigFont, {
 
@@ -38,16 +36,17 @@ local white = Color(255, 255, 255)
 local gray = Color(192, 192, 192)
 local black = Color(0, 0, 0)
 
-local function PrepMenu()
+local function PrepMenu(ent)
+
+	local Name = ent.PrintName
 
 	local mainFrame = vgui.Create("DFrame")
 
 	mainFrame:SetSize(900, 600)
 	mainFrame:Center()
-	mainFrame:SetTitle("BaseWars Menu")
+	mainFrame:SetTitle(Name)
 	mainFrame:SetIcon("icon16/application.png")
 	mainFrame:MakePopup()
-	mainFrame:SetDeleteOnClose(false)
 
 	function mainFrame:Paint(w, h)
 
@@ -55,21 +54,42 @@ local function PrepMenu()
 		draw.RoundedBox(0, 0, 24, w, h - 24, grayBottom)
 
 	end
+	
+	local tabPanel = mainFrame:Add("DPropertySheet")
 
-	function mainFrame:Close()
+	tabPanel:Dock(FILL)
+	tabPanel:SetWide(200)
 
-		self:Hide()
-		self:OnClose()
+	function tabPanel:MakeTab(name, icon)
+
+		local dpanel = vgui.Create("DPanel")
+		self:AddSheet(name, dpanel, icon)
+
+		return dpanel
 
 	end
 
+	local HelpTab = tabPanel:MakeTab("Help", "icon16/help.png")
+	local QuestsTab = tabPanel:MakeTab("Quests", "icon16/ruby_gear.png")
+	
+	return mainFrame
+
 end
 
-local function MakeNotExist()
+local pnl
+local function MakeNotExist(...)
 
 	if pnl and IsValid(pnl) then return end
 
-	pnl = MakeMenu(PrepMenu())
-	pnl:Hide()
+	pnl = PrepMenu(...)
 	
 end
+
+ local function ReceiveNet(len)
+ 
+	local Ent = net.ReadEntity()
+	
+	MakeNotExist(Ent)
+	
+end
+net.Receive(tag, ReceiveNet)
