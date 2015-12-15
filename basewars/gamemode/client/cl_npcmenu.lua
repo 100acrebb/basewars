@@ -68,9 +68,58 @@ local function PrepMenu(ent)
 		return dpanel
 
 	end
+	
+	local function PopulateFromTable(panel, tbl)
+	
+		local PanelList = vgui.Create("DPanelList", panel)
+		
+		PanelList:EnableHorizontal(false)
+		PanelList:EnableVerticalScrollbar(true)
+		PanelList:SetPadding(3)
+		PanelList:SetSpacing(5)
+		PanelList:Dock(FILL)
+		
+		for k, v in next, tbl do
+		
+			local Cat = vgui.Create("DCollapsibleCategory") 
+			Cat:SetLabel(k)
+			
+			local List = vgui.Create("DPanelList")
+			
+			List:SetPadding(3)
+			List:SetDrawBackground(false)
+			
+			for i, t in next, v do
+			
+				local Label = vgui.Create("DLabel", List)
+				
+				Label:SetText(t)
+				Label:SizeToContents()
+				
+				List:AddItem(Label)
+				
+			end
+			
+			List:SetSize( 250, 100 )
+			Cat:SetContents(List)
+			
+			Cat:InvalidateLayout()
+			Cat:SizeToContents()
+			
+			Cat:SetExpanded(false)
+			
+			PanelList:AddItem(Cat)
+			
+		end
+		
+		PanelList:InvalidateLayout()
+		
+	end
 
 	local HelpTab = tabPanel:MakeTab("Help", "icon16/help.png")
 	local QuestsTab = tabPanel:MakeTab("Quests", "icon16/ruby_gear.png")
+	
+	PopulateFromTable(HelpTab, BaseWars.Config.Help)
 	
 	return mainFrame
 

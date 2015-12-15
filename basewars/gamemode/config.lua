@@ -109,6 +109,24 @@ BaseWars.Config = {
 	DestroyReturn 		= 0.6,
 }
 
+BaseWars.Config.Help = {
+
+	["Dont be a jew"] = {
+	
+		"Jews will be killed",
+		"hitler din du nufin",
+	
+	},
+	
+	["Meow"] = {
+	
+		"hello i are cat",
+		"purr",
+	
+	},
+
+}
+
 BaseWars.SpawnList = {}
 BaseWars.SpawnList.Models = {
 
