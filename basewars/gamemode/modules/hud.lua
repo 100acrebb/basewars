@@ -23,6 +23,12 @@ function MODULE:__INIT()
 		size = 16,
 		weight = 800,
 	})
+	
+	surface.CreateFont(tag .. ".Large", {
+		font = "Roboto",
+		size = 20,
+		weight = 1200,
+	})
 
 end
 
@@ -165,6 +171,7 @@ function MODULE:DrawDisplay()
 	
 end
 
+local StuckTime
 function MODULE:Paint()
 
 	local me = LocalPlayer()
@@ -235,6 +242,23 @@ function MODULE:Paint()
 
 	draw.DrawText(round(suF), tag, pbarW + 98, sH - 128 - 16 - 8, shade, TEXT_ALIGN_LEFT)
 	draw.DrawText(round(suF), tag, pbarW + 96, sH - 128 - 16 - 10, trans, TEXT_ALIGN_LEFT)
+	
+	if me.Stuck and me:Stuck() and me:GetMoveType() == MOVETYPE_WALK then
+	
+		if not StuckTime then StuckTime = CurTime() end
+		
+		if CurTime() > StuckTime + 1 then
+		
+			draw.DrawText(BaseWars.LANG.StuckText, tag .. ".Large", sW / 2 + 2, sH / 2 + 2, shade, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+			draw.DrawText(BaseWars.LANG.StuckText, tag .. ".Large", sW / 2, sH / 2, trans, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+			
+		end
+		
+	else
+	
+		StuckTime = nil
+		
+	end
 
 end
 hook.Add("HUDPaint", tag .. ".Paint", Curry(MODULE.Paint))

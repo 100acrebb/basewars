@@ -115,3 +115,107 @@ function MODULE:PlayerSetHandsModel(ply, ent)
 
 end
 hook.Add("PlayerSetHandsModel", tag .. ".PlayerSetHandsModel", Curry(MODULE.PlayerSetHandsModel))
+
+function MODULE:Stuck(ply, pos)
+
+	local t = {}
+
+	t.start 	= pos or ply:GetPos()
+	t.endpos 	= t.start
+	t.filter 	= ply
+	t.mask 		= MASK_PLAYERSOLID
+	t.mins 		= ply:OBBMins()
+	t.maxs 		= ply:OBBMaxs()
+	
+	t = util.TraceHull(t)
+	
+	local ent = t.Entity
+	
+	return t.StartSolid or (ent and (ent:IsWorld() or IsValid(ent)))
+	
+end
+PLAYER.Stuck = Curry(MODULE.Stuck)
+
+local function FindPassableSpace(ply, direction, step)
+
+	local OldPos = ply:GetPos()
+	local Origin = ply:GetPos()
+	
+	for i = 1, 21 do
+		Origin = Origin + (step * direction)
+		
+		if not ply:Stuck(Origin) then return true, Origin end
+		
+	end
+	
+	return false, OldPos
+	
+end
+
+function MODULE:UnStuck(ply, ang, scale)
+
+	local NewPos = ply:GetPos()
+	local OldPos = NewPos
+	
+	if not ply:Stuck() then return end
+	
+	local Ang = ang or ply:GetAngles()
+	
+	local Forward 	= Ang:Forward()
+	local Right 	= Ang:Right()
+	local Up 		= Ang:Up()
+	
+	local SearchScale = scale or 3
+	local Found
+	
+	Found, NewPos = FindPassableSpace(ply, Forward, -SearchScale)
+	
+	if not Found then
+	
+		Found, NewPos = FindPassableSpace(ply, Right, SearchScale)
+		
+		if not Found then
+		
+			Found, NewPos = FindPassableSpace(ply, Right, -SearchScale)
+			
+			if not Found then
+			
+				Found, NewPos = FindPassableSpace(ply, Up, -SearchScale)
+				
+				if not Found then
+				
+					Found, NewPos = FindPassableSpace(ply, Up, SearchScale)
+					
+					if not Found then
+					
+						Found, NewPos = FindPassableSpace(ply, Forward, SearchScale)
+						
+						if not Found then
+						
+							return false	
+							
+						end
+						
+					end
+					
+				end
+				
+			end
+			
+		end
+		
+	end
+	
+	if OldPos == NewPos then
+	
+		return false
+		
+	else
+	
+		ply:SetPos(NewPos)
+		return true
+		
+	end
+		
+end
+PLAYER.UnStuck = Curry(MODULE.UnStuck)

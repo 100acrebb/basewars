@@ -74,6 +74,14 @@ BaseWars.Config = {
 		HTML	= "http://www.hexahedronic.org/faq.html",
 	},
 	
+	SpawnWeps = {
+		"weapon_physcannon",
+	},
+	
+	PhysgunBlockClasses = {
+		["bw_spawnpoint"] = true,
+	},
+	
 	PayDayBase 			= 500,
 	PayDayMin			= 50,
 	PayDayDivisor		= 1000,
@@ -91,6 +99,8 @@ BaseWars.Config = {
 	DefaultRun			= 400,
 	
 	DefaultLimit		= 4,
+	
+	UniversalPropConstant = 2.7,
 }
 
 BaseWars.SpawnList = {}
@@ -350,6 +360,7 @@ BaseWars.SpawnList.Models = {
 			["Coal Fired Generator"]	= BaseWars.GenSpawnList("models/props_wasteland/laundry_washer003.mdl", 3000, "bw_gen_coalfired"),
 			["Fission Reactor"]			= BaseWars.GenSpawnList("models/props/de_nuke/equipment1.mdl", 50000, "bw_gen_fission"),
 			["Fusion Reactor"]			= BaseWars.GenSpawnList("models/xqm/hydcontrolbox.mdl", 1000000, "bw_gen_fusion"),
+			["Hentai Generator"]		= BaseWars.GenSpawnList("models/props_junk/garbage_newspaper001a.mdl", 20, "bw_gen_hentai"),
 
 		},
 		

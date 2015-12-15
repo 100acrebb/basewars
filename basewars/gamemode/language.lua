@@ -24,8 +24,8 @@ BaseWars.LANG.__LANGUAGELOOK.ENGLISH = {
 	SpawnCamp				= "Do not attempt to spawncamp.",
 	
 	RaidOngoing				= "There is allready a raid ongoing!",
-	RaidSelfUnraidable		= "You are not raidable youself!",
-	RaidTargetUnraidable	= "Your target is not raidable!",
+	RaidSelfUnraidable		= "You are not raidable youself! (%s)",
+	RaidTargetUnraidable	= "Your target is not raidable! (%s)",
 	RaidOver				= "The raid between %s and %s has ENDED!",
 	RaidStart				= "Raid started between %s and %s!",
 	RaidTargNoFac			= "You cannot raid a factionless player as a faction!",
@@ -62,6 +62,11 @@ BaseWars.LANG.__LANGUAGELOOK.ENGLISH = {
 	SpawnMenuConf			= "Purchase Confirmation",
 	
 	EntLimitReached			= "You have reached the limit of \"%s\"s.",
+	
+	StuckText				= "You are stuck inside a wall, prop, or player! Remain calm and press [CTRL], if it does not work press [SPACE].",
+	
+	NoPrinters				= "No raidable printers!",
+	OnCoolDown				= "Currently on CoolDown from being raided!",
 }
 
 local INVALID_LANGUAGE 	= "INVALID LANGUAGE SELECTED! NOTIFY THE SERVER ADMIN!"

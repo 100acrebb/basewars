@@ -29,15 +29,25 @@ function ENT:PhysicsCollide(data, phys)
 	self.BaseClass:PhysicsCollide(data, phys)
 
 	local ent = data.HitEntity
-	if not ent or not IsValid(ent) then return end
+	if not BaseWars.Ents:Valid(ent) then return end
 	
-	if ent.Repair and not self.Removing then
+	if ent.Repair and not self.Removing and ent:Health() < ent:MaxHealth() - 1 then
 	
 		ent:Repair()
 		
 		self.Removing = true
 		self:Remove()
 		
-	end
+	return end
+	
+	if ent.DestructableProp and not self.Removing and ent:Health() < ent.MaxHealth - 1 then
+	
+		ent:SetHealth(ent.MaxHealth)
+		ent:SetColor(color_white)
+	
+		self.Removing = true
+		self:Remove()
+		
+	return end
 
 end

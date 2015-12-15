@@ -87,7 +87,7 @@ function MODULE:CheckForNULL()
 		
 	end
 	
-	if IsFaction and (not BaseWars.Factions:FactionExist(P1Faction) or not BaseWars.Factions:FactionExist(P2Faction)) then
+	if (SERVER and IsFaction and (not BaseWars.Factions:FactionExist(P1Faction) or not BaseWars.Factions:FactionExist(P2Faction))) or (CLIENT and (P1Faction and P2Faction)) then
 	
 		return false
 		
@@ -135,7 +135,7 @@ function MODULE:CheckRaidable(ply, nocool)
 		local Table = BaseWars.Factions.FactionTable
 		local Faction = Table[ply:GetFaction()]
 
-		if CurTime() - (Faction and Faction.__RaidCoolDown or ply.__RaidCoolDown or 0) < BaseWars.Config.Raid.CoolDownTime then return false end
+		if CurTime() - (Faction and Faction.__RaidCoolDown or ply.__RaidCoolDown or 0) < BaseWars.Config.Raid.CoolDownTime then return false, BaseWars.LANG.OnCoolDown end
 		
 	end
 
@@ -143,7 +143,7 @@ function MODULE:CheckRaidable(ply, nocool)
 	
 	if Call == false then
 	
-		return false
+		return false, Message
 		
 	end
 
@@ -211,18 +211,22 @@ function MODULE:Start(ply, target)
 		return
 		
 	end
-
-	if not self:CheckRaidable(ply, true) then
 	
-		ply:Notify(BaseWars.LANG.RaidSelfUnraidable, BASEWARS_NOTIFICATION_RAID)
+	local Ret, Msg
+
+	Ret, Msg = self:CheckRaidable(ply, true)
+	if not Ret then
+	
+		ply:Notify(string.format(BaseWars.LANG.RaidSelfUnraidable, Msg or "UNKNOWN!"), BASEWARS_NOTIFICATION_RAID)
 		
 		return
 		
 	end
 	
-	if not self:CheckRaidable(target) then
+	Ret, Msg = self:CheckRaidable(target)
+	if not Ret then
 	
-		ply:Notify(BaseWars.LANG.RaidTargetUnraidable, BASEWARS_NOTIFICATION_RAID)
+		ply:Notify(string.format(BaseWars.LANG.RaidTargetUnraidable, Msg or "UNKNOWN!"), BASEWARS_NOTIFICATION_RAID)
 		
 		return
 		

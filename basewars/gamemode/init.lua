@@ -4,6 +4,8 @@ AddCSLuaFile("include.lua")
 include("modules.lua")
 AddCSLuaFile("modules.lua")
 
+BaseWars.ModuleLoader:Load()
+
 local function MakePortalFunc()
 
 	local Map = game.GetMap()
@@ -41,9 +43,33 @@ end
 hook.Add("InitPostEntity", "BaseWars.MapPortal", MakePortalFunc)
 MakePortalFunc()
 
-BaseWars.ModuleLoader:Load()
+function GM:OnEntityCreated(ent)
+	
+	local f = function()
+	
+		self.BaseClass:OnEntityCreated(ent)
+
+		local Class = BaseWars.Ents:Valid(ent) and ent:GetClass()
+		if Class == "prop_physics" and ent:Health() == 0 then
+		
+			local HP = (BaseWars.Ents:Valid(ent:GetPhysicsObject()) and ent:GetPhysicsObject():GetMass() or 50) * BaseWars.Config.UniversalPropConstant
+		
+			ent:SetHealth(HP)
+			
+			ent.MaxHealth = HP
+			ent.DestructableProp = true
+			
+		end
+		
+	end
+	
+	timer.Simple(0, f)
+	
+end
 
 function GM:SetupPlayerVisibility(ply)
+
+	self.BaseClass:SetupPlayerVisibility(ply)
 
 	for _, v in next, ents.FindByClass("bw_bigbomb") do
 	
@@ -99,6 +125,12 @@ function GM:KeyPress(ply, code)
 		
 	end
 	
+	if code == IN_JUMP and (ply.Stuck and ply:Stuck()) and ply:GetMoveType() == MOVETYPE_WALK then
+	
+		ply:UnStuck()
+		
+	end
+	
 end
 
 function GM:EntityTakeDamage(ent, dmginfo)
@@ -120,8 +152,8 @@ function GM:EntityTakeDamage(ent, dmginfo)
 	local Owner = ent.CPPIGetOwner and ent:CPPIGetOwner()
 	if (not ent.AllwaysRaidable) and (Owner and BaseWars.Ents:ValidPlayer(Owner)) then
 	
-		local RaidLogic 	= (Attacker == Owner and Owner:InRaid()) or (Owner:InFaction() and Attacker:InFaction(Owner:GetFaction()))
-		local RaidLogic2 	= Attacker ~= Owner and (not Owner:InRaid() or not Attacker:InRaid())
+		local RaidLogic 	= (Attacker == Owner and Owner:InRaid()) or (Owner:InFaction() and (Attacker.InFaction and Attacker:InFaction(Owner:GetFaction())))
+		local RaidLogic2 	= Attacker ~= Owner and (not Owner:InRaid() or not (Attacker.InRaid and Attacker:InRaid()))
 	
 		if RaidLogic or RaidLogic2 then
 	
@@ -131,6 +163,29 @@ function GM:EntityTakeDamage(ent, dmginfo)
 		return false end
 		
 	end
+	
+	if ent.DestructableProp then
+	
+		if not BaseWars.Raid:IsOnGoing() then return end
+
+		local ActualDmg = Damage * Scale
+		local HP = ent:Health()
+	
+		ent:SetHealth(HP - ActualDmg)
+
+		if ent:Health() <= 0 then
+		
+			ent:Remove()
+
+		return end
+		
+		local M 		= HP / ent.MaxHealth
+		local OldCol 	= ent:GetColor()
+		local Color 	= Color(255 * M, 255 * M, 255 * M, OldCol.a)
+		
+		ent:SetColor(Color)
+		
+	return end
 	
 	if ent:IsPlayer() then
 	
@@ -353,6 +408,12 @@ function GM:PlayerSpawn(ply)
 		local Pos = Spawn:GetPos() + BaseWars.Config.Ents.SpawnPoint.Offset
 	
 		ply:SetPos(Pos)
+		
+	end
+	
+	for k, v in next, BaseWars.Config.SpawnWeps do
+	
+		ply:Give(v)
 		
 	end
 	

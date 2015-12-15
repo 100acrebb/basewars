@@ -86,7 +86,7 @@ function BaseWars.PrinterCheck(ply)
 		
 	end
 
-return false end
+return false, BaseWars.LANG.NoPrinters end
 hook.Add("PlayerIsRaidable", "BaseWars.Raidability.PrinterCheck", BaseWars.PrinterCheck)
 
 local tag = "BaseWars.UTIL"
@@ -116,6 +116,12 @@ function BaseWars.UTIL.TimerAdvDestroy(name)
 	timer.Destroy(name)
 	timer.Destroy(name .. ".Tick")
 	
+end
+
+function BaseWars.UTIL.PayOutInfo(ent, attacker)
+
+	return {}
+
 end
 
 local NumTable = {
@@ -167,4 +173,36 @@ function GM:PlayerNoClip(ply)
 	
 	return Admin
 	
+end
+
+local function BlockInteraction(ply, ent, ret)
+
+	if not BaseWars.Ents:Valid(ent) then return end
+
+	local Classes = BaseWars.Config.PhysgunBlockClasses
+	if Classes[ent:GetClass()] then return false end
+	
+	local Owner = ent.CPPIGetOwner and ent:CPPIGetOwner()
+	
+	if BaseWars.Ents:ValidPlayer(ply) and ply:InRaid() then return false end
+	if BaseWars.Ents:ValidPlayer(Owner) and Owner:InRaid() then return false end
+	
+	return ret == nil or ret
+	
+end
+
+function GM:PhysgunPickup(ply, ent)
+
+	local Ret = self.BaseClass:PhysgunPickup(ply, ent)
+
+	return BlockInteraction(ply, ent, Ret)
+
+end
+
+function GM:CanPlayerUnfreeze(ply, ent, phys)
+
+	local Ret = self.BaseClass:CanPlayerUnfreeze(ply, ent, phys)
+	
+	return BlockInteraction(ply, ent, Ret)
+
 end
