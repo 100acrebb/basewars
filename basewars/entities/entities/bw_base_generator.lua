@@ -249,10 +249,13 @@ if SERVER then
 	function ENT:OnTakeDamage(dmginfo)
 
 		local dmg = dmginfo:GetDamage()
+		local Attacker = dmginfo:GetAttacker()
 
 		self:SetHealth(self:Health() - dmg)
 
 		if self:Health() <= 0 then
+		
+			BaseWars.UTIL.PayOut(self, Attacker)
 		
 			if dmginfo:IsExplosionDamage() then
 			
@@ -264,7 +267,7 @@ if SERVER then
 
 		return end
 
-		self:Spark(nil, dmginfo:GetAttacker())
+		self:Spark(nil, Attacker)
 
 	end
 

@@ -147,6 +147,8 @@ if SERVER then
 				LimitDeduct(newEnt, ent, ply)
 				
 			end
+			
+			newEnt.CurrentValue = price
 
 			if newEnt.SpawnFunction and sf then
 			

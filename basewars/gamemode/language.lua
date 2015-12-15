@@ -69,6 +69,9 @@ BaseWars.LANG.__LANGUAGELOOK.ENGLISH = {
 	OnCoolDown				= "Currently on CoolDown from being raided!",
 
 	FailedToAuth			= "Steam failed to authenticate your SteamID, uh oh!",
+	
+	PayOutOwner				= "You got " .. CURRENCY .. "%s for the destruction of your %s!",
+	PayOut					= "You got " .. CURRENCY .. "%s for destroying a %s!",
 }
 
 local INVALID_LANGUAGE 	= "INVALID LANGUAGE SELECTED! NOTIFY THE SERVER ADMIN!"

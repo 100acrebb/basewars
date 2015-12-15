@@ -226,6 +226,13 @@ function MODULE:Leave(ply, disband, forcedisband)
 end
 PLAYER.LeaveFaction = Curry(MODULE.Leave)
 
+function MODULE:Members(ply)
+
+	return {}
+	
+end
+PLAYER.FactionMembers = Curry(MODULE.Members)
+
 function MODULE:ChangePass(ply, newpass)
 
 	-- not done dont use

@@ -23,9 +23,9 @@ end
 
 function MODULE:ValidOwner(ent)
 
-	local Owner = ent and (ent.Owner or (ent.CPPIGetOwner and ent:CPPIGetOwner()))
+	local Owner = ent and (ent.CPPIGetOwner and ent:CPPIGetOwner())
 	
-	return self:Valid(Owner) and Owner:IsPlayer() and Owner
+	return self:ValidPlayer(Owner)
 	
 end
 

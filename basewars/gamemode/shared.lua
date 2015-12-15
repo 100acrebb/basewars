@@ -8,15 +8,23 @@ Thanks to the following people:
 	Liquid			- Misc dev, good friend.
 	Tenrys			- Misc dev, good friend also.
 	Pyro-Fire		- Owner of Lagnation, ideas ect.
-	HLTV Proxy		- Original dev of BaseWars.
 	
 This GM has been built from scratch with almost no
-traces of the original BaseWars existing outside of
+traces of the original BaseWars existing outside of maybe
 a few miscellaneous entities, albiet, in heavily modified
 form. Due to this, anybody trying to dispute
 our ownership of the gamemode (as I remember happening on
 the previous version I made) will be told where to
 stick it.
+]]
+GM.License = [[
+Copyright (c) 2015 Hexahedronic, Ghosty, Tenrys
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ]]
 
 BaseWars = {}
@@ -118,9 +126,56 @@ function BaseWars.UTIL.TimerAdvDestroy(name)
 	
 end
 
-function BaseWars.UTIL.PayOutInfo(ent, attacker)
+local function Pay(ply, amt, name, own)
 
-	return {}
+	ply:Notify(string.format(own and BaseWars.LANG.PayOutOwner or BaseWars.LANG.PayOut, BaseWars.NumberFormat(amt), name), BASEWARS_NOTIFICATION_GENRL)
+	
+	ply:GiveMoney(amt)
+
+end
+
+function BaseWars.UTIL.PayOut(ent, attacker)
+
+	if not BaseWars.Ents:Valid(ent) or not BaseWars.Ents:ValidPlayer(attacker) then return end
+
+	local Owner = BaseWars.Ents:ValidOwner(ent)
+	local Val = ent.CurrentValue * BaseWars.Config.DestroyReturn
+	
+	local Name = ent.PrintName or ent:GetClass()
+	
+	print(attacker, Owner)
+	
+	if attacker == Owner then 
+	
+		Pay(Owner, Val, Name, true)
+		
+	return end
+	
+	local Members = attacker:FactionMembers()
+	local TeamAmt = attacker:InFaction() and #Members or 1
+	local Involved = Owner and TeamAmt + 1 or TeamAmt
+	
+	local Fraction = math.floor(Val / Involved)
+	
+	if Members then
+	
+		for k, v in next, Members do
+		
+			Pay(v, Fraction, Name)
+			
+		end
+	
+	else
+	
+		Pay(attacker, Fraction, Name)
+	
+	end
+	
+	if Owner then
+	
+		Pay(Owner, Fraction, Name, true)
+		
+	end
 
 end
 

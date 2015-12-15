@@ -105,6 +105,8 @@ BaseWars.Config = {
 	DefaultLimit		= 4,
 	
 	UniversalPropConstant = 2.7,
+	
+	DestroyReturn 		= 0.6,
 }
 
 BaseWars.SpawnList = {}
