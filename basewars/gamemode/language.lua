@@ -67,6 +67,8 @@ BaseWars.LANG.__LANGUAGELOOK.ENGLISH = {
 	
 	NoPrinters				= "No raidable printers!",
 	OnCoolDown				= "Currently on CoolDown from being raided!",
+
+	FailedToAuth			= "Steam failed to authenticate your SteamID, uh oh!",
 }
 
 local INVALID_LANGUAGE 	= "INVALID LANGUAGE SELECTED! NOTIFY THE SERVER ADMIN!"

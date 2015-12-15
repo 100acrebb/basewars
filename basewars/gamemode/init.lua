@@ -6,6 +6,38 @@ AddCSLuaFile("modules.lua")
 
 BaseWars.ModuleLoader:Load()
 
+local AuthTbl = {}
+
+function GM:NetworkIDValidated(name, steamid)
+
+	AuthTbl[steamid] = name
+	
+end
+
+function GM:PlayerInitialSpawn(ply)
+
+	self.BaseClass:PlayerInitialSpawn(ply)
+	
+	local f = function()
+	
+		if not AuthTbl[ply:SteamID()] then
+		
+			ply:ChatPrint(BaseWars.LANG.FailedToAuth)
+			
+			ply.UnAuthed = true
+		 
+		else
+		
+			AuthTbl[ply:SteamID()] = nil
+			
+		end
+		
+	end
+	
+	timer.Simple(0, f)
+
+end
+
 local function MakePortalFunc()
 
 	local Map = game.GetMap()
