@@ -1,5 +1,5 @@
 ENT.Base = "bw_base_drink"
-ENT.HealAmount = 5
+ENT.HealAmount = 20
 ENT.Random = false
 
 ENT.Model = "models/props_junk/PopCan01a.mdl"

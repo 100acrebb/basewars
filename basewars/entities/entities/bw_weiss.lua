@@ -1,12 +1,11 @@
 AddCSLuaFile()
 
-ENT.Base 		= "base_ai"
-ENT.Type 		= "ai"
+ENT.Base 		= "base_anim"--e
+ENT.Type 		= "anim"
 
 ENT.PrintName 	= "Weiss Schnee"
 
 ENT.Model 		= "models/jazzmcfly/rwby/weiss_schnee.mdl"
-ENT.AutomaticFrameAdvance = true
 
 ENT.Offset 		= Vector(0, 0, -3)
 ENT.Offset2		= Vector(0, 0, 4)
@@ -14,9 +13,10 @@ ENT.Offset2		= Vector(0, 0, 4)
 ENT.TextColor	= Color(0, 150, 255, 255)
 ENT.IsBWNPC		= true
 
+ENT.AutomaticFrameAdvance = true
+
 if CLIENT then return end
 
-ENT.Cap 		= bit.bor(CAP_ANIMATEDFACE, CAP_TURN_HEAD)
 ENT.UsedTime 	= CurTime()
 
 function ENT:OnUse(ply, caller)
@@ -45,16 +45,11 @@ function ENT:Initialize()
 	self:PhysicsInit(SOLID_BBOX)
 	self:SetSolid(SOLID_BBOX)
 	self:SetMoveType(MOVETYPE_NONE)
-	
-	self:SetNPCState(NPC_STATE_SCRIPT)
-	self:CapabilitiesAdd(self.Cap)
-
-	self:SetMaxYawSpeed(90)
 	self:SetUseType(USE_SIMPLE)
 	
-	self:Activate()
-
 	self.IDLESequence = 17--self:LookupSequence("idle_angry")
+	
+	self:Activate()
 	
 	timer.Simple(0, function() self:FixPosition() end)
 	

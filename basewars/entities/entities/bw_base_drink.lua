@@ -2,7 +2,7 @@ ENT.Base = "base_gmodentity"
 ENT.Type = "anim"
 
 ENT.HealAmount 	= 15
-ENT.MaxHealth 	= 200
+ENT.MaxHealth 	= 100
 ENT.MinHealth	= 5
 
 ENT.Model 		= "models/props_junk/PopCan01a.mdl"

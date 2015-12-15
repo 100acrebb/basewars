@@ -4,13 +4,13 @@ ENT.Base = "bw_base_moneyprinter"
 ENT.Model = "models/props_lab/reciever01a.mdl"
 ENT.Skin = 0
 
-ENT.Capacity 		= 100000
+ENT.Capacity 		= 200000
 ENT.PrintInterval 	= 1
-ENT.PrintAmount		= 65
+ENT.PrintAmount		= 80
 
-ENT.PrintName = "Gold Printer"
+ENT.PrintName = "Platinum Printer"
 
-ENT.FontColor = Color(204, 153, 0)
-ENT.BackColor = color_black
+ENT.FontColor = Color(229, 228, 226)
+ENT.BackColor = Color(79, 78, 76)
 
 ENT.IsValidRaidable = true
