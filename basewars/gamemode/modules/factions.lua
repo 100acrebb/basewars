@@ -137,7 +137,6 @@ function MODULE:Set(ply, value, password, force)
 	ply:SetNWString(tag, value)
 
 end
-
 local setFaction = Curry(MODULE.Set)
 PLAYER.SetFaction = setFaction
 PLAYER.JoinFaction = setFaction
@@ -228,7 +227,15 @@ PLAYER.LeaveFaction = Curry(MODULE.Leave)
 
 function MODULE:Members(ply)
 
-	return {}
+	if CLIENT then return end
+
+	local Table = BaseWars.Factions.FactionTable
+	local Fac = ply:GetFaction()
+	local Faction = Table[Fac]
+	
+	if not Faction then return {} end
+	
+	return Faction.members
 	
 end
 PLAYER.FactionMembers = Curry(MODULE.Members)

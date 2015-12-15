@@ -143,8 +143,6 @@ function BaseWars.UTIL.PayOut(ent, attacker)
 	
 	local Name = ent.PrintName or ent:GetClass()
 	
-	print(attacker, Owner)
-	
 	if attacker == Owner then 
 	
 		Pay(Owner, Val, Name, true)
@@ -152,7 +150,7 @@ function BaseWars.UTIL.PayOut(ent, attacker)
 	return end
 	
 	local Members = attacker:FactionMembers()
-	local TeamAmt = attacker:InFaction() and #Members or 1
+	local TeamAmt = (attacker:InFaction() and #Members) or 1
 	local Involved = Owner and TeamAmt + 1 or TeamAmt
 	
 	local Fraction = math.floor(Val / Involved)
