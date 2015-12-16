@@ -140,10 +140,8 @@ if SERVER then
 	end
 
 	function ENT:Think()
-	
-		if not self:DrainPower() then return end
 
-		if self:Health() <= 25 and math.random(0, 10) == 0 then
+		if self:IsPowered() and self:Health() <= 25 and math.random(0, 11) == 0 then
 			
 			self:Spark()
 
@@ -176,6 +174,8 @@ if SERVER then
 			self.FirstTime = false
 			
 		end
+		
+		if not self:DrainPower() then return end
 
 		self:ThinkFunc()
 

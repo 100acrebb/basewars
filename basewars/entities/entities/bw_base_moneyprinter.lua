@@ -88,7 +88,7 @@ if SERVER then
 
 	function ENT:ThinkFunc()
 
-		if self.Disabled then return end
+		if self.Disabled or self:BadlyDamaged() then return end
 		local added
 
 		if CurTime() >= self.PrintInterval + self.time and self:GetPaper() > 0 then
@@ -194,27 +194,11 @@ else
 
 		local w, h = 216 * 2, 136 * 2
 		local disabled = self:GetNWBool("printer_disabled")
-
 		local Pw = self:IsPowered()
 		
 		draw.RoundedBox(4, 0, 0, w, h, Pw and self.BackColor or color_black)
 		
-		if not Pw then
-		
-			if WasPowered then
-			
-				WasPowered = false
-				self:EmitSound("ambient/machines/thumper_shutdown1.wav")
-				
-			end
-			
-		return end
-		
-		if self:Power() > 15 then
-		
-			WasPowered = true
-			
-		end
+		if not Pw then return end
 		
 		if disabled then
 			
