@@ -431,10 +431,16 @@ BaseWars.SpawnList.Models = {
 		
 		["Weapons"] = {
 		
-			["SMG"] 		= BaseWars.GenWeapon("models/weapons/w_smg1.mdl", 1000, "weapon_smg1"),
-			["AR2"] 		= BaseWars.GenWeapon("models/weapons/w_irifle.mdl", 2250, "weapon_ar2"),
-			["Crowbar"] 	= BaseWars.GenWeapon("models/weapons/w_crowbar.mdl", 300, "weapon_crowbar"),
-			["Frag"]		= BaseWars.GenWeapon("models/weapons/w_grenade.mdl", 12500, "weapon_frag"),
+			["SMG"] 			= BaseWars.GenWeapon("models/weapons/w_smg1.mdl", 1000, "weapon_smg1"),
+			["AR2"] 			= BaseWars.GenWeapon("models/weapons/w_irifle.mdl", 2250, "weapon_ar2"),
+			["Crowbar"] 		= BaseWars.GenWeapon("models/weapons/w_crowbar.mdl", 300, "weapon_crowbar"),
+			["Frag"]			= BaseWars.GenWeapon("models/weapons/w_grenade.mdl", 12500, "weapon_frag"),
+		
+		},
+		
+		["Super Weapons"] = {
+		
+			["Crescent Rose"]	= BaseWars.GenWeapon("models/rubyscythe.mdl", 250000, "weapon_rubyrose_scythe"),
 		
 		},
 	

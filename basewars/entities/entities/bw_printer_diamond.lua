@@ -8,7 +8,7 @@ ENT.Capacity 		= 250000
 ENT.PrintInterval 	= 1
 ENT.PrintAmount		= 105
 
-ENT.PrintName = "Platinum Printer"
+ENT.PrintName = "Diamond Printer"
 
 ENT.FontColor = Color(185, 242, 255)
 ENT.BackColor = Color(69, 68, 96)

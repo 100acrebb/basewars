@@ -239,7 +239,7 @@ if SERVER then
 
 		if not ply:IsAdmin()  then
 			
-			BaseWars.Util_Player:Notification(ply, "Use the BaseWars spawnlist!", Color(255, 0, 0))
+			ply:Notify(BaseWars.LANG.UseSpawnMenu, BASEWARS_NOTIFICATION_ERROR)
 			return false
 
 		end
@@ -248,6 +248,7 @@ if SERVER then
 
 	hook.Add("PlayerSpawnObject", "BaseWars.Disallow_Spawning",Disallow_Spawning)
 	hook.Add("PlayerSpawnSENT", "BaseWars.Disallow_Spawning",Disallow_Spawning)
+	hook.Add("PlayerGiveSWEP", "BaseWars.Disallow_Spawning",Disallow_Spawning)
 	hook.Add("PlayerSpawnVehicle", "BaseWars.Disallow_Spawning",Disallow_Spawning)
 
 return end
