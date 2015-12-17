@@ -7,7 +7,7 @@ Thanks to the following people:
 	Ghosty			- Main frontent dev.
 	Liquid			- Misc dev, good friend.
 	Tenrys			- Misc dev, good friend also.
-	Pyro-Fire		- Owner of Lagnation, ideas ect.
+	Pyro-Fire		- Owner of LagNation, ideas ect.
 	
 This GM has been built from scratch with almost no
 traces of the original BaseWars existing outside of maybe
@@ -29,11 +29,12 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 BaseWars = {}
 
-function BaseWars.IsXmasTime()
+function BaseWars.IsXmasTime(day)
 
 	local Month = tonumber(os.date("%m"))
+	local Day	= tonumber(os.date("%d"))
 
-	return Month == 12
+	return Month == 12 and (not day or (Day == 24 or Day == 25))
 	
 end
 
