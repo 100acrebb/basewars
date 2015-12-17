@@ -75,6 +75,14 @@ end
 hook.Add("InitPostEntity", "BaseWars.MapPortal", MakePortalFunc)
 MakePortalFunc()
 
+function GM:ShutDown()
+
+	BaseWars.UTIL.RefundAll()
+
+	self.BaseClass:ShutDown()
+
+end
+
 function GM:OnEntityCreated(ent)
 	
 	local f = function()

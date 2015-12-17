@@ -4,7 +4,7 @@ ENT.Base 		= "base_gmodentity"
 ENT.Type 		= "anim"
 ENT.PrintName 	= "Printer Paper"
 
-ENT.Model 		= "models/props_junk/garbage_newspaper001a.mdl"
+ENT.Model 		= "models/props_lab/clipboard.mdl"
 
 ENT.PaperAmount = 1000
 

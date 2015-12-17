@@ -29,6 +29,14 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 BaseWars = {}
 
+function BaseWars.IsXmasTime()
+
+	local Month = tonumber(os.date("%m"))
+
+	return Month == 12
+	
+end
+
 function BaseWars.GenSpawnList(model, price, ent, sf, lim)
 
 	return {
@@ -134,12 +142,12 @@ local function Pay(ply, amt, name, own)
 
 end
 
-function BaseWars.UTIL.PayOut(ent, attacker)
+function BaseWars.UTIL.PayOut(ent, attacker, full)
 
 	if not BaseWars.Ents:Valid(ent) or not BaseWars.Ents:ValidPlayer(attacker) then return end
 
 	local Owner = BaseWars.Ents:ValidOwner(ent)
-	local Val = ent.CurrentValue * BaseWars.Config.DestroyReturn
+	local Val = ent.CurrentValue * (not full and BaseWars.Config.DestroyReturn or 1)
 	
 	local Name = ent.PrintName or ent:GetClass()
 	
@@ -175,6 +183,27 @@ function BaseWars.UTIL.PayOut(ent, attacker)
 		
 	end
 
+end
+
+function BaseWars.UTIL.RefundAll()
+
+	BaseWars.UTIL.Log("FULL SERVER REFUND IN PROGRESS!!!")
+
+	for k, v in next, ents.GetAll() do
+	
+		if not BaseWars.Ents:Valid(v) then continue end
+
+		local Owner = BaseWars.Ents:ValidOwner(v)
+		if not BaseWars.Ents:Valid(Owner) then continue end
+		
+		if not v.CurrentValue then continue end
+		
+		BaseWars.UTIL.PayOut(v, Owner, true)
+		
+		v:Remove()
+		
+	end
+	
 end
 
 local NumTable = {
@@ -273,5 +302,35 @@ function GM:CanTool(ply, tr, tool)
 	local Ret = self.BaseClass:CanTool(ply, tr, tool)
 	
 	return BlockInteraction(ply, ent, ret)
+	
+end
+
+function GM:CanDrive()
+
+	-- I'm fucking sick of this shit
+	return false
+	
+end
+
+local function IsAdmin(ply, ent, ret)
+
+	if BlockInteraction(ply, ent, ret) == false then return false end
+
+	return ply:IsAdmin()
+	
+end
+
+function GM:CanProperty(ply, prop, ent, ...)
+
+	local Ret = self.BaseClass:CanProperty(ply, prop, ent, ...)
+	local Class = ent:GetClass()
+	
+	if prop == "persist" 	then return false end
+	if prop == "ignite" 	then return IsAdmin(ply, ent, Ret) end
+	if prop == "extinguish" then return IsAdmin(ply, ent, Ret) end
+	
+	if prop == "remover" and Class:find("bw_") then return IsAdmin(ply, ent, Ret) end
+	
+	return BlockInteraction(ply, ent, Ret)
 	
 end

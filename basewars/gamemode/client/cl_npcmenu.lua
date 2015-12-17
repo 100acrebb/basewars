@@ -75,38 +75,54 @@ local function PrepMenu(ent)
 		
 		PanelList:EnableHorizontal(false)
 		PanelList:EnableVerticalScrollbar(true)
-		PanelList:SetPadding(3)
+		
+		PanelList:SetPadding(5)
 		PanelList:SetSpacing(5)
+		
 		PanelList:Dock(FILL)
 		
 		for k, v in next, tbl do
 		
-			local Cat = vgui.Create("DCollapsibleCategory") 
+			local Cat = vgui.Create("DCollapsibleCategory", PanelList) 
 			Cat:SetLabel(k)
 			
-			local List = vgui.Create("DPanelList")
+			Cat:SetExpanded(false)
 			
-			List:SetPadding(3)
-			List:SetDrawBackground(false)
+			Cat:SetHeight(100)
+			
+			local List = vgui.Create("DPanelList", Cat)
+			
+			List:SetPadding(5)
+			List:SetDrawBackground(true)
+			
+			Cat:SetContents(List)
 			
 			for i, t in next, v do
 			
 				local Label = vgui.Create("DLabel", List)
 				
 				Label:SetText(t)
+				
+				Label:SetDark(true)
+				Label:SetWrap(true)
+				
 				Label:SizeToContents()
 				
 				List:AddItem(Label)
 				
 			end
 			
-			List:SetSize( 250, 100 )
-			Cat:SetContents(List)
+			-- Garry is a massive cockhead
+			List.__PerformLayout = List.PerformLayout
+			List.PerformLayout = function(pan)
 			
-			Cat:InvalidateLayout()
-			Cat:SizeToContents()
+				pan:SizeToContents()
+				
+				pan:__PerformLayout()
+				
+			end
 			
-			Cat:SetExpanded(false)
+			List:SizeToContents()
 			
 			PanelList:AddItem(Cat)
 			
