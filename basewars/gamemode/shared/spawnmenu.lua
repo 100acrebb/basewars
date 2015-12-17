@@ -99,7 +99,7 @@ if SERVER then
 			ply:SetMoney(plyMoney - price)
 			ply:EmitSound("mvm/mvm_money_pickup.wav")
 
-			ply:Notify(string.format(BaseWars.LANG.SpawnMenuBuy, item, price), BASEWARS_NOTIFICATION_MONEY)
+			ply:Notify(string.format(BaseWars.LANG.SpawnMenuBuy, item, BaseWars.NumberFormat(price)), BASEWARS_NOTIFICATION_MONEY)
 
 		end
 		
@@ -170,7 +170,9 @@ if SERVER then
 
 				end
 				
-				newEnt:SpawnFunction(ply, tr, ent)
+				newEnt = newEnt:SpawnFunction(ply, tr, ent)
+				
+				newEnt.CurrentValue = price
 				
 			return end
 
@@ -246,14 +248,17 @@ if SERVER then
 
 	end
 
-	hook.Add("PlayerSpawnObject", "BaseWars.Disallow_Spawning",Disallow_Spawning)
-	hook.Add("PlayerSpawnSENT", "BaseWars.Disallow_Spawning",Disallow_Spawning)
-	hook.Add("PlayerGiveSWEP", "BaseWars.Disallow_Spawning",Disallow_Spawning)
-	hook.Add("PlayerSpawnVehicle", "BaseWars.Disallow_Spawning",Disallow_Spawning)
+	local name = "BaseWars.Disallow_Spawning"
+	
+	hook.Add("PlayerSpawnObject", 	name, Disallow_Spawning)
+	hook.Add("PlayerSpawnSENT", 	name, Disallow_Spawning)
+	hook.Add("PlayerGiveSWEP", 		name, Disallow_Spawning)
+	hook.Add("PlayerSpawnSWEP", 	name, Disallow_Spawning)
+	hook.Add("PlayerSpawnVehicle", 	name, Disallow_Spawning)
 
 return end
 
-language.Add("spawnmenu.category.basewars","BaseWars")
+language.Add("spawnmenu.category.basewars", "BaseWars")
 
 local overlayFont = "BaseWars.SpawnList.Overlay"
 surface.CreateFont(overlayFont,{
