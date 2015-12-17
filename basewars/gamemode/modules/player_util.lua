@@ -59,7 +59,7 @@ function MODULE:Notification(ply, text, col)
 		
 	end
 	
-	-- Temporary for tests
+	MsgC(col, text, "\n")
 	BaseWars.Notify:Add(text, col)
 	
 end
