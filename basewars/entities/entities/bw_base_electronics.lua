@@ -64,7 +64,7 @@ do
 		
 		return end
 
-	return self:GetNWInt("Power") end
+	return self:GetNWInt("Power", 0) or 0 end
 	
 	function ENT:MaxPower(val)
 
@@ -74,7 +74,7 @@ do
 		
 		return end
 
-	return self:GetNWBool("MaxPower") end
+	return self:GetNWBool("MaxPower", 0) or 0 end
 
 	function ENT:DrainPower(val)
 	

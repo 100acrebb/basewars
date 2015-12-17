@@ -230,15 +230,23 @@ end
 
 local function BlockInteraction(ply, ent, ret)
 
-	if not BaseWars.Ents:Valid(ent) then return end
+	if ent then
+	
+		if not BaseWars.Ents:Valid(ent) then return end
 
-	local Classes = BaseWars.Config.PhysgunBlockClasses
-	if Classes[ent:GetClass()] then return false end
+		local Classes = BaseWars.Config.PhysgunBlockClasses
+		if Classes[ent:GetClass()] then return false end
+		
+		local Owner = ent.CPPIGetOwner and ent:CPPIGetOwner()
+		
+		if BaseWars.Ents:ValidPlayer(ply) and ply:InRaid() then return false end
+		if BaseWars.Ents:ValidPlayer(Owner) and Owner:InRaid() then return false end
 	
-	local Owner = ent.CPPIGetOwner and ent:CPPIGetOwner()
+	else
 	
-	if BaseWars.Ents:ValidPlayer(ply) and ply:InRaid() then return false end
-	if BaseWars.Ents:ValidPlayer(Owner) and Owner:InRaid() then return false end
+		if ply:InRaid() then return false end
+		
+	end
 	
 	return ret == nil or ret
 	
@@ -258,4 +266,12 @@ function GM:CanPlayerUnfreeze(ply, ent, phys)
 	
 	return BlockInteraction(ply, ent, Ret)
 
+end
+
+function GM:CanTool(ply, tr, tool)
+
+	local Ret = self.BaseClass:CanTool(ply, tr, tool)
+	
+	return BlockInteraction(ply, ent, ret)
+	
 end

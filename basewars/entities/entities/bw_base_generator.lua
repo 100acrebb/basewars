@@ -69,7 +69,7 @@ do
 		
 		return end
 
-	return self:GetNWInt("Power") end
+	return self:GetNWInt("Power", 0) end
 	
 	function ENT:MaxPower(val)
 
@@ -79,7 +79,7 @@ do
 		
 		return end
 
-	return self:GetNWBool("MaxPower") end
+	return self:GetNWBool("MaxPower", 0) end
 	
 	function ENT:DrainPower(val)
 
@@ -103,7 +103,13 @@ do
 		
 			if not v or not IsValid(v) or v == self then continue end
 			if not v.IsElectronic or not v.ReceivePower then continue end
-			if v:Power() >= v:MaxPower() then continue end
+			
+			local Pow = v.Power and v:Power() or 0
+			local Max = v.MaxPower and v:MaxPower() or 0
+			
+			if Max < 1 then continue end
+			
+			if Pow >= Max then continue end
 			
 			local Transmit = math.min(self.TransmitRate, self:Power())
 			Transmit = math.min(Transmit, (v:MaxPower() - v:Power()))
