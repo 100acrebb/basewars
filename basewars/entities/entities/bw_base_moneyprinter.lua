@@ -77,7 +77,7 @@ if SERVER then
 		self:SetCapacity(self.Capacity)
 		self:SetPaper(self.Paper)
 
-		self:SetHealth(100)
+		self:SetHealth(self.PresetMaxHealth or 100)
 
 		self.rtb = 0
 		

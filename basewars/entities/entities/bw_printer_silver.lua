@@ -14,3 +14,5 @@ ENT.FontColor = Color(180, 180, 195)
 ENT.BackColor = Color(32, 32, 32)
 
 ENT.IsValidRaidable = false
+
+ENT.PresetMaxHealth = 150
