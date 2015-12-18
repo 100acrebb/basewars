@@ -141,6 +141,26 @@ if SERVER then
 			local newEnt = ents.Create(ent)
 
 			if not newEnt then return end
+
+			if newEnt.SpawnFunction and sf then
+				
+				newEnt = newEnt:SpawnFunction(ply, tr, ent)
+				
+				if newEnt.CPPISetOwner then
+
+					newEnt:CPPISetOwner(ply)
+
+				end
+				
+				newEnt.CurrentValue = price
+				
+				if lim then
+		
+					LimitDeduct(newEnt, ent, ply)
+					
+				end
+				
+			return end
 			
 			if lim then
 		
@@ -149,32 +169,6 @@ if SERVER then
 			end
 			
 			newEnt.CurrentValue = price
-
-			if newEnt.SpawnFunction and sf then
-			
-				local phys = newEnt:GetPhysicsObject()
-
-				if IsValid(phys) then
-
-					if i.ShouldFreeze then
-					
-						phys:EnableMotion(false)
-
-					end
-
-				end	
-				
-				if newEnt.CPPISetOwner then
-
-					newEnt:CPPISetOwner(ply)
-
-				end
-				
-				newEnt = newEnt:SpawnFunction(ply, tr, ent)
-				
-				newEnt.CurrentValue = price
-				
-			return end
 
 			prop = newEnt
 

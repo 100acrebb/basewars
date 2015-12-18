@@ -10,6 +10,28 @@ ENT.PaperAmount = 1000
 
 if CLIENT then return end
 
+function ENT:SpawnFunction(ply, tr, class)
+
+	local pos = ply:GetPos()
+	
+	local ent = ents.Create(class)
+		ent:CPPISetOwner(ply)
+		ent:SetPos(pos + ply:GetForward() * 32)
+	ent:Spawn()
+	ent:Activate()
+	
+	local phys = ent:GetPhysicsObject()
+	
+	if IsValid(phys) then
+
+		phys:Wake()
+
+	end	
+	
+	return ent
+
+end
+
 function ENT:Initialize()
 
 	self.BaseClass:Initialize()

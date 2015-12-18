@@ -282,6 +282,14 @@ local function BlockInteraction(ply, ent, ret)
 	
 end
 
+local function IsAdmin(ply, ent, ret)
+
+	if BlockInteraction(ply, ent, ret) == false then return false end
+
+	return ply:IsAdmin()
+	
+end
+
 function GM:PhysgunPickup(ply, ent)
 
 	local Ret = self.BaseClass:PhysgunPickup(ply, ent)
@@ -302,7 +310,9 @@ function GM:CanTool(ply, tr, tool)
 
 	local Ret = self.BaseClass:CanTool(ply, tr, tool)
 	
-	return BlockInteraction(ply, ent, ret)
+	if BaseWars.Config.BlockedTools[tool] then return IsAdmin(ply, ent, Ret) end
+	
+	return BlockInteraction(ply, ent, Ret)
 	
 end
 
@@ -313,21 +323,13 @@ function GM:CanDrive()
 	
 end
 
-local function IsAdmin(ply, ent, ret)
-
-	if BlockInteraction(ply, ent, ret) == false then return false end
-
-	return ply:IsAdmin()
-	
-end
-
 function GM:CanProperty(ply, prop, ent, ...)
 
 	local Ret = self.BaseClass:CanProperty(ply, prop, ent, ...)
 	local Class = ent:GetClass()
 	
 	if prop == "persist" 	then return false end
-	if prop == "ignite" 	then return IsAdmin(ply, ent, Ret) end
+	if prop == "ignite" 	then return false end
 	if prop == "extinguish" then return IsAdmin(ply, ent, Ret) end
 	
 	if prop == "remover" and Class:find("bw_") then return IsAdmin(ply, ent, Ret) end
