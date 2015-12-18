@@ -81,6 +81,7 @@ function MODULE:DrawStructureInfo(ent)
 	local curx, cury = Pos.x, Pos.y
 	local w, h
 	local Font = BaseWars.Config.HUD.EntFont
+	local Font2 = BaseWars.Config.HUD.EntFont2
 	local Padding = 5
 	local EndPad = -Padding * 2
 	
@@ -110,11 +111,11 @@ function MODULE:DrawStructureInfo(ent)
 		
 		draw.RoundedBox(0, curx + Padding, cury + Padding, HPLen + EndPad, H + EndPad, hpbck)
 
-		surface.SetFont(Font)
+		surface.SetFont(Font2)
 		w, h = surface.GetTextSize(HealthStr)
 		
-		draw.DrawText(HealthStr, Font, oldx - w / 2, cury + Padding, shade)
-		draw.DrawText(HealthStr, Font, oldx - w / 2, cury + Padding, color_white)
+		draw.DrawText(HealthStr, Font2, oldx - w / 2, cury + Padding, shade)
+		draw.DrawText(HealthStr, Font2, oldx - w / 2, cury + Padding, color_white)
 		
 	end
 	
@@ -132,11 +133,11 @@ function MODULE:DrawStructureInfo(ent)
 		
 		draw.RoundedBox(0, curx + Padding, cury + Padding, PWLen + EndPad, H + EndPad, pwbck)
 
-		surface.SetFont(Font)
+		surface.SetFont(Font2)
 		w, h = surface.GetTextSize(PowerStr)
 		
-		draw.DrawText(PowerStr, Font, oldx - w / 2, cury + Padding, shade)
-		draw.DrawText(PowerStr, Font, oldx - w / 2, cury + Padding, color_white)
+		draw.DrawText(PowerStr, Font2, oldx - w / 2, cury + Padding, shade)
+		draw.DrawText(PowerStr, Font2, oldx - w / 2, cury + Padding, color_white)
 		
 	end
 	
@@ -149,11 +150,11 @@ function MODULE:DrawStructureInfo(ent)
 		
 		local Str = BaseWars.LANG.HealthFailure
 
-		surface.SetFont(Font)
+		surface.SetFont(Font2)
 		w, h = surface.GetTextSize(Str)
 		
-		draw.DrawText(Str, Font, oldx - w / 2, cury + Padding - 1, shade)
-		draw.DrawText(Str, Font, oldx - w / 2, cury + Padding - 1, color_white)
+		draw.DrawText(Str, Font2, oldx - w / 2, cury + Padding - 1, shade)
+		draw.DrawText(Str, Font2, oldx - w / 2, cury + Padding - 1, color_white)
 		
 	end
 end

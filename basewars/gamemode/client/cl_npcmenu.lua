@@ -106,23 +106,23 @@ local function PrepMenu(ent)
 				Label:SetDark(true)
 				Label:SetWrap(true)
 				
-				Label:SizeToContents()
-				
 				List:AddItem(Label)
 				
 			end
+			
+			List:Dock(FILL)
+			
+			local Tall = #v * 22
 			
 			-- Garry is a massive cockhead
 			List.__PerformLayout = List.PerformLayout
 			List.PerformLayout = function(pan)
 			
-				pan:SizeToContents()
+				pan:SetSize(Cat:GetSize(), Tall)
 				
 				pan:__PerformLayout()
 				
 			end
-			
-			List:SizeToContents()
 			
 			PanelList:AddItem(Cat)
 			

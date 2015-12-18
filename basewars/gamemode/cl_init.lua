@@ -3,8 +3,14 @@ include("modules.lua")
 
 BaseWars.ModuleLoader:Load()
 
-if BaseWars.IsXmasTime() and materials then
+local function XmasMode()
 
-	materials.ReplaceTexture("GM_CONSTRUCT/GRASS", "nature/snowfloor002a")
+	if BaseWars.IsXmasTime() and materials then
 
+		materials.ReplaceTexture("GM_CONSTRUCT/GRASS", "nature/snowfloor002a")
+
+	end
+	
 end
+hook.Add("InitPostEntity", "BaseWars.XmasMode", XmasMode)
+XmasMode()

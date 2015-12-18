@@ -64,7 +64,8 @@ BaseWars.Config = {
 	},
 	
 	HUD = {
-		EntFont = "BudgetLabel",
+		EntFont = "TargetID",
+		EntFont2 = "BudgetLabel",
 		EntW	= 175,
 		EntH	= 25,
 	},
@@ -115,12 +116,23 @@ BaseWars.Config.Help = {
 	
 		"Jews will be killed",
 		"hitler din du nufin",
+		"purr",
+		"purr",
+		"purr",
+		"purr",
 	
 	},
 	
 	["Meow"] = {
 	
 		"hello i are cat",
+		"purr",
+		"purr",
+		"purr",
+		"purr",
+		"purr",
+		"purr",
+		"purr",
 		"purr",
 	
 	},
