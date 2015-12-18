@@ -193,6 +193,8 @@ function MODULE:Paint()
 	local pbarW, pbarH = 256, 6
 
 	local sW, sH = ScrW(), ScrH()
+	
+	draw.DrawText(BaseWars.LANG.MainMenuControl, "BudgetLabel", sW - 5, 3, trans, TEXT_ALIGN_RIGHT)
 
 	local hW = Calc(hp, 100, 0, pbarW)
 	local aW = Calc(su, 100, 0, pbarW)

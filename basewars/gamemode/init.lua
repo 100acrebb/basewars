@@ -11,6 +11,8 @@ function BaseWars.AddFastDLDir(dir)
 	local Dir = GAMEMODE.Folder .. "/content/" .. dir .. "/*"
 	local Files, Folders = file.Find(Dir, "GAME")
 	
+	BaseWars.UTIL.Log("Adding recursive FastDL for directory -> ", Dir)
+	
 	for k, v in next, Folders do
 
 		BaseWars.AddFastDLDir(dir .. "/" .. v)
@@ -21,7 +23,6 @@ function BaseWars.AddFastDLDir(dir)
 	
 		if not v:find(".", 1, true) then continue end
 		
-		BaseWars.UTIL.Log("Adding FastDL for file -> ", v)
 		resource.AddFile(Dir .. "/" .. v)
 		
 	end

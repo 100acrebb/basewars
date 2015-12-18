@@ -74,6 +74,7 @@ BaseWars.LANG.__LANGUAGELOOK.ENGLISH = {
 	PayOut					= "You got " .. CURRENCY .. "%s for destroying a %s!",
 	
 	UseSpawnMenu			= "Use the BaseWars spawnlist!",
+	MainMenuControl			= "F3 - Open Main Menu",
 }
 
 local INVALID_LANGUAGE 	= "INVALID LANGUAGE SELECTED! NOTIFY THE SERVER ADMIN!"

@@ -117,28 +117,59 @@ BaseWars.Config = {
 
 BaseWars.Config.Help = {
 
-	["Dont be a jew"] = {
-	
-		"Jews will be killed",
-		"hitler din du nufin",
-		"purr",
-		"purr",
-		"purr",
-		"purr",
+	["What is this server?"] = {
+		
+		"This is the HexaHedronic.ORG BaseWars server.",
+		"It runs a custom version of basewars coded by Q2F2 and Ghosty!",
+		"",
+		"BaseWars is a gamemode about making money and raiding.",
+		"It also contains cool guns and ways to defend your base!",
 	
 	},
 	
-	["Meow"] = {
+	["What are the controls?"] = {
+		
+		"To spawn printers and other entities you can open the spawnmenu by holding [Q] or your binding for it,",
+		"From here you can select the [Entities] sub-category of the [BaseWars] tab. (NOT THE ENTITIES TAB!)",
+		"",
+		"To Raid or Create a Faction you can press [F3] to open the [Main Menu]. From here you can select [Factions],",
+		"[Raids], [Rules] and in the future the [Store] and your [Eqipment Inventory]!",
 	
-		"hello i are cat",
-		"purr",
-		"purr",
-		"purr",
-		"purr",
-		"purr",
-		"purr",
-		"purr",
-		"purr",
+	},
+	
+	["How do I make a base?"] = {
+	
+		"Firstly find an area in the map which is secure, and you would be happy defending,",
+		"Then use some props from [Build] and [Barricades] sub-categories to secure the entrances,",
+		"Finally use the [Fading Door] tool to make yourself a secure way in and out.",
+		"",
+		"After you have secured the area, you can buy Printers and Generators from the [Entities] tab.",
+		"You will need to make sure you have enough power to supply your printers!",
+	
+	},
+	
+	["How do I Raid?"] = {
+	
+		"To Raid you and your TARGET must both have GOLD or HIGHER printer-types.",
+		"",
+		"If you are raidable, press F3, then select the [Raids] tab, followed by clicking on your TARGET's name.",
+		"Watch the [Notifications] in the top left to see if they are raidable, if they were, then a raid will",
+		"have started, if not, it will tell you why not.",
+		"",
+		"Once a raid has started you can destroy any props your enemy owns, along with electronics! But be carefull!",
+		"They can counter raid you while it is on-going!",
+	
+	},
+	
+	["Are there any rules?"] = {
+	
+		"Yes, you can view our server FAQ and rules in the [Main Menu]'s [Rules] tab.",
+		"Apart from the main server documentation there are a FEW other rules...",
+		"",
+		"1. Do not base with someone unless you are in a faction with them.",
+		"2. Do not propblock OTHER peoples bases, you CAN however block your own.",
+		"3. Do not attempt to circumvent ARR or similar systems.",
+		"4. You must base in A SINGLE CONTINGOUS SPACE, no multi-basing.",
 	
 	},
 
@@ -457,7 +488,9 @@ BaseWars.SpawnList.Models = {
 		
 		["Super Weapons"] = {
 		
-			["Crescent Rose"]	= BaseWars.GenWeapon("models/rubyscythe.mdl", 250000, "weapon_rubyrose_scythe"),
+			["Crescent Rose"]			= BaseWars.GenWeapon("models/rubyscythe.mdl", 300000, "weapon_rubyrose_scythe"),
+			["Red Scissor Blade"]		= BaseWars.GenWeapon("models/anfrien/kill_la_kill/scissor_blade/red_scissor_blade.mdl", 250000, "weapon_scissorblade_red"),
+			["Purple Scissor Blade"]	= BaseWars.GenWeapon("models/anfrien/kill_la_kill/scissor_blade/purple_scissor_blade.mdl", 250000, "weapon_scissorblade_purple"),
 		
 		},
 	
