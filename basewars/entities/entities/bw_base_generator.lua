@@ -112,7 +112,7 @@ do
 			if Pow >= Max then continue end
 			
 			local Transmit = math.min(self.TransmitRate, self:Power())
-			Transmit = math.min(Transmit, (v:MaxPower() - v:Power()))
+			Transmit = math.min(Transmit, (Max - Pow))
 			
 			v:ReceivePower(Transmit)
 			
@@ -151,7 +151,7 @@ if SERVER then
 		
 		self:Init()
 		
-		self:MaxHealth(self:Health())
+		self:MaxHealth(self.PresetMaxHealth or self:Health())
 		self:MaxPower(self.PowerCapacity)
 
 	end

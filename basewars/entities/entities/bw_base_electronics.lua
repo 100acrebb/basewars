@@ -128,7 +128,7 @@ if SERVER then
 		
 		self:Init()
 		
-		self:MaxHealth(self:Health())
+		self:MaxHealth(self.PresetMaxHealth or self:Health())
 		self:MaxPower(self.PowerCapacity)
 
 	end
