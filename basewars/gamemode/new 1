@@ -1,0 +1,13 @@
+function MODULE:IsRDM(ply, ply2)
+
+	if ply:InRaid() and ply2:InRaid() then return false end
+	
+	if ply.RecentlyHurtBy[ply2] and ply.RecentlyHurtBy[ply2] < CurTime() + BaseWars.Config.AntiRDM.HurtTime then return false end
+	
+	return true
+
+end
+
+function MODULE:OnEntityTakeDamage(ply, dmginfo)
+
+	local Attacker = dmginfo:GetAttacker()

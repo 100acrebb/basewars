@@ -1,10 +1,8 @@
 -- Big Black - Weapon Base
--- http://steamcommunity.com/sharedfiles/filedetails/?id=283172200 - Original Addon
--- http://steamcommunity.com/id/WeebWorld, http://steamcommunity.com/id/Anfrien - Creators
+-- http://steamcommunity.com/sharedfiles/filedetails/?id=535793966 - Original Addon
+-- http://steamcommunity.com/id/WeebWorld, http://steamcommunity.com/id/Anfrien, http://steamcommunity.com/id/RyuGi - Creators
 
 if SERVER then
-
-	resource.AddWorkshop("283172200")
 	
 	AddCSLuaFile( "shared.lua" )
 	SWEP.Weight				= 5
@@ -40,7 +38,7 @@ if SERVER then
 end
 
 if ( CLIENT ) then
-	SWEP.PrintName			= "Crescent Rose"	--Name of the SWEP
+	SWEP.PrintName			= "Red Scissor Blade"	--Name of the SWEP
 	SWEP.DrawAmmo 			= false	--Knives don't use ammo!
 	SWEP.DrawCrosshair 		= false	--Because we already got one.
 	SWEP.ViewModelFOV		= 60	--Field of View, lower is closer, higher is farther.
@@ -51,13 +49,13 @@ if ( CLIENT ) then
 	SWEP.SlotPos			= 1	--Place it at slot 1, if possible.
 	SWEP.IconLetter		= "j"	--What letter this uses for a killicon. Don't touch this, unless you know what letters are bound to what guns.
 
-	killicon.AddFont("weapon_rubyrose_scythe", "CSKillIcons", SWEP.IconLetter, Color( 255, 80, 0, 255 ))	--Sexy KillIcon. Too bad I don't know how to make a custom one work.
+	killicon.AddFont("weapon_scissorblade_red", "CSKillIcons", SWEP.IconLetter, Color( 255, 80, 0, 255 ))	--Sexy KillIcon. Too bad I don't know how to make a custom one work.
 	surface.CreateFont("CSKillIcons", {font = "csd", size = ScreenScale(30), weight = 500, antialias = true, additive = true})
 	surface.CreateFont("CSSelectIcons", {font = "csd", size = ScreenScale(60), weight = 500, antialias = true, additive = true})
 end
-SWEP.Category				= "RWBY" --Where the SWEP is in the spawn menu.
+SWEP.Category				= "KLK" --Where the SWEP is in the spawn menu.
 
-SWEP.HoldType			= "melee2"	--How we hold this weapon.
+SWEP.HoldType			= "melee"	--How we hold this weapon.
 
 SWEP.Spawnable				= true	--Can anyone spawn it?
 SWEP.AdminSpawnable			= true	--Can admins only spawn it?
@@ -78,17 +76,17 @@ SWEP.Primary.Automatic			= true	--Instead of clicking like a maniac, you can hol
 SWEP.Primary.Ammo			="none"	--Once again, this is a knife...
 
 SWEP.WElements = {
-	["scythe"] = {
-		type = "Model", model = "models/rubyscythe.mdl", bone = "ValveBiped.Bip01_R_Hand",
-		rel = "", pos = Vector(2.12, 1.52, 9), angle = Angle(180, -180, 0), size = Vector(1.74, 1.74, 1.74), color = Color(255, 255, 255, 255),
+	["scissor"] = {
+		type = "Model", model = "models/anfrien/kill_la_kill/scissor_blade/red_scissor_blade.mdl", bone = "ValveBiped.Bip01_R_Hand",
+		rel = "", pos = Vector(2.12, 1.52, 1), angle = Angle(180, 0, 0), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255),
 		surpresslightning = false, material = "", skin = 0, bodygroup = {}
 	}
 }
 --WElements puts the scythe on the world model, so others see it.
 SWEP.VElements = {
-	["scythe"] = {
-		type = "Model", model = "models/rubyscythe.mdl", bone = "v_weapon.Knife_Handle",
-		rel = "", pos = Vector(-0.151, -1, -1), angle = Angle(0, -90, 0), size = Vector(1.74, 1.74, 1.74), color = Color(255, 255, 255, 255),
+	["scissor"] = {
+		type = "Model", model = "models/anfrien/kill_la_kill/scissor_blade/red_scissor_blade.mdl", bone = "v_weapon.Knife_Handle",
+		rel = "", pos = Vector(-0.151, -1, -1), angle = Angle(8, 90, 0), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255),
 		surpresslightning = false, material = "", skin = 0, bodygroup = {}
 	}
 }
@@ -114,6 +112,7 @@ end
 Deploy plays the animation and draw sound
 ---------------------------------------------------------*/
 function SWEP:Deploy()
+	self:SetWeaponHoldType( self.HoldType )
 	self.Weapon:SendWeaponAnim( ACT_VM_DRAW )
 	self.Weapon:SetNextPrimaryFire(CurTime() + 1)	--Delay using this weapon for one second so we can play the animation.
 	self.Weapon:EmitSound( self.DeploySound, 50, 100 )

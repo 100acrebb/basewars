@@ -6,6 +6,32 @@ AddCSLuaFile("modules.lua")
 
 BaseWars.ModuleLoader:Load()
 
+function BaseWars.AddFastDLDir(dir)
+
+	local Dir = GAMEMODE.Folder .. "/content/" .. dir .. "/*"
+	local Files, Folders = file.Find(Dir, "GAME")
+	
+	for k, v in next, Folders do
+
+		BaseWars.AddFastDLDir(dir .. "/" .. v)
+		
+	end
+ 
+	for k, v in next, Files do
+	
+		if not v:find(".", 1, true) then continue end
+		
+		BaseWars.UTIL.Log("Adding FastDL for file -> ", v)
+		resource.AddFile(Dir .. "/" .. v)
+		
+	end
+	
+end
+
+BaseWars.AddFastDLDir("sound")
+BaseWars.AddFastDLDir("models")
+BaseWars.AddFastDLDir("materials")
+
 local AuthTbl = {}
 
 function GM:NetworkIDValidated(name, steamid)
