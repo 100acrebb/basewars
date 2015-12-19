@@ -152,13 +152,14 @@ if SERVER then
 
 				end
 				
-				newEnt.CurrentValue = price
-				
 				if lim then
 		
 					LimitDeduct(newEnt, ent, ply)
 					
 				end
+				
+				newEnt.CurrentValue = price
+				newEnt.DoNotDuplicate = true
 				
 			return end
 			
@@ -169,6 +170,7 @@ if SERVER then
 			end
 			
 			newEnt.CurrentValue = price
+			newEnt.DoNotDuplicate = true
 
 			prop = newEnt
 

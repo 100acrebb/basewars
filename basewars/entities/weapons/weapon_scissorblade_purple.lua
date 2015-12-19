@@ -4,7 +4,8 @@
 
 if SERVER then
 	
-	AddCSLuaFile( "shared.lua" )
+	AddCSLuaFile()
+	
 	SWEP.Weight				= 5
 	SWEP.AutoSwitchTo			= false
 	SWEP.AutoSwitchFrom		= false

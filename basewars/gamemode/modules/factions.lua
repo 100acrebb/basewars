@@ -1,6 +1,6 @@
 MODULE.Name 	= "Factions"
 MODULE.Author 	= "Q2F2 & Ghosty"
-MODULE.FactionTable = {}
+MODULE.FactionTable = BaseWars.Factions and BaseWars.Factions.FactionTable or {}
 
 local tag = "BaseWars.Factions"
 local PLAYER = debug.getregistry().Player

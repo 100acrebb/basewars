@@ -8,7 +8,7 @@ BaseWars.ModuleLoader:Load()
 
 function BaseWars.AddFastDLDir(dir)
 
-	local Dir = GAMEMODE.Folder .. "/content/" .. dir .. "/*"
+	local Dir = (GM or GAMEMODE).Folder .. "/content/" .. dir .. "/*"
 	local Files, Folders = file.Find(Dir, "GAME")
 	
 	BaseWars.UTIL.Log("Adding recursive FastDL for directory -> ", Dir)
@@ -219,7 +219,7 @@ function GM:EntityTakeDamage(ent, dmginfo)
 	local Owner = ent.CPPIGetOwner and ent:CPPIGetOwner()
 	if (not ent.AllwaysRaidable) and (Owner and BaseWars.Ents:ValidPlayer(Owner)) then
 	
-		local RaidLogic 	= (Attacker == Owner and Owner:InRaid()) or (Owner:InFaction() and (Attacker.InFaction and Attacker:InFaction(Owner:GetFaction())))
+		local RaidLogic 	= (Attacker == Owner and Owner:InRaid()) or (Owner:InFaction() and (not Attacker == Owner and Attacker.InFaction and Attacker:InFaction(Owner:GetFaction())))
 		local RaidLogic2 	= Attacker ~= Owner and (not Owner:InRaid() or not (Attacker.InRaid and Attacker:InRaid()))
 	
 		if RaidLogic or RaidLogic2 then

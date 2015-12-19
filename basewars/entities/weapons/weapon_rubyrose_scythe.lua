@@ -5,8 +5,8 @@
 if SERVER then
 
 	resource.AddWorkshop("283172200")
+	AddCSLuaFile()
 	
-	AddCSLuaFile( "shared.lua" )
 	SWEP.Weight				= 5
 	SWEP.AutoSwitchTo			= false
 	SWEP.AutoSwitchFrom		= false

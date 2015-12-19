@@ -45,7 +45,7 @@ if SERVER then
 	end
 	PLAYER.PayDay = Curry(MODULE.PayDay)
 
-	function  MODULE:CleanupMap()
+	function MODULE:CleanupMap()
 
 		for k, v in next, ents.FindByClass("game_text") do
 		
