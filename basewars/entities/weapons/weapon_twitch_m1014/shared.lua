@@ -96,4 +96,4 @@ function SWEP:CustomPrimaryAttack()
 	self.FireTime = CurTime()
 end
 
---if CLIENT then killicon.AddFont ("weapon_twitch_m1014", "CSKillIcons", "B", Color (150, 150, 255, 255)) end
+if CLIENT then killicon.AddFont ("weapon_twitch_m1014", "CSKillIcons", "B", Color (150, 150, 255, 255)) end

@@ -44,7 +44,7 @@ SWEP.Secondary.DefaultClip	= -1
 SWEP.Secondary.Automatic	= false
 SWEP.Secondary.Ammo			= "none"
 
---if CLIENT then killicon.AddFont ("weapon_twitch_tmp", "CSKillIcons", "d", Color (150, 150, 255, 255)) end
+if CLIENT then killicon.AddFont ("weapon_twitch_tmp", "CSKillIcons", "d", Color (150, 150, 255, 255)) end
 
 function SWEP:CustomHolster()
 	self.Holstered = true

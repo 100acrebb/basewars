@@ -501,7 +501,7 @@ BaseWars.SpawnList.Models = {
 			["USP"] 			= BaseWars.GenWeapon("models/weapons/w_pist_usp.mdl", 500, "weapon_twitch_usp"),
 			["Deagle"] 			= BaseWars.GenWeapon("models/weapons/w_pist_deagle.mdl", 800, "weapon_twitch_deagle"),
 			
-			["UMP"] 			= BaseWars.GenWeapon("models/weapons/w_smg_ump45.mdl", 1500, "weapon_twitch_ump"),
+			["UMP"] 			= BaseWars.GenWeapon("models/weapons/w_smg_ump45.mdl", 1500, "weapon_twitch_ump45"),
 			["MP5"] 			= BaseWars.GenWeapon("models/weapons/w_smg_mp5.mdl", 1500, "weapon_twitch_mp5"),
 		
 			["AR2"] 			= BaseWars.GenWeapon("models/weapons/w_irifle.mdl", 2250, "weapon_twitc_hl2pulserifle"),

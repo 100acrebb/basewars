@@ -24,7 +24,7 @@ BaseWars.LANG.__LANGUAGELOOK.ENGLISH = {
 	SpawnCamp				= "Do not attempt to spawncamp.",
 	
 	RaidOngoing				= "There is allready a raid ongoing!",
-	RaidSelfUnraidable		= "You are not raidable youself! (%s)",
+	RaidSelfUnraidable		= "You are not raidable yourself! (%s)",
 	RaidTargetUnraidable	= "Your target is not raidable! (%s)",
 	RaidOver				= "The raid between %s and %s has ENDED!",
 	RaidStart				= "Raid started between %s and %s!",

@@ -45,6 +45,6 @@ SWEP.Secondary.DefaultClip	= -1
 SWEP.Secondary.Automatic	= false
 SWEP.Secondary.Ammo			= "none"
 
---if CLIENT then killicon.AddFont ("weapon_twitch_hl2mp7", "HL2MPTypeDeath", "/", Color (150, 150, 255, 255)) end
+if CLIENT then killicon.AddFont ("weapon_twitch_hl2mp7", "HL2MPTypeDeath", "/", Color (150, 150, 255, 255)) end
 
 --GAMEMODE:RegisterWeapon ("weapon_twitch_ak47", {{typ = "text", text = "b", font = "CSSWeapons80", x = 6, y = 10}}, {})
