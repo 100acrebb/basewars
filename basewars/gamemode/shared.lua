@@ -8,6 +8,7 @@ Thanks to the following people:
 	Liquid			- Misc dev, good friend.
 	Tenrys			- Misc dev, good friend also.
 	Pyro-Fire		- Owner of LagNation, ideas ect.
+	Devenger		- Twitch Weaponry 2
 	
 This GM has been built from scratch with almost no
 traces of the original BaseWars existing outside of maybe
