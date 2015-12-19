@@ -113,6 +113,8 @@ BaseWars.Config = {
 	UniversalPropConstant = 2.7,
 	
 	DestroyReturn 		= 0.6,
+	
+	RestrictProps 		= false
 }
 
 BaseWars.Config.Help = {
@@ -178,6 +180,7 @@ BaseWars.Config.Help = {
 BaseWars.SpawnList = {}
 BaseWars.SpawnList.Models = {
 
+	--[[
 	Barricades = {
 
 		["Fences and Doors"] = {
@@ -423,7 +426,7 @@ BaseWars.SpawnList.Models = {
 
 		},
 
-	},
+	},]]
 	
 	Entities = {
 

@@ -1,11 +1,11 @@
 AddCSLuaFile()
 
-ENT.Base 		= "base_anim"--e
+ENT.Base 		= "base_anim"
 ENT.Type 		= "anim"
 
-ENT.PrintName 	= "Weiss Schnee"
+ENT.PrintName 	= "Help and Quests"
 
-ENT.Model 		= "models/jazzmcfly/rwby/weiss_schnee.mdl"
+ENT.Model 		= "models/Humans/Group03m/male_09.mdl"
 
 ENT.Offset 		= Vector(0, 0, -3)
 ENT.Offset2		= Vector(0, 0, 4)

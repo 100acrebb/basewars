@@ -1,6 +1,23 @@
 MODULE.Name 	= "NPCs"
 MODULE.Author 	= "Q2F2 & Ghosty"
 
+MODULE.MapTable = {
+	
+	["basewars_bangclaw_v1"] = {
+	
+		[1] = {
+		
+			-- 0x2c272b38
+			Pos = Vector(-1006, -1441, 74),
+			-- 0x2c272b60
+			Ang = Angle(0, 135, 0),
+			
+		}
+	
+	},
+
+}
+
 local tag = "BaseWars.NPCs"
 local PLAYER = debug.getregistry().Player
 
@@ -50,7 +67,7 @@ if CLIENT then
 			
 			if Col.a < 1 then continue end
 
-			cam.Start3D2D(Pos2 + Tall - v:GetUp(), Ang, 0.095)
+			cam.Start3D2D(Pos2 + Tall + v:GetUp() * 8, Ang, 0.095)
 			
 				draw.SimpleTextOutlined(v.PrintName, tag, 0, 0, Col, TEXT_ALIGN_CENTER, TEXT_ALIGN_BOTTOM, 0.85, color_black)	
 				
@@ -66,8 +83,25 @@ return end
 
 util.AddNetworkString("BaseWars.NPCs.Menu")
 
-function MODULE:CreateNPC(type)
+function MODULE:CreateNPCs()
 
-
+	local Map = game.GetMap()
+	local Entry = BaseWars.NPCs.MapTable[Map]
+	
+	if not Entry then return end
+	
+	for k, v in next, Entry do
+	
+		local Ent = ents.Create(v.Class or "bw_npc")
+			if not BaseWars.Ents:Valid(Ent) then continue end
+			
+			Ent:SetPos(v.Pos)
+			Ent:SetAngles(v.Ang)
+			
+		Ent:Spawn()
+		Ent:Activate()
+		
+	end
 
 end
+hook.Add("InitPostEntity", tag .. ".CreateNPCs", Curry(MODULE.CreateNPCs))

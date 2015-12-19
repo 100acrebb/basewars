@@ -233,8 +233,10 @@ if SERVER then
 
 	end)
 
-	local function Disallow_Spawning(ply)
+	local function Disallow_Spawning(ply, ...)
 
+		--BaseWars.UTIL.Log(ply, ...)
+	
 		if not ply:IsAdmin()  then
 			
 			ply:Notify(BaseWars.LANG.UseSpawnMenu, BASEWARS_NOTIFICATION_ERROR)
@@ -246,7 +248,12 @@ if SERVER then
 
 	local name = "BaseWars.Disallow_Spawning"
 	
-	hook.Add("PlayerSpawnObject", 	name, Disallow_Spawning)
+	if BaseWars.Config.RestrictProps then
+	
+		hook.Add("PlayerSpawnObject", 	name, Disallow_Spawning)
+		
+	end
+	
 	hook.Add("PlayerSpawnSENT", 	name, Disallow_Spawning)
 	hook.Add("PlayerGiveSWEP", 		name, Disallow_Spawning)
 	hook.Add("PlayerSpawnSWEP", 	name, Disallow_Spawning)
@@ -515,30 +522,6 @@ local Panels = {
 }
 
 local Tabs = {
-
-	barricades = {
-		Name = "Barricades", 
-		AssociatedPanel = "Barricades",
-		Icon = "icon16/shield.png",
-	},
-
-	furniture = {
-		Name = "Furniture and Decor", 
-		AssociatedPanel = "Furniture",
-		Icon = "icon16/lorry.png",
-	},
-
-	build = {
-		Name = "Build", 
-		AssociatedPanel = "Build",
-		Icon = "icon16/wrench.png",
-	},
-
-	junk = {
-		Name = "Junk",
-		AssociatedPanel = "Junk",
-		Icon = "icon16/bin_closed.png",
-	},
 	
 	entities = {
 		Name = "Entities",
@@ -553,6 +536,34 @@ local Tabs = {
 	},
 	
 }
+
+if BaseWars.Config.RestrictProps then
+
+	Tabs.barricades = {
+		Name = "Barricades", 
+		AssociatedPanel = "Barricades",
+		Icon = "icon16/shield.png",
+	}
+
+	Tabs.furniture = {
+		Name = "Furniture and Decor", 
+		AssociatedPanel = "Furniture",
+		Icon = "icon16/lorry.png",
+	}
+
+	Tabs.build = {
+		Name = "Build", 
+		AssociatedPanel = "Build",
+		Icon = "icon16/wrench.png",
+	}
+
+	Tabs.junk = {
+		Name = "Junk",
+		AssociatedPanel = "Junk",
+		Icon = "icon16/bin_closed.png",
+	}
+	
+end
 
 local function MakeSpawnList()
 
@@ -632,6 +643,6 @@ local function MakeSpawnList()
 
 end
 
-spawnmenu.AddCreationTab("#spawnmenu.category.basewars", MakeSpawnList, "icon16/building.png", -100)
+spawnmenu.AddCreationTab("#spawnmenu.category.basewars", MakeSpawnList, "icon16/building.png", BaseWars.Config.RestrictProps and -100 or 2)
 
 RunConsoleCommand("spawnmenu_reload")
