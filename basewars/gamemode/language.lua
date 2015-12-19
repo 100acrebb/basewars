@@ -75,6 +75,8 @@ BaseWars.LANG.__LANGUAGELOOK.ENGLISH = {
 	
 	UseSpawnMenu			= "Use the BaseWars spawnlist!",
 	MainMenuControl			= "F3 - Open Main Menu",
+	
+	DeadBuy					= "Dead people buy nothing.",
 }
 
 local INVALID_LANGUAGE 	= "INVALID LANGUAGE SELECTED! NOTIFY THE SERVER ADMIN!"

@@ -25,6 +25,8 @@ end
 if SERVER then 
 
 	local function Spawn(ply, cat, subcat, item)
+	
+		if not ply:Alive() then ply:Notify(BaseWars.LANG.DeadBuy, BASEWARS_NOTIFICATION_ERROR) return end
 
 		local l = SpawnList and SpawnList.Models
 

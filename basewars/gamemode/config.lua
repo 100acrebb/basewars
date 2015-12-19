@@ -93,6 +93,7 @@ BaseWars.Config = {
 		["baloon"] = true,
 		["hoverball"] = true,
 		["thruster"] = true,
+		["paint"] = true,
 	},
 	
 	NPC = {
@@ -149,10 +150,10 @@ BaseWars.Config.Help = {
 	["How do I make a base?"] = {
 	
 		"Firstly find an area in the map which is secure, and you would be happy defending,",
-		"Then use some props from [Build] and [Barricades] sub-categories to secure the entrances,",
+		"Then use some props from spawnmenu sub-categories to secure the entrances,",
 		"Finally use the [Fading Door] tool to make yourself a secure way in and out.",
 		"",
-		"After you have secured the area, you can buy Printers and Generators from the [Entities] tab.",
+		"After you have secured the area, you can buy Printers and Generators from the [BaseWars] tab.",
 		"You will need to make sure you have enough power to supply your printers!",
 	
 	},
@@ -181,6 +182,19 @@ BaseWars.Config.Help = {
 		"4. You must base in A SINGLE CONTINGOUS SPACE, no multi-basing.",
 	
 	},
+	
+	["How does the power system work?"] = {
+	
+		"Generators will transmit power to all nearby powered items in an AOE.",
+		"This means you do not need to worry about 'wiring' or similar.",
+		"",
+		"If an electronic has a [POWER FAILURE] then you may need more generators, or you might",
+		"just need to wait for the power supply to stabalise.",
+		"",
+		"If a generator has a [POWER FAILURE] then that means its power generation is being strained,",
+		"but it does not mean it is not working!",
+	
+	}
 
 }
 
@@ -489,15 +503,20 @@ BaseWars.SpawnList.Models = {
 		
 		["Weapons"] = {
 		
-			["SMG"] 			= BaseWars.GenWeapon("models/weapons/w_smg1.mdl", 1000, "weapon_smg1"),
-			["AR2"] 			= BaseWars.GenWeapon("models/weapons/w_irifle.mdl", 2250, "weapon_ar2"),
+			["AR2"] 			= BaseWars.GenWeapon("models/weapons/w_irifle.mdl", 2250, "weapon_twitc_hl2pulserifle"),
+			["P90"] 			= BaseWars.GenWeapon("models/weapons/w_smg_p90.mdl", 2000, "weapon_twitch_p90"),
+			["Galil"] 			= BaseWars.GenWeapon("models/weapons/w_rif_galil.mdl", 2000, "weapon_twitch_galil"),
+			["AK47"] 			= BaseWars.GenWeapon("models/weapons/w_rif_ak47.mdl", 2250, "weapon_twitch_ak47"),
+			["M4A1"] 			= BaseWars.GenWeapon("models/weapons/w_rif_m4a1.mdl", 2250, "weapon_twitch_m4"),
+			
 			["Crowbar"] 		= BaseWars.GenWeapon("models/weapons/w_crowbar.mdl", 300, "weapon_crowbar"),
-			["Frag"]			= BaseWars.GenWeapon("models/weapons/w_grenade.mdl", 12500, "weapon_frag"),
+			["Heal Gun"]		= BaseWars.GenWeapon("models/weapons/w_grenade.mdl", 12500, "weapon_frag"),
 		
 		},
 		
 		["Super Weapons"] = {
 		
+			["Frag"]			= BaseWars.GenWeapon("models/weapons/w_physics.mdl", 25000, "weapon_heal"),
 			--["Crescent Rose"]			= BaseWars.GenWeapon("models/rubyscythe.mdl", 300000, "weapon_rubyrose_scythe"),
 			--["Red Scissor Blade"]		= BaseWars.GenWeapon("models/anfrien/kill_la_kill/scissor_blade/red_scissor_blade.mdl", 250000, "weapon_scissorblade_red"),
 			--["Purple Scissor Blade"]	= BaseWars.GenWeapon("models/anfrien/kill_la_kill/scissor_blade/purple_scissor_blade.mdl", 250000, "weapon_scissorblade_purple"),

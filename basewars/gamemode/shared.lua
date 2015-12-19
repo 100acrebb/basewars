@@ -254,7 +254,7 @@ function GM:PlayerNoClip(ply)
 	
 	end
 	
-	return Admin
+	return Admin and not ply:InRaid()
 	
 end
 
@@ -311,6 +311,14 @@ function GM:CanTool(ply, tr, tool)
 	local Ret = self.BaseClass:CanTool(ply, tr, tool)
 	
 	if BaseWars.Config.BlockedTools[tool] then return IsAdmin(ply, ent, Ret) end
+	
+	if SERVER then
+		
+		local Pos = tr.HitPos
+		local HitString = math.floor(Pos.x) .. "," .. math.floor(Pos.y) .. "," .. math.floor(Pos.z)
+		BaseWars.UTIL.Log("TOOL EVENT: ", ply, " -> ", tool, " on pos [", HitString, "]")
+		
+	end
 	
 	return BlockInteraction(ply, ent, Ret)
 	
