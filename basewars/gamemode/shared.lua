@@ -165,8 +165,8 @@ function BaseWars.UTIL.PayOut(ent, attacker, full)
 	
 	local Fraction = math.floor(Val / Involved)
 	
-	if Members then
-	
+	if #Members > 0 then
+		
 		for k, v in next, Members do
 		
 			Pay(v, Fraction, Name)
