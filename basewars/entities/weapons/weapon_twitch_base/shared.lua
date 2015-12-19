@@ -1,5 +1,5 @@
 if SERVER then
-	AddCSLuaFile ("shared.lua")
+	AddCSLuaFile()
 	SWEP.HoldType = "ar2"
 	
 else
@@ -195,6 +195,8 @@ function SWEP:Reload()
 end
 
 function SWEP:Deploy()
+	if SERVER then self:SetWeaponHoldType (self.HoldType) end
+
 	if SERVER and game.SinglePlayer() then
 		timer.Simple(0.05, function() self.Owner.SendLua("if IsValid(LocalPlayer():GetActiveWeapon()) then LocalPlayer():GetActiveWeapon():Deploy() end") end)
 	end

@@ -647,4 +647,39 @@ end
 
 spawnmenu.AddCreationTab("#spawnmenu.category.basewars", MakeSpawnList, "icon16/building.png", BaseWars.Config.RestrictProps and -100 or 2)
 
-RunConsoleCommand("spawnmenu_reload")
+local function RemoveTabs()
+
+	local ply = LocalPlayer()
+	if not ply or not IsValid(ply) then return end
+	
+	--local Admin = ply:IsAdmin()
+
+	function spawnmenu.Reload()
+		
+		RunConsoleCommand("spawnmenu_reload")
+
+	end
+	function spawnmenu.RemoveCreationTab(blah)
+
+		spawnmenu.GetCreationTabs()[blah] = nil
+		
+	end
+
+	spawnmenu.RemoveCreationTab("#spawnmenu.category.saves")
+	spawnmenu.RemoveCreationTab("#spawnmenu.category.dupes")
+	spawnmenu.RemoveCreationTab("#spawnmenu.category.postprocess")
+
+	--if not Admin then
+
+		spawnmenu.RemoveCreationTab("#spawnmenu.category.vehicles")
+		spawnmenu.RemoveCreationTab("#spawnmenu.category.weapons")
+		spawnmenu.RemoveCreationTab("#spawnmenu.category.npcs")
+		spawnmenu.RemoveCreationTab("#spawnmenu.category.entities")
+		
+	--end
+
+	spawnmenu.Reload()
+
+end
+hook.Add("InitPostEntity", "BaseWars.SpawnMenu.RemoveTabs", RemoveTabs)
+RemoveTabs()

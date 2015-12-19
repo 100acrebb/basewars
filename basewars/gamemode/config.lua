@@ -6,15 +6,6 @@ BaseWars.Config = {
 			Explode		= true,
 			WaterProof	= false,
 		},
-		Turret = {
-			Health 		= 75,
-			Model		= "models/props_c17/TrapPropeller_Engine.mdl",
-		},
-		BigBomb = {
-			Model 		= "models/props_c17/oildrum001.mdl",
-			Skin		= 1,
-			Sound		= "weapons/c4/c4_beep1.wav",
-		},
 		SpawnPoint = {
 			Offset 		= Vector(0, 0, 16),
 		},
@@ -122,7 +113,10 @@ BaseWars.Config = {
 	
 	DestroyReturn 		= 0.6,
 	
-	RestrictProps 		= false
+	RestrictProps 		= false,
+	
+	DispenserTime		= 1,
+	
 }
 
 BaseWars.Config.Help = {
@@ -463,6 +457,7 @@ BaseWars.SpawnList.Models = {
 		["Dispensers"] = {
 
 			["Vending Machine"]			= BaseWars.GenSpawnList("models/props_interiors/VendingMachineSoda01a.mdl", 2000, "bw_vendingmachine"),
+			["Ammo Dispenser"]			= BaseWars.GenSpawnList("models/props_lab/reciever_cart.mdl", 3000, "bw_dispenser_ammo"),
 
 		},
 		
@@ -503,11 +498,19 @@ BaseWars.SpawnList.Models = {
 		
 		["Weapons"] = {
 		
+			["USP"] 			= BaseWars.GenWeapon("models/weapons/w_pist_usp.mdl", 500, "weapon_twitch_usp"),
+			["Deagle"] 			= BaseWars.GenWeapon("models/weapons/w_pist_deagle.mdl", 800, "weapon_twitch_deagle"),
+			
+			["UMP"] 			= BaseWars.GenWeapon("models/weapons/w_smg_ump45.mdl", 1500, "weapon_twitch_ump"),
+			["MP5"] 			= BaseWars.GenWeapon("models/weapons/w_smg_mp5.mdl", 1500, "weapon_twitch_mp5"),
+		
 			["AR2"] 			= BaseWars.GenWeapon("models/weapons/w_irifle.mdl", 2250, "weapon_twitc_hl2pulserifle"),
 			["P90"] 			= BaseWars.GenWeapon("models/weapons/w_smg_p90.mdl", 2000, "weapon_twitch_p90"),
 			["Galil"] 			= BaseWars.GenWeapon("models/weapons/w_rif_galil.mdl", 2000, "weapon_twitch_galil"),
 			["AK47"] 			= BaseWars.GenWeapon("models/weapons/w_rif_ak47.mdl", 2250, "weapon_twitch_ak47"),
 			["M4A1"] 			= BaseWars.GenWeapon("models/weapons/w_rif_m4a1.mdl", 2250, "weapon_twitch_m4"),
+			
+			["M3"] 				= BaseWars.GenWeapon("models/weapons/w_shot_m3super90.mdl", 3000, "weapon_twitch_m3"),
 			
 			["Crowbar"] 		= BaseWars.GenWeapon("models/weapons/w_crowbar.mdl", 300, "weapon_crowbar"),
 			["Frag"]			= BaseWars.GenWeapon("models/weapons/w_grenade.mdl", 12500, "weapon_frag"),
@@ -516,7 +519,7 @@ BaseWars.SpawnList.Models = {
 		
 		["Super Weapons"] = {
 		
-			["Heal Gun"]			= BaseWars.GenWeapon("models/weapons/w_physics.mdl", 25000, "weapon_heal"),
+			["Heal Gun"]			= BaseWars.GenWeapon("models/weapons/w_physics.mdl", 25000, "weapon_health"),
 			--["Crescent Rose"]			= BaseWars.GenWeapon("models/rubyscythe.mdl", 300000, "weapon_rubyrose_scythe"),
 			--["Red Scissor Blade"]		= BaseWars.GenWeapon("models/anfrien/kill_la_kill/scissor_blade/red_scissor_blade.mdl", 250000, "weapon_scissorblade_red"),
 			--["Purple Scissor Blade"]	= BaseWars.GenWeapon("models/anfrien/kill_la_kill/scissor_blade/purple_scissor_blade.mdl", 250000, "weapon_scissorblade_purple"),

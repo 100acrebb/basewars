@@ -133,6 +133,6 @@ function SWEP:CustomPrimaryAttack()
 	self.AnimFired = true
 end
 
-if CLIENT then killicon.AddFont ("weapon_twitch_hl2shotgun", "HL2MPTypeDeath", "0", Color (150, 150, 255, 255)) end
+--if CLIENT then killicon.AddFont ("weapon_twitch_hl2shotgun", "HL2MPTypeDeath", "0", Color (150, 150, 255, 255)) end
 
 --GAMEMODE:RegisterWeapon ("weapon_twitch_ak47", {{typ = "text", text = "b", font = "CSSWeapons80", x = 6, y = 10}}, {})
