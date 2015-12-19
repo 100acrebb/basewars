@@ -4,9 +4,10 @@ if SERVER then
 	
 else
 	surface.CreateFont("HL2SelectIcons", {Font = "HL2MP", Size = ScreenScale( 60 ), Weight = 500})
+	surface.CreateFont("CSSelectIcons_FailSafe", {Font = "CSSelectIcons", Size = ScreenScale( 60 ), Weight = 500})
 
 	function SWEP:DrawWeaponSelection (x, y, wide, tall, alpha) 
-		draw.SimpleText (self.IconLetter, self.IconLetterFont or "CSSelectIcons", x + wide/2, y + tall*0.2, Color (150, 150, 255, 255), TEXT_ALIGN_CENTER) 	 
+		draw.SimpleText (self.IconLetter, self.IconLetterFont or "CSSelectIcons_FailSafe", x + wide/2, y + tall*0.2, Color (150, 150, 255, 255), TEXT_ALIGN_CENTER) 	 
 	end
 	
 end

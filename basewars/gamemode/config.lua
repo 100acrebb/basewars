@@ -510,13 +510,13 @@ BaseWars.SpawnList.Models = {
 			["M4A1"] 			= BaseWars.GenWeapon("models/weapons/w_rif_m4a1.mdl", 2250, "weapon_twitch_m4"),
 			
 			["Crowbar"] 		= BaseWars.GenWeapon("models/weapons/w_crowbar.mdl", 300, "weapon_crowbar"),
-			["Heal Gun"]		= BaseWars.GenWeapon("models/weapons/w_grenade.mdl", 12500, "weapon_frag"),
+			["Frag"]			= BaseWars.GenWeapon("models/weapons/w_grenade.mdl", 12500, "weapon_frag"),
 		
 		},
 		
 		["Super Weapons"] = {
 		
-			["Frag"]			= BaseWars.GenWeapon("models/weapons/w_physics.mdl", 25000, "weapon_heal"),
+			["Heal Gun"]			= BaseWars.GenWeapon("models/weapons/w_physics.mdl", 25000, "weapon_heal"),
 			--["Crescent Rose"]			= BaseWars.GenWeapon("models/rubyscythe.mdl", 300000, "weapon_rubyrose_scythe"),
 			--["Red Scissor Blade"]		= BaseWars.GenWeapon("models/anfrien/kill_la_kill/scissor_blade/red_scissor_blade.mdl", 250000, "weapon_scissorblade_red"),
 			--["Purple Scissor Blade"]	= BaseWars.GenWeapon("models/anfrien/kill_la_kill/scissor_blade/purple_scissor_blade.mdl", 250000, "weapon_scissorblade_purple"),
