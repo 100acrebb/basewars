@@ -1,5 +1,3 @@
--- easylua.StartWeapon("hands")
-
 SWEP.Base = "weapon_base"
 SWEP.Slot = 1
 SWEP.SlotPos = 0
@@ -37,4 +35,3 @@ function SWEP:DrawWeaponSelection(x, y, w, h, t, a)
 	draw.SimpleText("C", "creditslogo", x + w / 2, 0, Color(255, 220, 0, a), TEXT_ALIGN_CENTER)
 end
 
--- easylua.EndWeapon(true, true)
