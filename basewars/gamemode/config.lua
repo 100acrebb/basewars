@@ -77,6 +77,7 @@ BaseWars.Config = {
 	
 	SpawnWeps = {
 		"weapon_physcannon",
+		"hands",
 	},
 	
 	PhysgunBlockClasses = {
@@ -86,6 +87,12 @@ BaseWars.Config = {
 	BlockedTools = {
 		["dynamite"] = true,
 		["duplicator"] = true,
+		["motor"] = true,
+		["emmiter"] = true,
+		["lamp"] = true,
+		["baloon"] = true,
+		["hoverball"] = true,
+		["thruster"] = true,
 	},
 	
 	NPC = {
@@ -435,7 +442,7 @@ BaseWars.SpawnList.Models = {
 			["Coal Fired Generator"]	= BaseWars.GenSpawnList("models/props_wasteland/laundry_washer003.mdl", 3000, "bw_gen_coalfired"),
 			["Fission Reactor"]			= BaseWars.GenSpawnList("models/props/de_nuke/equipment1.mdl", 50000, "bw_gen_fission"),
 			["Fusion Reactor"]			= BaseWars.GenSpawnList("models/xqm/hydcontrolbox.mdl", 1000000, "bw_gen_fusion"),
-			["Hentai Generator"]		= BaseWars.GenSpawnList("models/props_junk/garbage_newspaper001a.mdl", 20, "bw_gen_hentai"),
+			--["Hentai Generator"]		= BaseWars.GenSpawnList("models/props_junk/garbage_newspaper001a.mdl", 20, "bw_gen_hentai"),
 
 		},
 		
