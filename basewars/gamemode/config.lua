@@ -491,9 +491,9 @@ BaseWars.SpawnList.Models = {
 		
 		["Super Weapons"] = {
 		
-			["Crescent Rose"]			= BaseWars.GenWeapon("models/rubyscythe.mdl", 300000, "weapon_rubyrose_scythe"),
-			["Red Scissor Blade"]		= BaseWars.GenWeapon("models/anfrien/kill_la_kill/scissor_blade/red_scissor_blade.mdl", 250000, "weapon_scissorblade_red"),
-			["Purple Scissor Blade"]	= BaseWars.GenWeapon("models/anfrien/kill_la_kill/scissor_blade/purple_scissor_blade.mdl", 250000, "weapon_scissorblade_purple"),
+			--["Crescent Rose"]			= BaseWars.GenWeapon("models/rubyscythe.mdl", 300000, "weapon_rubyrose_scythe"),
+			--["Red Scissor Blade"]		= BaseWars.GenWeapon("models/anfrien/kill_la_kill/scissor_blade/red_scissor_blade.mdl", 250000, "weapon_scissorblade_red"),
+			--["Purple Scissor Blade"]	= BaseWars.GenWeapon("models/anfrien/kill_la_kill/scissor_blade/purple_scissor_blade.mdl", 250000, "weapon_scissorblade_purple"),
 		
 		},
 	
