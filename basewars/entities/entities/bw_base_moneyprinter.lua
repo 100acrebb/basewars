@@ -1,3 +1,5 @@
+easylua.StartEntity("bw_base_moneyprinter")
+
 local fontName = "BaseWars.MoneyPrinter"
 
 ENT.Base = "bw_base_electronics"
@@ -10,6 +12,9 @@ ENT.Money 			= 0
 ENT.Paper 			= 500
 ENT.PrintInterval 	= 1.1
 ENT.PrintAmount		= 30
+ENT.Level 			= 1
+ENT.MaxLevel 		= 10
+ENT.UpgradeCost 	= 1000
 
 ENT.PrintName = "Basic Printer"
 
@@ -64,10 +69,13 @@ end
 GSAT("Capacity", "Capacity")
 GSAT("Money", "Money", 0, "Capacity")
 GSAT("Paper", "Paper", 0, ENT.Paper)
+GSAT("Level", "Level", 0, "MaxLevel")
 
 if SERVER then
 
 	AddCSLuaFile()
+
+	hook.Add("PlayerSay", "BaseWars")
 
 	function ENT:Init()
 
@@ -84,6 +92,38 @@ if SERVER then
 		self.FontColor = color_white
 		self.BackColor = color_black
 
+		self:SetLevel(1)
+	end
+
+	function ENT:Upgrade(ply)
+
+		if ply then
+			
+			local lvl = self:GetLevel()
+
+			local plyM = ply:GetMoney()
+
+			local calcM = self.UpgradeCost * lvl
+
+			if plyM < calcM then
+				
+				ply:Notify("You don't have enough money to upgrade!", Color(255, 0, 0))
+
+			return end
+
+			if lvl >= self.MaxLevel then
+				
+				ply:Notify("You can't upgrade this printer any more!", Color(255, 0, 0))
+
+			return end
+
+			ply:TakeMoney(calcM)
+
+		end
+
+		self:AddLevel(1)
+		self:EmitSound("replay/rendercomplete.wav")
+
 	end
 
 	function ENT:ThinkFunc()
@@ -91,10 +131,12 @@ if SERVER then
 		if self.Disabled or self:BadlyDamaged() then return end
 		local added
 
+		local level = (self:GetLevel() + 10) / 10
+
 		if CurTime() >= self.PrintInterval + self.time and self:GetPaper() > 0 then
 			
 			local m = self:GetMoney()
-			self:AddMoney(self.PrintAmount)
+			self:AddMoney(math.Round(self.PrintAmount * level))
 			self.time = CurTime()
 			added = m ~= self:GetMoney()
 
@@ -195,7 +237,8 @@ else
 		local w, h = 216 * 2, 136 * 2
 		local disabled = self:GetNWBool("printer_disabled")
 		local Pw = self:IsPowered()
-		
+		local Lv = self:GetLevel()
+
 		draw.RoundedBox(4, 0, 0, w, h, Pw and self.BackColor or color_black)
 		
 		if not Pw then return end
@@ -211,7 +254,7 @@ else
 		if disabled then return end
 
 		draw.RoundedBox(0, 0, 30, w, 1, self.FontColor)
-		draw.DrawText("LEVEL: 0", fontName .. ".Big", 4, 32, self.FontColor, TEXT_ALIGN_LEFT)
+		draw.DrawText("LEVEL: " .. Lv, fontName .. ".Big", 4, 32, self.FontColor, TEXT_ALIGN_LEFT)
 		draw.RoundedBox(0, 0, 68, w, 1, self.FontColor)
 
 		draw.DrawText("CASH", fontName .. ".Big", 4, 72, self.FontColor, TEXT_ALIGN_LEFT)
@@ -280,3 +323,5 @@ else
 	end
 
 end
+
+easylua.EndEntity()

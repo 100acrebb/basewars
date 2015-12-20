@@ -42,22 +42,22 @@ end
 
 local function playTime(n)
 
-	local dat = os.date("!*t",n)
+	local dat = n
 	local str = ""
 	
-	if dat.hour > 0 then
+	if dat.h > 0 then
 	
-		str = str .. dat.hour .. "h "
+		str = str .. dat.h .. "h "
 		
 	end
-	if dat.min > 0 then
+	if dat.m > 0 then
 	
-		str = str .. dat.min .. "m "
+		str = str .. dat.m .. "m "
 		
 	end
-	if dat.sec > 0 then
+	if dat.s > 0 then
 	
-		str = str .. dat.sec  .. "s "
+		str = str .. dat.s  .. "s "
 		
 	end
 	
@@ -115,7 +115,7 @@ function MODULE:Paint()
 
 	if not IsValid(me) then me = LocalPlayer() return end
 
-	local plTime = me.GetPlayTime and me:GetPlayTime() or 0
+	local plTime = me.GetPlayTimeTable and me:GetPlayTimeTable() or {h = 0, m = 0, s = 0}
 	local money = me.GetMoney and me:GetMoney() or 0
 	
 	local diff = 0
