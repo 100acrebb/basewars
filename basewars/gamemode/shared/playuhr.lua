@@ -208,6 +208,12 @@ if SERVER then
 	timer.Create(hName3,0.01,0,hook3)
 	timer.Create(hName2,saveInterval(),0,hook4)
 
+	hook.Add("PlayerDisconnect", "playUhr_thing", function(ply)
+
+		DataMgr:Save(ply)
+
+	end)
+
 	for _,ply in next, player.GetAll() do
 		DataMgr:Load(ply)
 		Ticker:AddPlayer(ply)
@@ -237,10 +243,15 @@ function META:GetPlayTime()
 	return self:GetStoredPlayTime() + self:GetSessionTime()
 end
 
-local date = os.date
 function META:GetPlayTimeTable()
 	local time = self:GetPlayTime()
-	local tbl = date("!*t",time)
+	
+	local tbl = {}
+
+	tbl.hour = math.floor(time / 60 / 60) 
+	tbl.min = math.floor(time / 60) % 60
+	tbl.sec = math.floor(time) % 60
+
 	return {
 		h = tbl.hour,
 		m = tbl.min,
