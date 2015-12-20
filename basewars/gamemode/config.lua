@@ -462,6 +462,7 @@ BaseWars.SpawnList.Models = {
 
 			["Vending Machine"]			= BaseWars.GenSpawnList("models/props_interiors/VendingMachineSoda01a.mdl", 2000, "bw_vendingmachine"),
 			["Ammo Dispenser"]			= BaseWars.GenSpawnList("models/props_lab/reciever_cart.mdl", 3000, "bw_dispenser_ammo"),
+			["HealthPad"]				= BaseWars.GenSpawnList("models/props_trainstation/trainstation_clock001.mdl", 5000, "bw_healthpad"),
 
 		},
 		

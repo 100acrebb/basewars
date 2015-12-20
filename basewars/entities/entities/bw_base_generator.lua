@@ -145,6 +145,8 @@ if SERVER then
 		self:SetUseType(SIMPLE_USE)
 		self:SetHealth(100)
 		
+		self:AddEffects(EF_ITEM_BLINK)
+		
 		self.rtb = 0
 		
 		self:SetNWBool("WaterProof", BaseWars.Config.Ents.Electronics.WaterProof)

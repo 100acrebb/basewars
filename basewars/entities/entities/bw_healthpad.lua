@@ -1,3 +1,4 @@
+AddCSLuaFile()
 ENT.Base = "bw_base_electronics"
 ENT.Type = "anim"
  
@@ -15,7 +16,34 @@ ENT.Plys = {}
 ENT.Sound = Sound("npc/vort/health_charge.wav")
 ENT.Radius = 48
 
-if CLIENT then return end
+if CLIENT then
+
+	function ENT:Think()
+	
+		if not self:GetNWBool("HealthPad") then return end
+		
+		local Emitter = ParticleEmitter(self:GetPos())
+		if not Emitter then return end
+		
+		local ParticlePos = self:GetPos() + Vector(math.random(-24, 24), math.random(-24, 24), math.random(0, 80))
+		local Particle = Emitter:Add("particle/smokesprites_000" .. tostring(math.random(1,9)), ParticlePos)
+	   
+		if Particle then
+		
+			Particle:SetColor(0, 255, 0)
+			Particle:SetCollide(1)
+			Particle:SetLifeTime(0)
+			Particle:SetDieTime(5)
+			Particle:SetStartSize(math.random(0.1, 1))
+			Particle:SetEndSize(Particle:GetStartSize())
+			
+		end
+	   
+		Emitter:Finish()
+		
+	end
+
+return end
 
 local ForceAngle = Angle(-90, 0, 0)
 function ENT:Init()
@@ -28,9 +56,33 @@ function ENT:Init()
    
 end
 
+function ENT:SpawnFunction(ply, tr, class)
+   
+	local pos = ply:GetPos()
+	   
+	local ent = ents.Create(class)
+		ent:CPPISetOwner(ply)
+		ent:SetPos(pos)
+		ply:SetPos(pos + Vector(0,0,3))
+	ent:Spawn()
+	ent:Activate()
+	   
+	local phys = ent:GetPhysicsObject()
+	
+	if IsValid(phys) then
+	
+		phys:EnableMotion(false)
+		
+	end
+   
+	return ent
+   
+end
+
 function ENT:ThinkFunc()
 	
 	local Ents = ents.FindInBox(self:GetPos() + self.Mins, self:GetPos() + self.Maxs)
+	local Heal = false
    
 	for k, ply in next, Ents do
 		
@@ -42,6 +94,8 @@ function ENT:ThinkFunc()
 		self:DrainPower(self.Drain)
 		self:EmitSound(self.Sound)
 		
+		Heal = true
+		
 		if ply:Health() >= ply:GetMaxHealth() then
 			
 			ply:SetHealth(ply:GetMaxHealth())
@@ -49,5 +103,7 @@ function ENT:ThinkFunc()
 		end
 		
 	end
+	
+	self:SetNWBool("HealthPad", Heal)
 	
 end

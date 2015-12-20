@@ -55,7 +55,6 @@ ENT.PlayedStages = {}
 
 function ENT:Init()
 
-	self:AddEffects(EF_ITEM_BLINK)
 	self:SetHealth(300)
 
 end

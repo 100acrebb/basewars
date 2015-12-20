@@ -99,7 +99,6 @@ local function MakePortalFunc()
 
 end
 
-hook.Add("InitPostEntity", "BaseWars.MapPortal", MakePortalFunc)
 MakePortalFunc()
 
 function GM:ShutDown()
@@ -461,6 +460,14 @@ function GM:InitPostEntity()
 	self.BaseClass:InitPostEntity()
 	
 	ScanEntities()
+	
+	for k, v in next, ents.FindByClass("*door*") do
+	
+		v:Fire("unlock")
+		
+	end
+	
+	MakePortalFunc()
 	
 end
 
