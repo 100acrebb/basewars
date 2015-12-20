@@ -462,7 +462,7 @@ BaseWars.SpawnList.Models = {
 
 			["Vending Machine"]			= BaseWars.GenSpawnList("models/props_interiors/VendingMachineSoda01a.mdl", 2000, "bw_vendingmachine"),
 			["Ammo Dispenser"]			= BaseWars.GenSpawnList("models/props_lab/reciever_cart.mdl", 3000, "bw_dispenser_ammo"),
-			["HealthPad"]				= BaseWars.GenSpawnList("models/props_trainstation/trainstation_clock001.mdl", 5000, "bw_healthpad"),
+			["HealthPad"]				= BaseWars.GenSpawnList("models/props_trainstation/trainstation_clock001.mdl", 5000, "bw_healthpad", true),
 
 		},
 		
@@ -509,7 +509,7 @@ BaseWars.SpawnList.Models = {
 			["UMP"] 			= BaseWars.GenWeapon("models/weapons/w_smg_ump45.mdl", 1500, "weapon_twitch_ump45"),
 			["MP5"] 			= BaseWars.GenWeapon("models/weapons/w_smg_mp5.mdl", 1500, "weapon_twitch_mp5"),
 		
-			["AR2"] 			= BaseWars.GenWeapon("models/weapons/w_irifle.mdl", 2250, "weapon_twitc_hl2pulserifle"),
+			["AR2"] 			= BaseWars.GenWeapon("models/weapons/w_irifle.mdl", 2250, "weapon_twitch_hl2pulserifle"),
 			["P90"] 			= BaseWars.GenWeapon("models/weapons/w_smg_p90.mdl", 2000, "weapon_twitch_p90"),
 			["Galil"] 			= BaseWars.GenWeapon("models/weapons/w_rif_galil.mdl", 2000, "weapon_twitch_galil"),
 			["AK47"] 			= BaseWars.GenWeapon("models/weapons/w_rif_ak47.mdl", 2250, "weapon_twitch_ak47"),

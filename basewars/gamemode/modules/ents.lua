@@ -31,12 +31,12 @@ end
 
 function MODULE:ValidPlayer(ply)
 
-	return ply and IsValid(ply) and ply:IsPlayer() and ply
+	return self:Valid(ply) and ply:IsPlayer() and ply
 	
 end
 
 function MODULE:ValidClose(ent, ent2, dist)
 
-	return self:Valid(ent) and ent:GetPos():Distance(ent2:GetPos()) <= dist and ent
+	return self:Valid(ent) and ent:GetPos():DistToSqr(ent2:GetPos()) <= dist^2 and ent
 
 end

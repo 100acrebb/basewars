@@ -5,14 +5,14 @@ Todo:
 		AFK 		[X][2]
 		BOUNTY		[ ][2] <-
 		DRUGS		[X][2] <-
-		ENT LEVEL	[ ][3]
+		ENT LEVEL	[X][3]
 		ENT POWER	[X][3]
 	GUI:
 		FACTIONS	[X][1]
 		RAID HUD	[X][1]
 		RAID GUI	[X][1] <-
-		ENTITIES	[ ][1] <-
-		KARMA HUD	[ ][2]
+		ENTITIES	[X][1] <-
+		KARMA HUD	[X][2]
 	GM:
 		Friend-Fire [X][1] <-
 	GENERAL:
@@ -26,7 +26,7 @@ Todo:
 			- DisallowRDM
 			- Level + UG requirements for everything
 			- ^ allows for pay2win "owners"
-		IMP KARMA	[ ][3]
+		IMP KARMA	[X][3]
 			- We have karma now, implement it.
 	BIG IDEAS:
 		PLAYER LVL	[ ][5]
@@ -44,5 +44,5 @@ Ents To Make:
 	bw_druglab,
 	bw_nuke,
 	bw_landmine,
-	bw_spawnpoint,
-	bw_base_dispenser,
+	bw_spawnpoint, X
+	bw_base_dispenser, X

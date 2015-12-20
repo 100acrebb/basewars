@@ -676,7 +676,7 @@ local function RemoveTabs()
 		spawnmenu.RemoveCreationTab("#spawnmenu.category.vehicles")
 		spawnmenu.RemoveCreationTab("#spawnmenu.category.weapons")
 		spawnmenu.RemoveCreationTab("#spawnmenu.category.npcs")
-		spawnmenu.RemoveCreationTab("#spawnmenu.category.entities")
+		--spawnmenu.RemoveCreationTab("#spawnmenu.category.entities")
 		
 	--end
 
