@@ -69,7 +69,7 @@ if SERVER then
 		
 		end
 		
-		local SpawnPos = tr.HitPos + tr.HitNormal * 60
+		local SpawnPos = tr.HitPos + BaseWars.Config.SpawnOffset
 		local SpawnAng = ply:EyeAngles()
 		SpawnAng.p = 0
 		SpawnAng.y = SpawnAng.y + 180
@@ -202,6 +202,8 @@ if SERVER then
 
 		prop:Spawn()
 		prop:Activate()
+		
+		prop:DropToFloor()
 
 		local phys = prop:GetPhysicsObject()
 

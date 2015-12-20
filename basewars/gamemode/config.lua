@@ -91,6 +91,10 @@ BaseWars.Config = {
 		FadeOut = 400,
 	},
 	
+	AntiRDM = {
+		HurtTime = 80,
+	},
+	
 	PayDayBase 			= 500,
 	PayDayMin			= 50,
 	PayDayDivisor		= 1000,
@@ -108,9 +112,9 @@ BaseWars.Config = {
 	DefaultRun			= 400,
 	
 	DefaultLimit		= 4,
+	SpawnOffset			= Vector(0, 0, 40),
 	
 	UniversalPropConstant = 2.7,
-	
 	DestroyReturn 		= 0.6,
 	
 	RestrictProps 		= false,

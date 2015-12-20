@@ -261,11 +261,11 @@ function SWEP:DrawHUD()
 	surface.DrawLine (scrpos.x + 1, scrpos.y + ScrW() * size + 1, scrpos.x + 1, scrpos.y - ScrW() * size + 1)
 end
 
-local function WeaponUsesStationaryAiming()
+function WeaponUsesStationaryAiming()
 	return LocalPlayer() and IsValid(LocalPlayer():GetActiveWeapon()) and LocalPlayer():GetActiveWeapon().UseStationaryAiming
 end
 
-local function WeaponStationaryAimingOn()
+function WeaponStationaryAimingOn()
 	return LocalPlayer():GetActiveWeapon().StationaryAimingOn
 end
 

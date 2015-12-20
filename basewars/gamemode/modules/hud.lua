@@ -68,6 +68,7 @@ local hpbck = Color(255, 0  , 0  , 100)
 local pwbck = Color(0  , 0  , 255, 100)
 
 function MODULE:DrawStructureInfo(ent)
+
 	local Pos = ent:GetPos()
 	Pos.z = Pos.z + 14
 	
@@ -157,6 +158,7 @@ function MODULE:DrawStructureInfo(ent)
 		draw.DrawText(Str, Font2, oldx - w / 2, cury + Padding - 1, color_white)
 		
 	end
+	
 end
 
 function MODULE:DrawDisplay()
@@ -191,10 +193,10 @@ function MODULE:Paint()
 	oldAM = suF
 
 	local pbarW, pbarH = 256, 6
-
 	local sW, sH = ScrW(), ScrH()
 	
-	draw.DrawText(BaseWars.LANG.MainMenuControl, "BudgetLabel", sW - 5, 3, trans, TEXT_ALIGN_RIGHT)
+	local Karma = me:GetKarma()
+	local KarmaText = string.format(BaseWars.LANG.KarmaText, Karma)
 
 	local hW = Calc(hp, 100, 0, pbarW)
 	local aW = Calc(su, 100, 0, pbarW)
@@ -208,6 +210,12 @@ function MODULE:Paint()
 	aW = Lerp(0.15,oldaW,aW)
 	oldaW = aW
 	naW = pbarW - aW
+	
+	-- Karma + Controls
+	draw.DrawText(BaseWars.LANG.MainMenuControl, "BudgetLabel", sW - 5, 3, trans, TEXT_ALIGN_RIGHT)
+	
+	draw.DrawText(KarmaText, tag, 64 + 26 + pbarW / 2, sH - 128 - 48 - 8, shade, TEXT_ALIGN_CENTER)
+	draw.DrawText(KarmaText, tag, 64 + 24 + pbarW / 2, sH - 128 - 48 - 10, trans, TEXT_ALIGN_CENTER)
 
 	-- Health
 

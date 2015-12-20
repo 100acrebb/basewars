@@ -33,6 +33,12 @@ BaseWars.LANG.__LANGUAGELOOK.ENGLISH = {
 	RaidNoFaction			= "Cannot use faction functions during a raid!",
 	CantRaidSelf			= "You can't raid yourself or your faction!",
 	
+	NoPrinters				= "No raidable printers!",
+	OnCoolDown				= "Currently on CoolDown from being raided!",
+	
+	PayOutOwner				= "You got " .. CURRENCY .. "%s for the destruction of your %s!",
+	PayOut					= "You got " .. CURRENCY .. "%s for destroying a %s!",
+	
 	SteroidEffect			= "You feel full of energy...",
 	SteroidRemove			= "Your energy passes...",
 	RegenEffect				= "You feel your wounds healing by themselves...",
@@ -56,27 +62,23 @@ BaseWars.LANG.__LANGUAGELOOK.ENGLISH = {
 	
 	NewSpawnPoint			= "New SpawnPoint has been set!",
 	
+	UseSpawnMenu			= "Use the BaseWars spawnlist!",
 	SpawnMenuMoney			= "You don't have enough money for that.",
 	SpawnMenuBuy			= "You bought a(n) \"%s\" for " .. CURRENCY .. "%s.",
 	SpawnMenuBuyConfirm		= "Are you sure you want to by a(n) \"%s\" for " .. CURRENCY .. "%s?",
 	SpawnMenuConf			= "Purchase Confirmation",
-	
+	DeadBuy					= "Dead people buy nothing.",
 	EntLimitReached			= "You have reached the limit of \"%s\"s.",
 	
 	StuckText				= "You are stuck inside a wall, prop, or player! Remain calm and press [CTRL], if it does not work press [SPACE].",
-	
-	NoPrinters				= "No raidable printers!",
-	OnCoolDown				= "Currently on CoolDown from being raided!",
 
 	FailedToAuth			= "Steam failed to authenticate your SteamID, uh oh!",
 	
-	PayOutOwner				= "You got " .. CURRENCY .. "%s for the destruction of your %s!",
-	PayOut					= "You got " .. CURRENCY .. "%s for destroying a %s!",
-	
-	UseSpawnMenu			= "Use the BaseWars spawnlist!",
 	MainMenuControl			= "F3 - Open Main Menu",
+	KarmaText				= "Your Karma is currently %s",
 	
-	DeadBuy					= "Dead people buy nothing.",
+	AFKFor					= "You have been AFK for",
+	RespawnIn				= "You can respawn in",
 }
 
 local INVALID_LANGUAGE 	= "INVALID LANGUAGE SELECTED! NOTIFY THE SERVER ADMIN!"

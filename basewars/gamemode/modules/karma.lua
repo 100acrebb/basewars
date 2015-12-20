@@ -47,7 +47,7 @@ if SERVER then
 		local dirName = isPlayer(ply) and ply:UniqueID() or (isstring(ply) and ply or nil)
 		
 		if not file.IsDir(tag_escaped .. "/" .. dirName, "DATA") then file.CreateDir(tag_escaped .. "/" .. dirName) end
-		if not file.Exists(tag_escaped .. "/" .. dirName .. "/karma.txt", "DATA") then file.Write(tag_escaped .. "/" .. dirName .. "/karma.txt", 50) end
+		if not file.Exists(tag_escaped .. "/" .. dirName .. "/karma.txt", "DATA") then file.Write(tag_escaped .. "/" .. dirName .. "/karma.txt", 0) end
 		
 		return dirName
 		
@@ -78,7 +78,7 @@ if SERVER then
 
 	function MODULE:Set(ply, amount)
 
-		if not isnumber(amount) or amount < 0 then amount = 0 end
+		if not isnumber(amount) or amount < -100 then amount = -100 end
 		if amount > 100 then amount = 100 end
 		
 		amount = math.Round(amount)

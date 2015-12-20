@@ -115,7 +115,7 @@ function MODULE:Paint()
 	surface.SetTextPos(ScrW() / 2 - w / 2, ScrH() / 3)
 	surface.DrawText(AFKTime)
 	
-	local Txt = "You have been AFK for"
+	local Txt = BaseWars.LANG.AFKFor
 	local w2, h2 = surface.GetTextSize(Txt)
 	
 	surface.SetTextColor(color_black)
