@@ -1,5 +1,3 @@
-easylua.StartEntity("bw_base_moneyprinter")
-
 local fontName = "BaseWars.MoneyPrinter"
 
 ENT.Base = "bw_base_electronics"
@@ -107,13 +105,13 @@ if SERVER then
 
 			if plyM < calcM then
 				
-				ply:Notify("You don't have enough money to upgrade!", Color(255, 0, 0))
+				ply:Notify(BaseWars.LANG.UpgradeNoMoney, BASEWARS_NOTIFICATION_ERROR)
 
 			return end
 
 			if lvl >= self.MaxLevel then
 				
-				ply:Notify("You can't upgrade this printer any more!", Color(255, 0, 0))
+				ply:Notify(BaseWars.LANG.UpgradeMaxLevel, BASEWARS_NOTIFICATION_ERROR)
 
 			return end
 
@@ -323,5 +321,3 @@ else
 	end
 
 end
-
-easylua.EndEntity()

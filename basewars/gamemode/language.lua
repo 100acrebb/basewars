@@ -79,6 +79,9 @@ BaseWars.LANG.__LANGUAGELOOK.ENGLISH = {
 	
 	AFKFor					= "You have been AFK for",
 	RespawnIn				= "You can respawn in",
+	
+	UpgradeNoMoney			= "You don't have enough money to upgrade!",
+	UpgradeMaxLevel			= "You can't upgrade this printer any more!",
 }
 
 local INVALID_LANGUAGE 	= "INVALID LANGUAGE SELECTED! NOTIFY THE SERVER ADMIN!"
