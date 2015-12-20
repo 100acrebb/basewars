@@ -255,7 +255,7 @@ function GM:PlayerNoClip(ply)
 	
 	end
 	
-	return Admin and not ply:InRaid()
+	return Admin and not ply:InRaid() and (not aowl or ply.Unrestricted)
 	
 end
 
