@@ -116,7 +116,7 @@ if SERVER then
 			return
 		end
 		
-		MsgC(Color(255, 255, 0, 255), ply, color_white, ": ", unmsg, "\n")
+		(epoe and epoe.RealMsgC or MsgC)(Color(255, 255, 0, 255), ply, color_white, ": ", unmsg, "\n")
 
 		-- incoming terrible one-liners
 
