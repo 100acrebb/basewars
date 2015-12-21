@@ -161,7 +161,7 @@ if SERVER then
 				end
 				
 				newEnt.CurrentValue = price
-				if newEnt.Upgrade then newEnt.UpgradeCost = price end
+				if newEnt.SetUpgradeCost then newEnt:SetUpgradeCost(price) end
 				
 				newEnt.DoNotDuplicate = true
 				
@@ -174,7 +174,7 @@ if SERVER then
 			end
 			
 			newEnt.CurrentValue = price
-			if newEnt.Upgrade then newEnt.UpgradeCost = price end
+			if newEnt.SetUpgradeCost then newEnt:SetUpgradeCost(price) end
 			
 			newEnt.DoNotDuplicate = true
 

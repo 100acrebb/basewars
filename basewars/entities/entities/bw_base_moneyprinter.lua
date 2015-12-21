@@ -89,8 +89,17 @@ if SERVER then
 		
 		self.FontColor = color_white
 		self.BackColor = color_black
+		
+		self:SetNWInt("UpgradeCost", self.UpgradeCost)
 
 		self:SetLevel(1)
+	end
+	
+	function ENT:SetUpgradeCost(val)
+	
+		self.UpgradeCost = val
+		self:SetNWInt("UpgradeCost", val)
+		
 	end
 
 	function ENT:Upgrade(ply)
@@ -101,7 +110,7 @@ if SERVER then
 
 			local plyM = ply:GetMoney()
 
-			local calcM = self.UpgradeCost * lvl
+			local calcM = self:GetNWInt("UpgradeCost") * lvl
 
 			if plyM < calcM then
 				
@@ -293,7 +302,7 @@ else
 		draw.DrawText("Paper: " .. paper .. " sheets", fontName .. ".MedBig", 4, 84 + 24, self.FontColor, TEXT_ALIGN_LEFT)
 		draw.RoundedBox(0, 0, 102 + 32, w, 1, self.FontColor)
 		
-		local NextCost = BaseWars.LANG.CURRENCY .. BaseWars.NumberFormat(self:GetLevel() * self.UpgradeCost)
+		local NextCost = BaseWars.LANG.CURRENCY .. BaseWars.NumberFormat(self:GetLevel() * self:GetNWInt("UpgradeCost"))
 		
 		if self:GetLevel() >= self.MaxLevel then
 		

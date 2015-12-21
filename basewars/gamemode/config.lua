@@ -42,6 +42,7 @@ BaseWars.Config = {
 		Antidote = {
 		
 		},
+		CookTime	= 60 * 3,
 	},
 	
 	Notifications = {
@@ -52,7 +53,7 @@ BaseWars.Config = {
 	},
 	
 	Raid = {
-		Time 			= 360,
+		Time 			= 60 * 5,
 		CoolDownTime	= 60 * 15,
 	},
 	
@@ -104,7 +105,7 @@ BaseWars.Config = {
 	PayDayBase 			= 500,
 	PayDayMin			= 50,
 	PayDayDivisor		= 1000,
-	PayDayRate 			= 180,
+	PayDayRate 			= 60 * 3,
 	PayDayRandom		= 50,
 	
 	StartMoney 			= 5000,
