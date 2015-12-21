@@ -87,21 +87,19 @@ function ModuleLoader:Load()
 
 	for fName in self:IterateFiles("modules") do
 
-		function Curry(what)
+		MODULE = {}
+		
+		function Curry(f)
 
-			local mf = MODULE[what]
-
-			local f = function(...)
-
-				mf(mf, ...)
-
+			local MODULE = MODULE
+			local function curriedFunction(...)
+				return f(MODULE, ...)
 			end
 
-			return f
+			return curriedFunction
 
 		end
-
-		MODULE = {}
+		
 		local ok, err = pcall(include, fName)
 
 		if not ok then
