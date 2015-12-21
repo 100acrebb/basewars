@@ -4,17 +4,6 @@ MODULE.Author 	= "Q2F2 & Ghosty"
 local tag = "BaseWars.Ents"
 local PLAYER = debug.getregistry().Player
 
-local function Curry(f)
-
-	local MODULE = MODULE
-	local function curriedFunction(...)
-		return f(MODULE, ...)
-	end
-
-	return curriedFunction
-
-end
-
 function MODULE:Valid(ent)
 
 	return ent and isentity(ent) and IsValid(ent) and ent

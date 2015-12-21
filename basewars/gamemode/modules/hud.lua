@@ -5,17 +5,6 @@ MODULE.Credits 	= "Based on geist by ghosty; https://github.com/TrenchFroast/gho
 
 local tag = "BaseWars.HUD"
 
-local function Curry(f)
-
-	local MODULE = MODULE
-	local function curriedFunction(...)
-		return f(MODULE, ...)
-	end
-
-	return curriedFunction
-
-end
-
 function MODULE:__INIT()
 
 	surface.CreateFont(tag, {

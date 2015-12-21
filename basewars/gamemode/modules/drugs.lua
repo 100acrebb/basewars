@@ -4,17 +4,6 @@ MODULE.Author 	= "Q2F2 & Ghosty"
 local tag = "BaseWars.Drugs"
 local PLAYER = debug.getregistry().Player
 
-local function Curry(f)
-
-	local MODULE = MODULE
-	local function curriedFunction(...)
-		return f(MODULE, ...)
-	end
-
-	return curriedFunction
-
-end
-
 local DRUG_REMOVE = 0
 local DRUG_FAILED = 1
 

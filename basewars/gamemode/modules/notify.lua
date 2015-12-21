@@ -4,17 +4,6 @@ MODULE.Realm	= 2
 
 local tag = "BaseWars.Notify"
 
-local function Curry(f)
-
-	local MODULE = MODULE
-	local function curriedFunction(...)
-		return f(MODULE, ...)
-	end
-
-	return curriedFunction
-
-end
-
 function MODULE:__INIT()
 	
 	surface.CreateFont(tag, {

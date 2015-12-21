@@ -87,6 +87,20 @@ function ModuleLoader:Load()
 
 	for fName in self:IterateFiles("modules") do
 
+		function Curry(what)
+
+			local mf = MODULE[what]
+
+			local f = function(...)
+
+				mf(mf, ...)
+
+			end
+
+			return f
+
+		end
+
 		MODULE = {}
 		local ok, err = pcall(include, fName)
 
@@ -146,6 +160,7 @@ function ModuleLoader:Load()
 	end
 	
 	MODULE = nil
+	Curry = nil
 
 	local newTime = SysTime()
 	Log("STATS: Loaded ", tostring(moduleCount), " modules in ", tostring(math.Round(newTime - oldTime, 5)), " seconds.")

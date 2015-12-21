@@ -5,18 +5,6 @@ local tag = "BaseWars.Karma"
 local tag_escaped = "BaseWars_Karma"
 local PLAYER = debug.getregistry().Player
 
-local function Curry(f)
-
-	local MODULE = MODULE
-	local function curriedFunction(...)
-		return f(MODULE, ...)
-	end
-
-	return curriedFunction
-
-end
-
-
 local function isPlayer(ply)
 
 	return (IsValid(ply) and ply:IsPlayer())

@@ -21,17 +21,6 @@ MODULE.MapTable = {
 local tag = "BaseWars.NPCs"
 local PLAYER = debug.getregistry().Player
 
-local function Curry(f)
-
-	local MODULE = MODULE
-	local function curriedFunction(...)
-		return f(MODULE, ...)
-	end
-
-	return curriedFunction
-
-end
-
 if CLIENT then
 
 	surface.CreateFont(tag, {

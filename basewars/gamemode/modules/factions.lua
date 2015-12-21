@@ -5,17 +5,6 @@ MODULE.FactionTable = BaseWars.Factions and BaseWars.Factions.FactionTable or {}
 local tag = "BaseWars.Factions"
 local PLAYER = debug.getregistry().Player
 
-local function Curry(f)
-
-	local MODULE = MODULE
-	local function curriedFunction(...)
-		return f(MODULE, ...)
-	end
-
-	return curriedFunction
-
-end
-
 if SERVER then
 
 	util.AddNetworkString(tag)

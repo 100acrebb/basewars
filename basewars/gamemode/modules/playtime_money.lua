@@ -3,17 +3,6 @@ MODULE.Author 	= "Q2F2 & Ghosty"
 
 local tag = "BaseWars.PlayTime_Money"
 
-local function Curry(f)
-
-	local MODULE = MODULE
-	local function curriedFunction(...)
-		return f(MODULE, ...)
-	end
-
-	return curriedFunction
-
-end
-
 if SERVER then
 
 	resource.AddFile("materials/icon32/clock_wh32.png")
