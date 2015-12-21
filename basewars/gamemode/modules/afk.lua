@@ -96,11 +96,7 @@ function MODULE:Paint()
 	if not ply:IsAFK() then return end
 	
 	local len = ply:AFKTime()
-	local h = math.floor(len / 60 / 60)
-	local m = math.floor(len / 60 - h * 60)
-	local s = math.floor(len - m * 60 - h * 60 * 60)
-
-	local AFKTime = string.format("%.2d:%.2d:%.2d", h, m, s)
+	local AFKTime = BaseWars.UTIL.TimeParse(len)
 
 	surface.SetFont(tag)
 	local w, h = surface.GetTextSize(AFKTime)

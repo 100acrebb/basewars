@@ -173,7 +173,8 @@ if SERVER then
 
 		if self.Disabled then return end
 
-		if activator:IsPlayer() and caller:IsPlayer() and self:GetMoney() > 0 then
+		local Owner = BaseWars.Ents:ValidOwner(self)
+		if activator:IsPlayer() and (activator == Owner) and caller:IsPlayer() and self:GetMoney() > 0 then
 			
 			self:PlayerTakeMoney(activator)
 

@@ -476,7 +476,7 @@ BaseWars.SpawnList.Models = {
 		["Misc"] = {
 
 			["Spawnpoint"]			= BaseWars.GenSpawnList("models/props_trainstation/trainstation_clock001.mdl", 10000, "bw_spawnpoint", true),
-			["Repair Kit"]			= BaseWars.GenSpawnList("models/Items/car_battery01.mdl", 2000, "bw_repairkit"),
+			["Repair Kit"]			= BaseWars.GenSpawnList("models/Items/car_battery01.mdl", 2000, "bw_repairkit", true),
 			["Printer Paper"]		= BaseWars.GenSpawnList("models/props_junk/garbage_newspaper001a.mdl", 250, "bw_printerpaper", true),
 
 		},

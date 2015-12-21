@@ -75,6 +75,7 @@ do
 
 	LoadFileCS("client/cl_bwmenu.lua")
 	LoadFileCS("client/cl_npcmenu.lua")
+	LoadFileCS("client/cl_druglab.lua")
 
 	if BaseWars.Config.CustomChat then
 	

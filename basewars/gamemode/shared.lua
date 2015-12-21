@@ -1,10 +1,11 @@
 ﻿GM.Name 		= "BaseWars"
-GM.Author 		= "Q2F2, Ghosty, Liquid, Tenrys"
+GM.Author 		= "Q2F2, Ghosty, Liquid, Tenrys, TrIxter"
 GM.Website 		= "http://hexahedronic.org/"
 GM.Credits		= [[
 Thanks to the following people:
 	Q2F2			- Main backend dev.
 	Ghosty			- Main frontent dev.
+	TrIxter			- Misc Entity dev.
 	Liquid			- Misc dev, good friend.
 	Tenrys			- Misc dev, good friend also.
 	Pyro-Fire		- Owner of LagNation, ideas ect.
@@ -19,7 +20,7 @@ the previous version I made) will be told where to
 stick it.
 ]]
 GM.License = [[
-Copyright (c) 2015 Hexahedronic, Ghosty, Tenrys
+Copyright (c) 2015 Hexahedronic, ]] .. GM.Author .. [[
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
@@ -133,6 +134,18 @@ function BaseWars.UTIL.TimerAdvDestroy(name)
 
 	timer.Destroy(name)
 	timer.Destroy(name .. ".Tick")
+	
+end
+
+function BaseWars.UTIL.TimeParse(len)
+
+	local len = math.abs(math.floor(len))
+
+	local h = math.floor(len / 60 / 60)
+	local m = math.floor(len / 60 - h * 60)
+	local s = math.floor(len - m * 60 - h * 60 * 60)
+
+	return string.format("%.2d:%.2d:%.2d", h, m, s)
 	
 end
 
