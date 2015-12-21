@@ -7,6 +7,7 @@ ENT.PrintName 			= "Armour Dispenser"
 ENT.Author 				= "Q2F2"
 
 ENT.Model 				= "models/props_combine/suit_charger001.mdl"
+ENT.Sound				= Sound("HL1/fvox/blip.wav")
 
 function ENT:Init()
 
@@ -24,9 +25,11 @@ function ENT:UseFunc(ply)
 	
 	self.Time = CurTime()
 	
-	if ply:Armor() > 100 then return end
+	local Armor = ply:Armor()
+	if Armor >= 100 then return end
 	
 	ply:SetArmor(Armor + 10)
+	self:EmitSound(self.Sound, 100, 60)
 	
 	if ply:Armor() > 100 then ply:SetArmor(100) end
 	
