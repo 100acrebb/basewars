@@ -78,6 +78,14 @@ BaseWars.Config = {
 		"hands",
 	},
 	
+	WeaponDropBlacklist = {
+		["weapon_physgun"] = true,
+		["weapon_physcannon"] = true,
+		["hands"] = true,
+		["gmod_tool"] = true,
+		["gmod_camera"] = true,
+	},
+	
 	PhysgunBlockClasses = {
 		["bw_spawnpoint"] = true,
 	},

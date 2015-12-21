@@ -115,6 +115,8 @@ if SERVER then
 			Msg("[CHCH] ") print(ply," message failed to decompress!?")
 			return
 		end
+		
+		MsgC(Color(255, 255, 0, 255), ply, color_white, ": ", unmsg, "\n")
 
 		-- incoming terrible one-liners
 

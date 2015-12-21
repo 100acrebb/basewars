@@ -177,3 +177,43 @@ BaseWars.Commands.AddCommand({"upg", "upgrade", "upgr"}, function(ply)
 	Ent:Upgrade(ply)
 	
 end, false)
+
+BaseWars.Commands.AddCommand({"dw", "dropweapon", "dropwep"}, function(ply)
+
+	local Wep = ply:GetActiveWeapon()
+	
+	if BaseWars.Ents:Valid(Wep) then
+	
+		local Model = Wep:GetModel()
+		local Class = Wep:GetClass()
+		
+		if BaseWars.Config.WeaponDropBlacklist[Class] then return false end
+	
+		local tr = {}
+
+		tr.start = ply:EyePos()
+		tr.endpos = tr.start + ply:GetAimVector() * 85
+		tr.filter = ply
+
+		tr = util.TraceLine(tr)
+		
+		local SpawnPos = tr.HitPos + BaseWars.Config.SpawnOffset
+		local SpawnAng = ply:EyeAngles()
+		
+		SpawnAng.p = 0
+		SpawnAng.y = SpawnAng.y + 180
+		SpawnAng.y = math.Round(SpawnAng.y / 45) * 45
+		
+		local Ent = ents.Create("bw_weapon")
+			Ent.WeaponClass = Class
+			Ent.Model = Model
+			Ent:SetPos(SpawnPos)
+			Ent:SetAngles(SpawnAng)
+		Ent:Spawn()
+		Ent:Activate()
+		
+		ply:StripWeapon(Class)
+		
+	end
+	
+end, false)
