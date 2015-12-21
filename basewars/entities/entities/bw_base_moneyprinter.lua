@@ -73,7 +73,7 @@ if SERVER then
 
 	AddCSLuaFile()
 
-	hook.Add("PlayerSay", "BaseWars")
+	--hook.Add("PlayerSay", "BaseWars")
 
 	function ENT:Init()
 
@@ -271,7 +271,7 @@ else
 			draw.RoundedBox(0, boxw + 188, 76, www - ww, 24 - 4, self.BackColor)
 		end
 
-		local text = "£" .. BaseWars.NumberFormat(money)
+		local text = BaseWars.LANG.CURRENCY .. BaseWars.NumberFormat(money)
 		local font = fontName .. ".Big"
 		if #text > 10 then
 			
@@ -290,6 +290,19 @@ else
 
 		local paper = math.floor(self:GetPaper())
 		draw.DrawText("Paper: " .. paper .. " sheets", fontName .. ".MedBig", 4, 84 + 24, self.FontColor, TEXT_ALIGN_LEFT)
+		draw.RoundedBox(0, 0, 102 + 32, w, 1, self.FontColor)
+		
+		local NextCost = BaseWars.LANG.CURRENCY .. BaseWars.NumberFormat(self:GetLevel() * self.UpgradeCost)
+		
+		if self:GetLevel() >= self.MaxLevel then
+		
+			NextCost = "!Max Level!"
+			
+		end
+		
+		draw.DrawText("NEXT UPGRADE: " .. NextCost, fontName .. ".MedBig", 4, 84 + 48 + 5, self.FontColor, TEXT_ALIGN_LEFT)
+		draw.RoundedBox(0, 0, 142 + 20, w, 1, self.FontColor)
+		
 
 	end
 
@@ -298,7 +311,7 @@ else
 		local pos = self:GetPos()
 		local ang = self:GetAngles()
 
-		pos = pos + ang:Up() * 3.08
+		pos = pos + ang:Up() * 3.09
 		pos = pos + ang:Forward() * -7.35
 		pos = pos + ang:Right() * 10.82
 

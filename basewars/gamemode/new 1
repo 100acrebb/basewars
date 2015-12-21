@@ -1,7 +1,7 @@
 MODULE.Name 	= "AntiRDM"
 MODULE.Author 	= "Q2F2 & Ghosty"
 
-local tag = "BaseWars.AFK"
+local tag = "BaseWars.AntiRDM"
 local PLAYER = debug.getregistry().Player
 
 local function Curry(f)
@@ -68,17 +68,17 @@ function MODULE:Paint()
 	local RespawnTime = string.format("%.2d:%.2d", m, s)
 
 	surface.SetFont(tag)
-	local w, h = surface.GetTextSize(AFKTime)
+	local w, h = surface.GetTextSize(RespawnTime)
 	
 	surface.SetTextColor(color_black)
 	
 	surface.SetTextPos(ScrW() / 2 - w / 2 + 1, ScrH() / 3 + 1)
-	surface.DrawText(AFKTime)
+	surface.DrawText(RespawnTime)
 	
 	surface.SetTextColor(color_white)
 	
 	surface.SetTextPos(ScrW() / 2 - w / 2, ScrH() / 3)
-	surface.DrawText(AFKTime)
+	surface.DrawText(RespawnTime)
 	
 	local Txt = BaseWars.LANG.RespawnIn
 	local w2, h2 = surface.GetTextSize(Txt)

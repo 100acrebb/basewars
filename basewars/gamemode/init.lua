@@ -137,9 +137,9 @@ function GM:SetupPlayerVisibility(ply)
 
 	self.BaseClass:SetupPlayerVisibility(ply)
 
-	for _, v in next, ents.FindByClass("bw_bigbomb") do
+	for _, v in next, ents.FindByClass("bw_bomb_*") do
 	
-		if v:GetNWBool("armed") then
+		if v.IsExplosive and v:GetNWBool("IsArmed") then
 		
 			AddOriginToPVS(v:GetPos())
 			
@@ -356,7 +356,7 @@ end
 
 function GM:PlayerShouldTakeDamage(ply, atk)
 	
-	if not IsValid(atk) or not atk:IsPlayer() or ply == atk then
+	if ply == atk then
 	
 		return true
 		
@@ -368,7 +368,11 @@ function GM:PlayerShouldTakeDamage(ply, atk)
 	
 		if SpawnClasses[Class] then
 		
-			atk:Notify(BaseWars.LANG.SpawnKill, BASEWARS_NOTIFICATION_ERROR)
+			if BaseWars.Ents:ValidPlayer(atk) then
+			
+				atk:Notify(BaseWars.LANG.SpawnKill, BASEWARS_NOTIFICATION_ERROR)
+				
+			end
 			
 			return false
 			
@@ -382,7 +386,11 @@ function GM:PlayerShouldTakeDamage(ply, atk)
 	
 		if SpawnClasses[Class] then
 		
-			atk:Notify(BaseWars.LANG.SpawnCamp, BASEWARS_NOTIFICATION_ERROR)
+			if BaseWars.Ents:ValidPlayer(atk) then
+			
+				atk:Notify(BaseWars.LANG.SpawnCamp, BASEWARS_NOTIFICATION_ERROR)
+				
+			end
 			
 			return false
 			

@@ -26,6 +26,16 @@ local function LoadFileCS(File)
 	
 end
 
+local function IncludeSV(file)
+
+	if SERVER then
+	
+		include(file)
+		
+	end
+	
+end
+
 do
 
 	IncludeCS("shared.lua")
@@ -79,4 +89,10 @@ do
 	--LoadFileCS("client/hud.lua")
 	--LoadFileCS("client/playtime_money.lua")
 
+end
+
+do
+
+	IncludeSV("server/commands.lua")
+	
 end
