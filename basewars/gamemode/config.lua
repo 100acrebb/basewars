@@ -36,6 +36,12 @@ BaseWars.Config = {
 			Mult 		= 1.675,
 			Duration	= 120,
 		},
+		Shield = {
+		
+		},
+		Antidote = {
+		
+		},
 	},
 	
 	Notifications = {
@@ -492,12 +498,13 @@ BaseWars.SpawnList.Models = {
 		["Drugs"] = {
 		
 			["DoubleJump"] 	= BaseWars.GenDrug(10000, "DoubleJump"),
-			["Regen"] 		= BaseWars.GenDrug(50000, "Regen"),
+			["Regen"] 		= BaseWars.GenDrug(10000, "Regen"),
 			["PainKiller"] 	= BaseWars.GenDrug(10000, "PainKiller"),
 			["Steroid"] 	= BaseWars.GenDrug(10000, "Steroid"),
 			["Adrenaline"] 	= BaseWars.GenDrug(10000, "Adrenaline"),
-			["Rage"] 		= BaseWars.GenDrug(50000, "DoubleJump"),
-			["Shield"] 		= BaseWars.GenDrug(20000, "Shield"),
+			["Rage"] 		= BaseWars.GenDrug(10000, "Rage"),
+			["Shield"] 		= BaseWars.GenDrug(10000, "Shield"),
+			["Antidote"]	= BaseWars.GenDrug(10000, "Antidote"),
 		
 		},
 		

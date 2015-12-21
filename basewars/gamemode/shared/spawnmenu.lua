@@ -161,6 +161,8 @@ if SERVER then
 				end
 				
 				newEnt.CurrentValue = price
+				if newEnt.Upgrade then newEnt.UpgradeCost = price end
+				
 				newEnt.DoNotDuplicate = true
 				
 			return end
@@ -172,10 +174,11 @@ if SERVER then
 			end
 			
 			newEnt.CurrentValue = price
+			if newEnt.Upgrade then newEnt.UpgradeCost = price end
+			
 			newEnt.DoNotDuplicate = true
 
 			prop = newEnt
-
 			noundo = true
 
 		end

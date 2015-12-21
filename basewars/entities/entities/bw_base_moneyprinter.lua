@@ -116,6 +116,7 @@ if SERVER then
 			return end
 
 			ply:TakeMoney(calcM)
+			self.CurrentValue = (self.CurrentValue or 0) + calcM
 
 		end
 

@@ -62,6 +62,8 @@ end
 
 function BaseWars.Commands.CallCommand(ply, cmd, line, args)
 
+	BaseWars.UTIL.Log("COMMAND: ", ply, " -> ", cmd, "[", line, "]")
+
 	local ok, msg = pcall(function()
 
 		local allowed, reason = hook.Run("BaseWarsCommand", cmd, ply, line, unpack(args))
