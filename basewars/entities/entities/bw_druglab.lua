@@ -1,4 +1,5 @@
 AddCSLuaFile()
+
 ENT.Base = "bw_base_electronics"
 ENT.Type = "anim"
  

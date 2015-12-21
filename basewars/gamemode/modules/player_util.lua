@@ -212,6 +212,10 @@ function MODULE:UnStuck(ply, ang, scale)
 		
 	else
 	
+		
+		local HitString = math.floor(NewPos.x) .. "," .. math.floor(NewPos.y) .. "," .. math.floor(NewPos.z)
+		BaseWars.UTIL.Log("USTK EVENT: ", ply, " -> [", HitString, "]")
+	
 		ply:SetPos(NewPos)
 		return true
 		

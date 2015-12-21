@@ -199,7 +199,14 @@ BaseWars.Config.Help = {
 		"If a generator has a [POWER FAILURE] then that means its power generation is being strained,",
 		"but it does not mean it is not working!",
 	
-	}
+	},
+	
+	["What about RDM (Killing people randomly)?"] = {
+	
+		"RDM is ALLOWED. Do not complain and instead if you so desire seek your own revenge.",
+		"In the future the [Karma] system will punish mass RDMers with longer respawns and other debuffs.",
+	
+	},
 
 }
 
@@ -469,13 +476,20 @@ BaseWars.SpawnList.Models = {
 
 			["Vending Machine"]			= BaseWars.GenSpawnList("models/props_interiors/VendingMachineSoda01a.mdl", 2000, "bw_vendingmachine"),
 			["Ammo Dispenser"]			= BaseWars.GenSpawnList("models/props_lab/reciever_cart.mdl", 3000, "bw_dispenser_ammo"),
+			["Armour Dispenser"]		= BaseWars.GenSpawnList("models/props_combine/suit_charger001.mdl", 3000, "bw_dispenser_armor"),
 			["HealthPad"]				= BaseWars.GenSpawnList("models/props_trainstation/trainstation_clock001.mdl", 5000, "bw_healthpad", true),
 
 		},
 		
-		["Misc"] = {
-
+		["Structures"] = {
+		
 			["Spawnpoint"]			= BaseWars.GenSpawnList("models/props_trainstation/trainstation_clock001.mdl", 10000, "bw_spawnpoint", true),
+			["Drug Lab"]			= BaseWars.GenSpawnList("models/props_lab/crematorcase.mdl", 25000, "bw_druglab"),
+		
+		},
+		
+		["Consumables"] = {
+
 			["Repair Kit"]			= BaseWars.GenSpawnList("models/Items/car_battery01.mdl", 2000, "bw_repairkit", true),
 			["Printer Paper"]		= BaseWars.GenSpawnList("models/props_junk/garbage_newspaper001a.mdl", 250, "bw_printerpaper", true),
 
