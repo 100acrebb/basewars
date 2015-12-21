@@ -5,6 +5,8 @@ ENT.Type 	= "anim"
 
 if SERVER then
 
+	AddCSLuaFile()
+
 	function ENT:Initialize()
 
 		self:SetModel("models/hunter/blocks/cube025x025x025.mdl")
