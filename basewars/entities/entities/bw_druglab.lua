@@ -1,3 +1,4 @@
+AddCSLuaFile()
 ENT.Base = "bw_base_electronics"
 ENT.Type = "anim"
  
@@ -20,16 +21,20 @@ ENT.CookTime = BaseWars.Config.Drugs.CookTime
 ENT.CookStart = 0
 ENT.Cook = ""
  
-net.Receive( "BaseWars.DrugLab.Menu", function( len, cl )
+net.Receive("BaseWars.DrugLab.Menu", function(len, cl)
     local Ent = net.ReadEntity()
     local Owner = BaseWars.Ents:ValidOwner(Ent)
+	
     if not BaseWars.Ents:Valid( Ent ) then return end
     if not BaseWars.Ents:ValidPlayer(Owner) or not BaseWars.Ents:ValidPlayer(cl) then return end
     if Owner ~= cl then return end
-    if not Ent:GetClass() ~= "bw_druglab" then return end
+	
+    if Ent:GetClass() ~= "bw_druglab" then return end
     if not Ent.Status == "Press e to start cooking!" then return end
-    Ent:StartCooking( net.ReadString() )
-end )
+	
+    Ent:StartCooking(net.ReadString())
+	
+end)
  
 function ENT:StartCooking( drug )
     if not drug or drug == "" then return end
