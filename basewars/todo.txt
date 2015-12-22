@@ -39,9 +39,9 @@ Todo:
 			[YES]					[NO ]
 
 Ents To Make:
-	bw_base_turret,
+	bw_base_turret, X
 	bw_bigbomb,
-	bw_druglab,
+	bw_druglab, X
 	bw_nuke,
 	bw_landmine,
 	bw_spawnpoint, X

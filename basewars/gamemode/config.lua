@@ -496,6 +496,13 @@ BaseWars.SpawnList.Models = {
 		
 		},
 		
+		["Defence"] = {
+		
+			["Ballistic Turret"] 	= BaseWars.GenSpawnList("models/Combine_turrets/Floor_turret.mdl", 50000, "bw_turret_ballistic"),
+			["Laser Turret"] 		= BaseWars.GenSpawnList("models/Combine_turrets/Floor_turret.mdl", 80000, "bw_turret_laser"),
+		
+		},
+		
 		["Consumables"] = {
 
 			["Repair Kit"]			= BaseWars.GenSpawnList("models/Items/car_battery01.mdl", 2000, "bw_repairkit", true),

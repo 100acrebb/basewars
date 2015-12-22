@@ -1,3 +1,5 @@
+AddCSLuaFile()
+
 ENT.Base = "bw_base_electronics"
 ENT.Type = "anim"
  
@@ -24,6 +26,12 @@ if SERVER then
  
 ENT.Spread = 15
 ENT.NextShot = 0
+
+function ENT:Init()
+
+	self:SetModel(self.Model)
+	
+end
  
 function ENT:SpawnBullet( target )
 	if not self:IsPowered(self.PowerMin) then return end
@@ -84,12 +92,8 @@ function ENT:ThinkFunc()
 	if self.Ammo == 0 then return end
 	self:SpawnBullet( plys[1].ply )
 end
-   
-//
-// GetBulletInfo
-//
  
-else
+--[[else
  
 ENT.Debug = 0
  
@@ -152,6 +156,6 @@ function ENT:Draw()
 			render.DrawLine( self:GetPos() + self:GetUp() * 5, self:LocalToWorld( Vector( sin, cos, 5 ) ), Color( 255, 0, 0 ), true )
 		end
 	end
-end
+end]]
  
 end
