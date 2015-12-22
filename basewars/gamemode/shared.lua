@@ -401,7 +401,7 @@ function GM:PlayerSpawnProp(ply, model)
 
 	local Ret = self.BaseClass:PlayerSpawnProp(ply, model)
 	
-	local EscapedModel = model:Trim()
+	local EscapedModel = model:Trim():lower()
 	if BaseWars.Config.ModelBlacklist[EscapedModel] then
 	
 		ply:EmitSound(NoSounds[math.random(1, #NoSounds)], 140)
