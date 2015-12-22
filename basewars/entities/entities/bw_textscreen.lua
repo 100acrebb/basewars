@@ -1,4 +1,4 @@
---easylua.StartEntity("bw_textscreen")
+AddCSLuaFile()
 
 ENT.Base 	= "base_gmodentity"
 ENT.Type 	= "anim"
@@ -131,5 +131,3 @@ else
 	end
 
 end
-
---easylua.EndEntity()
