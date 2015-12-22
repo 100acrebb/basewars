@@ -7,6 +7,7 @@ ENT.PrintName 			= "Ammo Dispenser"
 ENT.Author 				= "Q2F2"
 
 ENT.Model 				= "models/props_lab/reciever_cart.mdl"
+ENT.Sound				= Sound("HL1/fvox/blip.wav")
 
 function ENT:Init()
 
@@ -31,5 +32,6 @@ function ENT:UseFunc(ply)
 	if not Ammo then return end
 	
 	ply:GiveAmmo(15, Ammo)
+	self:EmitSound(self.Sound, 100, 60)
 	
 end

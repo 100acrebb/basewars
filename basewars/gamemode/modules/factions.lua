@@ -1,6 +1,6 @@
 MODULE.Name 	= "Factions"
 MODULE.Author 	= "Q2F2 & Ghosty"
-MODULE.FactionTable = BaseWars.Factions and BaseWars.Factions.FactionTable or {}
+MODULE.FactionTable = {}
 
 local tag = "BaseWars.Factions"
 local PLAYER = debug.getregistry().Player
@@ -296,6 +296,16 @@ function MODULE:FactionExist(name)
 	return false
 	
 end
+
+function MODULE:IsEnemy(ply, ply2)
+
+	if ply == ply2 then return false end
+	if ply:InFaction() and ply2:InFaction(ply:GetFaction()) then return false end
+	
+	return true
+
+end
+PLAYER.IsEnemy = Curry(MODULE.IsEnemy)
 
 function MODULE:Clean(ply)
 

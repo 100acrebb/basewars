@@ -50,6 +50,7 @@ do
 	--IncludeCS("shared/money.lua")
 	
 	IncludeCS("shared/cppi.lua")
+	IncludeCS("shared/admin.lua")
 	
 	if BaseWars.Config.CustomChat then
 	

@@ -189,6 +189,8 @@ end
 function BaseWars.UTIL.PayOut(ent, attacker, full)
 
 	if not BaseWars.Ents:Valid(ent) or not BaseWars.Ents:ValidPlayer(attacker) then return end
+	
+	if not ent.CurrentValue then ErrorNoHalt("ERROR! NO CURRENT VALUE! CANNOT PAY OUT!\n") return end
 
 	local Owner = BaseWars.Ents:ValidOwner(ent)
 	local Val = ent.CurrentValue * (not full and BaseWars.Config.DestroyReturn or 1)
@@ -354,6 +356,7 @@ function GM:CanTool(ply, tr, tool)
 	local Ret = self.BaseClass:CanTool(ply, tr, tool)
 	
 	if BaseWars.Config.BlockedTools[tool] then return IsAdmin(ply, ent, Ret) end
+	if BaseWars.Ents:Valid(tr.Entity) and tr.Entity:GetClass():find("bw_") then return IsAdmin(ply, ent, Ret) end
 	
 	if SERVER then
 		

@@ -408,6 +408,16 @@ function GM:Think()
 	
 	if LastThink < CurTime() - 3 then
 	
+		for k, v in next, ents.GetAll() do
+			
+			if v:IsOnFire() then
+				
+				v:Extinguish()
+				
+			end
+			
+		end
+	
 		for k, s in next, Spawns do
 		
 			if not s or not IsValid(s) then
