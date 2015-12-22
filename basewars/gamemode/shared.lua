@@ -391,3 +391,23 @@ function GM:CanProperty(ply, prop, ent, ...)
 	return BlockInteraction(ply, ent, Ret)
 	
 end
+
+local NoSounds = {
+	"vo/engineer_no01.mp3",
+	"vo/engineer_no02.mp3",
+	"vo/engineer_no03.mp3",
+}
+function GM:PlayerSpawnProp(ply, model)
+
+	local Ret = self.BaseClass:PlayerSpawnProp(ply, model)
+	
+	local EscapedModel = model:Trim()
+	if BaseWars.Config.ModelBlacklist[EscapedModel] then
+	
+		ply:EmitSound(NoSounds[math.random(1, #NoSounds)], 140)
+		
+	return end
+	
+	return Ret == nil or Ret
+
+end
