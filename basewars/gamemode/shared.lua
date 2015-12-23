@@ -214,7 +214,7 @@ function BaseWars.UTIL.PayOut(ent, attacker, full)
 	return end
 	
 	local Members = attacker:FactionMembers()
-	local TeamAmt = #Members
+	local TeamAmt = table.Count(Members)
 	local Involved = Owner and TeamAmt + 1 or TeamAmt
 	
 	local Fraction = math.floor(Val / Involved)
