@@ -201,6 +201,16 @@ end
 
 function GM:EntityTakeDamage(ent, dmginfo)
 	
+	local Player = BaseWars.Ents:ValidPlayer(ent)
+	local Owner = BaseWars.Ents:ValidOwner(ent)
+	
+	if not Player and not Owner then
+		
+		dmginfo:ScaleDamage(0)
+		dmginfo:SetDamage(0)
+		
+	return false end
+	
 	self.BaseClass:EntityTakeDamage(ent, dmginfo)
 	
 	local Inflictor = dmginfo:GetInflictor()
@@ -215,13 +225,12 @@ function GM:EntityTakeDamage(ent, dmginfo)
 		
 	end
 	
-	local Owner = ent.CPPIGetOwner and ent:CPPIGetOwner()
-	if (not ent.AllwaysRaidable) and (Owner and BaseWars.Ents:ValidPlayer(Owner)) then
+	if Owner then
 	
 		local RaidLogic 	= (Attacker == Owner and Owner:InRaid()) or (Owner:InFaction() and (not Attacker == Owner and Attacker.InFaction and Attacker:InFaction(Owner:GetFaction())))
 		local RaidLogic2 	= Attacker ~= Owner and (not Owner:InRaid() or not (Attacker.InRaid and Attacker:InRaid()))
 	
-		if RaidLogic or RaidLogic2 then
+		if not ent.AllwaysRaidable and (RaidLogic or RaidLogic2) then
 	
 			dmginfo:ScaleDamage(0)
 			dmginfo:SetDamage(0)
