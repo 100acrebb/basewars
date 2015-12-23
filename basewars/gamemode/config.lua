@@ -240,6 +240,7 @@ BaseWars.Config = {
 		["models/props_citizen_tech/firetrap_gashose01b.mdl"] = true,
 		["models/props_citizen_tech/firetrap_button01a.mdl"] = true,
 		["models/props_citizen_tech/windmill_blade004a.mdl"] = true,
+		["models/props_phx/misc/potato_launcher_chamber.mdl"] = true,
 	},
 	
 	NPC = {
@@ -638,8 +639,9 @@ BaseWars.SpawnList.Models = {
 		
 		["Defence"] = {
 		
-			["Ballistic Turret"] 	= BaseWars.GenSpawnList("models/Combine_turrets/Floor_turret.mdl", 50000, "bw_turret_ballistic"),
-			["Laser Turret"] 		= BaseWars.GenSpawnList("models/Combine_turrets/Floor_turret.mdl", 80000, "bw_turret_laser"),
+			["Ballistic Turret"] 	= BaseWars.GenSpawnList("models/Combine_turrets/Floor_turret.mdl", 50000, "bw_turret_ballistic", false, 2),
+			["Laser Turret"] 		= BaseWars.GenSpawnList("models/Combine_turrets/Floor_turret.mdl", 80000, "bw_turret_laser", false, 1),
+			["Tesla Coil"]			= BaseWars.GenSpawnList("models/props_c17/substation_transformer01d.mdl", 500000, "bw_tesla", false, 1)
 		
 		},
 		

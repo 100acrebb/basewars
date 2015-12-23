@@ -178,6 +178,23 @@ BaseWars.Commands.AddCommand({"upg", "upgrade", "upgr"}, function(ply)
 	
 end, false)
 
+BaseWars.Commands.AddCommand({"sell", "destroy", "remove"}, function(ply)
+
+	local trace = ply:GetEyeTrace()
+
+	local Ent = trace.Entity
+	if not Ent.CurrentValue then return false end
+	
+	local Owner = BaseWars.Ents:ValidOwner(Ent)
+	if Owner ~= ply then return false end
+	
+	if ply:InRaid() then return false end
+
+	BaseWars.UTIL.PayOut(Ent, ply)
+	Ent:Remove()
+	
+end, false)
+
 BaseWars.Commands.AddCommand({"dw", "dropweapon", "dropwep"}, function(ply)
 
 	local Wep = ply:GetActiveWeapon()

@@ -10,7 +10,7 @@ ENT.PowerRequired = 10
 ENT.PowerMin = 1000
 ENT.PowerCapacity = 2500
  
-ENT.Drain = 80
+ENT.Drain = 150
  
 ENT.Damage = 80
 ENT.Radius = 1250

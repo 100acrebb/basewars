@@ -90,6 +90,29 @@ properties.Add("bwa_copymodel", {
 		
 })
 
+properties.Add("bwa_copymaterial", {
+
+	MenuLabel = "Copy Material",
+	MenuIcon = "icon16/page_copy.png",
+	Order =	-99,
+	
+	Filter = function(self, ent, ply)
+	
+		if not IsValid(ent) or not (ent:GetMaterial() and #ent:GetMaterial() > 0)then return false end
+		
+		return true 
+		
+	end,
+	
+	Action = function(self, ent)
+		
+		local Mat = ent:GetMaterial()
+		SetClipboardText(Mat)
+		
+	end,
+		
+})
+
 properties.Add("bwa_kick", {
 
 	MenuLabel = "Kick",

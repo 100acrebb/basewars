@@ -12,7 +12,7 @@ ENT.PowerCapacity = 2500
  
 ENT.Drain = 35
  
-ENT.Damage = 2
+ENT.Damage = 6
 ENT.Radius = 750
 ENT.ShootingDelay = 0.1
 ENT.Ammo = -1
