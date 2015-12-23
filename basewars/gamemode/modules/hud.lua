@@ -200,14 +200,28 @@ function MODULE:Paint()
 	oldaW = aW
 	naW = pbarW - aW
 	
+	if BaseWars.PSAText then
+		
+		surface.SetFont("BudgetLabel")
+		local w, h = surface.GetTextSize(BaseWars.PSAText)
+		
+		local fw = sW + w * 2
+		local x, y = ((SysTime() * 50) % fw) - w, 1
+		
+		local Col = HSVToColor(CurTime() % 6 * 60, 1, 1)
+		
+		draw.DrawText(BaseWars.PSAText, "BudgetLabel", x, y, Col, TEXT_ALIGN_LEFT)
+	
+	end
+	
 	-- Karma + Controls
-	draw.DrawText(BaseWars.LANG.MainMenuControl, "BudgetLabel", sW - 5, 3, trans, TEXT_ALIGN_RIGHT)
+	draw.DrawText(BaseWars.LANG.MainMenuControl, "BudgetLabel", sW - 5, (BaseWars.PSAText and 20 or 3), trans, TEXT_ALIGN_RIGHT)
 	
 	local W, H = surface.GetTextSize("a")
 	
 	for k, v in next, BaseWars.Config.RulesTbl do
 	
-		draw.DrawText(v, "BudgetLabel", sW - 5, k * H + 6, trans, TEXT_ALIGN_RIGHT)
+		draw.DrawText(v, "BudgetLabel", sW - 5, k * H + (BaseWars.PSAText and 23 or 6), trans, TEXT_ALIGN_RIGHT)
 		
 	end
 	

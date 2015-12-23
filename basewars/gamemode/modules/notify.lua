@@ -60,7 +60,7 @@ function MODULE:DrawMessage(self, k, v, i)
 	local h = v.h
 	
 	w = w + 16
-	h = h + (i - 1) * v.h
+	h = h + ((i - 1) * v.h) + (BaseWars.PSAText and 10 or 0)
 	y = y + h
 	
 	surface.SetFont(tag)
@@ -93,7 +93,7 @@ function MODULE:Paint()
 	local col = BaseWars.Config.Notifications.BackColor
 
 	surface.SetDrawColor(col.r, col.g, col.b, math.min(Alpha, col.a))
-	surface.DrawRect(10, 10, w + 12, h + 12)
+	surface.DrawRect(10, (BaseWars.PSAText and 20 or 10), w + 12, h + 12)
 
 	if not HUDNotesm then
 	

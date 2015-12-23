@@ -6,7 +6,7 @@ ENT.Skin = 0
 
 ENT.Capacity 		= 10000
 ENT.PrintInterval 	= 1
-ENT.PrintAmount		= 40
+ENT.PrintAmount		= 30
 
 ENT.PrintName = "Copper Printer"
 

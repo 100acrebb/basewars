@@ -6,7 +6,7 @@ ENT.Skin = 0
 
 ENT.Capacity 		= 25000
 ENT.PrintInterval 	= 1
-ENT.PrintAmount		= 50
+ENT.PrintAmount		= 40
 
 ENT.PrintName = "Silver Printer"
 

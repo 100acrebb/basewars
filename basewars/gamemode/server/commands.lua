@@ -178,6 +178,20 @@ BaseWars.Commands.AddCommand({"upg", "upgrade", "upgr"}, function(ply)
 	
 end, false)
 
+BaseWars.Commands.AddCommand("psa", function(ply, line, text)
+
+	if text then
+	
+		BroadcastLua([[BaseWars.PSAText = "]] .. line .. [["]])
+		
+	else
+	
+		BroadcastLua([[BaseWars.PSAText = nil]])
+		
+	end
+	
+end, true)
+
 BaseWars.Commands.AddCommand({"sell", "destroy", "remove"}, function(ply)
 
 	local trace = ply:GetEyeTrace()
