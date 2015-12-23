@@ -20,6 +20,8 @@ ENT.Ammo = -1
 ENT.EyePosOffset = Vector( 0, 0, 0 )
 ENT.Sounds = Sound( "npc/turret_floor/shoot1.wav" )
 
+ENT.PresetMaxHealth = 500
+
 ENT.AllwaysRaidable = true
  
 if SERVER then

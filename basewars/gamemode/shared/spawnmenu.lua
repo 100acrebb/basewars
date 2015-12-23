@@ -134,6 +134,12 @@ if SERVER then
 			Ent:Activate()
 		
 		return end
+		
+		if ply:InRaid() then 
+		
+			ply:Notify(BaseWars.LANG.CannotPurchaseRaid, BASEWARS_NOTIFICATION_ERROR)
+			
+		return end
 
 		local prop
 		local noundo

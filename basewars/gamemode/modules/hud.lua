@@ -203,6 +203,14 @@ function MODULE:Paint()
 	-- Karma + Controls
 	draw.DrawText(BaseWars.LANG.MainMenuControl, "BudgetLabel", sW - 5, 3, trans, TEXT_ALIGN_RIGHT)
 	
+	local W, H = surface.GetTextSize("a")
+	
+	for k, v in next, BaseWars.Config.RulesTbl do
+	
+		draw.DrawText(v, "BudgetLabel", sW - 5, k * H + 6, trans, TEXT_ALIGN_RIGHT)
+		
+	end
+	
 	draw.DrawText(KarmaText, tag, 64 + 26 + pbarW / 2, sH - 128 - 48 - 8, shade, TEXT_ALIGN_CENTER)
 	draw.DrawText(KarmaText, tag, 64 + 24 + pbarW / 2, sH - 128 - 48 - 10, trans, TEXT_ALIGN_CENTER)
 

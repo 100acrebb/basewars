@@ -70,6 +70,8 @@ if SERVER then
 		if not isnumber(amount) or amount < 0 then amount = 0 end
 		if amount > 2^63 then amount = 2^63 end
 		
+		if amount ~= amount then amount = 0 end
+		
 		amount = math.Round(amount)
 		self:SaveMoney(ply, amount)
 		

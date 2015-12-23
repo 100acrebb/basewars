@@ -33,6 +33,8 @@ BaseWars.LANG.__LANGUAGELOOK.ENGLISH = {
 	RaidNoFaction			= "Cannot use faction functions during a raid!",
 	CantRaidSelf			= "You can't raid yourself or your faction!",
 	
+	CannotPurchaseRaid		= "You cannot purchase that in a raid!",
+	
 	NoPrinters				= "Not enough raidable printers!",
 	OnCoolDown				= "Currently on CoolDown from being raided!",
 	

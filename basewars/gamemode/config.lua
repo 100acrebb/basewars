@@ -280,6 +280,15 @@ BaseWars.Config = {
 	
 }
 
+BaseWars.Config.RulesTbl = {
+
+	"1. Do not base with someone unless you are in a faction with them.",
+	"2. Do not propblock OTHER peoples bases (You CAN block your own).",
+	"3. Do not attempt to circumvent Anti-RandomRaid or similar systems.",
+	"4. You must base in A SINGLE CONTINGOUS SPACE. NO multi-basing!",
+
+}
+
 BaseWars.Config.Help = {
 
 	["What is this server?"] = {
@@ -326,17 +335,7 @@ BaseWars.Config.Help = {
 	
 	},
 	
-	["Are there any rules?"] = {
-	
-		"Yes, you can view our server FAQ and rules in the [Main Menu]'s [Rules] tab.",
-		"Apart from the main server documentation there are a FEW other rules...",
-		"",
-		"1. Do not base with someone unless you are in a faction with them.",
-		"2. Do not propblock OTHER peoples bases, you CAN however block your own.",
-		"3. Do not attempt to circumvent ARR or similar systems.",
-		"4. You must base in A SINGLE CONTINGOUS SPACE, no multi-basing.",
-	
-	},
+	["Are there any rules?"] = BaseWars.Config.RulesTbl,
 	
 	["How does the power system work?"] = {
 	

@@ -135,7 +135,7 @@ function BaseWars.PrinterCheck(ply)
 		
 	end
 	
-	if Raids >= BaseWars.Config.Raids.NeededPrinters then return true end
+	if Raids >= BaseWars.Config.Raid.NeededPrinters then return true end
 
 return false, BaseWars.LANG.NoPrinters end
 hook.Add("PlayerIsRaidable", "BaseWars.Raidability.PrinterCheck", BaseWars.PrinterCheck)
@@ -197,6 +197,13 @@ function BaseWars.UTIL.PayOut(ent, attacker, full)
 
 	local Owner = BaseWars.Ents:ValidOwner(ent)
 	local Val = ent.CurrentValue * (not full and BaseWars.Config.DestroyReturn or 1)
+	
+	if Val ~= Val or Val == math.huge then
+	
+		ErrorNoHalt("NAN OR INF RETURN DETECTED! HALTING!\n")
+		ErrorNoHalt("...INFINITE MONEY GLITCH PREVENTED!!!\n")
+		
+	return end
 	
 	local Name = ent.PrintName or ent:GetClass()
 	

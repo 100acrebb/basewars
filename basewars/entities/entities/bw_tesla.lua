@@ -20,6 +20,8 @@ ENT.Delay	= 5
 ENT.Sound = Sound("npc/roller/mine/rmine_explode_shock1.wav")
 ENT.Color = Color(100, 100, 255, 255)
 
+ENT.PresetMaxHealth = 2500
+
 ENT.AllwaysRaidable = true
  
 if CLIENT then return end

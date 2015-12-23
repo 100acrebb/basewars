@@ -120,7 +120,7 @@ if SERVER then
 		self:Activate()
 
 		self:SetUseType(SIMPLE_USE)
-		self:SetHealth(100)
+		self:SetHealth(self.PresetMaxHealth or 100)
 		
 		self:AddEffects(EF_ITEM_BLINK)
 		
@@ -143,7 +143,7 @@ if SERVER then
 
 	function ENT:Think()
 
-		if self:IsPowered() and self:Health() <= 25 and math.random(0, 11) == 0 then
+		if self:IsPowered() and self:BadlyDamaged() and math.random(0, 11) == 0 then
 			
 			self:Spark()
 
@@ -177,7 +177,7 @@ if SERVER then
 			
 		end
 		
-		if not self:DrainPower() then return end
+		if not self:DrainPower() or self:BadlyDamaged() then return end
 
 		self:ThinkFunc()
 
