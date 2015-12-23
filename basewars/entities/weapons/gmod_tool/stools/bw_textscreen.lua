@@ -1,21 +1,23 @@
---easylua.StartTool("bw_textscreen")
+--easylua.StartTool("textscreens")
 
-	cleanup.Register("bw_textscreen")
+	cleanup.Register("textscreens")
+
+	CreateConVar("sbox_maxtextscreens","16",{FCVAR_REPLICATED, FCVAR_NOTIFY})
 
 	if CLIENT then
 		
-		language.Add("Tool.bw_textscreen.name", "Textscreens")
-		language.Add("Tool.bw_textscreen.desc", "Screens with text on them")
-		language.Add("Tool.bw_textscreen.0", "Left Click: Spawns/Updates a textscreen Right Click: Removes a textscreen")
-		language.Add("Tool_bw_textscreen_0", "Left Click: Spawns/Updates a textscreen Right Click: Removes a textscreen")
-		language.Add("Undone.bw_textscreen", "Undone Textscreen")
-		language.Add("Undone_bw_textscreen", "Undone Textscreen")
-		language.Add("Cleanup.bw_textscreen", "Textscreens")
-		language.Add("Cleanup_bw_textscreen", "Textscreens")
-		language.Add("Cleaned.bw_textscreen", "Cleaned up all Textscreens")
-		language.Add("Cleaned_bw_textscreen", "Cleaned up all Textscreens")	
-		language.Add("SBoxLimit.bw_textscreen", "You've hit the Textscreens limit!")
-		language.Add("SBoxLimit_bw_textscreen", "You've hit the Textscreens limit!")
+		language.Add("Tool.textscreens.name", "Textscreens")
+		language.Add("Tool.textscreens.desc", "Screens with text on them")
+		language.Add("Tool.textscreens.0", "Left Click: Spawns/Updates a textscreen Right Click: Removes a textscreen")
+		language.Add("Tool_textscreens_0", "Left Click: Spawns/Updates a textscreen Right Click: Removes a textscreen")
+		language.Add("Undone.textscreens", "Undone Textscreen")
+		language.Add("Undone_textscreens", "Undone Textscreen")
+		language.Add("Cleanup.textscreens", "Textscreens")
+		language.Add("Cleanup_textscreens", "Textscreens")
+		language.Add("Cleaned.textscreens", "Cleaned up all Textscreens")
+		language.Add("Cleaned_textscreens", "Cleaned up all Textscreens")	
+		language.Add("SBoxLimit.textscreens", "You've hit the Textscreens limit!")
+		language.Add("SBoxLimit_textscreens", "You've hit the Textscreens limit!")
 
 	end
 
@@ -24,14 +26,8 @@
 	TOOL.Name		= "Textscreens"	-- Name to display
 	TOOL.Command	= nil			-- Command on click (nil for default), can be removed
 	TOOL.ConfigName	= nil			-- Config file name (nil for default), can be removed
-	TOOL.Lines = {
 
-		"font:32",
-		"PANIC!",
-
-	}
-
-	TOOL.ClientConVar["lines"] = "Uh oh! I am missing configuration!"
+	TOOL.ClientConVar["lines"] = "f:32;PANIC!"
 
 	local function MakeTextScreen(ply, tr, lines)
 
@@ -53,6 +49,8 @@
 		screen:Spawn()
 		screen:Activate()
 		screen:NetworkLines(lines)
+
+		screen.__creator = ply
 
 		local phys = screen:GetPhysicsObject()
 
@@ -77,7 +75,6 @@
 	function TOOL:LeftClick(tr)
 
 		if CLIENT then return true end
-		--if not self:GetWeapon():CheckLimit("bw_textscreen") then return false end
 
 		if not tr.Hit then return false end
 
@@ -98,6 +95,8 @@
 			return true
 
 		end	
+
+		if not self:GetWeapon():CheckLimit("textscreens") then return false end
 
 		return MakeTextScreen(ply, tr, lines)
 
