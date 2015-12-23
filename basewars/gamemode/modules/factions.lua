@@ -222,7 +222,7 @@ function MODULE:Members(ply)
 	local Fac = ply:GetFaction()
 	local Faction = Table[Fac]
 	
-	if not Faction then return {} end
+	if not Faction then return {[ply:SteamID()] = ply} end
 	
 	return Faction.members
 	

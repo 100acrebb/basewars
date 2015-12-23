@@ -45,7 +45,7 @@ if SERVER then
 
 	function ENT:UseFunc(activator, caller, usetype, value)
 
-		if not BaseWars.Ents:ValidOwner(self.OwningPly) then self.OwningPly = nil end
+		if not BaseWars.Ents:ValidPlayer(self.OwningPly) then self.OwningPly = nil end
 	
 		local ply = activator:IsPlayer() and activator or caller:IsPlayer() and caller or nil
 
