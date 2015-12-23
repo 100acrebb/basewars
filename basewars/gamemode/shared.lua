@@ -231,7 +231,7 @@ function BaseWars.UTIL.PayOut(ent, attacker, full)
 
 end
 
-function BaseWars.UTIL.RefundAll()
+function BaseWars.UTIL.RefundAll(ply)
 
 	BaseWars.UTIL.Log("FULL SERVER REFUND IN PROGRESS!!!")
 
@@ -240,12 +240,11 @@ function BaseWars.UTIL.RefundAll()
 		if not BaseWars.Ents:Valid(v) then continue end
 
 		local Owner = BaseWars.Ents:ValidOwner(v)
-		if not BaseWars.Ents:Valid(Owner) then continue end
+		if not Owner or (ply and ply ~= Owner) then continue end
 		
 		if not v.CurrentValue then continue end
 		
 		BaseWars.UTIL.PayOut(v, Owner, true)
-		
 		v:Remove()
 		
 	end
