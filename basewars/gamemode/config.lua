@@ -55,6 +55,7 @@ BaseWars.Config = {
 	Raid = {
 		Time 			= 60 * 5,
 		CoolDownTime	= 60 * 15,
+		NeededPrinters	= 3,
 	},
 	
 	AFK  = {

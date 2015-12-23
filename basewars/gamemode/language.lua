@@ -33,7 +33,7 @@ BaseWars.LANG.__LANGUAGELOOK.ENGLISH = {
 	RaidNoFaction			= "Cannot use faction functions during a raid!",
 	CantRaidSelf			= "You can't raid yourself or your faction!",
 	
-	NoPrinters				= "No raidable printers!",
+	NoPrinters				= "Not enough raidable printers!",
 	OnCoolDown				= "Currently on CoolDown from being raided!",
 	
 	PayOutOwner				= "You got " .. CURRENCY .. "%s for the destruction of your %s!",

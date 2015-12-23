@@ -121,6 +121,7 @@ function BaseWars.PrinterCheck(ply)
 
 	local Ents = ents.GetAll()
 
+	local Raids = 0
 	for k, v in next, Ents do
 	
 		if not BaseWars.Ents:Valid(v) or not v.CPPIGetOwner then continue end
@@ -130,9 +131,11 @@ function BaseWars.PrinterCheck(ply)
 		
 		local Raidable = v.IsValidRaidable
 		
-		if Raidable then return true end
+		if Raidable then Raids = Raids + 1 end
 		
 	end
+	
+	if Raids >= BaseWars.Config.Raids.NeededPrinters then return true end
 
 return false, BaseWars.LANG.NoPrinters end
 hook.Add("PlayerIsRaidable", "BaseWars.Raidability.PrinterCheck", BaseWars.PrinterCheck)
