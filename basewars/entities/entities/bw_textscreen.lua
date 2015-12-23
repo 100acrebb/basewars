@@ -63,21 +63,32 @@ else
 
 		for _, line in next, l do
 			
-			if line:StartWith("color:") then
+			if line:match("c%d- %d- %d- %d+;?") then
 				
-				local r,g,b,a = line:match("(%d-) (%d-) (%d-) (%d+)")
+				local r,g,b,a = line:match("c(%d-) (%d-) (%d-) (%d+);?")
 
 				col = Color(tonumber(r), tonumber(g), tonumber(b), tonumber(a))
+				line = line:gsub("c%d- %d- %d- %d+;?", "")
 
-			continue end
-
-			if line:StartWith("font:") then
+			elseif line:match("c%d- %d- %d+;?") then
 				
-				local siz = line:match("%d+")
+				local r,g,b,a = line:match("c(%d-) (%d-) (%d+);?")
+				a = 255
+
+				col = Color(tonumber(r), tonumber(g), tonumber(b), tonumber(a))
+				line = line:gsub("c%d- %d- %d+;?", "")
+
+			end
+
+			if line:match("f%d+;?") then
+				
+				local siz = line:match("f(%d+)")
 
 				font = GetFont(tonumber(siz))
 
-			continue end	
+				line = line:gsub("f(%d+);?", "")
+
+			end	
 
 			surface.SetFont(font)
 
@@ -102,6 +113,8 @@ else
 	end
 
 	function ENT:Draw()
+
+		self:DestroyShadow()
 
 		if not self.Lines then return end
 
