@@ -307,7 +307,7 @@ BaseWars.Config.Help = {
 		"From here you can select the [Entities] sub-category of the [BaseWars] tab. (NOT THE ENTITIES TAB!)",
 		"",
 		"To Raid or Create a Faction you can press [F3] to open the [Main Menu]. From here you can select [Factions],",
-		"[Raids], [Rules] and in the future the [Store] and your [Eqipment Inventory]!",
+		"[Raids], [Rules] and in the future the [Store] and your [Equipment Inventory]!",
 	
 	},
 	

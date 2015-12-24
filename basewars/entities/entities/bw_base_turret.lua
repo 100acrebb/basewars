@@ -16,16 +16,18 @@ ENT.Damage = 2
 ENT.Radius = 750
 ENT.ShootingDelay = 0.08
 ENT.Ammo = -1
+ENT.Angle = math.rad(45)
  
-ENT.EyePosOffset = Vector( 0, 0, 0 )
-ENT.Sounds = Sound( "npc/turret_floor/shoot1.wav" )
+ENT.EyePosOffset 	= Vector(0, 0, 0)
+ENT.Sounds 			= Sound("npc/turret_floor/shoot1.wav")
+ENT.NoAmmoSound		= Sound("weapons/pistol/pistol_empty.wav")
 
 ENT.PresetMaxHealth = 500
 
 ENT.AllwaysRaidable = true
  
 if SERVER then
- 
+
 ENT.Spread = 15
 ENT.NextShot = 0
 
@@ -34,65 +36,95 @@ function ENT:Init()
 	self:SetModel(self.Model)
 	
 end
- 
-function ENT:SpawnBullet( target )
+
+function ENT:SpawnBullet(target)
+
 	if not self:IsPowered(self.PowerMin) then return end
-   
-	local tr = util.TraceLine( {
-		start = self:GetPos() + self.EyePosOffset,
-		endpos = target:LocalToWorld(target:OBBCenter()) + Vector( 0, 0, 10 ),
-		filter = function( ent ) if ent:IsPlayer() or ent:GetClass():find("prop_") then return true end end,
-	} )
+	
+	local Pos = target:LocalToWorld(target:OBBCenter()) + Vector(0, 0, 10)
+	
+	local tr = {}
+		tr.start = self:GetPos() + self.EyePosOffset
+		tr.endpos = Pos
+		tr.filter = function(ent)
+			
+			if ent:IsPlayer() or ent:GetClass():find("prop_") then return true end
+			
+		end
+	tr = util.TraceLine(tr)
  
 	if tr.Entity == target then
-		local bullet = self:GetBulletInfo(target)
+	
+		local Bullet = self:GetBulletInfo(target, Pos)
 	   
-		self:DrainPower( self.Drain )
-		self:FireBullets( bullet )
-		self:EmitSound( self.Sounds )
+		self:FireBullets(Bullet)
+		
+		self:DrainPower(self.Drain)
+		self:EmitSound(self.Sounds)
+		
 		self.Ammo = self.Ammo - 1
+		
 	end
+	
 end
 
-function ENT:GetBulletInfo(target)
+function ENT:GetBulletInfo(target, pos)
 
 	local bullet = {}
 		bullet.Num = 1
 		bullet.Damage = self.Damage
 		bullet.Force = 1
 		bullet.TracerName = "AR2Tracer"
-		bullet.Spread = Vector( self.Spread, self.Spread, 0 )
-		bullet.Src = self:GetPos() + self.EyePosOffset
-		bullet.Dir = (target:LocalToWorld(target:OBBCenter()) + Vector( 0, 0, 10 )) - (self:GetPos() + self.EyePosOffset)
+		bullet.Spread = Vector(self.Spread, self.Spread, 0)
+		bullet.Src = self.EyePosOffset
+		bullet.Dir = pos - self.EyePosOffset
 		
 	return bullet
 		
 end
- 
+
 function ENT:ThinkFunc()
+
 	if self.NextShot > CurTime() then return end
-   
-	self.EyePosOffset = self:GetUp() * 58 + self:GetForward() * 7 + self:GetRight() * 2
-	local eyepos = self:GetPos() + self.EyePosOffset
-   
+	
+	local Forward = self:GetForward()
+	local SelfPos = self:GetPos()
+	
+	self.EyePosOffset = SelfPos + (self:GetUp() * 58 + Forward * 7 + self:GetRight() * 2)
 	self.NextShot = CurTime() + self.ShootingDelay
-   
+	
 	local plys = {}
-   
-	local find = ents.FindInCone( eyepos, self:GetForward(), self.Radius, math.rad(45) )
-	for k, v in pairs( find ) do
-		if not BaseWars.Ents:ValidPlayer( v ) then continue end
-		if v == BaseWars.Ents:ValidOwner( self ) then continue end
-		local Owner = BaseWars.Ents:ValidOwner( self )
-		if Owner and not Owner:IsEnemy(v) then return end
-		table.insert( plys, {ply=v, dist=self:GetPos():Distance( v:GetPos() ) } )
+	
+	local find = ents.FindInCone(self.EyePosOffset, Forward, self.Radius, self.Angle)
+	
+	for k, v in next, find do
+	
+		if not BaseWars.Ents:ValidPlayer(v) then continue end
+		
+		local Owner = BaseWars.Ents:ValidOwner(self)
+		if Owner and not Owner:IsEnemy(v) then continue end
+		
+		local Data = {
+			ply = v,
+			dist = SelfPos:Distance(v:GetPos()),
+		}
+		plys[#plys+1] = Data
+		
 	end
    
-	if #plys <= 0 then return end
-	table.SortByMember( plys, "dist", true )
-	if not BaseWars.Ents:ValidPlayer( plys[1].ply ) then return end
-	if self.Ammo == 0 then return end
+	if #plys <= 0 then
+	
+		return
+	
+	elseif self.Ammo == 0 then
+	
+		self:EmitSound(self.NoAmmoSound)
+	
+	return end
+	
+	table.SortByMember(plys, "dist", true)
 	self:SpawnBullet( plys[1].ply )
+	
 end
  
 --[[else
