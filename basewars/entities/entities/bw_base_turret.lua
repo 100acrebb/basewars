@@ -41,7 +41,7 @@ function ENT:SpawnBullet( target )
 	local tr = util.TraceLine( {
 		start = self:GetPos() + self.EyePosOffset,
 		endpos = target:LocalToWorld(target:OBBCenter()) + Vector( 0, 0, 10 ),
-		filter = function( ent ) if ent:GetClass() == "player" or ent:GetClass() == "prop_physics" or ent:GetClass() == "prop_door_rotating" then return true end end,
+		filter = function( ent ) if ent:IsPlayer() or ent:GetClass():find("prop_") then return true end end,
 	} )
  
 	if tr.Entity == target then
