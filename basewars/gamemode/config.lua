@@ -343,7 +343,7 @@ BaseWars.Config.Help = {
 		"This means you do not need to worry about 'wiring' or similar.",
 		"",
 		"If an electronic has a [POWER FAILURE] then you may need more generators, or you might",
-		"just need to wait for the power supply to stabalise.",
+		"just need to wait for the power supply to stabilise.",
 		"",
 		"If a generator has a [POWER FAILURE] then that means its power generation is being strained,",
 		"but it does not mean it is not working!",
