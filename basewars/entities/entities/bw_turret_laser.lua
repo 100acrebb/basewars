@@ -23,20 +23,19 @@ if SERVER then
  
 ENT.Spread = 2
 
-end
-
-function ENT:GetBulletInfo(target)
+function ENT:GetBulletInfo(target, pos)
 
 	local bullet = {}
 		bullet.Num = 1
 		bullet.Damage = self.Damage
 		bullet.Force = 15
 		bullet.TracerName = "ToolTracer"
-		bullet.Spread = Vector( self.Spread, self.Spread, 0 )
-		bullet.Src = self:GetPos() + self.EyePosOffset
-		bullet.Dir = (target:LocalToWorld(target:OBBCenter()) + Vector( 0, 0, 10 )) - (self:GetPos() + self.EyePosOffset)
+		bullet.Spread = Vector(self.Spread, self.Spread, 0)
+		bullet.Src = self.EyePosOffset
+		bullet.Dir = pos - self.EyePosOffset
 		
 	return bullet
 		
 end
- 
+
+end

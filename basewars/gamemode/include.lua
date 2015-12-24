@@ -41,6 +41,7 @@ do
 	IncludeCS("shared.lua")
 	IncludeCS("language.lua")
 	IncludeCS("config.lua")
+	IncludeCS("store_items.lua")
 	
 	IncludeCS("shared/spawnmenu.lua")
 	

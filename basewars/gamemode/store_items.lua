@@ -1,3 +1,5 @@
+BaseWars.Store = {}
+
 BaseWars.Store.Items = {
 
 	Cosmetics = {
