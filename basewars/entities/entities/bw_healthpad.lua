@@ -89,18 +89,12 @@ function ENT:ThinkFunc()
 		if not BaseWars.Ents:ValidPlayer(ply) then continue end
 		if ply:Health() >= ply:GetMaxHealth() then continue end
 		
-		ply:SetHealth(ply:Health() + self.RegenRate)
+		ply:SetHealth(math.min(ply:Health() + self.RegenRate, ply:GetMaxHealth()))
 		
 		self:DrainPower(self.Drain)
 		self:EmitSound(self.Sound)
 		
 		Heal = true
-		
-		if ply:Health() >= ply:GetMaxHealth() then
-			
-			ply:SetHealth(ply:GetMaxHealth())
-			
-		end
 		
 	end
 	
