@@ -3,7 +3,7 @@ MODULE.Author 	= "Q2F2, Ghosty and Tenrys"
 MODULE.Credits 	= "Based on sh_money by Tenrys; https://github.com/Tenrys/tenrys-scripts/blob/master/lua/autorun/sh_money.lua"
 
 local tag = "BaseWars.Money"
-local tag_escaped = "BaseWars_Money"
+local tag_escaped = "basewars_money"
 local PLAYER = debug.getregistry().Player
 
 local function isPlayer(ply)

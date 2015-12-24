@@ -67,7 +67,7 @@ do
 		IncludeCS("shared/customnick.lua")
 		IncludeCS("shared/hostnamefix.lua")
 		
-		IncludeCS("shared/MetaStruct/anime.lua")
+		IncludeCS("shared/metastruct/anime.lua")
 		
 	end
 
@@ -82,9 +82,9 @@ do
 
 	if BaseWars.Config.CustomChat then
 	
-		LoadFileCS("shared/MetaStruct/markup.lua")
-		LoadFileCS("shared/MetaStruct/expression.lua")
-		LoadFileCS("shared/MetaStruct/ch.lua")
+		LoadFileCS("shared/metastruct/markup.lua")
+		LoadFileCS("shared/metastruct/expression.lua")
+		LoadFileCS("shared/metastruct/ch.lua")
 	
 		LoadFileCS("client/qchat.lua")
 		

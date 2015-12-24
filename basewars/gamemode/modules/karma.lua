@@ -2,7 +2,7 @@ MODULE.Name 	= "Karma"
 MODULE.Author 	= "Q2F2 & Ghosty"
 
 local tag = "BaseWars.Karma"
-local tag_escaped = "BaseWars_Karma"
+local tag_escaped = "basewars_karma"
 local PLAYER = debug.getregistry().Player
 
 local function isPlayer(ply)
