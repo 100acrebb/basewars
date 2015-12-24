@@ -17,6 +17,7 @@ ENT.Radius = 750
 ENT.ShootingDelay = 0.08
 ENT.Ammo = -1
 ENT.Angle = math.rad(45)
+ENT.LaserColor = Color(0, 255, 0)
  
 ENT.EyePosOffset 	= Vector(0, 0, 0)
 ENT.Sounds 			= Sound("npc/turret_floor/shoot1.wav")
@@ -44,7 +45,7 @@ function ENT:SpawnBullet(target)
 	local Pos = target:LocalToWorld(target:OBBCenter()) + Vector(0, 0, 10)
 	
 	local tr = {}
-		tr.start = self:GetPos() + self.EyePosOffset
+		tr.start = self.EyePosOffset
 		tr.endpos = Pos
 		tr.filter = function(ent)
 			
@@ -123,73 +124,49 @@ function ENT:ThinkFunc()
 	return end
 	
 	table.SortByMember(plys, "dist", true)
-	self:SpawnBullet( plys[1].ply )
+	
+	self:SpawnBullet(plys[1].ply)
 	
 end
  
---[[else
- 
-ENT.Debug = 0
+else
  
 function ENT:Draw()
+
 	self:DrawModel()
-   
-	if not self.Debug then return end
-   
-	self.EyePosOffset = self:GetUp() * 58 + self:GetForward() * 7 + self:GetRight() * 2
-   
-	local eyepos = self:GetPos() + self.EyePosOffset
-   
-	local find = ents.FindInCone( eyepos, self:GetForward(), self.Radius, math.rad(45) )
-	for k, v in pairs( find ) do
-		if v:GetClass() == "prop_physics" then
-			local tr = util.TraceLine( {
-				start = self:GetPos(),
-				endpos = v:LocalToWorld(v:OBBCenter()),
-				filter = function( ent ) if ent:GetClass() == "player" or ent:GetClass() == "prop_physics" then return true end end,
-			} )
-		   
-			if tr.Entity ~= v then
-				render.DrawLine( eyepos, tr.HitPos, Color( 255, 255, 0 ), true ) //If prop isnt the right one
-			else
-				render.DrawLine( eyepos, tr.HitPos, Color( 0, 255, 0 ), true ) //If prop is the right one
+	
+	local Forward = self:GetForward()
+	local SelfPos = self:GetPos()
+	
+	self.EyePosOffset = SelfPos + (self:GetUp() * 58 + Forward * 7 + self:GetRight() * 2)
+	
+	local find = ents.FindInCone(self.EyePosOffset, Forward, self.Radius, self.Angle)
+	
+	for k, v in next, find do
+	
+		if not BaseWars.Ents:ValidPlayer(v) then continue end
+		
+		local Owner = BaseWars.Ents:ValidOwner(self)
+		if Owner and not Owner:IsEnemy(v) then continue end
+		
+		local Pos = v:LocalToWorld(v:OBBCenter()) + Vector(0, 0, 10)
+	
+		local tr = {}
+			tr.start = self.EyePosOffset
+			tr.endpos = Pos
+			tr.filter = function(ent)
+				
+				if ent:IsPlayer() or ent:GetClass():find("prop_") then return true end
+				
 			end
-		   
-		elseif BaseWars.Ents:ValidPlayer( v ) then
-			local tr = util.TraceLine( {
-				start = self:GetPos() + self.EyePosOffset,
-				endpos = v:LocalToWorld(v:OBBCenter()) + Vector( 0, 0, 10 ),
-				filter = function( ent ) if ent:GetClass() == "player" or ent:GetClass() == "prop_physics" then return true end end,
-			} )
-		   
-			if tr.Entity ~= v then
-				render.DrawLine( eyepos, v:LocalToWorld(v:OBBCenter()) + Vector( 0, 0, 10 ), Color( 255, 0, 255 ), true ) //If prop is between player and turret
-			else
-				render.DrawLine( eyepos, tr.HitPos, Color( 0, 255, 0 ), true ) //If player is hitted
-			end
-		   
-		end
+		tr = util.TraceLine(tr)
+		
+		if tr.Entity ~= v then continue end
+		
+		render.DrawLine(self.EyePosOffset, Pos, self.LaserColor, true)
+		
 	end
-   
-	for I=0,360 do
-		local cone_direction = self:GetForward()
-		cone_direction:Normalize()
-	   
-		local cosang = math.cos( math.rad( 45 ) )
-	   
-		local sin = math.sin( I ) * self.Radius
-		local cos = math.cos( I ) * self.Radius
-	   
-		local pos = self:LocalToWorld( Vector( sin, cos, 5 ) )
-		local dir = pos - self:LocalToWorld( Vector( 0, 0, 5 ) )
-		dir:Normalize()
-	   
-		local dot = cone_direction:Dot( dir )
-	   
-		if dot > cosang then
-			render.DrawLine( self:GetPos() + self:GetUp() * 5, self:LocalToWorld( Vector( sin, cos, 5 ) ), Color( 255, 0, 0 ), true )
-		end
-	end
-end]]
+	
+end
  
 end

@@ -57,6 +57,8 @@ end
 
 function MODULE:Paint()
 
+	do return end
+
 	local ply = LocalPlayer()
 
 	if (ply.IsAFK and ply:IsAFK()) or not ply:GetRespawnTime() then return end
