@@ -55,6 +55,7 @@ local trans = Color(255, 255, 255, 150)
 local textc = Color(100, 150, 200, 255)
 local hpbck = Color(255, 0  , 0  , 100)
 local pwbck = Color(0  , 0  , 255, 100)
+local red	= Color(255, 0  , 0	 , 210)
 
 function MODULE:DrawStructureInfo(ent)
 
@@ -215,15 +216,7 @@ function MODULE:Paint()
 	end
 	
 	-- Karma + Controls
-	draw.DrawText(BaseWars.LANG.MainMenuControl, "BudgetLabel", sW - 5, (BaseWars.PSAText and 20 or 3), trans, TEXT_ALIGN_RIGHT)
-	
-	local W, H = surface.GetTextSize("a")
-	
-	for k, v in next, BaseWars.Config.RulesTbl do
-	
-		draw.DrawText(v, "BudgetLabel", sW - 5, k * H + (BaseWars.PSAText and 23 or 6), trans, TEXT_ALIGN_RIGHT)
-		
-	end
+	draw.DrawText(BaseWars.LANG.MainMenuControl, "BudgetLabel", sW - 5, (BaseWars.PSAText and 20 or 3), red, TEXT_ALIGN_RIGHT)
 	
 	draw.DrawText(KarmaText, tag, 64 + 26 + pbarW / 2, sH - 128 - 48 - 8, shade, TEXT_ALIGN_CENTER)
 	draw.DrawText(KarmaText, tag, 64 + 24 + pbarW / 2, sH - 128 - 48 - 10, trans, TEXT_ALIGN_CENTER)

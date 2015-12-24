@@ -62,6 +62,16 @@ function GM:PlayerInitialSpawn(ply)
 	end
 	
 	timer.Simple(0, f)
+	
+	for k, v in next, ents.GetAll() do
+	
+		local Owner = BaseWars.Ents:ValidOwner(v)
+		local Class = v:GetClass()
+		if Owner ~= ply or not Class:find("bw_") then continue end
+		
+		ply:GetTable()["limit_" .. Class] = (ply:GetTable()["limit_" .. Class] or 0) + 1
+		
+	end
 
 end
 

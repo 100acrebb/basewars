@@ -76,7 +76,7 @@ BaseWars.LANG.__LANGUAGELOOK.ENGLISH = {
 
 	FailedToAuth			= "Steam failed to authenticate your SteamID, uh oh!",
 	
-	MainMenuControl			= "F3 - Open Main Menu",
+	MainMenuControl			= "F3 - Open Main Menu - Rules - Factions - Raids - Store",
 	KarmaText				= "Your Karma is currently %s",
 	
 	AFKFor					= "You have been AFK for",

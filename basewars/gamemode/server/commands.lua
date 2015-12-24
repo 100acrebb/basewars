@@ -135,6 +135,8 @@ function BaseWars.Commands.SayCommand(ply, txt, team)
 
 	BaseWars.Commands.CallCommand(ply, cmd, line, line and BaseWars.Commands.ParseArgs(line) or {})
 	
+	return ""
+	
 end
 
 function BaseWars.Commands.AddCommand(cmd, callback, admin)

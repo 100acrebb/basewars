@@ -205,9 +205,18 @@ else
 		}
 		return tbl
 	end
+	
+	local function NiceFormat(str)
+	
+		local Nice = str:lower()
+		Nice = str:gsub("^%l", string.upper)
+		
+		return Nice
+		
+	end
 
 	local white,gray = Color(255,255,255),Color(128,128,128)
-	local red = Color(225,0,0)
+	local red, blu = Color(225,0,0), Color(80, 200, 255)
 
 	function GM:OnPlayerChat(ply,msg,mode,dead)
 
@@ -224,6 +233,17 @@ else
 		end
 
 		if IsValid(ply) and ply:IsPlayer() then
+			if ply:IsAdmin() or (ply.IsMod and ply:IsMod()) then
+			
+				tbl[#tbl + 1] = gray
+				tbl[#tbl + 1] = "["
+				tbl[#tbl + 1] = blu
+				tbl[#tbl + 1] = NiceFormat(ply:GetUserGroup())
+				tbl[#tbl + 1] = gray
+				tbl[#tbl + 1] = "] "
+				
+			end
+			
 			tbl[#tbl + 1] = team.GetColor(ply:Team())
 			tbl[#tbl + 1] = ply:Nick()
 		else
