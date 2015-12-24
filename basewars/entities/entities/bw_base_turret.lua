@@ -135,6 +135,8 @@ function ENT:Draw()
 
 	self:DrawModel()
 	
+	if not self:IsPowered(self.PowerMin) then return end
+	
 	local Forward = self:GetForward()
 	local SelfPos = self:GetPos()
 	

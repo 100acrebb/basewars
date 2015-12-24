@@ -149,6 +149,14 @@ function GM:SetupPlayerVisibility(ply)
 	
 end
 
+function GM:PreCleanupMap()
+
+	self.BaseClass:PreCleanupMap()
+	
+	BaseWars.UTIL.RefundAll()
+	
+end
+
 function GM:GetFallDamage(ply, speed)
 
 	local Velocity = speed - 526.5
@@ -364,6 +372,12 @@ local function ScanEntities()
 end
 
 function GM:PlayerShouldTakeDamage(ply, atk)
+
+	if aowl and ply.Unrestricted then
+	
+		return false
+	
+	end
 	
 	if ply == atk then
 	

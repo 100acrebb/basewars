@@ -46,5 +46,6 @@ if SERVER then
 
 	timer.Create(tag .. ".PayDay", BaseWars.Config.PayDayRate, 0, Curry(MODULE.PayDay))
 	hook.Add("InitPostEntity", tag .. ".CleanupMap", Curry(MODULE.CleanupMap))
+	hook.Add("PostCleanupMap", tag .. ".CleanupMap", Curry(MODULE.CleanupMap))
 
 end
