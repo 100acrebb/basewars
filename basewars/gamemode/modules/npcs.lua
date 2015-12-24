@@ -12,7 +12,20 @@ MODULE.MapTable = {
 			-- 0x2c272b60
 			Ang = Angle(0, 135, 0),
 			
-		}
+		},
+	
+	},
+	
+	["rp_bangclaw"] = {
+	
+		[1] = {
+		
+			-- 0x2c272b38
+			Pos = Vector(-1006, -1441, 74),
+			-- 0x2c272b60
+			Ang = Angle(0, 135, 0),
+			
+		},
 	
 	},
 
