@@ -18,6 +18,12 @@ function MODULE:__INIT()
 		size = 20,
 		weight = 1200,
 	})
+	
+	surface.CreateFont("SysFont", {
+		font = "FixedSys",
+		size = 30,
+		weight = 1000,
+	})
 
 end
 
@@ -217,6 +223,7 @@ function MODULE:Paint()
 	
 	-- Karma + Controls
 	draw.DrawText(BaseWars.LANG.MainMenuControl, "BudgetLabel", sW - 5, (BaseWars.PSAText and 20 or 3), red, TEXT_ALIGN_RIGHT)
+	draw.DrawText(os.date("%H:%M"), "SysFont", sW / 2, (BaseWars.PSAText and 20 or 3), trans, TEXT_ALIGN_CENTER)
 	
 	draw.DrawText(KarmaText, tag, 64 + 26 + pbarW / 2, sH - 128 - 48 - 8, shade, TEXT_ALIGN_CENTER)
 	draw.DrawText(KarmaText, tag, 64 + 24 + pbarW / 2, sH - 128 - 48 - 10, trans, TEXT_ALIGN_CENTER)
