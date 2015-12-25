@@ -430,7 +430,7 @@ local function MakeTab(type)
 
 					end
 
-					if money > 0 then
+					if (money > 0) and not (myMoney / 100 > money) then
 
 						if myMoney < money then
 							
