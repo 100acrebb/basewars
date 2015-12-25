@@ -53,7 +53,7 @@ function ENT:PhysicsCollide(data, phys)
 	local ent = data.HitEntity
 	if not BaseWars.Ents:Valid(ent) then return end
 	
-	if ent.Repair and not self.Removing and ent:Health() < ent:MaxHealth() - 1 then
+	if ent.Repair and not self.Removing and ent:Health() < ent:GetMaxHealth() - 1 then
 	
 		ent:Repair()
 		
