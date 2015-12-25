@@ -61,7 +61,7 @@ local trans = Color(255, 255, 255, 150)
 local textc = Color(100, 150, 200, 255)
 local hpbck = Color(255, 0  , 0  , 100)
 local pwbck = Color(0  , 0  , 255, 100)
-local red	= Color(255, 0  , 0	 , 210)
+local red	= Color(255, 0  , 0	 , 245)
 
 function MODULE:DrawStructureInfo(ent)
 
@@ -217,12 +217,14 @@ function MODULE:Paint()
 		
 		local Col = HSVToColor(CurTime() % 6 * 60, 1, 1)
 		
-		draw.DrawText(BaseWars.PSAText, "BudgetLabel", x, y, Col, TEXT_ALIGN_LEFT)
+		draw.DrawText(BaseWars.PSAText, tag .. ".Large", x, y, Col, TEXT_ALIGN_LEFT)
 	
 	end
 	
 	-- Karma + Controls
-	draw.DrawText(BaseWars.LANG.MainMenuControl, "BudgetLabel", sW - 5, (BaseWars.PSAText and 20 or 3), red, TEXT_ALIGN_RIGHT)
+	draw.DrawText(BaseWars.LANG.MainMenuControl, tag, sW - 5, (BaseWars.PSAText and 20 or 3), red, TEXT_ALIGN_RIGHT)
+	draw.DrawText(BaseWars.LANG.SpawnMenuControl, tag, sW - 5, (BaseWars.PSAText and 33 or 16), red, TEXT_ALIGN_RIGHT)
+	
 	draw.DrawText(os.date("%H:%M"), "SysFont", sW / 2, (BaseWars.PSAText and 20 or 3), trans, TEXT_ALIGN_CENTER)
 	
 	draw.DrawText(KarmaText, tag, 64 + 26 + pbarW / 2, sH - 128 - 48 - 8, shade, TEXT_ALIGN_CENTER)
