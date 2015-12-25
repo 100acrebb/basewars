@@ -101,7 +101,7 @@ function MODULE:DrawStructureInfo(ent)
 		surface.SetDrawColor(shade)
 		surface.DrawRect(curx, cury, W, H)
 		
-		local MaxHealth = ent:MaxHealth() or 100
+		local MaxHealth = ent:GetMaxHealth() or 100
 		local HealthStr = ent:Health() .. "/" .. MaxHealth .. " HP"
 	
 		local HPLen = W * (ent:Health() / MaxHealth)
@@ -116,17 +116,17 @@ function MODULE:DrawStructureInfo(ent)
 		
 	end
 	
-	if ent.Power then
+	if ent.GetPower then
 	
 		cury = cury + H + 1
 	
 		surface.SetDrawColor(shade)
 		surface.DrawRect(curx, cury, W, H)
 		
-		local MaxPower = ent:MaxPower() or 100
-		local PowerStr = (ent:Power() > 0 and ent:Power() .. "/" .. MaxPower .. " PW") or BaseWars.LANG.PowerFailure
+		local MaxPower = ent:GetMaxPower() or 100
+		local PowerStr = (ent:GetPower() > 0 and ent:GetPower() .. "/" .. MaxPower .. " PW") or BaseWars.LANG.PowerFailure
 	
-		local PWLen = W * (ent:Power() / MaxPower)
+		local PWLen = W * (ent:GetPower() / MaxPower)
 		
 		draw.RoundedBox(0, curx + Padding, cury + Padding, PWLen + EndPad, H + EndPad, pwbck)
 

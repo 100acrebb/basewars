@@ -9,6 +9,8 @@ ENT.IsElectronic = true
 ENT.PowerRequired = 5
 ENT.PowerCapacity = 1000
 
+ENT.PresetMaxHealth = 100
+
 function ENT:Init()
 
 end
@@ -31,56 +33,23 @@ function ENT:BadlyDamaged()
 
 end
 
-function ENT:WaterProof(val)
+function ENT:SetupDataTables()
 
-	if val and SERVER then
+	self:NetworkVar("Bool", 0, "WaterProof")
 	
-		self:SetNWBool("WaterProof", val)
-	
-	return end
+	self:NetworkVar("Int", 0, "MaxHealth")
+	self:NetworkVar("Int", 1, "Power")
 
-return self:GetNWBool("WaterProof") end
-
-function ENT:MaxHealth(val)
-
-	if val and SERVER then
-	
-		self:SetNWBool("MaxHealth", val)
-	
-	return end
-
-return self:GetNWBool("MaxHealth") end
+end
 
 do
 	-- Power System
-
-	function ENT:Power(val)
-
-		if val and SERVER then
-		
-			if val > self:MaxPower() then val = self:MaxPower() end
-		
-			self:SetNWInt("Power", val)
-		
-		return end
-
-	return self:GetNWInt("Power", 0) or 0 end
-	
-	function ENT:MaxPower(val)
-
-		if val and SERVER then
-		
-			self:SetNWBool("MaxPower", val)
-		
-		return end
-
-	return self:GetNWBool("MaxPower", 0) or 0 end
 
 	function ENT:DrainPower(val)
 	
 		if not self:IsPowered(val) then return false end
 
-		self:Power(self:Power() - (val or self.PowerRequired))
+		self:SetPower(self:GetPower() - (val or self.PowerRequired))
 		
 		return true
 		
@@ -90,13 +59,13 @@ do
 	
 		if val < 1 then return end
 
-		self:Power(self:Power() + val)
+		self:SetPower(self:GetPower() + val)
 
 	end
 	
 	function ENT:IsPowered(val)
 	
-		return self:Power() >= (val or self.PowerRequired)
+		return self:GetPower() >= (val or self.PowerRequired)
 		
 	end
 	
@@ -115,29 +84,26 @@ if SERVER then
 		self:SetSolid(SOLID_VPHYSICS)
 		self:SetMoveType(MOVETYPE_VPHYSICS)
 
-		self:PhysWake()
-
-		self:Activate()
-
 		self:SetUseType(SIMPLE_USE)
-		self:SetHealth(self.PresetMaxHealth or 100)
-		
 		self:AddEffects(EF_ITEM_BLINK)
+		
+		self:PhysWake()
+		self:Activate()
+		
+		self:SetHealth(self.PresetMaxHealth)
+		self:SetMaxPower(self.PowerCapacity)
 		
 		self.rtb = 0
 		
-		self:SetNWBool("WaterProof", BaseWars.Config.Ents.Electronics.WaterProof)
+		self:SetWaterProof(BaseWars.Config.Ents.Electronics.WaterProof)
 		
 		self:Init()
-		
-		self:MaxHealth(self.PresetMaxHealth or self:Health())
-		self:MaxPower(self.PowerCapacity)
 
 	end
 	
 	function ENT:Repair()
 	
-		self:SetHealth(self:MaxHealth())
+		self:SetHealth(self:GetMaxHealth())
 		
 	end
 
@@ -149,7 +115,7 @@ if SERVER then
 
 		end
 	
-		if self:WaterLevel() > 0 and not self:WaterProof() then
+		if self:WaterLevel() > 0 and not self:GetWaterProof() then
 
 			if not self.FirstTime and self:Health() > 25 then
 				

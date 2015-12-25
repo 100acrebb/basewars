@@ -36,62 +36,36 @@ function ENT:BadlyDamaged()
 
 end
 
-function ENT:WaterProof(val)
+function ENT:SetupDataTables()
 
-	if val and SERVER then
+	self:NetworkVar("Bool", 0, "WaterProof")
 	
-		self:SetNWBool("WaterProof", val)
-	
-	return end
+	self:NetworkVar("Int", 0, "MaxHealth")
+	self:NetworkVar("Int", 1, "Power")
 
-return self:GetNWBool("WaterProof") end
-
-function ENT:MaxHealth(val)
-
-	if val and SERVER then
-	
-		self:SetNWBool("MaxHealth", val)
-	
-	return end
-
-return self:GetNWBool("MaxHealth") end
+end
 
 do
 	-- Power System
-
-	function ENT:Power(val)
-
-		if val and SERVER then
-		
-			if val > self:MaxPower() then val = self:MaxPower() end
-		
-			self:SetNWInt("Power", val)
-		
-		return end
-
-	return self:GetNWInt("Power", 0) end
-	
-	function ENT:MaxPower(val)
-
-		if val and SERVER then
-		
-			self:SetNWBool("MaxPower", val)
-		
-		return end
-
-	return self:GetNWBool("MaxPower", 0) end
-	
 	function ENT:DrainPower(val)
 
-		self:Power(self:Power() - val)
+		local Value = self:GetPower() - val
+	
+		if Value > self:GetMaxPower() then val = self:GetMaxPower() end
+		if Value < 0 then val = 0 end
+	
+		self:SetPower(self:GetPower() - val)
 		
 	end
 
 	function ENT:ReceivePower(val)
 	
-		if val < 1 then return end
+		local Value = self:GetPower() + val
+	
+		if Value > self:GetMaxPower() then Value = self:GetMaxPower() end
+		if Value < 0 then val = 0 end
 
-		return self:Power(self:Power() + val)
+		return self:SetPower(Value)
 
 	end
 
@@ -104,14 +78,14 @@ do
 			if not v or not IsValid(v) or v == self then continue end
 			if not v.IsElectronic or not v.ReceivePower then continue end
 			
-			local Pow = v.Power and v:Power() or 0
-			local Max = v.MaxPower and v:MaxPower() or 0
+			local Pow = v.GetPower and v:GetPower() or 0
+			local Max = v.GetMaxPower and v:GetMaxPower() or 0
 			
 			if Max < 1 then continue end
 			
 			if Pow >= Max then continue end
 			
-			local Transmit = math.min(self.TransmitRate, self:Power())
+			local Transmit = math.min(self.TransmitRate, self:GetPower())
 			Transmit = math.min(Transmit, (Max - Pow))
 			
 			v:ReceivePower(Transmit)
@@ -138,29 +112,26 @@ if SERVER then
 		self:SetSolid(SOLID_VPHYSICS)
 		self:SetMoveType(MOVETYPE_VPHYSICS)
 
-		self:PhysWake()
-
-		self:Activate()
-
 		self:SetUseType(SIMPLE_USE)
-		self:SetHealth(100)
-		
 		self:AddEffects(EF_ITEM_BLINK)
+		
+		self:PhysWake()
+		self:Activate()
+		
+		self:SetHealth(self.PresetMaxHealth)
+		self:SetMaxPower(self.PowerCapacity)
 		
 		self.rtb = 0
 		
-		self:SetNWBool("WaterProof", BaseWars.Config.Ents.Electronics.WaterProof)
+		self:SetWaterProof(BaseWars.Config.Ents.Electronics.WaterProof)
 		
 		self:Init()
-		
-		self:MaxHealth(self.PresetMaxHealth or self:Health())
-		self:MaxPower(self.PowerCapacity)
 
 	end
 	
 	function ENT:Repair()
 	
-		self:SetHealth(self:MaxHealth())
+		self:SetHealth(self:GetMaxHealth())
 		
 	end
 
@@ -174,13 +145,13 @@ if SERVER then
 		
 		self:TransmitPower()
 
-		if self:Health() <= 25 and math.random(0, 10) == 0 then
+		if self:IsPowered() and self:BadlyDamaged() and math.random(0, 11) == 0 then
 			
 			self:Spark()
 
 		end
 	
-		if self:WaterLevel() > 0 and not self:WaterProof() then
+		if self:WaterLevel() > 0 and not self:GetWaterProof() then
 
 			if not self.FirstTime and self:Health() > 25 then
 				
@@ -207,6 +178,8 @@ if SERVER then
 			self.FirstTime = false
 			
 		end
+		
+		if not self:DrainPower() or self:BadlyDamaged() then return end
 
 		self:ThinkFunc()
 
