@@ -1,6 +1,8 @@
 MODULE.Name 	= "NPCs"
 MODULE.Author 	= "Q2F2 & Ghosty"
 
+--for k, v in next, ents.FindByClass"bw_npc" do print("[" .. k .. "] = {") local a = v:GetAngles() local p = v:GetPos() local r = math.Round print("\tPos = Vector(" .. r(p.x) .. ", " .. r(p.y) .. ", " .. r(p.z) .. "),") print("\tAng = Angle(" .. r(a.p) .. ", " .. r(a.y) .. ", " .. r(a.r) .. "),")  print("},\n") end
+
 MODULE.MapTable = {
 	
 	["basewars_bangclaw_v1"] = {
@@ -19,12 +21,33 @@ MODULE.MapTable = {
 	["rp_bangclaw"] = {
 	
 		[1] = {
-		
-			-- 0x2c272b38
-			Pos = Vector(-1006, -1441, 74),
-			-- 0x2c272b60
+			Pos = Vector(-1006, -1441, 75),
 			Ang = Angle(0, 135, 0),
-			
+		},
+		
+		[2] = {
+			Pos = Vector(2055, -2289, 75),
+			Ang = Angle(0, 141, 0),
+		},
+		
+		[3] = {
+			Pos = Vector(1315, 2129, 147),
+			Ang = Angle(0, -133, 0),
+		},
+		
+		[4] = {
+			Pos = Vector(3619, 364, 75),
+			Ang = Angle(0, -145, 0),
+		},
+		
+		[5] = {
+			Pos = Vector(51, -1924, 75),
+			Ang = Angle(0, -141, 0),
+		},
+		
+		[6] = {
+			Pos = Vector(712, -90, 74),
+			Ang = Angle(0, 87, 0),
 		},
 	
 	},
