@@ -242,6 +242,7 @@ BaseWars.Config = {
 		["models/props_citizen_tech/firetrap_button01a.mdl"] = true,
 		["models/props_citizen_tech/windmill_blade004a.mdl"] = true,
 		["models/props_phx/misc/potato_launcher_chamber.mdl"] = true,
+		["models/props_combine/combine_train02a.mdl"] = true,
 	},
 	
 	NPC = {
