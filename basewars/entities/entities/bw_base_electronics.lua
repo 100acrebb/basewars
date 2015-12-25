@@ -1,4 +1,6 @@
-ENT.Base = "base_gmodentity"
+AddCSLuaFile()
+
+ENT.Base = "bw_base"
 ENT.Type = "anim"
 ENT.PrintName = "Base Electricals"
 
@@ -9,103 +11,23 @@ ENT.IsElectronic = true
 ENT.PowerRequired = 5
 ENT.PowerCapacity = 1000
 
-ENT.PresetMaxHealth = 100
+function ENT:DrainPower(val)
 
-function ENT:Init()
+	if not self:IsPowered(val) then return false end
 
-end
-
-function ENT:ThinkFunc()
-
-end
-
-function ENT:UseFunc()
-
-end
-
-function ENT:UseFuncBypass()
-
-end
-
-function ENT:BadlyDamaged()
-
-	return self:Health() <= 25
-
-end
-
-function ENT:SetupDataTables()
-
-	self:NetworkVar("Bool", 0, "WaterProof")
+	self:SetPower(self:GetPower() - (val or self.PowerRequired))
 	
-	self:NetworkVar("Int", 0, "MaxHealth")
-	self:NetworkVar("Int", 1, "Power")
-
+	return true
+	
 end
 
-do
-	-- Power System
+function ENT:IsPowered(val)
 
-	function ENT:DrainPower(val)
-	
-		if not self:IsPowered(val) then return false end
-
-		self:SetPower(self:GetPower() - (val or self.PowerRequired))
-		
-		return true
-		
-	end
-
-	function ENT:ReceivePower(val)
-	
-		if val < 1 then return end
-
-		self:SetPower(self:GetPower() + val)
-
-	end
-	
-	function ENT:IsPowered(val)
-	
-		return self:GetPower() >= (val or self.PowerRequired)
-		
-	end
+	return self:GetPower() >= (val or self.PowerRequired)
 	
 end
 
 if SERVER then
-
-	AddCSLuaFile()
-
-	function ENT:Initialize()
-
-		self:SetModel(self.Model)
-		self:SetSkin(self.Skin)
-
-		self:PhysicsInit(SOLID_VPHYSICS)
-		self:SetSolid(SOLID_VPHYSICS)
-		self:SetMoveType(MOVETYPE_VPHYSICS)
-
-		self:SetUseType(SIMPLE_USE)
-		self:AddEffects(EF_ITEM_BLINK)
-		
-		self:PhysWake()
-		self:Activate()
-		
-		self:SetHealth(self.PresetMaxHealth)
-		self:SetMaxPower(self.PowerCapacity)
-		
-		self.rtb = 0
-		
-		self:SetWaterProof(BaseWars.Config.Ents.Electronics.WaterProof)
-		
-		self:Init()
-
-	end
-	
-	function ENT:Repair()
-	
-		self:SetHealth(self:GetMaxHealth())
-		
-	end
 
 	function ENT:Think()
 
@@ -146,102 +68,6 @@ if SERVER then
 		if not self:DrainPower() or self:BadlyDamaged() then return end
 
 		self:ThinkFunc()
-
-	end
-	
-	function ENT:Use(activator, caller, usetype, value)
-	
-		self:UseFuncBypass(activator, caller, usetype, value)
-	
-		if not self:IsPowered() or self:BadlyDamaged() then 
-		
-			self:EmitSound("buttons/button10.wav")
-
-		return end
-	
-		self:UseFunc(activator, caller, usetype, value)
-		
-	end
-
-	function ENT:Spark(a, ply)
-
-		local vPoint = self:GetPos()
-		local effectdata = EffectData()
-		effectdata:SetOrigin(vPoint)
-		util.Effect(a or "ManhackSparks", effectdata)
-		self:EmitSound("DoSpark")
-
-		if ply and ply:GetPos():Distance(self:GetPos()) < 80 and math.random(0, 10) == 0 then
-
-			local d = DamageInfo()
-
-			d:SetAttacker(ply)
-			d:SetInflictor(ply)
-			d:SetDamage(ply:Health() / 2)
-			d:SetDamageType(DMG_SHOCK)
-
-			local vPoint = ply:GetPos()
-			local effectdata = EffectData()
-			effectdata:SetOrigin(vPoint)
-			util.Effect(a or "ManhackSparks", effectdata)
-
-			ply:TakeDamageInfo(d)
-
-		end
-
-	end
-
-	function ENT:OnTakeDamage(dmginfo)
-
-		local dmg = dmginfo:GetDamage()
-		local Attacker = dmginfo:GetAttacker()
-
-		self:SetHealth(self:Health() - dmg)
-
-		if self:Health() <= 0 then
-		
-			BaseWars.UTIL.PayOut(self, Attacker)
-		
-			if dmginfo:IsExplosionDamage() then
-			
-				self:Explode(false)
-
-			return end
-
-			self:Explode()
-
-		return end
-
-		self:Spark(nil, Attacker)
-
-	end
-
-	function ENT:Explode(e)
-
-		if e == false then
-
-			local vPoint = self:GetPos()
-			local effectdata = EffectData()
-			effectdata:SetOrigin(vPoint)
-			util.Effect("Explosion", effectdata)
-
-			self:Remove()
-			
-		return end
-
-		local ex = ents.Create("env_explosion")
-			ex:SetPos(self:GetPos())
-		ex:Spawn()
-		ex:Activate()
-		
-		ex:SetKeyValue("iMagnitude", 100)
-		
-		ex:Fire("explode")
-
-		self:Spark("cball_bounce")
-		self:Remove()
-
-		SafeRemoveEntityDelayed(ex, 0.1)
 
 	end
 	
