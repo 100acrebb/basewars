@@ -336,7 +336,7 @@ function BaseWars.UTIL.RefundFromCrash(ply)
 	if file.Exists(FileName, "DATA") then
 	
 		local Money = file.Read(FileName, "DATA")
-		Money = tostring(Money)
+		Money = tonumber(Money)
 		
 		ply:ChatPrint(BaseWars.LANG.WelcomeBackCrash)
 		ply:ChatPrint(string.format(BaseWars.LANG.Refunded, BaseWars.NumberFormat(Money)))
