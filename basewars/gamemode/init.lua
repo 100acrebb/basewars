@@ -113,7 +113,7 @@ MakePortalFunc()
 
 function GM:ShutDown()
 
-	BaseWars.UTIL.RefundAll()
+	BaseWars.UTIL.SafeShutDown()
 
 	self.BaseClass:ShutDown()
 

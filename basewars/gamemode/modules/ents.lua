@@ -5,8 +5,7 @@ local tag = "BaseWars.Ents"
 local PLAYER = debug.getregistry().Player
 
 function MODULE:Valid(ent)
-
-	return ent and isentity(ent) and IsValid(ent) and ent
+	return ent and (isentity(ent) or ent:IsValid()) and IsValid(ent) and ent
 	
 end
 

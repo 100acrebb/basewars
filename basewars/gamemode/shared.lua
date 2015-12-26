@@ -189,21 +189,23 @@ local function Pay(ply, amt, name, own)
 
 end
 
-function BaseWars.UTIL.PayOut(ent, attacker, full)
+function BaseWars.UTIL.PayOut(ent, attacker, full, ret)
 
-	if not BaseWars.Ents:Valid(ent) or not BaseWars.Ents:ValidPlayer(attacker) then return end
+	if not BaseWars.Ents:Valid(ent) or not BaseWars.Ents:ValidPlayer(attacker) then return 0 end
 	
-	if not ent.CurrentValue then ErrorNoHalt("ERROR! NO CURRENT VALUE! CANNOT PAY OUT!\n") return end
+	if not ent.CurrentValue then ErrorNoHalt("ERROR! NO CURRENT VALUE! CANNOT PAY OUT!\n") return 0 end
 
 	local Owner = BaseWars.Ents:ValidOwner(ent)
-	local Val = ent.CurrentValue * (not full and BaseWars.Config.DestroyReturn or 1)
+	local Val = ent.CurrentValue * (not full and not ret and BaseWars.Config.DestroyReturn or 1)
 	
 	if Val ~= Val or Val == math.huge then
 	
 		ErrorNoHalt("NAN OR INF RETURN DETECTED! HALTING!\n")
 		ErrorNoHalt("...INFINITE MONEY GLITCH PREVENTED!!!\n")
 		
-	return end
+	return 0 end
+	
+	if ret then return Val end
 	
 	local Name = ent.PrintName or ent:GetClass()
 	
@@ -211,7 +213,7 @@ function BaseWars.UTIL.PayOut(ent, attacker, full)
 	
 		Pay(Owner, Val, Name, true)
 		
-	return end
+	return 0 end
 	
 	local Members = attacker:FactionMembers()
 	local TeamAmt = table.Count(Members)
@@ -238,12 +240,26 @@ function BaseWars.UTIL.PayOut(ent, attacker, full)
 		Pay(Owner, Fraction, Name, true)
 		
 	end
+	
+	return Val
 
 end
 
-function BaseWars.UTIL.RefundAll(ply)
+function BaseWars.UTIL.RefundAll(ply, ret)
 
-	BaseWars.UTIL.Log("FULL SERVER REFUND IN PROGRESS!!!")
+	if not ply then BaseWars.UTIL.Log("FULL SERVER REFUND IN PROGRESS!!!") end
+	
+	local RetTbl = {}
+	
+	if ret then
+	
+		for k, v in next, player.GetAll() do
+		
+			RetTbl[v:UniqueID()] = 0
+			
+		end
+		
+	end
 
 	for k, v in next, ents.GetAll() do
 	
@@ -254,8 +270,90 @@ function BaseWars.UTIL.RefundAll(ply)
 		
 		if not v.CurrentValue then continue end
 		
-		BaseWars.UTIL.PayOut(v, Owner, true)
-		v:Remove()
+		if not ret then
+		
+			BaseWars.UTIL.PayOut(v, Owner, true, ret)
+			v:Remove()
+			
+		else
+		
+			RetTbl[Owner:UniqueID()] = RetTbl[Owner:UniqueID()] + BaseWars.UTIL.PayOut(v, Owner, true, ret)
+		
+		end
+		
+	end
+	
+	return RetTbl
+	
+end
+
+function BaseWars.UTIL.WriteCrashRollback(recover)
+
+	if recover then
+	
+		if file.Exists("server_crashed.dat", "DATA") then
+		
+			BaseWars.UTIL.Log("Server crash detected, converting data rollbacks into refund files!")
+			
+		else
+		
+			return
+			
+		end
+	
+		local Files = file.Find("basewars_crashrollback/*_save.txt", "DATA")
+		
+		for k, v in next, Files do
+		
+			local FileName = v:gsub("_save.txt", "")
+			local FileData = file.Read("basewars_crashrollback/" .. v, "DATA")
+		
+			file.Write("basewars_crashrollback/" .. FileName .. "_load.txt", FileData)
+			
+		end
+	
+	return end
+
+	local RefundTable = BaseWars.UTIL.RefundAll(nil, true)
+	
+	for k, v in next, RefundTable do
+		
+		if not file.IsDir("basewars_crashrollback", "DATA") then file.CreateDir("basewars_crashrollback") end
+		
+		file.Write("basewars_crashrollback/" .. tostring(k) .. "_save.txt", v)
+		
+	end
+	
+	file.Write("server_crashed.dat", "")
+	
+end
+
+function BaseWars.UTIL.SafeShutDown()
+
+	BaseWars.UTIL.RefundAll()
+
+	local Files = file.Find("basewars_crashrollback/*_save.txt", "DATA")
+		
+	for k, v in next, Files do
+	
+		file.Delete("basewars_crashrollback/" .. v)
+		
+	end
+
+	file.Delete("server_crashed.dat")
+	
+end
+
+function BaseWars.UTIL.FreezeAll()
+
+	for k, v in next, ents.GetAll() do
+		
+		if not BaseWars.Ents:Valid(v) then continue end
+		
+		local Phys = v:GetPhysicsObject()
+		if not BaseWars.Ents:Valid(Phys) then continue end
+		
+		Phys:EnableMotion(false)
 		
 	end
 	
