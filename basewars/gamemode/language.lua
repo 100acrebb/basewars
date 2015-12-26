@@ -85,6 +85,9 @@ BaseWars.LANG.__LANGUAGELOOK.ENGLISH = {
 	
 	UpgradeNoMoney			= "You don't have enough money to upgrade!",
 	UpgradeMaxLevel			= "You can't upgrade this printer any more!",
+	
+	WelcomeBackCrash		= "Welcome back, the last time you played we crashed.",
+	Refunded				= "You have been refunded " .. CURRENCY .. "%s.",
 }
 
 local INVALID_LANGUAGE 	= "INVALID LANGUAGE SELECTED! NOTIFY THE SERVER ADMIN!"

@@ -45,6 +45,8 @@ function GM:PlayerInitialSpawn(ply)
 
 	self.BaseClass:PlayerInitialSpawn(ply)
 	
+	BaseWars.UTIL.RefundFromCrash(ply)
+	
 	local f = function()
 	
 		if not AuthTbl[ply:SteamID()] then
@@ -441,6 +443,8 @@ function GM:Think()
 	
 	if LastThink < CurTime() - 3 then
 	
+		BaseWars.UTIL.WriteCrashRollback()
+	
 		for k, v in next, ents.GetAll() do
 			
 			if v:IsOnFire() then
@@ -519,6 +523,8 @@ function GM:InitPostEntity()
 	end
 	
 	MakePortalFunc()
+	
+	BaseWars.UTIL.WriteCrashRollback(true)
 	
 end
 

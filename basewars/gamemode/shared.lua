@@ -247,7 +247,7 @@ end
 
 function BaseWars.UTIL.RefundAll(ply, ret)
 
-	if not ply then BaseWars.UTIL.Log("FULL SERVER REFUND IN PROGRESS!!!") end
+	if not ply and not ret then BaseWars.UTIL.Log("FULL SERVER REFUND IN PROGRESS!!!") end
 	
 	local RetTbl = {}
 	
@@ -327,6 +327,29 @@ function BaseWars.UTIL.WriteCrashRollback(recover)
 	file.Write("server_crashed.dat", "")
 	
 end
+
+function BaseWars.UTIL.RefundFromCrash(ply)
+
+	local UID = ply:UniqueID()
+	local FileName = "basewars_crashrollback/" .. UID .. "_load.txt"
+
+	if file.Exists(FileName, "DATA") then
+	
+		local Money = file.Read(FileName, "DATA")
+		Money = tostring(Money)
+		
+		ply:ChatPrint(BaseWars.LANG.WelcomeBackCrash)
+		ply:ChatPrint(string.format(BaseWars.LANG.Refunded, BaseWars.NumberFormat(Money)))
+		
+		BaseWars.UTIL.Log("Refunding ", ply, " for server crash previously.")
+		ply:GiveMoney(Money)
+		
+		file.Delete(FileName)
+		
+	end
+
+end
+		
 
 function BaseWars.UTIL.SafeShutDown()
 
