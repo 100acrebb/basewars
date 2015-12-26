@@ -1,6 +1,9 @@
 BASEWARS_CHOSEN_LANGUAGE = "ENGLISH"
 
 BaseWars.Config = {
+	Forums 		= "http://www.hexahedronic.org/forum",
+	SteamGroup 	= "http://steamcommunity.com/groups/hexahedronic",
+
 	Ents = {
 		Electronics = {
 			Explode		= true,
@@ -72,6 +75,10 @@ BaseWars.Config = {
 	Rules = {
 		IsHTML 	= false,
 		HTML	= "http://www.hexahedronic.org/faq.html",
+	},
+	
+	Adverts = {
+		Time = 120,
 	},
 	
 	SpawnWeps = {
@@ -279,6 +286,16 @@ BaseWars.Config = {
 	
 	DispenserTime		= 1,
 	
+}
+
+local NiceGreen = Color(100, 250, 125)
+local Grey = Color(200, 200, 200)
+
+BaseWars.AdvertTbl = {
+
+	{Grey, "Remember to join our", NiceGreen, "Steam Group", Grey, "! (/steam)"},
+	{Grey, "You can find out more on the ",  NiceGreen, "Forums", Grey, "! (/forums)"}
+
 }
 
 BaseWars.Config.RulesTbl = {

@@ -250,3 +250,15 @@ BaseWars.Commands.AddCommand({"dw", "dropweapon", "dropwep"}, function(ply)
 	end
 	
 end, false)
+
+BaseWars.Commands.AddCommand({"steam", "sg", "group"}, function(ply)
+
+	ply:SendLua([[gui.OpenURL"]] .. BaseWars.Config.SteamGroup .. [["]])
+	
+end, true)
+
+BaseWars.Commands.AddCommand({"forums", "forum", "f"}, function(ply)
+
+	ply:SendLua([[gui.OpenURL"]] .. BaseWars.Config.Forums .. [["]])
+	
+end, true)
