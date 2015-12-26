@@ -386,6 +386,13 @@ function GM:CanDrive()
 	
 end
 
+function GM:OnPhysgunReload()
+
+	-- Stop crashing our server faggots
+	return false
+	
+end
+
 function GM:CanProperty(ply, prop, ent, ...)
 
 	local Ret = self.BaseClass:CanProperty(ply, prop, ent, ...)
@@ -416,6 +423,14 @@ function GM:PlayerSpawnProp(ply, model)
 		ply:EmitSound(NoSounds[math.random(1, #NoSounds)], 140)
 		
 	return end
+	
+	Ret = (Ret == nil or Ret)
+	
+	if Ret then
+	
+		BaseWars.UTIL.Log("PROP EVENT: ", ply, " -> ", EscapedModel)
+		
+	end
 	
 	return Ret == nil or Ret
 
