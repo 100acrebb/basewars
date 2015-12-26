@@ -3,7 +3,7 @@ ENT.Base = "bw_base_electronics"
 ENT.Type = "anim"
  
 ENT.PrintName = "HealthPad"
-ENT.Model = "models/props_trainstation/trainstation_clock001.mdl"
+ENT.Model = "models/props_lab/teleplatform.mdl"
  
 ENT.PowerRequired = 10
 ENT.PowerCapacity = 5000
@@ -15,6 +15,8 @@ ENT.Plys = {}
 
 ENT.Sound = Sound("npc/vort/health_charge.wav")
 ENT.Radius = 48
+
+ENT.PresetMaxHealth = 300
 
 if CLIENT then
 
@@ -45,7 +47,7 @@ if CLIENT then
 
 return end
 
-local ForceAngle = Angle(-90, 0, 0)
+local ForceAngle = Angle(0, 0, 0)
 function ENT:Init()
 
 	self:SetAngles(ForceAngle)
@@ -58,7 +60,7 @@ end
 
 function ENT:SpawnFunction(ply, tr, class)
    
-	local pos = ply:GetPos()
+	local pos = ply:GetPos() + Vector(0,0,8)
 	   
 	local ent = ents.Create(class)
 		ent:CPPISetOwner(ply)

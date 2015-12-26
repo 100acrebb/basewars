@@ -104,20 +104,6 @@ if SERVER then
 		self:SetHealth(self:GetMaxHealth())
 		
 	end
-	
-	function ENT:Use(activator, caller, usetype, value)
-	
-		self:UseFuncBypass(activator, caller, usetype, value)
-	
-		if self:BadlyDamaged() then 
-		
-			self:EmitSound("buttons/button10.wav")
-
-		return end
-	
-		self:UseFunc(activator, caller, usetype, value)
-		
-	end
 
 	function ENT:Spark(a, ply)
 

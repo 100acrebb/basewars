@@ -615,25 +615,26 @@ BaseWars.SpawnList.Models = {
 
 		["Generators"] = {
 
-			["Coal Fired Generator"]	= BaseWars.GenSpawnList("models/props_wasteland/laundry_washer003.mdl", 3000, "bw_gen_coalfired"),
+			["Solar Panel"]				= BaseWars.GenSpawnList("models/props_lab/miniteleport.mdl", 1500, "bw_gen_solar"),
+			["Coal Fired Generator"]	= BaseWars.GenSpawnList("models/props_wasteland/laundry_washer003.mdl", 10000, "bw_gen_coalfired"),
 			["Fission Reactor"]			= BaseWars.GenSpawnList("models/props/de_nuke/equipment1.mdl", 50000, "bw_gen_fission"),
-			["Fusion Reactor"]			= BaseWars.GenSpawnList("models/xqm/hydcontrolbox.mdl", 1000000, "bw_gen_fusion"),
+			["Fusion Reactor"]			= BaseWars.GenSpawnList("models/xqm/hydcontrolbox.mdl", 250000, "bw_gen_fusion"),
 			--["Hentai Generator"]		= BaseWars.GenSpawnList("models/props_junk/garbage_newspaper001a.mdl", 20, "bw_gen_hentai"),
 
 		},
 		
 		["Dispensers"] = {
 
-			["Vending Machine"]			= BaseWars.GenSpawnList("models/props_interiors/VendingMachineSoda01a.mdl", 2000, "bw_vendingmachine"),
-			["Ammo Dispenser"]			= BaseWars.GenSpawnList("models/props_lab/reciever_cart.mdl", 3000, "bw_dispenser_ammo"),
-			["Armour Dispenser"]		= BaseWars.GenSpawnList("models/props_combine/suit_charger001.mdl", 3000, "bw_dispenser_armor"),
-			["HealthPad"]				= BaseWars.GenSpawnList("models/props_trainstation/trainstation_clock001.mdl", 5000, "bw_healthpad", true),
+			["Vending Machine"]			= BaseWars.GenSpawnList("models/props_interiors/VendingMachineSoda01a.mdl", 10000, "bw_vendingmachine"),
+			["Ammo Dispenser"]			= BaseWars.GenSpawnList("models/props_lab/reciever_cart.mdl", 12000, "bw_dispenser_ammo"),
+			["Armour Dispenser"]		= BaseWars.GenSpawnList("models/props_combine/suit_charger001.mdl", 25000, "bw_dispenser_armor"),
+			["HealthPad"]				= BaseWars.GenSpawnList("models/props_lab/teleplatform.mdl", 30000, "bw_healthpad", true),
 
 		},
 		
 		["Structures"] = {
 		
-			["Spawnpoint"]			= BaseWars.GenSpawnList("models/props_trainstation/trainstation_clock001.mdl", 10000, "bw_spawnpoint", true),
+			["Spawnpoint"]			= BaseWars.GenSpawnList("models/props_trainstation/trainstation_clock001.mdl", 15000, "bw_spawnpoint", true),
 			["Drug Lab"]			= BaseWars.GenSpawnList("models/props_lab/crematorcase.mdl", 25000, "bw_druglab"),
 		
 		},
@@ -656,11 +657,11 @@ BaseWars.SpawnList.Models = {
 		["Printers"] = {
 
 			["Basic Printer"]			= BaseWars.GenSpawnList("models/props_lab/reciever01a.mdl", 2000, "bw_base_moneyprinter"),
-			["Copper Printer"]			= BaseWars.GenSpawnList("models/props_lab/reciever01a.mdl", 15000, "bw_printer_copper"),
-			["Silver Printer"]			= BaseWars.GenSpawnList("models/props_lab/reciever01a.mdl", 25000, "bw_printer_silver"),
+			["Copper Printer"]			= BaseWars.GenSpawnList("models/props_lab/reciever01a.mdl", 12500, "bw_printer_copper"),
+			["Silver Printer"]			= BaseWars.GenSpawnList("models/props_lab/reciever01a.mdl", 20000, "bw_printer_silver"),
 			["Gold Printer"]			= BaseWars.GenSpawnList("models/props_lab/reciever01a.mdl", 50000, "bw_printer_gold"),
-			["Platinum Printer"]		= BaseWars.GenSpawnList("models/props_lab/reciever01a.mdl", 100000, "bw_printer_platinum"),
-			["Diamond Printer"]			= BaseWars.GenSpawnList("models/props_lab/reciever01a.mdl", 250000, "bw_printer_diamond"),
+			["Platinum Printer"]		= BaseWars.GenSpawnList("models/props_lab/reciever01a.mdl", 75000, "bw_printer_platinum"),
+			["Diamond Printer"]			= BaseWars.GenSpawnList("models/props_lab/reciever01a.mdl", 150000, "bw_printer_diamond"),
 
 		},
 
@@ -683,28 +684,28 @@ BaseWars.SpawnList.Models = {
 		
 		["Weapons"] = {
 		
-			["USP"] 			= BaseWars.GenWeapon("models/weapons/w_pist_usp.mdl", 500, "weapon_twitch_usp"),
-			["Deagle"] 			= BaseWars.GenWeapon("models/weapons/w_pist_deagle.mdl", 800, "weapon_twitch_deagle"),
+			["USP"] 			= BaseWars.GenWeapon("models/weapons/w_pist_usp.mdl", 1000, "weapon_twitch_usp"),
+			["Deagle"] 			= BaseWars.GenWeapon("models/weapons/w_pist_deagle.mdl", 1800, "weapon_twitch_deagle"),
 			
-			["UMP"] 			= BaseWars.GenWeapon("models/weapons/w_smg_ump45.mdl", 1500, "weapon_twitch_ump45"),
-			["MP5"] 			= BaseWars.GenWeapon("models/weapons/w_smg_mp5.mdl", 1500, "weapon_twitch_mp5"),
+			["UMP"] 			= BaseWars.GenWeapon("models/weapons/w_smg_ump45.mdl", 2500, "weapon_twitch_ump45"),
+			["MP5"] 			= BaseWars.GenWeapon("models/weapons/w_smg_mp5.mdl", 2500, "weapon_twitch_mp5"),
 		
-			["AR2"] 			= BaseWars.GenWeapon("models/weapons/w_irifle.mdl", 2250, "weapon_twitch_hl2pulserifle"),
-			["P90"] 			= BaseWars.GenWeapon("models/weapons/w_smg_p90.mdl", 2000, "weapon_twitch_p90"),
-			["Galil"] 			= BaseWars.GenWeapon("models/weapons/w_rif_galil.mdl", 2000, "weapon_twitch_galil"),
-			["AK47"] 			= BaseWars.GenWeapon("models/weapons/w_rif_ak47.mdl", 2250, "weapon_twitch_ak47"),
-			["M4A1"] 			= BaseWars.GenWeapon("models/weapons/w_rif_m4a1.mdl", 2250, "weapon_twitch_m4"),
+			["AR2"] 			= BaseWars.GenWeapon("models/weapons/w_irifle.mdl", 3250, "weapon_twitch_hl2pulserifle"),
+			["P90"] 			= BaseWars.GenWeapon("models/weapons/w_smg_p90.mdl", 3000, "weapon_twitch_p90"),
+			["Galil"] 			= BaseWars.GenWeapon("models/weapons/w_rif_galil.mdl", 3000, "weapon_twitch_galil"),
+			["AK47"] 			= BaseWars.GenWeapon("models/weapons/w_rif_ak47.mdl", 3250, "weapon_twitch_ak47"),
+			["M4A1"] 			= BaseWars.GenWeapon("models/weapons/w_rif_m4a1.mdl", 3250, "weapon_twitch_m4"),
 			
-			["M3"] 				= BaseWars.GenWeapon("models/weapons/w_shot_m3super90.mdl", 3000, "weapon_twitch_m3"),
+			["M3"] 				= BaseWars.GenWeapon("models/weapons/w_shot_m3super90.mdl", 5000, "weapon_twitch_m3"),
 			
-			["Crowbar"] 		= BaseWars.GenWeapon("models/weapons/w_crowbar.mdl", 300, "weapon_crowbar"),
+			["Crowbar"] 		= BaseWars.GenWeapon("models/weapons/w_crowbar.mdl", 500, "weapon_crowbar"),
 			["Frag"]			= BaseWars.GenWeapon("models/weapons/w_grenade.mdl", 12500, "weapon_frag"),
 		
 		},
 		
 		["Super Weapons"] = {
 		
-			["Heal Gun"]			= BaseWars.GenWeapon("models/weapons/w_physics.mdl", 25000, "weapon_health"),
+			["Heal Gun"]			= BaseWars.GenWeapon("models/weapons/w_physics.mdl", 30000, "weapon_health"),
 			--["Crescent Rose"]			= BaseWars.GenWeapon("models/rubyscythe.mdl", 300000, "weapon_rubyrose_scythe"),
 			--["Red Scissor Blade"]		= BaseWars.GenWeapon("models/anfrien/kill_la_kill/scissor_blade/red_scissor_blade.mdl", 250000, "weapon_scissorblade_red"),
 			--["Purple Scissor Blade"]	= BaseWars.GenWeapon("models/anfrien/kill_la_kill/scissor_blade/purple_scissor_blade.mdl", 250000, "weapon_scissorblade_purple"),
