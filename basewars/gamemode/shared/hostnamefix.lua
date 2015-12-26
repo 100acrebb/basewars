@@ -1,7 +1,7 @@
 AddCSLuaFile()
 
 if SERVER then
-	local hostname = GetHostName()
+	local hostname = GetConVar("hostname"):GetString()
 	function SetHostName(what)
 		hostname = what
 	end
