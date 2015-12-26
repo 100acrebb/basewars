@@ -37,7 +37,8 @@ if SERVER then
 		
 		if not file.IsDir(tag_escaped .. "/" .. dirName, "DATA") then file.CreateDir(tag_escaped .. "/" .. dirName) end
 		if not file.Exists(tag_escaped .. "/" .. dirName .. "/money.txt", "DATA") then file.Write(tag_escaped .. "/" .. dirName .. "/money.txt", tostring(BaseWars.Config.StartMoney)) end
-		
+		file.Write(tag_escaped .. "/" .. dirName .. "/player.txt", ply:Name())
+			
 		return dirName
 		
 	end
