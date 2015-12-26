@@ -437,11 +437,19 @@ function GM:PlayerShouldTakeDamage(ply, atk)
 	
 end
 
+function GM:PlayerDisconnected(ply)
+
+	BaseWars.UTIL.ClearRollbackFile(ply)
+	
+	self.BaseClass:PlayerDisconnected(ply)
+	
+end
+
 function GM:Think()
 
 	local State = self.BaseClass:Think()
 	
-	if LastThink < CurTime() - 3 then
+	if LastThink < CurTime() - 5 then
 	
 		BaseWars.UTIL.WriteCrashRollback()
 	
@@ -452,6 +460,7 @@ function GM:Think()
 				v:Extinguish()
 				
 			end
+			
 			
 		end
 	

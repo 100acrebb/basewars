@@ -349,7 +349,15 @@ function BaseWars.UTIL.RefundFromCrash(ply)
 	end
 
 end
-		
+
+function BaseWars.UTIL.ClearRollbackFile(ply)
+
+	local UID = ply:UniqueID()
+	local FileName = "basewars_crashrollback/" .. UID .. "_save.txt"
+	
+	if file.Exists(FileName) then file.Delete(FileName) end
+	
+end
 
 function BaseWars.UTIL.SafeShutDown()
 
