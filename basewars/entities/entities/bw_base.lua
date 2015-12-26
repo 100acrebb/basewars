@@ -25,6 +25,10 @@ function ENT:UseFuncBypass()
 
 end
 
+function ENT:StableNetwork()
+
+end
+
 function ENT:BadlyDamaged()
 
 	return self:Health() <= 25
@@ -38,8 +42,9 @@ function ENT:SetupDataTables()
 	self:NetworkVar("Int", 0, "Power")
 	self:NetworkVar("Int", 1, "MaxPower")
 	
+	self:StableNetwork()
+	
 end
-
 
 function ENT:DrainPower(val)
 

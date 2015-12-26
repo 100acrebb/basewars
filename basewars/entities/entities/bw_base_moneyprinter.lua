@@ -10,53 +10,38 @@ ENT.Money 			= 0
 ENT.Paper 			= 500
 ENT.PrintInterval 	= 1.1
 ENT.PrintAmount		= 20
-ENT.Level 			= 1
 ENT.MaxLevel 		= 10
 ENT.UpgradeCost 	= 1000
 
 ENT.PrintName = "Basic Printer"
 
+ENT.IsPrinter = true
 ENT.IsValidRaidable = false
 
 local Clamp = math.Clamp
-local function GSAT(name, var, min, max)
+function ENT:GSAT(slot, name, var, min, max)
 
-	ENT["Get" .. name] = function(self)
+	self:NetworkVar("Int", slot, name)
 
-		if CLIENT then
-			
-			local str = self:GetNWString("printer_" .. name:lower(),"")
+	self["Add" .. name] = function(e, var)
+	
+			if min and max then
+				
+				var = Clamp(tonumber(var) or 0, self[min] or min, self[max] or max)
 
-			return tonumber(str) or str
-
-		end
-
-		return self[name]
-
-	end
-
-	if CLIENT then return end
-
-	ENT["Set" .. name] = function(self, var)
-
-		if min and max then
-			
-			var = Clamp(tonumber(var) or 0, self[min] or min, self[max] or max)
-
-		end
-
-		self[name] = var
-		self:SetNWString("printer_" .. name:lower(),tostring(var))
-
-	end
-
-	ENT["Add" .. name] = function(self, var)
+			end
 
 			self["Set" .. name](self, self["Get" .. name](self) + var)
 
 	end
 
-	ENT["Take" .. name] = function(self, var)
+	self["Take" .. name] = function(e, var)
+	
+		if min and max then
+			
+			var = Clamp(tonumber(var) or 0, self[min] or min, self[max] or max)
+
+		end
 
 		self["Set" .. name](self, self["Get" .. name](self) - var)
 
@@ -64,10 +49,14 @@ local function GSAT(name, var, min, max)
 
 end
 
-GSAT("Capacity", "Capacity")
-GSAT("Money", "Money", 0, "Capacity")
-GSAT("Paper", "Paper", 0, ENT.Paper)
-GSAT("Level", "Level", 0, "MaxLevel")
+function ENT:StableNetwork()
+
+	self:GSAT(2, "Capacity", "Capacity")
+	self:GSAT(3, "Money", "Money", 0, "Capacity")
+	self:GSAT(4, "Paper", "Paper", 0, self.Paper)
+	self:GSAT(5, "Level", "Level", 0, "MaxLevel")
+
+end
 
 if SERVER then
 
