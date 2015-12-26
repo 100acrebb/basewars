@@ -355,7 +355,7 @@ function BaseWars.UTIL.ClearRollbackFile(ply)
 	local UID = ply:UniqueID()
 	local FileName = "basewars_crashrollback/" .. UID .. "_save.txt"
 	
-	if file.Exists(FileName) then file.Delete(FileName) end
+	if file.Exists(FileName, "DATA") then file.Delete(FileName) end
 	
 end
 
