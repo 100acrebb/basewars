@@ -374,6 +374,13 @@ BaseWars.Config.Help = {
 		"In the future the [Karma] system will punish mass RDMers with longer respawns and other debuffs.",
 	
 	},
+	
+	["How do I upgrade my printers?"] = {
+	
+		"All you need to do is look at them and type /upg",
+		"You can bind \"basewars upgrade\" to a key to do it automaticly!",
+	
+	},
 
 }
 
