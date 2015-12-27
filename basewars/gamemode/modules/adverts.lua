@@ -13,6 +13,6 @@ function MODULE:__INIT()
 		chat.AddText(unpack(Advert))
 
 	end
-	timer.Add(tag, BaseWars.Config.Adverts.Time, 0, Curry(MODULE.DisplayRandomAdvert))
+	timer.Create(tag, BaseWars.Config.Adverts.Time, 0, Curry(MODULE.DisplayRandomAdvert))
 
 end

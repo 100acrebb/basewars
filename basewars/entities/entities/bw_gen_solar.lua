@@ -5,8 +5,8 @@ ENT.PrintName 		= "Solar Panel"
 
 ENT.Model 			= "models/props_lab/miniteleport.mdl"
 
-ENT.PowerGenerated 	= 12
+ENT.PowerGenerated 	= 13
 ENT.PowerCapacity 	= 300
 
 ENT.TransmitRadius 	= 200
-ENT.TransmitRate 	= 5
+ENT.TransmitRate 	= 7

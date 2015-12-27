@@ -293,7 +293,7 @@ local Grey = Color(200, 200, 200)
 
 BaseWars.AdvertTbl = {
 
-	{Grey, "Remember to join our", NiceGreen, "Steam Group", Grey, "! (/steam)"},
+	{Grey, "Remember to join our ", NiceGreen, "Steam Group", Grey, "! (/steam)"},
 	{Grey, "You can find out more on the ",  NiceGreen, "Forums", Grey, "! (/forums)"}
 
 }

@@ -130,7 +130,7 @@ local function FindPassableSpace(ply, direction, step)
 	local OldPos = ply:GetPos()
 	local Origin = ply:GetPos()
 	
-	for i = 1, 21 do
+	for i = 1, 11 do
 		Origin = Origin + (step * direction)
 		
 		if not ply:Stuck(Origin) then return true, Origin end
