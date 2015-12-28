@@ -382,6 +382,13 @@ BaseWars.Config.Help = {
 	
 	},
 
+	["How do I sell my printers?"] = {
+	
+		"All you need to do is look at them and type /sell",
+		"You can bind \"basewars sell\" to a key to do it automaticly!",
+	
+	},
+
 }
 
 BaseWars.SpawnList = {}
