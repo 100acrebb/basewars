@@ -1,4 +1,4 @@
-PlayTime = {}
+PlayTime = PlayTime or {}
 
 local PLAYER = debug.getregistry().Player
 
@@ -6,7 +6,33 @@ if SERVER then
 	
 PlayTime.LastThink = CurTime() + 1
 
+function PlayTime:Init()
+	if not file.IsDir( "basewars_time", "DATA" ) then file.CreateDir( "basewars_time" ) end
+end
+
+function PlayTime:GetGlobalTimeFile( ply )
+	local dir = "basewars_time/" .. ply:SteamID64()
+	if not file.IsDir( dir, "DATA" ) then
+		file.CreateDir( dir )
+		file.Write( dir .. "/time.txt", "0" )
+		return 0	
+	else
+		return tonumber(file.Read( dir .. "/time.txt" ))
+	end
+end
+
+function PlayTime:SetGlobalTimeFile( ply, time )
+	local dir = "basewars_time/" .. ply:SteamID64()
+	if not file.IsDir( dir, "DATA" ) then
+		file.CreateDir( dir )
+		file.Write( dir .. "/time.txt", "0" )
+	else
+		file.Write( dir .. "/time.txt", time )
+	end
+end
+
 hook.Add( "Initialize", function()
+	PlayTime:Init()
 	PlayTime.LastThink = CurTime() + 1	//Not needed? Don't know
 end )
 
@@ -22,18 +48,18 @@ end )
 
 hook.Add( "PlayerInitialSpawn", "PlayTime.Connect", function( ply )
 	ply.JoinTime = CurTime()
-	ply.GlobalTime = self:GetPData( "GlobalTime", 0 )
+	ply.GlobalTime = PlayTime:GetGlobalTimeFile( ply )
 end )
 
-hook.Add( "PlayerDisconnect", "PlayTime.Disconnect", function( ply )
-	ply:SetPData( "GlobalTime", ply.GlobalTime + ply:GetSessionTime() )
+hook.Add( "PlayerDisconnected", "PlayTime.Disconnect", function( ply )
+	PlayTime:SetGlobalTimeFile( ply, ply.GlobalTime + ply:GetSessionTime() )
 end )
 
 end 
 
 function PLAYER:GetPlayTime()
 	if SERVER then
-		return math.Round( self.GlobalTime + self:GetSessionTime() )
+		return math.Round( (self.GlobalTime or 0) + self:GetSessionTime() )
 	else
 		return math.Round( self:GetNWInt( "GlobalTime", 0 ) + self:GetSessionTime() )
 	end
