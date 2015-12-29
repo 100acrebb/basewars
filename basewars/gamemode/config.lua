@@ -694,7 +694,8 @@ BaseWars.SpawnList.Models = {
 			["Platinum Printer"]	         	= BaseWars.GenSpawnList("models/props_lab/reciever01a.mdl", 75000, "bw_printer_platinum"),
 			["Diamond Printer"]			= BaseWars.GenSpawnList("models/props_lab/reciever01a.mdl", 150000, "bw_printer_diamond"),
 			["Nuclear Printer"]                     = BaseWars.GenSpawnList("models/props_lab/reciever01a.mdl", 300000, "bw_printer_nuclear"),
-			["Mobius Printer"]                      = BaseWars.GenSpawnList("models/props_lab/reciever01a.mdl", 300000, "bw_printer_mobius"),
+			["Mobius Printer"]                      = BaseWars.GenSpawnList("models/props_lab/reciever01a.mdl", 600000, "bw_printer_mobius"),
+			["Dark Matter Printer"]                      = BaseWars.GenSpawnList("models/props_lab/reciever01a.mdl", 1200000, "bw_printer_darkmatter"),
 
 		},
 
