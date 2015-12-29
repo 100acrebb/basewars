@@ -25,7 +25,9 @@ surface.CreateFont(tag, {
 })
 
 function MODULE:GetRespawnTime(ply)
-	return ply:GetNWInt( "RespawnTime", 0 )
+
+	return ply:GetNWInt("RespawnTime", 0)
+	
 end
 PLAYER.GetRespawnTime = Curry(MODULE.GetRespawnTime)
 	
@@ -36,6 +38,9 @@ function MODULE:Paint()
 	if (ply.IsAFK and ply:IsAFK()) or not ply:GetRespawnTime() or ply:Alive() then return end
 	
 	local len = ply:GetRespawnTime()
+	
+	if len < 1 then return end
+
 	local m = math.floor(len / 60) % 60
 	local s = math.floor(len) % 60
 
@@ -69,6 +74,34 @@ function MODULE:Paint()
 	
 end
 hook.Add("HUDPaint", tag .. ".Paint", Curry(MODULE.Paint))
+
+local Red = Color(255, 0, 0, 255)
+local Green = Color(0, 255, 0, 255)
+function MODULE:PreDrawHalos()
+	
+	local Plys, Plys2 = {}, {}
+	
+	for k, v in next, player.GetAll() do
+	
+		local Karma = v:GetKarma()
+		
+		if Karma > BaseWars.Config.KarmaGlowLevel then
+		
+			Plys[#Plys + 1] = v
+		
+		elseif Karma < -BaseWars.Config.KarmaGlowLevel then
+		
+			Plys2[#Plys2 + 1] = v
+		
+		end
+	
+	end
+	
+	halo.Add(Plys, Red)
+	halo.Add(Plys2, Green)
+	
+end
+hook.Add("PreDrawHalos", tag .. ".PreDrawHalos", Curry(MODULE.PreDrawHalos))
 	
 else
 
@@ -80,26 +113,25 @@ function MODULE:IsRDM(ply, ply2)
 	
 	if ply.RecentlyHurtBy[ply2] and ply.RecentlyHurtBy[ply2] < CurTime() + BaseWars.Config.AntiRDM.HurtTime then return false end
 	
-	ply2.RDMS = ply2.RDMS or 0
-	ply2.RDMS = ply2.RDMS + 1
-	print( ply2:Name() .. " Rdmed" )
 	return true
 
 end
 
-function MODULE:CalculateSpawnTime( ply )
+function MODULE:CalculateSpawnTime(ply)
+
 	local delay = 0
-	delay = delay + (ply.RDMS * 2)
+	delay = delay + (ply.RDMS * BaseWars.Config.AntiRDM.RDMSecondsAdd)
 	
 	local karma = ply:GetKarma()
 	if karma < 0 then
-		local karma = math.abs( ply:GetKarma() )
-		delay = delay + (karma/10)
+	
+		karma = math.abs(karma)
+		delay = delay + (karma / BaseWars.Config.AntiRDM.KarmaSecondPer)
+		
 	end
 	
-	print( "SPAWNTIME FOR " .. ply:Name() .. " = " .. delay )
-	
 	return CurTime() + delay
+	
 end
 PLAYER.CalculateSpawnTime = Curry(MODULE.CalculateSpawnTime)
 
@@ -117,7 +149,12 @@ hook.Add("OnTakeDamage", tag .. ".TakeDamage", Curry(MODULE.OnEntityTakeDamage))
 function MODULE:PlayerDeath(ply, inflictor, attacker)
 
 	if not BaseWars.Ents:ValidPlayer(attacker) then return end
-	if not self:IsRDM(ply, attacker) then return end
+	if self:IsRDM(ply, attacker) then 
+	
+		attacker.RDMS = (attacker.RDMS or 0) + 1
+		attacker:AddKarma(-1)
+		
+	end
 	
 	ply.RecentlyHurtBy = {}
 	ply.NextSpawn = ply:CalculateSpawnTime()
@@ -126,17 +163,20 @@ function MODULE:PlayerDeath(ply, inflictor, attacker)
 end
 hook.Add("PlayerDeath", tag .. ".PlayerDeath", Curry(MODULE.PlayerDeath))
 
-function MODULE:PlayerDeathThink()
-	for k, ply in pairs( player.GetAll() ) do
-		if ply:Alive() then return end
-		ply:SetNWInt( "RespawnTime", ply.NextSpawn - CurTime() )
+function MODULE:PlayerDeathThink(ply)
+	
+	if CurTime() >= ply.NextSpawn then
+	
+		ply:SetNWInt("RespawnTime", 0)
 		
-		if CurTime() >= ply.NextSpawn then
-			return true
-		end
-		
-		return false
-	end
+	return end
+	
+	local Time = ply.NextSpawn - CurTime()
+	if Time > 300 then Time = 300 end
+	
+	ply:SetNWInt("RespawnTime", Time)
+	
+	return false
 end
 hook.Add("PlayerDeathThink", tag .. ".PlayerDeathThink", Curry(MODULE.PlayerDeathThink))
 

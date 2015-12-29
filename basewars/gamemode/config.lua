@@ -258,6 +258,8 @@ BaseWars.Config = {
 	
 	AntiRDM = {
 		HurtTime = 80,
+		RDMSecondsAdd = 2,
+		KarmaSecondPer = 10,
 	},
 	
 	PayDayBase 			= 500,
@@ -286,6 +288,7 @@ BaseWars.Config = {
 	
 	DispenserTime		= 1,
 	
+	KarmaGlowLevel		= 70,
 }
 
 local NiceGreen = Color(100, 250, 125)
