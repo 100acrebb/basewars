@@ -260,7 +260,7 @@ BaseWars.Config = {
 		HurtTime 		= 80,
 		RDMSecondsAdd 	= 2,
 		KarmaSecondPer 	= 10,
-		KarmaLoss 		= 2,
+		KarmaLoss 		= -2,
 		KarmaGlowLevel 	= 65,
 	},
 	
