@@ -10,23 +10,23 @@ function BaseWars.AddFastDLDir(dir)
 
 	local Dir = (GM or GAMEMODE).Folder .. "/content/" .. dir .. "/*"
 	local Files, Folders = file.Find(Dir, "GAME")
-	
+
 	BaseWars.UTIL.Log("Adding recursive FastDL for directory -> ", Dir)
-	
+
 	for k, v in next, Folders do
 
 		BaseWars.AddFastDLDir(dir .. "/" .. v)
-		
+
 	end
  
 	for k, v in next, Files do
-	
+
 		if not v:find(".", 1, true) then continue end
-		
+
 		resource.AddFile(Dir .. "/" .. v)
-		
+
 	end
-	
+
 end
 
 BaseWars.AddFastDLDir("sound")
@@ -44,35 +44,35 @@ end
 function GM:PlayerInitialSpawn(ply)
 
 	self.BaseClass:PlayerInitialSpawn(ply)
-	
+
 	BaseWars.UTIL.RefundFromCrash(ply)
-	
+
 	local f = function()
-	
+
 		if not AuthTbl[ply:SteamID()] then
-		
+
 			ply:ChatPrint(BaseWars.LANG.FailedToAuth)
-			
+
 			ply.UnAuthed = true
-		 
+
 		else
-		
+
 			AuthTbl[ply:SteamID()] = nil
-			
+
 		end
-		
+
 	end
-	
+
 	timer.Simple(0, f)
-	
+
 	for k, v in next, ents.GetAll() do
-	
+
 		local Owner = BaseWars.Ents:ValidOwner(v)
 		local Class = v:GetClass()
 		if Owner ~= ply or not Class:find("bw_") then continue end
-		
+
 		ply:GetTable()["limit_" .. Class] = (ply:GetTable()["limit_" .. Class] or 0) + 1
-		
+
 	end
 
 end
@@ -84,29 +84,29 @@ local function MakePortalFunc()
 
 		local PortalBox = ents.GetMapCreatedEntity(2086)
 		local On 		= false
-		
+
 		function BaseWars.ToggleMapPortal()
-		
+
 			if On then
-			
+
 				On = false
-			
+
 				PortalBox:Fire("InValue", "13")
-				
+
 			else
-			
+
 				On = true
-			
+
 				PortalBox:Fire("InValue", "12")
-				
+
 			end
-		
+
 		end
-		
+
 	else
 
 		function BaseWars.ToggleMapPortal() end
-		
+
 	end
 
 end
@@ -122,27 +122,27 @@ function GM:ShutDown()
 end
 
 function GM:OnEntityCreated(ent)
-	
+
 	local f = function()
-	
+
 		self.BaseClass:OnEntityCreated(ent)
 
 		local Class = BaseWars.Ents:Valid(ent) and ent:GetClass()
 		if Class == "prop_physics" and ent:Health() == 0 then
-		
+
 			local HP = (BaseWars.Ents:Valid(ent:GetPhysicsObject()) and ent:GetPhysicsObject():GetMass() or 50) * BaseWars.Config.UniversalPropConstant
-		
+
 			ent:SetHealth(HP)
-			
+
 			ent.MaxHealth = HP
 			ent.DestructableProp = true
-			
+
 		end
-		
+
 	end
-	
+
 	timer.Simple(0, f)
-	
+
 end
 
 function GM:SetupPlayerVisibility(ply)
@@ -150,23 +150,23 @@ function GM:SetupPlayerVisibility(ply)
 	self.BaseClass:SetupPlayerVisibility(ply)
 
 	for _, v in next, ents.FindByClass("bw_bomb_*") do
-	
+
 		if v.IsExplosive and v:GetNWBool("IsArmed") then
-		
+
 			AddOriginToPVS(v:GetPos())
-			
+
 		end
-		
+
 	end
-	
+
 end
 
 function GM:PreCleanupMap()
 
 	self.BaseClass:PreCleanupMap()
-	
+
 	BaseWars.UTIL.RefundAll()
-	
+
 end
 
 function GM:GetFallDamage(ply, speed)
@@ -174,7 +174,7 @@ function GM:GetFallDamage(ply, speed)
 	local Velocity = speed - 526.5
 
 	return Velocity * 0.225
-	
+
 end
 
 function GM:SetupMove(ply, move)
@@ -182,19 +182,19 @@ function GM:SetupMove(ply, move)
 	local State = self.BaseClass:SetupMove(ply, move)
 
 	if not ply:Alive() then
-	
+
 		return State
-		
+
 	end
-	
+
 	if BaseWars.Drugs and ply:IsOnGround() then
-	
+
 		ply.DoubleJump_OnGround = true
-		
+
 	end
-	
+
 	return State
-	
+
 end
 
 local Jump = Sound("npc/zombie/claw_miss1.wav")
@@ -203,20 +203,20 @@ function GM:KeyPress(ply, code)
 	self.BaseClass:KeyPress(ply, code)
 
 	if BaseWars.Drugs and code == IN_JUMP and ply.DoubleJump_OnGround and not ply:IsOnGround() and ply:HasDrug("DoubleJump") and ply:GetMoveType() == MOVETYPE_WALK then
-	
+
 		ply:SetVelocity(ply:GetForward() * 100 + BaseWars.Config.Drugs.DoubleJump.JumpHeight)
 		ply.DoubleJump_OnGround = false
-		
+
 		ply:EmitSound(Jump)
-		
+
 	end
-	
+
 	if code == IN_JUMP and (ply.Stuck and ply:Stuck()) and ply:GetMoveType() == MOVETYPE_WALK then
-	
+
 		ply:UnStuck()
-		
+
 	end
-	
+
 end
 
 function GM:EntityTakeDamage(ent, dmginfo)

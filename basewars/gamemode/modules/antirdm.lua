@@ -156,6 +156,12 @@ end
 hook.Add("PlayerDeath", tag .. ".PlayerDeath", Curry(MODULE.PlayerDeath))
 
 function MODULE:PlayerDeathThink(ply)
+
+	if ply.NextSpawn == math.huge or ply.NextSpawn ~= ply.NextSpawn then
+		
+		ply.NextSpawn = CurTime()
+		
+	end
 	
 	if CurTime() >= ply.NextSpawn then
 	
