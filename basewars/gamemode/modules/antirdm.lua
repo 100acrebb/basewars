@@ -4,17 +4,6 @@ MODULE.Author 	= "Q2F2 & Ghosty"
 local tag = "BaseWars.AntiRDM"
 local PLAYER = debug.getregistry().Player
 
-local function Curry(f)
-
-	local MODULE = MODULE
-	local function curriedFunction(...)
-		return f(MODULE, ...)
-	end
-
-	return curriedFunction
-
-end
-
 if CLIENT then
 
 surface.CreateFont(tag, {
@@ -29,6 +18,7 @@ function MODULE:GetRespawnTime(ply)
 	return ply:GetNWInt("RespawnTime", 0)
 	
 end
+
 PLAYER.GetRespawnTime = Curry(MODULE.GetRespawnTime)
 	
 function MODULE:Paint()
@@ -73,6 +63,7 @@ function MODULE:Paint()
 	surface.DrawText(Txt)
 	
 end
+
 hook.Add("HUDPaint", tag .. ".Paint", Curry(MODULE.Paint))
 
 local Red = Color(255, 0, 0, 255)
@@ -81,17 +72,17 @@ function MODULE:PreDrawHalos()
 	
 	local Plys, Plys2 = {}, {}
 	
-	for k, v in next, player.GetAll() do
+	for _, p in next, player.GetAll() do
 	
-		local Karma = v:GetKarma()
+		local Karma = p:GetKarma()
 		
 		if Karma > BaseWars.Config.AntiRDM.KarmaGlowLevel then
 		
-			Plys[#Plys + 1] = v
+			Plys[#Plys + 1] = p
 		
-		elseif Karma < -BaseWars.Config.AntiRDM.KarmaGlowLevel then
+		elseif Karma < -BaseWars.Config.AntiRDM.	KarmaGlowLevel then
 		
-			Plys2[#Plys2 + 1] = v
+			Plys2[#Plys2 + 1] = p
 		
 		end
 	
@@ -101,6 +92,7 @@ function MODULE:PreDrawHalos()
 	halo.Add(Plys2, Red, 1, 1)
 	
 end
+
 hook.Add("PreDrawHalos", tag .. ".PreDrawHalos", Curry(MODULE.PreDrawHalos))
 	
 else
@@ -178,13 +170,17 @@ function MODULE:PlayerDeathThink(ply)
 	
 	return false
 end
+
 hook.Add("PlayerDeathThink", tag .. ".PlayerDeathThink", Curry(MODULE.PlayerDeathThink))
 
-function MODULE:PlayerInitialSpawn( ply )
+function MODULE:PlayerInitialSpawn(ply)
+	
 	ply.NextSpawn = math.huge
 	ply.RecentlyHurtBy = {}
 	ply.RDMS = 0
+
 end
+
 hook.Add("PlayerInitialSpawn", tag .. ".PlayerInitialSpawn", Curry(MODULE.PlayerInitialSpawn))
 
 end
