@@ -65,9 +65,9 @@ if SERVER then
 
 		end
 
-	end )
+	end)
 
-	hook.Add("PlayerInitialSpawn", "PlayTime.Connect", function( ply )
+	hook.Add("PlayerInitialSpawn", "PlayTime.Connect", function(ply)
 
 		ply.JoinTime = CurTime()
 		ply.GlobalTime = PlayTime:GetGlobalTimeFile(ply)
