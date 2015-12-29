@@ -85,11 +85,11 @@ function MODULE:PreDrawHalos()
 	
 		local Karma = v:GetKarma()
 		
-		if Karma > BaseWars.Config.KarmaGlowLevel then
+		if Karma > BaseWars.Config.AntiRDM.KarmaGlowLevel then
 		
 			Plys[#Plys + 1] = v
 		
-		elseif Karma < -BaseWars.Config.KarmaGlowLevel then
+		elseif Karma < -BaseWars.Config.AntiRDM.KarmaGlowLevel then
 		
 			Plys2[#Plys2 + 1] = v
 		
@@ -97,8 +97,8 @@ function MODULE:PreDrawHalos()
 	
 	end
 	
-	halo.Add(Plys, Red)
-	halo.Add(Plys2, Green)
+	halo.Add(Plys, Green, 1, 1)
+	halo.Add(Plys2, Red, 1, 1)
 	
 end
 hook.Add("PreDrawHalos", tag .. ".PreDrawHalos", Curry(MODULE.PreDrawHalos))
@@ -152,7 +152,7 @@ function MODULE:PlayerDeath(ply, inflictor, attacker)
 	if self:IsRDM(ply, attacker) then 
 	
 		attacker.RDMS = (attacker.RDMS or 0) + 1
-		attacker:AddKarma(-1)
+		attacker:AddKarma(BaseWars.Config.AntiRDM.KarmaLoss)
 		
 	end
 	
