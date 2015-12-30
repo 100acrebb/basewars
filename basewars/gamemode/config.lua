@@ -111,6 +111,7 @@ BaseWars.Config = {
 	},
 	
 	ModelBlacklist = {
+		["models/props_vehicles/apc001.mdl"] = true,
 		["models/props_combine/combinetower001.mdl"] = true,
 		["models/cranes/crane_frame.mdl"] = true,
 		["models/items/item_item_crate.mdl"] = true,
