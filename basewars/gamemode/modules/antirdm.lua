@@ -73,7 +73,9 @@ function MODULE:PreDrawHalos()
 	local Plys, Plys2 = {}, {}
 	
 	for _, p in next, player.GetAll() do
-	
+		
+		if not p:Alive() then continue end
+		
 		local Karma = p:GetKarma()
 		
 		if Karma > BaseWars.Config.AntiRDM.KarmaGlowLevel then
