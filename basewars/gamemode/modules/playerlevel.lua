@@ -85,7 +85,7 @@ if SERVER then
 	
 		self:Init(ply)
 		local lvl = tostring(self:GetLevel(ply))
-		local xp = tostring(self:GetXp(ply))
+		local xp = tostring(self:GetXP(ply))
 		ply:SetNWString(tag .. ".Level", lvl)
 		ply:SetNWString(tag .. ".XP", xp)
 		ply.level = lvl
