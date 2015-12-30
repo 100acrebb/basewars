@@ -76,7 +76,7 @@ if SERVER then
 	
 		local dirName = self:Init(ply)
 		file.Write(tag_escaped .. "/" .. dirName .. "/level.txt", self:GetLevel(ply))
-		file.Write(tag_escaped .. "/" .. dirName .. "/xp.txt", self:GetXp(ply))
+		file.Write(tag_escaped .. "/" .. dirName .. "/xp.txt", self:GetXP(ply))
 		
 	end
 	PLAYER.SaveLevels = Curry(MODULE.Save)
