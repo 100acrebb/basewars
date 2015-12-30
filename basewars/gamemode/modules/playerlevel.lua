@@ -49,7 +49,7 @@ function MODULE:GetXPNextLevel(ply)
 	local n = ply:GetLevel()
 	return (n + 1) * 150
 end
-PLAYER.GetXpNextLevel = Curry(MODULE.GetXPNextLevel)
+PLAYER.GetXPNextLevel = Curry(MODULE.GetXPNextLevel)
 
 if SERVER then
 
