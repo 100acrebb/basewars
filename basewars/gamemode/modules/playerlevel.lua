@@ -28,7 +28,7 @@ function MODULE:GetLevel(ply)
 end
 PLAYER.GetLevel = Curry(MODULE.GetLevel)
 
-function MODULE:GetXp(ply)
+function MODULE:GetXP(ply)
 	
 	if SERVER then
 	
@@ -38,18 +38,18 @@ function MODULE:GetXp(ply)
 		
 	elseif CLIENT then
 	
-		return tonumber(ply:GetNWString(tag .. ".Xp")) or 0
+		return tonumber(ply:GetNWString(tag .. ".XP")) or 0
 		
 	end
 	
 end
-PLAYER.GetXp = Curry(MODULE.GetXp)
+PLAYER.GetXP = Curry(MODULE.GetXP)
 
-function MODULE:GetXpNextLevel(ply)
+function MODULE:GetXPNextLevel(ply)
 	local n = ply:GetLevel()
 	return (n + 1) * 150
 end
-PLAYER.GetXpNextLevel = Curry(MODULE.GetXpNextLevel)
+PLAYER.GetXpNextLevel = Curry(MODULE.GetXPNextLevel)
 
 if SERVER then
 
@@ -87,7 +87,7 @@ if SERVER then
 		local lvl = tostring(self:GetLevel(ply))
 		local xp = tostring(self:GetXp(ply))
 		ply:SetNWString(tag .. ".Level", lvl)
-		ply:SetNWString(tag .. ".Xp", xp)
+		ply:SetNWString(tag .. ".XP", xp)
 		ply.level = lvl
 		ply.xp = xp
 		
@@ -95,11 +95,15 @@ if SERVER then
 	PLAYER.LoadLevels = Curry(MODULE.Load)
 
 	function MODULE:CheckLevels(ply)
+
 		local neededxp = ply:GetXpNextLevel()
 		if ply:GetXp() >= neededxp then
-			ply:AddLevel( 1 )
-			ply:SetXp( ply:GetXp() - neededxp)
+
+			ply:AddLevel(1)
+			ply:SetXP( ply:GetXP() - neededxp)
+
 		end
+
 	end
 	
 	function MODULE:Set(ply, amount)
@@ -126,7 +130,7 @@ if SERVER then
 	end
 	PLAYER.AddLevel = Curry(MODULE.AddLevel)
 	
-	function MODULE:SetXp(ply, amount)
+	function MODULE:SetXP(ply, amount)
 
 		if not isnumber(amount) or amount < 0 then amount = 0 end
 		
@@ -135,21 +139,21 @@ if SERVER then
 		ply.xp = amount
 		self:Save(ply)
 		
-		ply:SetNWString(tag .. ".Xp", tostring(amount))
+		ply:SetNWString(tag .. ".XP", tostring(amount))
 		
 		self:CheckLevels( ply )
 		
 	end
-	PLAYER.SetXp = Curry(MODULE.SetXp)
+	PLAYER.SetXP = Curry(MODULE.SetXP)
 
-	function MODULE:AddXp(ply, amount)
+	function MODULE:AddXP(ply, amount)
 		
-		local Value = ply:GetXp()
+		local Value = ply:GetXP()
 		
-		ply:SetXp(Value + amount)
+		ply:SetXP(Value + amount)
 		
 	end
-	PLAYER.AddXp = Curry(MODULE.AddXp)
+	PLAYER.AddXP = Curry(MODULE.AddXP)
 	
 	hook.Add("PlayerAuthed", tag .. ".Load", Curry(MODULE.Load))
 	hook.Add("PlayerDisconnected", tag .. ".Save", Curry(MODULE.Save))
