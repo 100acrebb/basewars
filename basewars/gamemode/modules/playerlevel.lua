@@ -45,6 +45,12 @@ function MODULE:GetXp(ply)
 end
 PLAYER.GetXp = Curry(MODULE.GetXp)
 
+function MODULE:GetXpNextLevel(ply)
+	local n = ply:GetLevel()
+	return (n + 1) * 150
+end
+PLAYER.GetXpNextLevel = Curry(MODULE.GetXpNextLevel)
+
 if SERVER then
 
 	function MODULE:Init(ply)
@@ -88,9 +94,18 @@ if SERVER then
 	end
 	PLAYER.LoadLevels = Curry(MODULE.Load)
 
+	function MODULE:CheckLevels(ply)
+		local neededxp = ply:GetXpNextLevel()
+		if ply:GetXp() >= neededxp then
+			ply:AddLevel( 1 )
+			ply:SetXp( ply:GetXp() - neededxp)
+		end
+	end
+	
 	function MODULE:Set(ply, amount)
 
 		if not isnumber(amount) or amount < 0 then amount = 0 end
+		if amount > 100 then amount = 100 end
 		
 		amount = math.Round(amount)
 		
@@ -121,6 +136,8 @@ if SERVER then
 		self:Save(ply)
 		
 		ply:SetNWString(tag .. ".Xp", tostring(amount))
+		
+		self:CheckLevels( ply )
 		
 	end
 	PLAYER.SetXp = Curry(MODULE.SetXp)
