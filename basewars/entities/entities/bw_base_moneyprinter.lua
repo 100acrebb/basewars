@@ -19,7 +19,7 @@ ENT.IsPrinter = true
 ENT.IsValidRaidable = false
 
 local Clamp = math.Clamp
-function ENT:GSAT(slot, name, var, min, max)
+function ENT:GSAT(slot, name,  min, max)
 
 	self:NetworkVar("Int", slot, name)
 
@@ -51,10 +51,11 @@ end
 
 function ENT:StableNetwork()
 
-	self:GSAT(2, "Capacity", "Capacity")
-	self:GSAT(3, "Money", "Money", 0, "Capacity")
-	self:GSAT(4, "Paper", "Paper", 0, self.Paper)
-	self:GSAT(5, "Level", "Level", 0, "MaxLevel")
+	self:GSAT(2, "Capacity")
+	
+	self:GSAT(3, "Money", 0, "Capacity")
+	self:GSAT(4, "Paper", 0, self.Paper)
+	self:GSAT(5, "Level", 0, "MaxLevel")
 
 end
 
