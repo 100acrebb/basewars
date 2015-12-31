@@ -7,7 +7,7 @@ ENT.Skin = 0
 
 ENT.Capacity 		= 10000
 ENT.Money 			= 0
-ENT.Paper 			= 500
+ENT.Paper 			= 2500
 ENT.PrintInterval 	= 1.1
 ENT.PrintAmount		= 20
 ENT.MaxLevel 		= 10
