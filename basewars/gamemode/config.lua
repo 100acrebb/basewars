@@ -422,7 +422,7 @@ BaseWars.SpawnList.Models = {
 			["Vending Machine"]				= BaseWars.GSL{Model = "models/props_interiors/VendingMachineSoda01a.mdl", Price = 10000, ClassName = "bw_vendingmachine"},
 			["Ammo Dispenser"]				= BaseWars.GSL{Model = "models/props_lab/reciever_cart.mdl", Price = 12000, ClassName = "bw_dispenser_ammo"},
 			["Armour Dispenser"]			= BaseWars.GSL{Model = "models/props_combine/suit_charger001.mdl", Price = 25000, ClassName = "bw_dispenser_armor"},
-			["Automated Paper Dispenser"]	= BaseWars.GSL{Model = "models/props_lab/plotter.mdl", Price = 500000, ClassName = "bw_dispenser_paper", UseSpawnFunc = false, Limit = 1},
+			["Printer-Paper Refiller"]		= BaseWars.GSL{Model = "models/props_lab/plotter.mdl", Price = 500000, ClassName = "bw_dispenser_paper", UseSpawnFunc = false, Limit = 1},
 			["HealthPad"]					= BaseWars.GSL{Model = "models/props_lab/teleplatform.mdl", Price = 30000, ClassName = "bw_healthpad", UseSpawnFunc = true},
 
 		},
@@ -445,6 +445,7 @@ BaseWars.SpawnList.Models = {
 		["Consumables"] = {
 
 			["Repair Kit"]					= BaseWars.GSL{Model = "models/Items/car_battery01.mdl", Price = 2000, ClassName = "bw_repairkit", UseSpawnFunc = true},
+			["Armour Kit"]					= BaseWars.GSL{Model = "models/props_junk/cardboard_box004a.mdl", Price = 2000, ClassName = "bw_entityarmor", UseSpawnFunc = true},
 			["Printer Paper"]				= BaseWars.GSL{Model = "models/props_junk/garbage_newspaper001a.mdl", Price = 250, ClassName = "bw_printerpaper", UseSpawnFunc = true},
 
 		},

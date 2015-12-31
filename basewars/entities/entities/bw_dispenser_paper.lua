@@ -3,7 +3,7 @@ AddCSLuaFile()
 ENT.Base 				= "bw_base_electronics"
 ENT.Type 				= "anim"
 
-ENT.PrintName 			= "Automated Paper Dispenser"
+ENT.PrintName 			= "Printer-Paper Refiller"
 ENT.Author 				= "Q2F2"
 
 ENT.Model 				= "models/props_lab/plotter.mdl"

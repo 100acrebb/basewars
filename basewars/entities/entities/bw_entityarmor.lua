@@ -4,7 +4,7 @@ ENT.Base 		= "base_gmodentity"
 ENT.Type 		= "anim"
 ENT.PrintName 	= "Armor Upgrade Kit"
 
-ENT.Model 		= "models/Items/car_battery01.mdl"
+ENT.Model 		= "models/props_junk/cardboard_box004a.mdl"
 
 ENT.ArmorAmt	= 500
 

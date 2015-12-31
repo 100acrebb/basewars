@@ -68,6 +68,24 @@ local Participant2	= nil
 local P1Faction		= nil
 local P2Faction		= nil
 
+function MODULE:GetP1()
+
+	return Participant1
+
+end
+
+function MODULE:GetP2()
+
+	return Participant2
+
+end
+
+function MODULE:IsFaction()
+
+	return IsFaction
+
+end
+
 function MODULE:CheckForNULL()
 
 	if not Participant1 or not Participant2 or not IsValid(Participant1) or not IsValid(Participant2) then
@@ -314,11 +332,12 @@ function MODULE:GetVersus()
 
 	if not self:CheckForNULL() then
 	
+		ErrorNoHalt("NULL CHECK FAILED FOR RAID!\n")
 		return "<NONE>", "<NONE>"
 		
 	end
 	
-	local TrimTo = 18
+	local TrimTo = 21
 	local name1, name2
 	
 	if IsFaction then

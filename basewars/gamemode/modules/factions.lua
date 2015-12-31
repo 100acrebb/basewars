@@ -255,7 +255,11 @@ end
 
 function MODULE:InFaction(ply, name, leader)
 	
-	if not BaseWars.Factions then return false end
+	if CLIENT and leader then
+	
+		return self:InFaction(ply, name)
+		
+	end
 	
 	local Table = BaseWars.Factions.FactionTable
 	local Fac = ply:GetFaction()
