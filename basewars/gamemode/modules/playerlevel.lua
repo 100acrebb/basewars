@@ -97,7 +97,7 @@ if SERVER then
 	function MODULE:CheckLevels(ply)
 
 		local neededxp = ply:GetXPNextLevel()
-		if ply:GetXp() >= neededxp then
+		if ply:GetXP() >= neededxp then
 
 			ply:AddLevel(1)
 			ply:SetXP( ply:GetXP() - neededxp)
