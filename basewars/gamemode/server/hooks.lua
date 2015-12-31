@@ -3,7 +3,7 @@ hook.Add( "BaseWars_PlayerBuyEntity", "XPRewards", function( ply, ent )
 	if not ent then return end
 	local class = ent:GetClass()
 	
-	if string.find( class, "bw_printer_" ) or class == bw_base_moneyprinter" then
+	if string.find( class, "bw_printer_" ) or class == "bw_base_moneyprinter" then
 		ply:AddXP( 75 )
 	elseif string.find( class, "bw_gen_" ) then
 		ply:AddXP( 100 )
