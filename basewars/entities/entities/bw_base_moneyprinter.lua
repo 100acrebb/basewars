@@ -7,7 +7,7 @@ ENT.Skin = 0
 
 ENT.Capacity 		= 10000
 ENT.Money 			= 0
-ENT.Paper 			= 2500
+ENT.MaxPaper		= 2500
 ENT.PrintInterval 	= 1.1
 ENT.PrintAmount		= 20
 ENT.MaxLevel 		= 10
@@ -58,7 +58,7 @@ function ENT:StableNetwork()
 	self:GSAT(2, "Capacity")
 	
 	self:GSAT(3, "Money", 0, "Capacity")
-	self:GSAT(4, "Paper", 0, self.Paper)
+	self:GSAT(4, "Paper", 0, "MaxPaper")
 	self:GSAT(5, "Level", 0, "MaxLevel")
 
 end
@@ -73,7 +73,7 @@ if SERVER then
 		self.time_p = CurTime()
 
 		self:SetCapacity(self.Capacity)
-		self:SetPaper(self.Paper)
+		self:SetPaper(self.MaxPaper)
 
 		self:SetHealth(self.PresetMaxHealth or 100)
 
