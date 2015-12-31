@@ -124,22 +124,22 @@ function MODULE:Paint()
 
 	surface.SetDrawColor(0, 0, 0, 150)
 	surface.SetMaterial(TimeMat)
-	surface.DrawTexturedRect(66, sH - 126, 32, 32)
+	surface.DrawTexturedRect(66, sH - 110, 32, 32)
 
 	surface.SetDrawColor(255, 255, 255, 150)
 	surface.SetMaterial(TimeMat)
-	surface.DrawTexturedRect(64, sH - 128, 32, 32)
+	surface.DrawTexturedRect(64, sH - 112, 32, 32)
 
-	draw.DrawText(playTime(plTime), tag, 64 + 44, sH - 128 + 6, shade, TEXT_ALIGN_LEFT)
-	draw.DrawText(playTime(plTime), tag, 64 + 42, sH - 128 + 4, white, TEXT_ALIGN_LEFT)
+	draw.DrawText(playTime(plTime), tag, 64 + 44, sH - 112 + 6, shade, TEXT_ALIGN_LEFT)
+	draw.DrawText(playTime(plTime), tag, 64 + 42, sH - 112 + 4, white, TEXT_ALIGN_LEFT)
 
 	surface.SetDrawColor(0, 0, 0, 150)
 	surface.SetMaterial(MoneyMat)
-	surface.DrawTexturedRect(66, sH - 126 + 40, 32, 32)
+	surface.DrawTexturedRect(66, sH - 110 + 40, 32, 32)
 
 	surface.SetDrawColor(255, 255, 255, 150)
 	surface.SetMaterial(MoneyMat)
-	surface.DrawTexturedRect(64, sH - 128 + 40, 32, 32)
+	surface.DrawTexturedRect(64, sH - 112 + 40, 32, 32)
 
 	local moneyColor
 	if loss then
@@ -154,8 +154,8 @@ function MODULE:Paint()
 	
 	moneyColor = ColorAlpha(moneyColor,150)
 
-	draw.DrawText(BaseWars.LANG.CURRENCY .. "\xe2\x80\x8a" .. money, tag, 64 + 44, sH - 128 + 40 + 6, shade, TEXT_ALIGN_LEFT)
-	draw.DrawText(BaseWars.LANG.CURRENCY .. "\xe2\x80\x8a" .. money, tag, 64 + 42, sH - 128 + 40 + 4, moneyColor, TEXT_ALIGN_LEFT)
+	draw.DrawText(BaseWars.LANG.CURRENCY .. "\xe2\x80\x8a" .. money, tag, 64 + 44, sH - 112 + 40 + 6, shade, TEXT_ALIGN_LEFT)
+	draw.DrawText(BaseWars.LANG.CURRENCY .. "\xe2\x80\x8a" .. money, tag, 64 + 42, sH - 112 + 40 + 4, moneyColor, TEXT_ALIGN_LEFT)
 	
 	if triggered then
 
