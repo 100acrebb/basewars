@@ -194,6 +194,13 @@ function MODULE:Paint()
 	local Karma = me:GetKarma()
 	local KarmaText = string.format(BaseWars.LANG.KarmaText, Karma)
 
+	local Level = me:GetLevel()
+	local XP = me:GetXP()
+	local NextLevelXP = me:GetXPNextLevel()
+	local LevelText = string.format(BaseWars.LANG.LevelText, Level)
+	local XPText = string.format(BaseWars.LANG.XPText, XP, NextLevelXP)
+	local LvlText = LevelText .. ", " .. XPText
+
 	local hW = Calc(hp, 100, 0, pbarW)
 	local aW = Calc(su, 100, 0, pbarW)
 
@@ -223,7 +230,7 @@ function MODULE:Paint()
 	
 	local Key = (input.LookupBinding("+menu") or ""):upper()
 	
-	-- Karma + Controls
+	-- Karma, XP + Controls
 	draw.DrawText(BaseWars.LANG.MainMenuControl, tag, sW - 5, (BaseWars.PSAText and 20 or 3), red, TEXT_ALIGN_RIGHT)
 	draw.DrawText(Key .. BaseWars.LANG.SpawnMenuControl, tag, sW - 5, (BaseWars.PSAText and 33 or 16), red, TEXT_ALIGN_RIGHT)
 	
@@ -231,6 +238,9 @@ function MODULE:Paint()
 	
 	draw.DrawText(LvlText, tag, 64 + 26 + pbarW / 2, sH - 128 - 8, shade, TEXT_ALIGN_CENTER)
 	draw.DrawText(LvlText, tag, 64 + 24 + pbarW / 2, sH - 128 - 10, trans, TEXT_ALIGN_CENTER)
+
+	draw.DrawText(LvlText, tag, 64 + 26 + 48, sH - 34 - 8, shade, TEXT_ALIGN_CENTER)
+	draw.DrawText(LvlText, tag, 64 + 24 + 48, sH - 34 - 10, trans, TEXT_ALIGN_CENTER)
 
 	-- Health
 
