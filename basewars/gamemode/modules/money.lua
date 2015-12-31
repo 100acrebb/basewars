@@ -33,7 +33,7 @@ if SERVER then
 
 	function MODULE:InitMoney(ply)
 	
-		local dirName = isPlayer(ply) and ply:UniqueID() or (isstring(ply) and ply or nil)
+		local dirName = isPlayer(ply) and ply:SteamID64() or (isstring(ply) and ply or nil)
 		
 		if not file.IsDir(tag_escaped .. "/" .. dirName, "DATA") then file.CreateDir(tag_escaped .. "/" .. dirName) end
 		if not file.Exists(tag_escaped .. "/" .. dirName .. "/money.txt", "DATA") then file.Write(tag_escaped .. "/" .. dirName .. "/money.txt", tostring(BaseWars.Config.StartMoney)) end
