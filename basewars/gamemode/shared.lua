@@ -69,44 +69,29 @@ function BaseWars.IsXmasTime(day)
 	
 end
 
-function BaseWars.GenSpawnList(model, price, ent, sf, lim)
-
-	return {
-
-		Model = model,
-		Price = price or 0,
-		ClassName = ent,
-		UseSpawnFunc = sf,
-		Limit = lim or (ent and BaseWars.Config.DefaultLimit) or nil,
+local DefaultData = {
+	
+	__index = {
+	
+		Model = "models/props_c17/FurnitureToilet001a.mdl",
+		Price = 0,
+		ClassName = "prop_physics",
+		Limit = BaseWars.Config.DefaultLimit,
 		ShouldFreeze = true,
-
+		
 	}
-	
-end
 
-function BaseWars.GenWeapon(model, price, class)
+}
 
-	return {
-	
-		Gun = true,
-		Model = model,
-		Price = price or 0,
-		ClassName = class,
+function BaseWars.GSL(t)
 
-	}
-	
-end
+	if t.Drug then
+		
+		t.Model = "models/props_junk/PopCan01a.mdl"
+		
+	end
 
-function BaseWars.GenDrug(price, effect)
-
-	return {
-	
-		Drug = true,
-		Model = "models/props_junk/PopCan01a.mdl",
-		Price = price or 0,
-		ClassName = effect,
-
-	}
+	return setmetatable(t, DefaultData)
 	
 end
 
