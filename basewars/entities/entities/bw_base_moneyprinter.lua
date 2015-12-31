@@ -13,9 +13,9 @@ ENT.PrintAmount		= 20
 ENT.MaxLevel 		= 10
 ENT.UpgradeCost 	= 1000
 
-ENT.PrintName = "Basic Printer"
+ENT.PrintName 		= "Basic Printer"
 
-ENT.IsPrinter = true
+ENT.IsPrinter 		= true
 ENT.IsValidRaidable = false
 
 local Clamp = math.Clamp
@@ -23,23 +23,27 @@ function ENT:GSAT(slot, name,  min, max)
 
 	self:NetworkVar("Int", slot, name)
 
-	self["Add" .. name] = function(e, var)
+	self["Add" .. name] = function(_, var)
+	
+			local Val = self["Get" .. name](self) + var
 	
 			if min and max then
 				
-				var = Clamp(tonumber(var) or 0, self[min] or min, self[max] or max)
+				Val = Clamp(tonumber(Val) or 0, self[min] or min, self[max] or max)
 
 			end
 
-			self["Set" .. name](self, self["Get" .. name](self) + var)
+			self["Set" .. name](self, Val)
 
 	end
 
-	self["Take" .. name] = function(e, var)
+	self["Take" .. name] = function(_, var)
+	
+		local Val = self["Get" .. name](self) - var
 	
 		if min and max then
 			
-			var = Clamp(tonumber(var) or 0, self[min] or min, self[max] or max)
+			Val = Clamp(tonumber(Val) or 0, self[min] or min, self[max] or max)
 
 		end
 
@@ -62,8 +66,6 @@ end
 if SERVER then
 
 	AddCSLuaFile()
-
-	--hook.Add("PlayerSay", "BaseWars")
 
 	function ENT:Init()
 
@@ -166,7 +168,7 @@ if SERVER then
 		
 		self:TakeMoney(money)
 
-		ply:SetMoney(ply:GetMoney() + money)
+		ply:GiveMoney(money)
 		ply:EmitSound("mvm/mvm_money_pickup.wav")
 
 		hook.Run("BaseWars_PlayerEmptyPrinter", ply, self, money)
