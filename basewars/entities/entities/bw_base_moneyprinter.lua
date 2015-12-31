@@ -152,11 +152,25 @@ if SERVER then
 	function ENT:PlayerTakeMoney(ply)
 
 		local money = self:GetMoney()
+		
+		local Res, Msg = hook.Run("BaseWars_PlayerCanEmptyPrinter", ply, self, money)
+		if Res == false then
+		
+			if Msg then
+			
+				ply:Notify(Msg, BASEWARS_NOTIFICATION_ERROR)
+				
+			end
+		
+		return end
+		
 		self:TakeMoney(money)
 
 		ply:SetMoney(ply:GetMoney() + money)
 		ply:EmitSound("mvm/mvm_money_pickup.wav")
 
+		hook.Run("BaseWars_PlayerEmptyPrinter", ply, self, money)
+		
 	end
 
 	function ENT:UseFuncBypass(activator, caller, usetype, value)
@@ -175,7 +189,7 @@ if SERVER then
 	function ENT:SetDisabled(a)
 
 		self.Disabled = a and true or false
-		self:SetNWBool("printer_disabled",a and true or false)
+		self:SetNWBool("printer_disabled", a and true or false)
 
 	end
 	

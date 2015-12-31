@@ -2,9 +2,11 @@ AddCSLuaFile()
 
 ENT.Base 		= "base_gmodentity"
 ENT.Type 		= "anim"
-ENT.PrintName 	= "Repair Kit"
+ENT.PrintName 	= "Armor Upgrade Kit"
 
 ENT.Model 		= "models/Items/car_battery01.mdl"
+
+ENT.ArmorAmt	= 500
 
 if CLIENT then return end
 
@@ -53,16 +55,25 @@ function ENT:PhysicsCollide(data, phys)
 	local ent = data.HitEntity
 	if not BaseWars.Ents:Valid(ent) then return end
 	
-	if ent.Repair and not self.Removing and ent:Health() < ent:GetMaxHealth() - 1 then
+	if ent.Armoured then return end
 	
-		ent:Repair()
+	if ent.Repair and not self.Removing then
+	
+		ent.Armoured = true
+	
+		ent:SetMaxHealth(Max + self.ArmorAmt)
+		ent:SetHealth(Cur + self.ArmorAmt)
 		
 		self.Removing = true
 		self:Remove()
 		
 	return end
 	
-	if ent.DestructableProp and not self.Removing and ent:Health() < ent.MaxHealth - 1 then
+	if ent.DestructableProp and not self.Removing then
+	
+		ent.Armoured = true
+	
+		ent:SetMaxHealth(Max + self.ArmorAmt)
 	
 		ent:SetHealth(ent.MaxHealth)
 		ent:SetColor(color_white)
