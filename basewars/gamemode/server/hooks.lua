@@ -32,6 +32,6 @@ end) -- ok senpai -Ghosty
 
 hook.Add("BaseWars_PlayerEmptyPrinter", "XPRewards", function(ply, ent, money)
 	
-	ply:AddXP(math.max(0, money / 100))
+	ply:AddXP(math.max(0, money / 250))
 	
 end)
