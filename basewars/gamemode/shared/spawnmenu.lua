@@ -94,27 +94,34 @@ if SERVER then
 			
 		end
 		
+		local Res, Msg
 		if gun then
 		
-			local Res = hook.Run("BaseWars_PlayerCanBuyGun", ply, ent) -- Player, Gun class
-			if Res == false then return end
+			Res, Msg = hook.Run("BaseWars_PlayerCanBuyGun", ply, ent) -- Player, Gun class
 		
 		elseif drug then
 		
-			local Res = hook.Run("BaseWars_PlayerCanBuyDrug", ply, ent) -- Player, Drug type
-			if Res == false then return end
+			Res, Msg = hook.Run("BaseWars_PlayerCanBuyDrug", ply, ent) -- Player, Drug type
 		
 		elseif ent then
 		
-			local Res = hook.Run("BaseWars_PlayerCanBuyEntity", ply, ent) -- Player, Entity class
-			if Res == false then return end
+			Res, Msg = hook.Run("BaseWars_PlayerCanBuyEntity", ply, ent) -- Player, Entity class
 			
 		else
 		
-			local Res = hook.Run("BaseWars_PlayerCanBuyProp", ply, ent) -- Player, Entity class
-			if Res == false then return end
+			Res, Msg = hook.Run("BaseWars_PlayerCanBuyProp", ply, ent) -- Player, Entity class
 		
 		end
+		
+		if Res == false then
+		
+			if Msg then
+			
+				ply:Notify(Msg, BASEWARS_NOTIFICATION_ERROR)
+				
+			end
+		
+		return end
 
 		if price > 0 then
 			
