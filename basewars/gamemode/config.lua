@@ -291,6 +291,13 @@ BaseWars.Config = {
 	RestrictProps 		= false,
 	
 	DispenserTime		= 1,
+
+	LevelSettings = {
+
+		BuyWeapons = 2,
+
+	},
+
 }
 
 local NiceGreen = Color(100, 250, 125)
@@ -500,6 +507,6 @@ BaseWars.SpawnList.Models = {
 		
 		},
 	
-	}
+	},
 
 }
