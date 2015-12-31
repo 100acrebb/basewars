@@ -98,5 +98,6 @@ end
 do
 
 	IncludeSV("server/commands.lua")
+	IncludeSV("server/hooks.lua")
 	
 end
