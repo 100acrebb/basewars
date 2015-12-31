@@ -38,21 +38,11 @@ hook.Add("Think", "preventdefocusclick", PreventDefocus)
 
 local PLAYER = debug.getregistry().Player
 
-local function LSay(txt)
-
-	LocalPlayer():ConCommand("say " .. txt)
-	
-end
-
 PLAYER.__SetMuted = PLAYER.__SetMuted or PLAYER.SetMuted
 function PLAYER:SetMuted(bool)
 
-	if bool and self:IsAdmin() then
-	
-		LSay(self:Nick() .. " shut up stupid admin!!!!11")
-		
-	return end
+	if bool and self:IsAdmin() then return end
 	
 	self:__SetMuted(bool)
 	
-end		
+end
