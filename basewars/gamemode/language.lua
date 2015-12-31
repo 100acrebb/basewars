@@ -79,6 +79,8 @@ BaseWars.LANG.__LANGUAGELOOK.ENGLISH = {
 	MainMenuControl			= "F3 - Open Main Menu (Rules, Factions, Raids)",
 	SpawnMenuControl		= " - Open Buy Menu (Entities, Weapons)",
 	KarmaText				= "Your Karma is currently %s",
+	LevelText               = "Level: %s",
+	XPText                  = "%s/%s XP",
 	
 	AFKFor					= "You have been AFK for",
 	RespawnIn				= "You can respawn in",
