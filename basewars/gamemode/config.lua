@@ -431,7 +431,7 @@ BaseWars.SpawnList.Models = {
 		
 			["Ballistic Turret"] 			= BaseWars.GSL{Model = "models/Combine_turrets/Floor_turret.mdl", Price = 50000, ClassName = "bw_turret_ballistic", UseSpawnFunc = false, Limit = 2},
 			["Laser Turret"] 				= BaseWars.GSL{Model = "models/Combine_turrets/Floor_turret.mdl", Price = 80000, ClassName = "bw_turret_laser", UseSpawnFunc = false, Limit = 1},
-			["Tesla Coil"]					= BaseWars.GSL{Model = "models/props_c17/substation_transformer01d.mdl", Price = 500000, ClassName = "bw_tesla", UseSpawnFunc = false, Limit = 1)
+			["Tesla Coil"]					= BaseWars.GSL{Model = "models/props_c17/substation_transformer01d.mdl", Price = 500000, ClassName = "bw_tesla", UseSpawnFunc = false, Limit = 1},
 		
 		},
 		

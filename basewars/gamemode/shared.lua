@@ -76,7 +76,6 @@ local DefaultData = {
 		Model = "models/props_c17/FurnitureToilet001a.mdl",
 		Price = 0,
 		ClassName = "prop_physics",
-		Limit = BaseWars.Config.DefaultLimit,
 		ShouldFreeze = true,
 		
 	}
@@ -88,6 +87,12 @@ function BaseWars.GSL(t)
 	if t.Drug then
 		
 		t.Model = "models/props_junk/PopCan01a.mdl"
+		
+	end
+	
+	if not t.Limit then
+	
+		t.Limit = BaseWars.Config.DefaultLimit
 		
 	end
 
