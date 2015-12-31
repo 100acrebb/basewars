@@ -30,8 +30,8 @@ hook.Add("BaseWars_PlayerCanBuyGun", "AntiFaggot", function(ply, class) --Replac
 
 end) -- ok senpai -Ghosty
 
-hook.Add( "BaseWars_PlayerEmptyPrinter", "XPRewards", function( ply, ent, money )
+hook.Add("BaseWars_PlayerEmptyPrinter", "XPRewards", function(ply, ent, money)
 	
-	ply:AddXP( math.max( 0, money / 100 ) )
+	ply:AddXP(math.max(0, money / 100))
 	
-end )
+end)
