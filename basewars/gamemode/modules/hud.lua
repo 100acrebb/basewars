@@ -229,8 +229,8 @@ function MODULE:Paint()
 	
 	draw.DrawText(os.date("%H:%M"), "SysFont", sW / 2, (BaseWars.PSAText and 20 or 3), trans, TEXT_ALIGN_CENTER)
 	
-	draw.DrawText(KarmaText, tag, 64 + 26 + pbarW / 2, sH - 128 - 48 - 8, shade, TEXT_ALIGN_CENTER)
-	draw.DrawText(KarmaText, tag, 64 + 24 + pbarW / 2, sH - 128 - 48 - 10, trans, TEXT_ALIGN_CENTER)
+	draw.DrawText(LvlText, tag, 64 + 26 + pbarW / 2, sH - 128 - 8, shade, TEXT_ALIGN_CENTER)
+	draw.DrawText(LvlText, tag, 64 + 24 + pbarW / 2, sH - 128 - 10, trans, TEXT_ALIGN_CENTER)
 
 	-- Health
 
