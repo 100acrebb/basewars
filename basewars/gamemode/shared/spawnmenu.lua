@@ -75,6 +75,12 @@ if SERVER then
 		SpawnAng.y = SpawnAng.y + 180
 		SpawnAng.y = math.Round(SpawnAng.y / 45) * 45
 		
+		if not gun and not drug and ply:InRaid() then 
+		
+			ply:Notify(BaseWars.LANG.CannotPurchaseRaid, BASEWARS_NOTIFICATION_ERROR)
+			
+		return end
+		
 		if lim then
 		
 			local Amount = ply:GetTable()["limit_" .. ent] or 0
@@ -86,6 +92,28 @@ if SERVER then
 			
 			return end
 			
+		end
+		
+		if gun then
+		
+			local Res = hook.Run("BaseWars_PlayerCanBuyGun", ply, ent) -- Player, Gun class
+			if Res == false then return end
+		
+		elseif drug then
+		
+			local Res = hook.Run("BaseWars_PlayerCanBuyDrug", ply, ent) -- Player, Drug type
+			if Res == false then return end
+		
+		elseif ent then
+		
+			local Res = hook.Run("BaseWars_PlayerCanBuyEntity", ply, ent) -- Player, Entity class
+			if Res == false then return end
+			
+		else
+		
+			local Res = hook.Run("BaseWars_PlayerCanBuyProp", ply, ent) -- Player, Entity class
+			if Res == false then return end
+		
 		end
 
 		if price > 0 then
@@ -114,11 +142,13 @@ if SERVER then
 				Ent:SetAngles(SpawnAng)
 			Ent:Spawn()
 			Ent:Activate()
+			
+			hook.Run("BaseWars_PlayerBuyGun", ply, Ent) -- Player, Gun entity
 		
 		return end
 		
-		if drug then 
-		
+		if drug then
+			
 			local Rand = (ent == "Random")
 			local Ent = ents.Create("bw_drink_drug")
 				if not Rand then
@@ -132,13 +162,9 @@ if SERVER then
 				Ent:SetAngles(SpawnAng)
 			Ent:Spawn()
 			Ent:Activate()
-		
-		return end
-		
-		if ply:InRaid() then 
-		
-			ply:Notify(BaseWars.LANG.CannotPurchaseRaid, BASEWARS_NOTIFICATION_ERROR)
 			
+			hook.Run("BaseWars_PlayerBuyDrug", ply, Ent) -- Player, Drug entity
+		
 		return end
 
 		local prop
@@ -170,6 +196,8 @@ if SERVER then
 				if newEnt.SetUpgradeCost then newEnt:SetUpgradeCost(price) end
 				
 				newEnt.DoNotDuplicate = true
+				
+				hook.Run("BaseWars_PlayerBuyEntity", ply, newEnt) -- Player, Entity
 				
 			return end
 			
@@ -235,7 +263,16 @@ if SERVER then
 			prop:CPPISetOwner(ply)
 
 		end
+		
+		if ent then
+		
+			hook.Run("BaseWars_PlayerBuyEntity", ply, prop) -- Player, Entity
+			
+		else
+			
+			hook.Run("BaseWars_PlayerBuyProp", ply, prop) -- Player, Prop
 
+		end
 	
 	end
 
