@@ -55,7 +55,7 @@ function ENT:PhysicsCollide(data, phys)
 	local ent = data.HitEntity
 	if not ent or not IsValid(ent) then return end
 	
-	if ent.Paper and not self.Removing then
+	if ent.MaxPaper and not self.Removing then
 	
 		ent:AddPaper(self.PaperAmount)
 		
