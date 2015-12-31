@@ -62,7 +62,7 @@ function ENT:PhysicsCollide(data, phys)
 		ent.Armoured = true
 	
 		ent:SetMaxHealth(ent:GetMaxHealth() + self.ArmorAmt)
-		ent:SetHealth(ent:GetHealth() + self.ArmorAmt)
+		ent:SetHealth(ent:Health() + self.ArmorAmt)
 		
 		self.Removing = true
 		self:Remove()
