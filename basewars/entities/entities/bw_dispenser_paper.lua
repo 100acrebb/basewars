@@ -13,7 +13,7 @@ ENT.Radius				= 600
 ENT.PaperAmt			= 50
 
 ENT.PowerRequired		= 15
-ENT.Drain				= 10
+ENT.Drain				= 55
 
 function ENT:Init()
 
@@ -32,6 +32,8 @@ function ENT:UseFunc(ply)
 	self.Time = CurTime()
 	
 	local Ents = ents.FindInSphere(self:GetPos(), self.Radius)
+	
+	self:EmitSound(self.Sound, 100, 60)
 	
 	for k, v in next, Ents do
 	
