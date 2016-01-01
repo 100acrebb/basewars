@@ -527,6 +527,17 @@ function GM:CanProperty(ply, prop, ent, ...)
 	
 end
 
+function GM:GravGunPunt(ply, ent)
+
+	local Ret = self.BaseClass:GravGunPunt(ply, ent)
+	local Class = ent:GetClass()
+
+	if Class == "prop_physics" then return false end
+	
+	return BlockInteraction(ply, ent, Ret)
+	
+end
+
 local NoSounds = {
 	"vo/engineer_no01.mp3",
 	"vo/engineer_no02.mp3",
