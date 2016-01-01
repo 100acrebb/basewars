@@ -26,6 +26,8 @@ if SERVER then
 
 	local function Spawn(ply, cat, subcat, item)
 	
+		if ply.IsBanned and ply:IsBanned() then return end
+	
 		if not ply:Alive() then ply:Notify(BaseWars.LANG.DeadBuy, BASEWARS_NOTIFICATION_ERROR) return end
 
 		local l = SpawnList and SpawnList.Models
@@ -48,7 +50,16 @@ if SERVER then
 
 		local model, price, ent, sf, lim = i.Model, i.Price, i.ClassName, i.UseSpawnFunc, i.Limit
 		local gun, drug = i.Gun, i.Drug
+		
+		local level = i.Level
+		if gun then level = BaseWars.Config.LevelSettings.BuyWeapons end
 
+		if level and not ply:HasLevel(level) then
+		
+			ply:EmitSound("buttons/button10.wav")
+			
+		return end
+		
 		local tr
 		
 		if ent then
@@ -416,9 +427,12 @@ end
 vgui.Register("BaseWars.ErrorCheckTextEntry", PANEL, "DTextEntry")
 
 local white = Color(255, 255, 255)
+local trans = Color(0, 0, 0, 0)
 
-local canBuy  = Color(90, 200, 0, 180)
-local cantBuy = Color(100, 100, 100, 180)
+local blue 	= Color(0, 90, 200, 180)
+local green = Color(90, 200, 0, 180)
+local grey	= Color(90, 90, 90, 180)
+local red	= Color(200, 0, 20, 180)
 
 local shade = Color(0, 0, 0, 200)
 
@@ -452,6 +466,7 @@ local function MakeTab(type)
 
 				local model = tab.Model
 				local money = tab.Price
+				local level = tab.Level
 				
 				local icon = iLayout:Add("SpawnIcon")
 
@@ -461,6 +476,14 @@ local function MakeTab(type)
 				icon:SetSize(64, 64)
 
 				function icon:DoClick()
+				
+				
+					local HasLevel = not level or LocalPlayer():HasLevel(level)
+					if not HasLevel then
+					
+						surface.PlaySound("buttons/button10.wav")
+						
+					return end
 
 					local myMoney = LocalPlayer():GetMoney()
 
@@ -494,16 +517,37 @@ local function MakeTab(type)
 
 				end
 
-				if money > 0 then
-
-						function icon:Paint(w, h)
-								
-							local myMoney = LocalPlayer():GetMoney()
-
-							draw.RoundedBox(4, 1, 1, w - 2, h - 2, myMoney >= money and canBuy or cantBuy)
-
-						end
+				function icon:Paint(w, h)
+					
+					local myMoney = LocalPlayer():GetMoney()
+					local HasLevel = not level or LocalPlayer():HasLevel(level)
+					
+					local DrawCol = green
+					
+					if not HasLevel then
+					
+						DrawCol = grey
 						
+					elseif money <= 0 then
+					
+						DrawCol = trans
+					
+					elseif money >= myMoney * 2 then
+					
+						DrawCol = grey
+					
+					elseif money > myMoney then
+
+						DrawCol = red
+						
+					elseif money < myMoney / 100 then
+					
+						DrawCol = blue
+						
+					end
+
+					draw.RoundedBox(4, 1, 1, w - 2, h - 2, DrawCol)
+
 				end
 
 				local pO = icon.PaintOver
@@ -513,6 +557,16 @@ local function MakeTab(type)
 					pO(self, w, h)
 					
 					local text
+					
+					local HasLevel = not level or LocalPlayer():HasLevel(level)
+					if not HasLevel then
+					
+						text = "LVL " .. level
+					
+						draw.DrawText(text, overlayFont2, w / 2, h / 2, shade, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+						draw.DrawText(text, overlayFont2, w / 2 - 2, h / 2 - 2, white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+					
+					return end
 
 					if money > 0 then
 					
