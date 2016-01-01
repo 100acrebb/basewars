@@ -165,7 +165,7 @@ function MODULE:Leave(ply, disband, forcedisband)
 		
 	end
 
-	if not forcedisband and disband and (Faction.leader ~= ply:SteamID() and not ply:IsAdmin()) then
+	if not forcedisband and disband and Faction.leader ~= ply:SteamID() then
 	
 		disband = false
 		
@@ -231,11 +231,28 @@ PLAYER.FactionMembers = Curry(MODULE.Members)
 
 function MODULE:ChangePass(ply, newpass)
 
-	-- not done dont use
-
-	local Table = BaseWars.Factions.FactionTable
+	if not newpass or not isstring(newpass) then return end
 	
-	if not Table[name] then
+	if CLIENT then
+	
+		-- Do netmessage here
+		-- check newpass as string
+	
+	return end
+
+	if not ply:InFaction() then
+	
+		ply:Notify(BaseWars.LANG.FactionNotExist, BASEWARS_NOTIFICATION_ERROR)
+	
+		return
+		
+	end
+
+	local Name = ply:GetFaction()
+	local Table = BaseWars.Factions.FactionTable
+	local Faction = Table[Name]
+	
+	if not Table[Name] then
 	
 		ply:Notify(BaseWars.LANG.FactionNotExist, BASEWARS_NOTIFICATION_ERROR)
 	
@@ -251,18 +268,26 @@ function MODULE:ChangePass(ply, newpass)
 		
 	end
 	
+	Faction.password = newpass
+	
 end
 
 function MODULE:InFaction(ply, name, leader)
 	
-	if CLIENT and leader then
+	local Fac = ply:GetFaction()
 	
-		return self:InFaction(ply, name)
+	if CLIENT then
+	
+		-- Client cant check if they are the leader due to how it works
+		if not name then
 		
-	end
+			return Fac ~= ""
+			
+		end
+		
+	return Fac == name end
 	
 	local Table = BaseWars.Factions.FactionTable
-	local Fac = ply:GetFaction()
 	local Faction = Table[Fac]
 	
 	local Leader = (not leader or Faction and Faction.leader == ply:SteamID())

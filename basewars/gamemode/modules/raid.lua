@@ -88,16 +88,23 @@ end
 
 function MODULE:CheckForNULL()
 
-	if not Participant1 or not Participant2 or not IsValid(Participant1) or not IsValid(Participant2) then
+	if not IsFaction and (not BaseWars.Ents:ValidPlayer(Participant1) or not BaseWars.Ents:ValidPlayer(Participant2)) then
 	
 		return false
 		
 	end
 	
-	if (SERVER and IsFaction and (not BaseWars.Factions:FactionExist(P1Faction) or not BaseWars.Factions:FactionExist(P2Faction))) or (CLIENT and (P1Faction and P2Faction)) then
+	if IsFaction and SERVER then
 	
-		return false
+		local F1 = BaseWars.Factions:FactionExist(P1Faction)
+		local F2 = BaseWars.Factions:FactionExist(P2Faction)
 		
+		if not F1 or not F2 then
+		
+			return false
+			
+		end
+	
 	end
 	
 	return true
@@ -135,18 +142,30 @@ function MODULE:PlayerInvolved(ply)
 end
 PLAYER.InRaid = Curry(MODULE.PlayerInvolved)
 
-function MODULE:CheckRaidable(ply, nocool)
+function MODULE:CheckRaidable(ply, nocool, fac)
+
+	local Table = BaseWars.Factions.FactionTable
+	local Faction = Table[ply:GetFaction()]
 
 	if not nocool then
-	
-		local Table = BaseWars.Factions.FactionTable
-		local Faction = Table[ply:GetFaction()]
 
 		if CurTime() - (Faction and Faction.__RaidCoolDown or ply.__RaidCoolDown or 0) < BaseWars.Config.Raid.CoolDownTime then return false, BaseWars.LANG.OnCoolDown end
 		
 	end
 
 	local Call, Message = hook.Run("PlayerIsRaidable", ply)
+	
+	if Call == false and Faction then
+	
+		for k, v in next, Faction.members do
+		
+			Call, Message = hook.Run("PlayerIsRaidable", v)
+			
+			if Call == false then break end
+			
+		end
+		
+	end
 	
 	if Call == false then
 	
@@ -219,26 +238,6 @@ function MODULE:Start(ply, target)
 		
 	end
 	
-	local Ret, Msg
-
-	Ret, Msg = self:CheckRaidable(ply, true)
-	if not Ret then
-	
-		ply:Notify(string.format(BaseWars.LANG.RaidSelfUnraidable, Msg or "UNKNOWN!"), BASEWARS_NOTIFICATION_RAID)
-		
-		return
-		
-	end
-	
-	Ret, Msg = self:CheckRaidable(target)
-	if not Ret then
-	
-		ply:Notify(string.format(BaseWars.LANG.RaidTargetUnraidable, Msg or "UNKNOWN!"), BASEWARS_NOTIFICATION_RAID)
-		
-		return
-		
-	end
-	
 	if ply == target then
 	
 		ply:Notify(BaseWars.LANG.CantRaidSelf, BASEWARS_NOTIFICATION_RAID)
@@ -264,6 +263,26 @@ function MODULE:Start(ply, target)
 	end
 	
 	IsFaction = ply:InFaction()
+	
+	local Ret, Msg
+
+	Ret, Msg = self:CheckRaidable(ply, true, IsFaction)
+	if not Ret then
+	
+		ply:Notify(string.format(BaseWars.LANG.RaidSelfUnraidable, Msg or "UNKNOWN!"), BASEWARS_NOTIFICATION_RAID)
+		
+		return
+		
+	end
+	
+	Ret, Msg = self:CheckRaidable(target, false, IsFaction)
+	if not Ret then
+	
+		ply:Notify(string.format(BaseWars.LANG.RaidTargetUnraidable, Msg or "UNKNOWN!"), BASEWARS_NOTIFICATION_RAID)
+		
+		return
+		
+	end
 	
 	if IsFaction and target:InFaction(ply:GetFaction()) then
 	
