@@ -17,7 +17,7 @@ function MODULE:GetLevel(ply)
 	
 		local dirName = self:Init(ply)
 		local level = ply.level or tonumber(file.Read(tag_escaped .. "/" .. dirName .. "/level.txt", "DATA"))
-		return level
+		return tonumber(level)
 		
 	elseif CLIENT then
 	
@@ -34,7 +34,7 @@ function MODULE:GetXP(ply)
 	
 		local dirName = self:Init(ply)
 		local xp = ply.xp or tonumber(file.Read(tag_escaped .. "/" .. dirName .. "/xp.txt", "DATA"))
-		return xp
+		return tonumber(xp)
 		
 	elseif CLIENT then
 	
@@ -47,9 +47,15 @@ PLAYER.GetXP = Curry(MODULE.GetXP)
 
 function MODULE:GetXPNextLevel(ply)
 	local n = ply:GetLevel()
-	return (n + 1) * 150
+	return (n + 1) * 250
 end
 PLAYER.GetXPNextLevel = Curry(MODULE.GetXPNextLevel)
+
+function MODULE:HasLevel(ply, level)
+	local plylevel = ply:GetLevel()
+	return (plylevel >= level)
+end
+PLAYER.HasLevel = Curry(MODULE.HasLevel)
 
 if SERVER then
 
@@ -99,6 +105,12 @@ if SERVER then
 		local neededxp = ply:GetXPNextLevel()
 		if ply:GetXP() >= neededxp then
 
+			if ply:GetLevel() == 100 then
+				ply:SetLevel( 100 )
+				ply:SetXP( 0 )
+				return
+			end
+		
 			ply:AddLevel(1)
 			ply:SetXP( ply:GetXP() - neededxp)
 

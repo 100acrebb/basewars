@@ -16,6 +16,14 @@ if SERVER then
 		
 	end
 	
+	hook.Add( "Initialize", "HostNameInit", function()
+
+		timer.Simple( 30, function()
+			hostname = GetConVar("hostname"):GetString()
+		end )
+	
+	end )
+	
 	timer.Create("HostNameRefresher", 1, 0, function()
 	
 		SetGlobalString("Hn", hostname)
