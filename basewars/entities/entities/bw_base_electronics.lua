@@ -97,6 +97,7 @@ if SERVER then
 		self:UseFuncBypass(activator, caller, usetype, value)
 		
 		if not self:GetUsable() then return end
+		if self:CheckUsable() == false then return end
 	
 		if not self:IsPowered() or self:BadlyDamaged() then 
 		
