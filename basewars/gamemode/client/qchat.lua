@@ -2,31 +2,50 @@ if qchat and IsValid(qchat.pPanel) then
 	qchat:Close()
 end
 
-surface.CreateFont("QChatFont", {
-	font = "Verdana",
-	size = 14,
-	weight = 600,
-	antialias = true,
-	shadow = true,
-})
+local FontSize = CreateConVar("qchat_fontsize", "21")
 
 qchat = {}
 
-qchat.TimeStamps = false
+function qchat.CreateFonts()
 
-qchat.red 	= Color(255,  10, 100, 255)
-qchat.green = Color(100, 255, 100, 255)
-qchat.back 	= Color(10 ,  0 , 10 , 100)
-qchat.baka  = Color(90 , 10 , 90 , 255)
-qchat.back2	= Color(90 , 10 , 90 , 255)
-qchat.twhit = Color(255, 255, 255, 100)
-qchat.tbaka = Color(0  , 0  , 0  , 100)
+	surface.CreateFont("QChatFont", {
+		font = "HaxrCorp S8",
+		size = FontSize:GetInt(),
+		shadow = true,
+	})
+
+	surface.CreateFont("QChatFont2", {
+		font = "HaxrCorp S8",
+		size = 16,
+		shadow = true,
+	})
+
+end
+
+qchat.CreateFonts()
+
+concommand.Add("qchat_reloadfonts", qchat.CreateFonts)
+
+local deshou = {
+
+	white		= Color(255, 255, 255, 255),
+	alpha		= Color(  0,   0,   0,   0),
+
+	subGrey		= Color( 51,  51,  51, 255),
+	darkGrey	= Color( 45,  45,  45, 255),
+	highGrey	= Color( 78,  78,  78, 255),
+	lightGrey	= Color(204, 204, 202, 255),
+	
+	pink		= Color(217, 191, 194, 255),
+	pink2		= Color(169, 141, 155, 255),
+
+}
 
 function qchat:CreateChatTab()
 	-- The tab for the actual chat.
 	self.chatTab 		= vgui.Create("DPanel", self.pPanel)
 	self.chatTab.Paint 	= function(self, w, h)
-		surface.SetDrawColor(qchat.back)
+		surface.SetDrawColor(deshou.subGrey)
 		surface.DrawRect(0, 0, w, h)
 	end 
 
@@ -42,7 +61,7 @@ function qchat:CreateChatTab()
 	
 	self.chatTab.pGr 	= vgui.Create("DPanel", self.chatTab.pTBase)
 	self.chatTab.pGr.Paint 	= function(self, w, h)
-		surface.SetDrawColor(qchat.back2)
+		surface.SetDrawColor(deshou.darkGrey)
 		surface.DrawRect(0, 0, w, h)
 	end
 
@@ -91,10 +110,11 @@ function qchat:CreateChatTab()
 	end
 
 	self.chatTab.pText.Paint = function(pan, w, h)
-		surface.SetDrawColor(qchat.twhit)
+		surface.SetDrawColor(deshou.darkGrey)
 		surface.DrawRect(0, 0, w, h)
 
-		pan:DrawTextEntryText(pan.m_colText, pan.m_colHighlight, pan.m_colCursor)
+		pan:SetFontInternal("QChatFont2")
+		pan:DrawTextEntryText(deshou.white, deshou.highGrey, deshou.highGrey)
 	end
 
 	self.chatTab.pText.OnChange = function(pan)
@@ -115,7 +135,8 @@ function qchat:CreateChatTab()
 	self.chatTab.pGrLab = vgui.Create("DLabel", self.chatTab.pGr)
 	self.chatTab.pGrLab:SetPos(8, 2)
 
-	self.chatTab.pGrLab:SetTextColor(color_black)
+	self.chatTab.pGrLab:SetTextColor(deshou.pink)
+	self.chatTab.pGrLab:SetFont("QChatFont2")
 
 	-- The element to actually display the chat its-self.
 	self.chatTab.pFeed 	= vgui.Create("RichText", self.chatTab)
@@ -222,7 +243,7 @@ function qchat:SetUpChat()
 		self.pPanel:MakePopup()
 	end
 
-	self.chatTab.pGrLab:SetTextColor(color_white)
+	self.chatTab.pGrLab:SetTextColor(deshou.pink)
 	self.chatTab.pGrLab:SetText(qchat.isTeamChat and "(TEAM)" or "(GLOBAL)")
 	self.chatTab.pText:SetText("")
 	
@@ -238,45 +259,129 @@ function qchat:BuildIfNotExist()
 	end
 end
 
-function qchat:ParseChatLine(tbl)
-	self:BuildIfNotExist()
+local function CheckFor(tbl,a,b)
+    local a_len=#a
+    local res,endpos=true,1
+    while res and endpos < a_len do
+        res,endpos=a:find(b,endpos)
+        if res then
+            tbl[#tbl+1]={res,endpos}
+        end
+    end
+end
 
-	if (qchat.TimeStamps) then
-		self.chatTab.pFeed:InsertColorChange(20, 20, 90, 255)
+local function AppendTextLink(a,callback)
 
-		self.chatTab.pFeed:AppendText("[" .. os.date("%X") .. "] ")
+	local result={}
+	CheckFor(result,a,"https?://[^%s%\"]+")
+	CheckFor(result,a,"ftp://[^%s%\"]+")
+	CheckFor(result,a,"steam://[^%s%\"]+")
+
+	--todo
+	--CheckFor(result,a,"^www%.[^%s%\"]+")
+	--CheckFor(result,a,"[^%s%\"]www%.[^%s%\"]+")
+
+	if #result == 0 then return false end
+
+	table.sort(result,function(a,b) return a[1]<b[1] end)
+
+	-- Fix overlaps
+	local _l,_r
+	for k,tbl in pairs(result) do
+
+		local l,r=tbl[1],tbl[2]
+
+		if not _l then
+			_l,_r=tbl[1],tbl[2]
+			continue
+		end
+
+		if l<_r then table.remove(result,k) end
+
+		_l,_r=tbl[1],tbl[2]
 	end
 
-	if (isstring(tbl)) then
+	local function TEX(str) callback(false,str) end
+	local function LNK(str) callback(true,str) end
+
+	local offset=1
+	local right
+	for _,tbl in pairs(result) do
+		local l,r=tbl[1],tbl[2]
+		local link=a:sub(l,r)
+		local left=a:sub(offset,l-1)
+		right=a:sub(r+1,-1)
+		offset=r+1
+		TEX(left)
+		LNK(link)
+	end
+	TEX(right)
+	return true
+end
+
+function qchat:AppendText(txt)
+	local function linkAppend(islink, text)
+	
+		if islink then
+		
+			self.chatTab.pFeed:InsertClickableTextStart(text)
+				self.chatTab.pFeed:AppendText(text)
+			self.chatTab.pFeed:InsertClickableTextEnd()
+		
+		return end
+	
+		self.chatTab.pFeed:AppendText(text)
+	
+	end
+
+	local res = AppendTextLink(txt, linkAppend)
+	
+	if not res then
+	
+		self.chatTab.pFeed:AppendText(txt)
+		
+	end
+	
+end
+
+function qchat:ParseChatLine(tbl)
+
+	self:BuildIfNotExist()
+
+	if isstring(tbl) then
+	
 		self.chatTab.pFeed:InsertColorChange(120, 240, 140, 255)
 
 		self.chatTab.pFeed:AppendText(tbl)
 		self.chatTab.pFeed:AppendText("\n")
 		
-		return
-	end
+	return end
 
 	for i = 1, #tbl do
+	
 		local v = tbl[i]
 
-		if (IsColor(v) or istable(v)) then
+		if IsColor(v) or istable(v) then
+		
 			self.chatTab.pFeed:InsertColorChange(v.r, v.g, v.b, 255)
 
-		elseif (isstring(v) and v != "") then
-			self.chatTab.pFeed:AppendText(v)
-
-		elseif (isentity(v) and v:IsPlayer()) then
+		elseif isentity(v) and v:IsPlayer() then
+		
 			local col = GAMEMODE:GetTeamColor(v)
 			self.chatTab.pFeed:InsertColorChange(col.r, col.g, col.b, 255)
 
 			self.chatTab.pFeed:AppendText(v:Nick())
 
 		else
-			self.chatTab.pFeed:AppendText("[" .. type(v) .. ": " .. tostring(v) .. "]")
+		
+			self:AppendText(tostring(v))
+			
 		end
+		
 	end
 
 	self.chatTab.pFeed:AppendText("\n")
+	
 end
 
 function qchat.ChatBind(ply, bind)
