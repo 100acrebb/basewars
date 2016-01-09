@@ -35,3 +35,17 @@ hook.Add("BaseWars_PlayerEmptyPrinter", "XPRewards", function(ply, ent, money)
 	ply:AddXP(math.max(0, money / 250))
 	
 end)
+
+timer.Create("BaseWars_KarmaRecover", 3 * 60, function()
+
+	for k, v in next, player.GetAll() do
+	
+		if v:GetKarma() < 0 then
+		
+			v:AddKarma(1)
+			
+		end
+	
+	end
+
+end)
