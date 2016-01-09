@@ -137,6 +137,12 @@ if SERVER then
 		end
 
 	end
+	
+	function ENT:CheckUsable()
+	
+		if self.Busy then return false end
+	
+	end
 
 	function ENT:ThinkFunc()
 
@@ -169,9 +175,5 @@ if SERVER then
 
 
 	end
-
-else
-
-	-- Nothing yet.
-
+	
 end
