@@ -36,7 +36,7 @@ hook.Add("BaseWars_PlayerEmptyPrinter", "XPRewards", function(ply, ent, money)
 	
 end)
 
-timer.Create("BaseWars_KarmaRecover", 3 * 60, function()
+timer.Create("BaseWars_KarmaRecover", 3 * 60, 0, function()
 
 	for k, v in next, player.GetAll() do
 	
