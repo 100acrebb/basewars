@@ -54,6 +54,9 @@ function LookEnt:Paint()
 		
 		local sW = ScrW()
 		local sH = ScrH()
+
+		--added spacing here instead
+		action = "   ".. action .." "
 		
 		surface.SetFont( "LookEnt.Key" )
 		local keyX, keyY = surface.GetTextSize( key )
@@ -66,36 +69,36 @@ function LookEnt:Paint()
 		
 		surface.SetMaterial( LookEnt.Key )
 		surface.SetDrawColor( Color( 255, 255, 255 ) )
-		surface.DrawTexturedRect( sW / 2 - actionX - nameX / 2 - keyX + 15, sH / 2 + 40 / 2, 40, 40 )
+		surface.DrawTexturedRect( sW / 2 - keyX/2 - 20 - actionX/2 , sH / 2 + 40 / 2, 40, 40 )
 		
 		surface.SetFont( "LookEnt.Key" )
 		surface.SetTextColor( Color( 0, 0, 0 ) )
-		surface.SetTextPos( sW / 2 - actionX - nameX / 2 + 15 + 1, sH / 2 + 40 / 2 + 40 / 2 - keyY / 2 + 1 )
+		surface.SetTextPos( sW / 2 - keyX - actionX/2 + 1 , sH / 2 + 40 / 2 + 40 / 2 - keyY / 2 + 1 )
 		surface.DrawText( key )
 		
 		surface.SetFont( "LookEnt.Key" )
 		surface.SetTextColor( Color( 0, 0, 0 ) )
-		surface.SetTextPos( sW / 2 - actionX - nameX / 2 + 15, sH / 2 + 40 / 2 + 40 / 2 - keyY / 2 )
+		surface.SetTextPos( sW / 2 - keyX - actionX/2 , sH / 2 + 40 / 2 + 40 / 2 - keyY / 2 )
 		surface.DrawText( key )
 		
 		surface.SetFont( "LookEnt.Text" )
 		surface.SetTextColor( Color( 0, 0, 0 ) )
-		surface.SetTextPos( sW / 2 - actionX - nameX / 2 + 40 + 10 + 1, sH / 2 + 40 / 2 + 40 / 2 - actionY / 2 + 1 )
+		surface.SetTextPos( sW / 2 - actionX/2 + 1 , sH / 2 + 40 / 2 + 40 / 2 - actionY / 2 + 1 )
 		surface.DrawText( action )
 		
 		surface.SetFont( "LookEnt.Text" )
 		surface.SetTextColor( actioncolor )
-		surface.SetTextPos( sW / 2 - actionX - nameX / 2 + 40 + 10, sH / 2 + 40 / 2 + 40 / 2 - actionY / 2 )
+		surface.SetTextPos( sW / 2 - actionX/2 , sH / 2 + 40 / 2 + 40 / 2 - actionY / 2 )
 		surface.DrawText( action )
 		
 		surface.SetFont( "LookEnt.Text" )
 		surface.SetTextColor( Color( 0, 0, 0 ) )
-		surface.SetTextPos( sW / 2 - actionX - nameX / 2 + 40 + 10 + actionX + 5 + 1, sH / 2 + 40 / 2 + 40 / 2 - actionY / 2 + 1 )
+		surface.SetTextPos( sW / 2 + actionX /2 + 1 , sH / 2 + 40 / 2 + 40 / 2 - actionY / 2 + 1 )
 		surface.DrawText( name )
 		
 		surface.SetFont( "LookEnt.Text" )
 		surface.SetTextColor( namecolor )
-		surface.SetTextPos( sW / 2 - actionX - nameX / 2 + 40 + 10 + actionX + 5, sH / 2 + 40 / 2 + 40 / 2 - actionY / 2 )
+		surface.SetTextPos( sW / 2 + actionX /2 , sH / 2 + 40 / 2 + 40 / 2 - actionY / 2 )
 		surface.DrawText( name )
 	end
 end
