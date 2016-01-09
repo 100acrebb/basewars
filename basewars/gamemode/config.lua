@@ -412,14 +412,14 @@ BaseWars.Config.Help = {
 	["What does a higher level earn me?"] = {
 	
 		"When you level up, you unlock new items.",
-		"They are more efficient than the older one's.",
+		"They are usually more powerful or more efficient than the older version.",
 		"Currently, you unlock everything at level 10.",
 	
 	},
 	
-	["What is the E Use/Collect money thingy?"] = {
+	["What is the 'E Use/Collect Money' thingy?"] = {
 	
-		"It show's you what can you do with the entity.",
+		"It shows you what can you do with that entity.",
 		"If you don't like it, you can disable it by typing",
 		"'interactions_enabled 0' into your console.",
 	
@@ -437,7 +437,7 @@ BaseWars.SpawnList.Models = {
 			["Solar Panel"]					= BaseWars.GSL{Model = "models/props_lab/miniteleport.mdl", Price = 1500, ClassName = "bw_gen_solar"},
 			["Coal Fired Generator"]		= BaseWars.GSL{Model = "models/props_wasteland/laundry_washer003.mdl", Price = 20000, ClassName = "bw_gen_coalfired", Level = 3},
 			["Fission Reactor"]				= BaseWars.GSL{Model = "models/props/de_nuke/equipment1.mdl", Price = 75000, ClassName = "bw_gen_fission", Level = 5},
-			["Fusion Reactor"]				= BaseWars.GSL{Model = "models/xqm/hydcontrolbox.mdl", Price = 300000, ClassName = "bw_gen_fusion", Level = 8},
+			["Fusion Reactor"]				= BaseWars.GSL{Model = "models/xqm/hydcontrolbox.mdl", Price = 300000, ClassName = "bw_gen_fusion", Level = 10},
 
 		},
 		
