@@ -46,7 +46,7 @@ end
  
 function ENT:SpawnDrug( drug )
     local Ent = ents.Create("bw_drink_drug")
-        Ent.DrugEffect = drug
+        Ent:SetDrugEffect(drug)
         Ent.Random = false
         Ent:SetPos(self:GetPos() + self:GetUp() * 16 )
         Ent:SetAngles(self:GetAngles())
