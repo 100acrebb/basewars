@@ -7,7 +7,7 @@ hook.Add("BaseWars_PlayerBuyEntity", "XPRewards", function(ply, ent)
 	
 	if class:match("bw_printer_") or class == "bw_base_moneyprinter" then
 
-		local lvl = (ent.CurrentValue or 0) / 100
+		local lvl = (ent.CurrentValue or 0) / 1000
 		ply:AddXP(25 * lvl)
 
 	elseif class:match("bw_gen_") then

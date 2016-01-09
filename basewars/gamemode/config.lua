@@ -261,8 +261,8 @@ BaseWars.Config = {
 	
 	AntiRDM = {
 		HurtTime 		= 80,
-		RDMSecondsAdd 	= 2,
-		KarmaSecondPer 	= 10,
+		RDMSecondsAdd 	= 3,
+		KarmaSecondPer 	= 4,
 		KarmaLoss 		= -2,
 		KarmaGlowLevel 	= 65,
 	},
