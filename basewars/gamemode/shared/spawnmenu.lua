@@ -171,7 +171,7 @@ if SERVER then
 			local Ent = ents.Create("bw_drink_drug")
 				if not Rand then
 				
-					Ent.DrugEffect = ent
+					Ent:SetDrugEffect(ent)
 					Ent.Random = false
 					
 				end
