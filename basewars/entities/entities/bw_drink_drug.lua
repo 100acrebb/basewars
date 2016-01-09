@@ -15,8 +15,6 @@ ENT.Effects = {
 
 function ENT:StableNetwork()
 
-	self.BaseClass:StableNetwork()
-
 	self:NetworkVar("String", 0, "DrugEffect")
 	
 	self:NetworkVar("Int", 2, "DrugDuration")
