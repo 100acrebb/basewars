@@ -46,3 +46,10 @@ function PLAYER:SetMuted(bool)
 	self:__SetMuted(bool)
 	
 end
+
+local function NPCGlow()
+
+	halo.Add(ents.FindByClass("bw_npc"), HSVToColor(CurTime() % 6 * 60, 1, 1), 0.6, 0.6, 1)
+
+end
+hook.Add("PreDrawHalos", "BaseWars_NPC_Glow", NPCGlow)
