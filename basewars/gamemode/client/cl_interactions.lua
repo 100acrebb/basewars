@@ -32,6 +32,7 @@ function LookEnt:Paint()
 	if not IsValid( me ) then me = LocalPlayer() end
 	if not tobool(LookEnt.ConVar:GetInt()) then return end
 	local aimEnt = me:GetEyeTrace().Entity
+	if not BaseWars.Ents:Valid( aimEnt ) then return end
 	if aimEnt:GetClass() == "worldspawn" then return end
 	for _, tbl, next in pairs( LookEnt.Ents ) do
 		local class = tbl.class
