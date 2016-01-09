@@ -11,6 +11,12 @@ ENT.IsElectronic = true
 ENT.PowerRequired = 5
 ENT.PowerCapacity = 1000
 
+function ENT:StableNetwork()
+
+	self:NetworkVar("Bool", 1, "Usable")
+	
+end
+
 function ENT:DrainPower(val)
 
 	if not self:IsPowered(val) then return false end
@@ -29,8 +35,16 @@ end
 
 if SERVER then
 
-	function ENT:Think()
+	function ENT:Initialize()
+		
+		self:SetUsable(true)
+	
+		self.BaseClass:Initialize()
+		
+	end
 
+	function ENT:Think()
+	
 		if self:IsPowered() and self:BadlyDamaged() and math.random(0, 11) == 0 then
 			
 			self:Spark()
@@ -65,15 +79,37 @@ if SERVER then
 			
 		end
 		
-		if not self:DrainPower() or self:BadlyDamaged() then return end
+		if not self:DrainPower() or self:BadlyDamaged() then
+		
+			if self:GetUsable() then self:SetUsable(false) end
+		
+		return end
+		
+		local Res = self:CheckUsable()
+		
+		if Res and Res ~= self:GetUsable() then
+		
+			self:SetUsable(Res and true or false)
+			
+		end
+		
+		if Res == false then return end
 
 		self:ThinkFunc()
 
 	end
 	
+	function ENT:CheckUsable()
+	
+	
+	
+	end
+	
 	function ENT:Use(activator, caller, usetype, value)
 	
 		self:UseFuncBypass(activator, caller, usetype, value)
+		
+		if not self:GetUsable() then return end
 	
 		if not self:IsPowered() or self:BadlyDamaged() then 
 		

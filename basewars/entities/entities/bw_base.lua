@@ -31,7 +31,7 @@ end
 
 function ENT:BadlyDamaged()
 
-	return self:Health() <= 25
+	return self:Health() <= (self:GetMaxHealth() / 5)
 
 end
 

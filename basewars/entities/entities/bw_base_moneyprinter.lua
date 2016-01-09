@@ -55,6 +55,8 @@ end
 
 function ENT:StableNetwork()
 
+	self.BaseClass:StableNetwork()
+
 	self:GSAT(2, "Capacity")
 	
 	self:GSAT(3, "Money", 0, "Capacity")
