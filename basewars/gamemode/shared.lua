@@ -1,15 +1,16 @@
 ﻿GM.Name 		= "BaseWars"
-GM.Author 		= "Q2F2, Ghosty, Liquid, Tenrys, TrIxter"
+GM.Author 		= "Q2F2, Ghosty, Liquid, Tenrys, TrIxter, User4992"
 GM.Website 		= "http://hexahedronic.org/"
 GM.Credits		= [[
 Thanks to the following people:
 	Q2F2			- Main backend dev.
 	Ghosty			- Main frontent dev.
-	TrIxter			- Misc Entity dev.
+	TrIxter			- Frontend + Serveral entities.
 	Liquid			- Misc dev, good friend.
 	Tenrys			- Misc dev, good friend also.
 	Pyro-Fire		- Owner of LagNation, ideas ect.
 	Devenger		- Twitch Weaponry 2
+	User4992		- Fixes for random stuff.
 	
 This GM has been built from scratch with almost no
 traces of the original BaseWars existing outside of maybe
@@ -56,6 +57,12 @@ function ents.FindInCone(cone_origin, cone_direction, cone_radius, cone_angle)
 
 	return result
 	
+end
+
+if BaseWars and BaseWars.Factions and table.Count(BaseWars.Factions.FactionTable) > 0 then
+
+	__BASEWARS_FACTION_BACKUP = table.Copy(BaseWars.Factions.FactionTable)
+
 end
 
 BaseWars = BaseWars or {}

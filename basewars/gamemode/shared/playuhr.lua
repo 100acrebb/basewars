@@ -79,6 +79,16 @@ if SERVER then
 		PlayTime:SetGlobalTimeFile(ply, ply.GlobalTime + ply:GetSessionTime())
 
 	end)
+	
+	hook.Add( "ShutDown", "PlayTime.ShutDown", function()
+		
+		for _, ply, next in pairs( player.GetAll() ) do
+		
+			PlayTime:SetGlobalTimeFile(ply, ply.GlobalTime + ply:GetSessionTime())
+			
+		end
+		
+	end	)
 
 end 
 

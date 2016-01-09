@@ -90,6 +90,9 @@ BaseWars.LANG.__LANGUAGELOOK.ENGLISH = {
 	
 	WelcomeBackCrash		= "Welcome back, the last time you played we crashed.",
 	Refunded				= "You have been refunded " .. CURRENCY .. "%s.",
+	
+	GivenMoney				= "%s gave you " .. CURRENCY .. "%s.",
+	GaveMoney				= "You gave %s " .. CURRENCY .. "%s.",
 }
 
 local INVALID_LANGUAGE 	= "INVALID LANGUAGE SELECTED! NOTIFY THE SERVER ADMIN!"

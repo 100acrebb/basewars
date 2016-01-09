@@ -42,6 +42,12 @@ if SERVER then
 		return ent
 	
 	end
+	
+	function ENT:CheckUsable()
+
+		if BaseWars.Ents:ValidPlayer(self.OwningPly) then return false end
+		
+	end
 
 	function ENT:UseFunc(activator, caller, usetype, value)
 
@@ -49,7 +55,7 @@ if SERVER then
 	
 		local ply = activator:IsPlayer() and activator or caller:IsPlayer() and caller or nil
 
-		if ply and not self.OwningPly then
+		if ply then
 		
 			self:EmitSound("buttons/blip1.wav")
 			

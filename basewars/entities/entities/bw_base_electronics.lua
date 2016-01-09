@@ -30,7 +30,7 @@ end
 if SERVER then
 
 	function ENT:Think()
-
+	
 		if self:IsPowered() and self:BadlyDamaged() and math.random(0, 11) == 0 then
 			
 			self:Spark()
@@ -65,15 +65,37 @@ if SERVER then
 			
 		end
 		
-		if not self:DrainPower() or self:BadlyDamaged() then return end
+		if not self:DrainPower() or self:BadlyDamaged() then
+		
+			if self:GetUsable() then self:SetUsable(false) end
+		
+		return end
+		
+		local Res = self:CheckUsable()
+		local State = Res ~= false
+		
+		if State ~= self:GetUsable() then
+		
+			self:SetUsable(State)
+			
+		end
 
 		self:ThinkFunc()
 
 	end
 	
+	function ENT:CheckUsable()
+	
+	
+	
+	end
+	
 	function ENT:Use(activator, caller, usetype, value)
 	
 		self:UseFuncBypass(activator, caller, usetype, value)
+		
+		if not self:GetUsable() then return end
+		if self:CheckUsable() == false then return end
 	
 		if not self:IsPowered() or self:BadlyDamaged() then 
 		

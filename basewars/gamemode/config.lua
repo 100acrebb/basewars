@@ -111,6 +111,7 @@ BaseWars.Config = {
 	},
 	
 	ModelBlacklist = {
+		["models/props_vehicles/tanker001a.mdl"] = true,
 		["models/props_vehicles/apc001.mdl"] = true,
 		["models/props_combine/combinetower001.mdl"] = true,
 		["models/cranes/crane_frame.mdl"] = true,
@@ -260,8 +261,8 @@ BaseWars.Config = {
 	
 	AntiRDM = {
 		HurtTime 		= 80,
-		RDMSecondsAdd 	= 2,
-		KarmaSecondPer 	= 10,
+		RDMSecondsAdd 	= 3,
+		KarmaSecondPer 	= 4,
 		KarmaLoss 		= -2,
 		KarmaGlowLevel 	= 65,
 	},
@@ -400,6 +401,29 @@ BaseWars.Config.Help = {
 		"You can bind \"basewars sell\" to a key to do it automaticly!",
 	
 	},
+	
+	["How do I level up?"] = {
+	
+		"To level up you have to do different things like",
+		"buy printers, generators and collect from printers money.",
+	
+	},
+	
+	["What does a higher level earn me?"] = {
+	
+		"When you level up, you unlock new items.",
+		"They are usually more powerful or more efficient than the older version.",
+		"Currently, you unlock everything at level 10.",
+	
+	},
+	
+	["What is the 'E Use/Collect Money' thingy?"] = {
+	
+		"It shows you what can you do with that entity.",
+		"If you don't like it, you can disable it by typing",
+		"'interactions_enabled 0' into your console.",
+	
+	},
 
 }
 
@@ -413,7 +437,7 @@ BaseWars.SpawnList.Models = {
 			["Solar Panel"]					= BaseWars.GSL{Model = "models/props_lab/miniteleport.mdl", Price = 1500, ClassName = "bw_gen_solar"},
 			["Coal Fired Generator"]		= BaseWars.GSL{Model = "models/props_wasteland/laundry_washer003.mdl", Price = 20000, ClassName = "bw_gen_coalfired", Level = 3},
 			["Fission Reactor"]				= BaseWars.GSL{Model = "models/props/de_nuke/equipment1.mdl", Price = 75000, ClassName = "bw_gen_fission", Level = 5},
-			["Fusion Reactor"]				= BaseWars.GSL{Model = "models/xqm/hydcontrolbox.mdl", Price = 300000, ClassName = "bw_gen_fusion", Level = 8},
+			["Fusion Reactor"]				= BaseWars.GSL{Model = "models/xqm/hydcontrolbox.mdl", Price = 300000, ClassName = "bw_gen_fusion", Level = 10},
 
 		},
 		

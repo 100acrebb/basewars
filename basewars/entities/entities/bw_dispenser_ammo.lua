@@ -18,10 +18,15 @@ function ENT:Init()
 	
 end
 
+function ENT:CheckUsable()
+
+	if self.Time and self.Time + BaseWars.Config.DispenserTime > CurTime() then return false end
+	
+end
+
 function ENT:UseFunc(ply)
 	
 	if not BaseWars.Ents:ValidPlayer(ply) then return end
-	if self.Time and self.Time + BaseWars.Config.DispenserTime > CurTime() then return end
 	
 	self.Time = CurTime()
 	

@@ -7,7 +7,7 @@ hook.Add("BaseWars_PlayerBuyEntity", "XPRewards", function(ply, ent)
 	
 	if class:match("bw_printer_") or class == "bw_base_moneyprinter" then
 
-		local lvl = (ent.CurrentValue or 0) / 100
+		local lvl = (ent.CurrentValue or 0) / 1000
 		ply:AddXP(25 * lvl)
 
 	elseif class:match("bw_gen_") then
@@ -34,4 +34,18 @@ hook.Add("BaseWars_PlayerEmptyPrinter", "XPRewards", function(ply, ent, money)
 	
 	ply:AddXP(math.max(0, money / 250))
 	
+end)
+
+timer.Create("BaseWars_KarmaRecover", 3 * 60, 0, function()
+
+	for k, v in next, player.GetAll() do
+	
+		if v:GetKarma() < 0 then
+		
+			v:AddKarma(1)
+			
+		end
+	
+	end
+
 end)
