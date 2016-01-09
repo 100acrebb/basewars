@@ -437,6 +437,34 @@ function GM:PlayerShouldTakeDamage(ply, atk)
 	
 end
 
+function GM:PostPlayerDeath(ply)
+
+	local Weapons = ply:GetWeapons()
+	
+	for k, wep in next, Weapons do
+	
+		if not BaseWars.Ents:Valid(wep) then return end
+		
+		local Model = wep:GetModel()
+		local Class = wep:GetClass()
+		
+		if BaseWars.Config.WeaponDropBlacklist[Class] then continue end
+		
+		local SpawnPos = ply:GetPos() + BaseWars.Config.SpawnOffset
+		local SpawnAng = Angle(math.random(-180, 180), math.random(-180, 180), math.random(-180, 180))
+		
+		local Ent = ents.Create("bw_weapon")
+			Ent.WeaponClass = Class
+			Ent.Model = Model
+			Ent:SetPos(SpawnPos)
+			Ent:SetAngles(SpawnAng)
+		Ent:Spawn()
+		Ent:Activate()
+		
+	end
+
+end
+
 function GM:PlayerDisconnected(ply)
 
 	BaseWars.UTIL.ClearRollbackFile(ply)
