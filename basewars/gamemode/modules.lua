@@ -74,7 +74,7 @@ local function loadModule()
 	
 	if MODULE.__INIT then
 	
-		MODULE:__INIT()
+		BW[MODULE.Name]:__INIT()
 		
 	end
 

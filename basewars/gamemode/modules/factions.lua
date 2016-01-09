@@ -5,6 +5,20 @@ MODULE.FactionTable = {}
 local tag = "BaseWars.Factions"
 local PLAYER = debug.getregistry().Player
 
+
+function MODULE:__INIT()
+
+	if __BASEWARS_FACTION_BACKUP then
+
+		BaseWars.UTIL.Log("Detected faction backup. ATTEMPTING TO RESTORE.")
+		self.FactionTable = table.Copy(__BASEWARS_FACTION_BACKUP)
+		
+		__BASEWARS_FACTION_BACKUP = nil
+		
+	end
+	
+end
+
 if SERVER then
 
 	util.AddNetworkString(tag)
@@ -45,12 +59,6 @@ if SERVER then
 	end
 
 	net.Receive(tag, Curry(MODULE.HandleNetMessage))
-	
-	for k, v in next, player.GetAll() do
-		
-		v:SetNWString(tag, "")
-		
-	end
 	
 end
 
