@@ -11,12 +11,6 @@ ENT.IsElectronic = true
 ENT.PowerRequired = 5
 ENT.PowerCapacity = 1000
 
-function ENT:StableNetwork()
-
-	self:NetworkVar("Bool", 1, "Usable")
-	
-end
-
 function ENT:DrainPower(val)
 
 	if not self:IsPowered(val) then return false end
@@ -34,14 +28,6 @@ function ENT:IsPowered(val)
 end
 
 if SERVER then
-
-	function ENT:Initialize()
-		
-		self:SetUsable(true)
-	
-		self.BaseClass:Initialize()
-		
-	end
 
 	function ENT:Think()
 	
@@ -86,10 +72,11 @@ if SERVER then
 		return end
 		
 		local Res = self:CheckUsable()
+		local State = Res ~= false
 		
-		if Res and Res ~= self:GetUsable() then
+		if State ~= self:GetUsable() then
 		
-			self:SetUsable(Res and true or false)
+			self:SetUsable(State)
 			
 		end
 		

@@ -38,6 +38,7 @@ end
 function ENT:SetupDataTables()
 
 	self:NetworkVar("Bool", 0, "WaterProof")
+	self:NetworkVar("Bool", 1, "Usable")
 	
 	self:NetworkVar("Int", 0, "Power")
 	self:NetworkVar("Int", 1, "MaxPower")
@@ -91,6 +92,7 @@ if SERVER then
 		
 		self.rtb = 0
 		
+		self:SetUsable(true)
 		self:SetWaterProof(BaseWars.Config.Ents.Electronics.WaterProof)
 		
 		self:Init()
