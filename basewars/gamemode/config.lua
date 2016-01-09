@@ -401,6 +401,21 @@ BaseWars.Config.Help = {
 		"You can bind \"basewars sell\" to a key to do it automaticly!",
 	
 	},
+	
+	["How do I level up?"] = {
+	
+		"To level up you have to do different things like",
+		"buy printers, generators and collect from printers money.",
+	
+	},
+	
+	["What does a higher level earn me?"] = {
+	
+		"When you level up, you unlock new items.",
+		"They are more efficient than the older one's.",
+		"Currently, you unlock everything at level 10.",
+	
+	},
 
 }
 
