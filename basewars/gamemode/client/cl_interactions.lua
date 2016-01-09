@@ -21,9 +21,10 @@ surface.CreateFont("LookEnt.Text", {
 	weight = 400,
 })
 
-function LookEnt:RegisterEnt( class, key, action, color )
+function LookEnt:RegisterEnt( class, key, action, color, cansee )
 	key = string.upper( key )
-	table.insert( LookEnt.Ents, {class=class, key=key, action=action, color=color} )
+	cansee = cansee or function( aimEnt ) return true end
+	table.insert( LookEnt.Ents, {class=class, key=key, action=action, color=color, cansee=cansee } )
 end
 
 local me = LocalPlayer()
@@ -42,6 +43,8 @@ function LookEnt:Paint()
 		else
 			if not class(aimEnt) then continue end
 		end
+		
+		if not tbl.cansee( aimEnt ) then continue end
 		
 		if aimEnt:GetPos():Distance( me:GetPos() ) > LookEnt.Dist then continue end
 		
@@ -107,7 +110,10 @@ function( aimEnt )
 	return Color( 128, 255, 0 ), Color( 255, 255, 21 )
 end )
 
-LookEnt:RegisterEnt( function( aimEnt ) return aimEnt.IsPrinter end, input.LookupBinding( "+use" ), function( aimEnt )
+LookEnt:RegisterEnt( function( aimEnt ) 
+	return aimEnt.IsPrinter
+end, input.LookupBinding( "+use" ), 
+function( aimEnt )
 	return "Collect", "money"
 end, 
 function( aimEnt )
@@ -119,6 +125,9 @@ LookEnt:RegisterEnt( "bw_spawnpoint", input.LookupBinding( "+use" ), function( a
 end, 
 function( aimEnt )
 	return Color( 128, 255, 0 ), Color( 255, 255, 21 )
+end,
+function( aimEnt )
+	return aimEnt:GetUsable()
 end )
 
 LookEnt:RegisterEnt( "bw_druglab", input.LookupBinding( "+use" ), function( aimEnt )
