@@ -79,8 +79,6 @@ if SERVER then
 			self:SetUsable(State)
 			
 		end
-		
-		if Res == false then return end
 
 		self:ThinkFunc()
 
