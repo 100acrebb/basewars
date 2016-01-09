@@ -29,6 +29,7 @@ end
 local me = LocalPlayer()
 
 function LookEnt:Paint()
+	if not IsValid( me ) then me = LocalPlayer() end
 	if not tobool(LookEnt.ConVar:GetInt()) then return end
 	local aimEnt = me:GetEyeTrace().Entity
 	if aimEnt:GetClass() == "worldspawn" then return end

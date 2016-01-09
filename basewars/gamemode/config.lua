@@ -416,6 +416,14 @@ BaseWars.Config.Help = {
 		"Currently, you unlock everything at level 10.",
 	
 	},
+	
+	["What is the E Use/Collect money thingy?"] = {
+	
+		"It show's you what can you do with the entity.",
+		"If you don't like it, you can disable it by typing",
+		"'interactions_enabled 0' into your console.",
+	
+	},
 
 }
 
