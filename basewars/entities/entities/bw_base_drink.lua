@@ -27,7 +27,6 @@ if SERVER then
 		self:SetMoveType(MOVETYPE_VPHYSICS)
 
 		self:PhysWake()
-
 		self:Activate()
 
 		self:SetUseType(SIMPLE_USE)
@@ -63,14 +62,6 @@ if SERVER then
 			self:Drink(activator)
 
 		end
-
-	end
-
-else
-
-	function ENT:Initialize()
-
-		self:Init()
 
 	end
 

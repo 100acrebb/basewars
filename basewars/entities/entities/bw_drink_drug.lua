@@ -13,7 +13,7 @@ ENT.Effects = {
 	"Shield",
 }
 
-function ENT:StableNetwork()
+function ENT:SetupDataTables()
 
 	self:NetworkVar("String", 0, "DrugEffect")
 	
@@ -26,7 +26,7 @@ if SERVER then
 	AddCSLuaFile()
 
 	function ENT:Init()
-
+		
 		if self.Random then
 
 			self:SetSkin(math.random(0, 2))

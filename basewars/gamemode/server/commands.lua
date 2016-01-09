@@ -86,6 +86,12 @@ function BaseWars.Commands.CallCommand(ply, cmd, line, args)
 			
 				ply:EmitSound("buttons/button8.wav")
 				
+				if reason then
+				
+					ply:SendLua(string.format([[local s = "%s" notification.AddLegacy(s, 1, 4)]], reason))
+				
+				end
+				
 			end
 			
 		end
@@ -132,6 +138,8 @@ function BaseWars.Commands.SayCommand(ply, txt, team)
 	
 	local TblCmd = BaseWars.Commands.cmds[cmd]
 	if not TblCmd then return end
+	
+	if not BaseWars.Ents:Valid(ply) or (TblCmd.IsAdmin and not ply:IsAdmin()) then return end
 
 	BaseWars.Commands.CallCommand(ply, cmd, line, line and BaseWars.Commands.ParseArgs(line) or {})
 	
@@ -255,10 +263,64 @@ BaseWars.Commands.AddCommand({"steam", "sg", "group"}, function(ply)
 
 	ply:SendLua([[gui.OpenURL"]] .. BaseWars.Config.SteamGroup .. [["]])
 	
-end, true)
+end, false)
 
 BaseWars.Commands.AddCommand({"forums", "forum", "f"}, function(ply)
 
 	ply:SendLua([[gui.OpenURL"]] .. BaseWars.Config.Forums .. [["]])
 	
-end, true)
+end, false)
+
+BaseWars.Commands.AddCommand({"givemoney", "pay", "moneygive"}, function(caller, line, ply, amount)
+
+	if not easylua then return false, "easylua is required for this command, tell your dev to change how it works or install easylua" end
+
+	if not amount then return false, "Invalid amount!" end
+
+	amount, ply = amount:Trim(), ply and ply:Trim() or ""
+	
+	if ply and isnumber(tonumber(ply)) then
+	
+		local amt, tar = ply, amount
+		
+		amount 	= amt
+		ply 	= tar
+		
+	end
+	
+	if amount:lower():Trim():match("nan") then return false, "Can't break the system mate" end
+	
+	amount = tonumber(amount) or 0
+	
+	if not isnumber(amount) or amount <= 0 and not caller:IsAdmin() then
+	
+		amount = 0
+		
+	elseif amount > 10^12 then
+	
+		amount = 10^12
+		
+	end
+	
+	if amount > 0 and caller:GetMoney() < amount then return false, "You're too poor for this transaction!" end
+	
+	if ply ~= "" and ply ~= nil then
+	
+		ply = easylua.FindEntity(ply)
+		
+	else return false, "Invalid player!" end
+	
+	if not BaseWars.Ents:ValidPlayer(ply) then return false, "Invalid player!" end
+	
+	caller:TakeMoney(amount)
+	ply:GiveMoney(amount)
+	
+	hook.Run("BaseWars_GiveMoney", caller, ply, amount)
+	
+	local Given = string.format(BaseWars.LANG.GivenMoney, caller:Nick(), BaseWars.NumberFormat(amount))
+	local Gave = string.format(BaseWars.LANG.GaveMoney, ply:Nick(), BaseWars.NumberFormat(amount))
+	
+	caller:ChatPrint(Gave)
+	ply:ChatPrint(Given)
+
+end, false)
