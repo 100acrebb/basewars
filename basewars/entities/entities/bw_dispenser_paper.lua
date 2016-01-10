@@ -15,6 +15,8 @@ ENT.PaperAmt			= 50
 ENT.PowerRequired		= 15
 ENT.Drain				= 55
 
+ENT.PowerCapacity 		= 25000
+
 function ENT:Init()
 
 	self:SetModel(self.Model)

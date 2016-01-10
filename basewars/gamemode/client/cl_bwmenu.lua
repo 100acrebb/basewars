@@ -104,11 +104,9 @@ local function PrepMenu()
 
 	local ftionTab = tabPanel:MakeTab("Factions", "icon16/layers.png")
 	local raidsTab = tabPanel:MakeTab("Raids", "icon16/building_delete.png")
-	local equipTab = tabPanel:MakeTab("Equipment", "icon16/user_gray.png")
-	local storeTab = tabPanel:MakeTab("Store", "icon16/cart_put.png")
 	local rulesTab = tabPanel:MakeTab("Rules", "icon16/script.png")
 
-	return mainFrame, tabPanel, ftionTab, raidsTab, equipTab, storeTab, rulesTab
+	return mainFrame, tabPanel, ftionTab, raidsTab, rulesTab
 
 end
 
@@ -580,7 +578,7 @@ local function CreatePopupDialog(c, id, ...)
 
 end
 
-local function MakeMenu(mainFrame, tabPanel, ftionTab, raidsTab, equipTab, storeTab, rulesTab)
+local function MakeMenu(mainFrame, tabPanel, ftionTab, raidsTab, rulesTab)
 
 	function mainFrame:OpenMenuThing(c, i, ...)
 
@@ -807,34 +805,6 @@ local function MakeMenu(mainFrame, tabPanel, ftionTab, raidsTab, equipTab, store
 			
 		end
 
-	end
-	
-	do -- Equipment tab
-
-		equipTab:DockPadding(16, 8, 16, 16)
-		local equipmentLabel = equipTab:Add("DLabel")
-
-		equipmentLabel:Dock(TOP)
-		equipmentLabel:SetText("Equipment - WORK IN PROGRESS!")
-		equipmentLabel:SetFont(bigFont)
-		equipmentLabel:SetBright(true)
-		equipmentLabel:SetExpensiveShadow(2, shadowColor)
-		equipmentLabel:SizeToContents()
-		
-	end
-	
-	do -- Store tab
-
-		storeTab:DockPadding(16, 8, 16, 16)
-		local storeLabel = storeTab:Add("DLabel")
-
-		storeLabel:Dock(TOP)
-		storeLabel:SetText("Store - WORK IN PROGRESS!")
-		storeLabel:SetFont(bigFont)
-		storeLabel:SetBright(true)
-		storeLabel:SetExpensiveShadow(2, shadowColor)
-		storeLabel:SizeToContents()
-		
 	end
 	
 	do -- Rules tab
