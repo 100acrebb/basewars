@@ -71,7 +71,13 @@ function MiniMap:ShoulDraw(me)
 
 end
 
-local grey = Color(50, 50, 50, 255)
+function MiniMap:GetRange()
+
+	return 2048
+	
+end
+
+local grey = Color(50, 50, 50, 155)
 function MiniMap:Draw()
 
 	local me = LocalPlayer()
@@ -81,7 +87,9 @@ function MiniMap:Draw()
 	local x, y = ScrW() - 25 - MiniMap.Radius, ScrH() - 25 - MiniMap.Radius
 	draw.DrawCircle("minimap_bg", 60, x, y, MiniMap.Radius, grey)
 	
-	for _, ply in next, player.GetAll() do
+	for _, ply in next, ents.FindInSphere(me:GetPos(), self:GetRange()) do
+	
+		if not BaseWars.Ents:ValidPlayer(ply) or ply == me then continue end
 	
 		local dist 	= MiniMap:GetDist(me, ply)
 		local ang 	= MiniMap:GetAngle(me, ply)
