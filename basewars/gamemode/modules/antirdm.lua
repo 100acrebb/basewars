@@ -82,7 +82,7 @@ function MODULE:PreDrawHalos()
 		
 			Plys[#Plys + 1] = p
 		
-		elseif Karma < -BaseWars.Config.AntiRDM.	KarmaGlowLevel then
+		elseif Karma < -BaseWars.Config.AntiRDM.KarmaGlowLevel then
 		
 			Plys2[#Plys2 + 1] = p
 		
