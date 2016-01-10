@@ -454,6 +454,7 @@ BaseWars.SpawnList.Models = {
 		["Structures"] = {
 		
 			["Spawnpoint"]					= BaseWars.GSL{Model = "models/props_trainstation/trainstation_clock001.mdl", Price = 15000, ClassName = "bw_spawnpoint", UseSpawnFunc = true},
+			["Radar"]						= BaseWars.GSL{Model = "models/props_rooftop/roof_dish001.mdl", Price = 1000000, ClassName = "bw_radar",  Limit = 1, Level = 12},
 			["Drug Lab"]					= BaseWars.GSL{Model = "models/props_lab/crematorcase.mdl", Price = 35000, ClassName = "bw_druglab"},
 		
 		},
