@@ -2,7 +2,7 @@
 --does this count -Ghosty
 LookEnt = {}
 
-LookEnt.Key = Material("custom/key.png")
+LookEnt.Key = Material("custom/key.png", "noclamp nocull smooth")
 LookEnt.Dist = 150
 
 LookEnt.ConVarName = "interactions_enabled"
