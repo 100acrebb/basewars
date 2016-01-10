@@ -182,10 +182,3 @@ end,
 function(aimEnt)
 	return aimEnt:GetUsable() and color1 or color3, color2
 end)
-
---[[ comments from commit 334613e35da6338db32154c9bc8965267d468140
-no trix, spaces in brackets does not make the code more readable
-no trix, that's not how you use "next"
-no trix, using a Color table with surface.Set*Color is not optimal
-no trix, you don't need extra brackets with "x and y or z" 
-]]--
