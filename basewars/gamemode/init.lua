@@ -32,6 +32,7 @@ end
 BaseWars.AddFastDLDir("sound")
 BaseWars.AddFastDLDir("models")
 BaseWars.AddFastDLDir("materials")
+BaseWars.AddFastDLDir("resource")
 
 local AuthTbl = {}
 
@@ -74,6 +75,8 @@ function GM:PlayerInitialSpawn(ply)
 		ply:GetTable()["limit_" .. Class] = (ply:GetTable()["limit_" .. Class] or 0) + 1
 
 	end
+	
+	ply:SetTeam(1)
 
 end
 

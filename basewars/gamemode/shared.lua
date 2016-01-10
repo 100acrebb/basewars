@@ -415,7 +415,7 @@ function BaseWars.NumberFormat(num)
 end
 
 local PlayersCol = Color(125, 125, 125, 255)
-team.SetUp(1, "Players", PlayersCol)
+team.SetUp(1, "No Faction", PlayersCol)
 
 function GM:PlayerNoClip(ply)
 
