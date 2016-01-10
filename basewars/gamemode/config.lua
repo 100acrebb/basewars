@@ -108,6 +108,7 @@ BaseWars.Config = {
 		["hoverball"] = true,
 		["thruster"] = true,
 		["paint"] = true,
+		["edgeglow"] = true,
 	},
 	
 	ModelBlacklist = {
