@@ -60,8 +60,8 @@ if SERVER then
 	
 		for _, ply in next, player.GetAll() do
 
-			ply:SetNWString("SessionTime", tostring(ply:GetSessionTime()))
-			ply:SetNWString("GlobalTime", tostring(ply:GetPlayTime()))
+			ply:SetNW2String("SessionTime", tostring(ply:GetSessionTime()))
+			ply:SetNW2String("GlobalTime", tostring(ply:GetPlayTime()))
 
 		end
 
@@ -99,7 +99,7 @@ function PLAYER:GetPlayTime()
 		return math.Round((self.GlobalTime or 0) + self:GetSessionTime())
 	else
 
-		return math.Round((tonumber(self:GetNWString("GlobalTime", "0")) or 0) + self:GetSessionTime())
+		return tonumber(self:GetNW2String("GlobalTime", "0")) or 0
 
 	end
 
@@ -126,7 +126,7 @@ function PLAYER:GetSessionTime()
 
 	else
 
-		return math.Round(CurTime() - tonumber(self:GetNWString("SessionTime", "0")) or 0)
+		return tonumber(self:GetNW2String("SessionTime", "0"))
 
 	end
 

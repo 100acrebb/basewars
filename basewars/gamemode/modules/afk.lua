@@ -23,7 +23,7 @@ if SERVER then
 	
 	for k, v in next, player.GetAll() do
 		
-		v:SetNWInt(tag, CurTime())
+		v:SetNW2Int(tag, CurTime())
 		
 	end
 	
@@ -52,21 +52,21 @@ function MODULE:ClearAFK(ply)
 	
 	end
 
-	ply:SetNWInt(tag, CurTime())
+	ply:SetNW2Int(tag, CurTime())
 
 end
 PLAYER.ClearAFK = Curry(MODULE.ClearAFK)
 
 function MODULE:IsAFK(ply)
 
-	return (CurTime() - ply:GetNWInt(tag)) > BaseWars.Config.AFK.Time
+	return (CurTime() - ply:GetNW2Int(tag)) > BaseWars.Config.AFK.Time
 	
 end
 PLAYER.IsAFK = Curry(MODULE.IsAFK)
 
 function MODULE:AFKTime(ply)
 
-	return CurTime() - ply:GetNWInt(tag)
+	return CurTime() - ply:GetNW2Int(tag)
 	
 end
 PLAYER.AFKTime = Curry(MODULE.AFKTime)
