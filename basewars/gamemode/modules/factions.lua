@@ -390,6 +390,8 @@ end
 hook.Add("PlayerDisconnect", tag .. ".Clean", Curry(MODULE.Clean))
 
 function MODULE:Create(ply, name, password, color)
+	
+	color = color or Color(math.random(0,255), math.random(0,255), math.random(0,255))
 
 	if not name or not isstring(name) or (password and not isstring(password)) then
 
@@ -435,14 +437,13 @@ function MODULE:Create(ply, name, password, color)
 	BaseWars.UTIL.Log("Faction created for ", name, ". Leader: ", ply:Nick(), ". Password: ", (password ~= "" and password or "<NONE>"), ".")
 
 	local teamid = self:GetLatestTeamID() + 1
-	local color = Color( math.random(0,255),math.random(0,255),math.random(0,255) )
 
 	Table[name] = {
 		leader = ply:SteamID(),
 		password = password,
 		members = {},
 		teamid = teamid or 1,
-		color = color or color_white,
+		color = color,
 	}
 
 	team.SetUp( teamid, name, color )
