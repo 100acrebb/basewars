@@ -216,7 +216,7 @@ else
 	end
 
 	local white,gray = Color(255,255,255),Color(128,128,128)
-	local red, blu = Color(225,0,0), Color(80, 200, 255)
+	local red, blu, green = Color(225,0,0), Color(80, 200, 255), Color(133,208,142)
 
 	function GM:OnPlayerChat(ply,msg,mode,dead)
 
@@ -239,6 +239,17 @@ else
 				tbl[#tbl + 1] = "["
 				tbl[#tbl + 1] = blu
 				tbl[#tbl + 1] = NiceFormat(ply:GetUserGroup())
+				tbl[#tbl + 1] = gray
+				tbl[#tbl + 1] = "] "
+				
+			end
+			
+			if ply:GetUserGroup() == "donators" then
+			
+				tbl[#tbl + 1] = gray
+				tbl[#tbl + 1] = "["
+				tbl[#tbl + 1] = green
+				tbl[#tbl + 1] = "$"
 				tbl[#tbl + 1] = gray
 				tbl[#tbl + 1] = "] "
 				
