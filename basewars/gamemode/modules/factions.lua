@@ -1,10 +1,11 @@
 MODULE.Name 	= "Factions"
 MODULE.Author 	= "Q2F2 & Ghosty"
-MODULE.FactionTable = {}
+MODULE.FactionTable = {
+	__id = 1,
+}
 
 local tag = "BaseWars.Factions"
 local PLAYER = debug.getregistry().Player
-
 
 function MODULE:__INIT()
 
@@ -14,7 +15,7 @@ function MODULE:__INIT()
 		self.FactionTable = table.Copy(__BASEWARS_FACTION_BACKUP)
 
 		__BASEWARS_FACTION_BACKUP = nil
-
+		
 	end
 
 end
@@ -470,8 +471,10 @@ function MODULE:SendFactionData( teamid, name, color )
 	net.Broadcast()
 end
 
-local id = 1
 function MODULE:GetEmptyTeamID()
-	id = id + 1
-	return id
+
+	self.FactionTable.__id = (self.FactionTable.__id or 1) + 1
+	
+	return self.FactionTable.__id
+	
 end
