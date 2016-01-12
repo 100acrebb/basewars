@@ -13,7 +13,7 @@ BaseWars.Config = {
 			Offset 		= Vector(0, 0, 16),
 		},
 	},
-	
+
 	Drugs = {
 		DoubleJump = {
 			JumpHeight 	= Vector(0, 0, 320),
@@ -40,52 +40,52 @@ BaseWars.Config = {
 			Duration	= 120,
 		},
 		Shield = {
-		
+
 		},
 		Antidote = {
-		
+
 		},
 		CookTime	= 60 * 3,
 	},
-	
+
 	Notifications = {
 		LinesAmount = 11,
 		Width		= 582,
 		BackColor	= Color(30, 30, 30, 140),
 		OpenTime	= 10,
 	},
-	
+
 	Raid = {
 		Time 			= 60 * 5,
 		CoolDownTime	= 60 * 15,
 		NeededPrinters	= 3,
 	},
-	
+
 	AFK  = {
 		Time 	= 30,
 	},
-	
+
 	HUD = {
 		EntFont = "TargetID",
 		EntFont2 = "BudgetLabel",
 		EntW	= 175,
 		EntH	= 25,
 	},
-	
+
 	Rules = {
 		IsHTML 	= false,
 		HTML	= "http://www.hexahedronic.org/faq.html",
 	},
-	
+
 	Adverts = {
 		Time = 120,
 	},
-	
+
 	SpawnWeps = {
 		"weapon_physcannon",
 		"hands",
 	},
-	
+
 	WeaponDropBlacklist = {
 		["weapon_physgun"] = true,
 		["weapon_physcannon"] = true,
@@ -93,11 +93,11 @@ BaseWars.Config = {
 		["gmod_tool"] = true,
 		["gmod_camera"] = true,
 	},
-	
+
 	PhysgunBlockClasses = {
 		["bw_spawnpoint"] = true,
 	},
-	
+
 	BlockedTools = {
 		["dynamite"] = true,
 		["duplicator"] = true,
@@ -110,7 +110,7 @@ BaseWars.Config = {
 		["paint"] = true,
 		["edgeglow"] = true,
 	},
-	
+
 	ModelBlacklist = {
 		["models/props_vehicles/tanker001a.mdl"] = true,
 		["models/props_vehicles/apc001.mdl"] = true,
@@ -255,11 +255,11 @@ BaseWars.Config = {
 		["models/props_phx/misc/potato_launcher_chamber.mdl"] = true,
 		["models/props_combine/combine_train02a.mdl"] = true,
 	},
-	
+
 	NPC = {
 		FadeOut = 400,
 	},
-	
+
 	AntiRDM = {
 		HurtTime 		= 80,
 		RDMSecondsAdd 	= 3,
@@ -267,31 +267,31 @@ BaseWars.Config = {
 		KarmaLoss 		= -2,
 		KarmaGlowLevel 	= 65,
 	},
-	
+
 	PayDayBase 			= 500,
 	PayDayMin			= 50,
 	PayDayDivisor		= 1000,
 	PayDayRate 			= 60 * 3,
 	PayDayRandom		= 50,
-	
+
 	StartMoney 			= 5000,
-	
+
 	CustomChat			= true,
 	ExtraStuff			= true,
-	
+
 	AllowFriendlyFire	= false,
-	
+
 	DefaultWalk			= 200,
 	DefaultRun			= 400,
-	
+
 	DefaultLimit		= 4,
 	SpawnOffset			= Vector(0, 0, 40),
-	
+
 	UniversalPropConstant = 2.7,
 	DestroyReturn 		= 0.6,
-	
+
 	RestrictProps 		= false,
-	
+
 	DispenserTime		= 2,
 
 	LevelSettings = {
@@ -324,38 +324,38 @@ BaseWars.Config.RulesTbl = {
 BaseWars.Config.Help = {
 
 	["What is this server?"] = {
-		
+
 		"This is the HexaHedronic.ORG BaseWars server.",
 		"It runs a custom version of basewars coded by Q2F2 and Ghosty!",
 		"",
 		"BaseWars is a gamemode about making money and raiding.",
 		"It also contains cool guns and ways to defend your base!",
-	
+
 	},
-	
+
 	["What are the controls?"] = {
-		
+
 		"To spawn printers and other entities you can open the spawnmenu by holding [Q] or your binding for it,",
 		"From here you can select the [Entities] sub-category of the [BaseWars] tab. (NOT THE ENTITIES TAB!)",
 		"",
 		"To Raid or Create a Faction you can press [F3] to open the [Main Menu]. From here you can select [Factions],",
 		"[Raids], [Rules] and in the future the [Store] and your [Equipment Inventory]!",
-	
+
 	},
-	
+
 	["How do I make a base?"] = {
-	
+
 		"Firstly find an area in the map which is secure, and you would be happy defending,",
 		"Then use some props from spawnmenu sub-categories to secure the entrances,",
 		"Finally use the [Fading Door] tool to make yourself a secure way in and out.",
 		"",
 		"After you have secured the area, you can buy Printers and Generators from the [BaseWars] tab.",
 		"You will need to make sure you have enough power to supply your printers!",
-	
+
 	},
-	
+
 	["How do I Raid?"] = {
-	
+
 		"To Raid you and your TARGET must both have GOLD or HIGHER printer-types.",
 		"",
 		"If you are raidable, press F3, then select the [Raids] tab, followed by clicking on your TARGET's name.",
@@ -364,13 +364,13 @@ BaseWars.Config.Help = {
 		"",
 		"Once a raid has started you can destroy any props your enemy owns, along with electronics! But be carefull!",
 		"They can counter raid you while it is on-going!",
-	
+
 	},
-	
+
 	["Are there any rules?"] = BaseWars.Config.RulesTbl,
-	
+
 	["How does the power system work?"] = {
-	
+
 		"Generators will transmit power to all nearby powered items in an AOE.",
 		"This means you do not need to worry about 'wiring' or similar.",
 		"",
@@ -379,51 +379,51 @@ BaseWars.Config.Help = {
 		"",
 		"If a generator has a [POWER FAILURE] then that means its power generation is being strained,",
 		"but it does not mean it is not working!",
-	
+
 	},
-	
+
 	["What about RDM (Killing people randomly)?"] = {
-	
+
 		"RDM is ALLOWED. Do not complain and instead if you so desire seek your own revenge.",
 		"In the future the [Karma] system will punish mass RDMers with longer respawns and other debuffs.",
-	
+
 	},
-	
+
 	["How do I upgrade my printers?"] = {
-	
+
 		"All you need to do is look at them and type /upg",
 		"You can bind \"basewars upgrade\" to a key to do it automaticly!",
-	
+
 	},
 
 	["How do I sell my printers?"] = {
-	
+
 		"All you need to do is look at them and type /sell",
 		"You can bind \"basewars sell\" to a key to do it automaticly!",
-	
+
 	},
-	
+
 	["How do I level up?"] = {
-	
+
 		"To level up you have to do different things like",
 		"buy printers, generators and collect from printers money.",
-	
+
 	},
-	
+
 	["What does a higher level earn me?"] = {
-	
+
 		"When you level up, you unlock new items.",
 		"They are usually more powerful or more efficient than the older version.",
 		"Currently, you unlock everything at level 10.",
-	
+
 	},
-	
+
 	["What is the 'E Use/Collect Money' thingy?"] = {
-	
+
 		"It shows you what can you do with that entity.",
 		"If you don't like it, you can disable it by typing",
 		"'interactions_enabled 0' into your console.",
-	
+
 	},
 
 }
@@ -441,7 +441,7 @@ BaseWars.SpawnList.Models = {
 			["Fusion Reactor"]				= BaseWars.GSL{Model = "models/xqm/hydcontrolbox.mdl", Price = 300000, ClassName = "bw_gen_fusion", Level = 10},
 
 		},
-		
+
 		["Dispensers"] = {
 
 			["Vending Machine"]				= BaseWars.GSL{Model = "models/props_interiors/VendingMachineSoda01a.mdl", Price = 20000, ClassName = "bw_vendingmachine"},
@@ -451,23 +451,23 @@ BaseWars.SpawnList.Models = {
 			["HealthPad"]					= BaseWars.GSL{Model = "models/props_lab/teleplatform.mdl", Price = 50000, ClassName = "bw_healthpad", UseSpawnFunc = true},
 
 		},
-		
+
 		["Structures"] = {
-		
+
 			["Spawnpoint"]					= BaseWars.GSL{Model = "models/props_trainstation/trainstation_clock001.mdl", Price = 15000, ClassName = "bw_spawnpoint", UseSpawnFunc = true},
 			["Radar"]						= BaseWars.GSL{Model = "models/props_rooftop/roof_dish001.mdl", Price = 1000000, ClassName = "bw_radar",  Limit = 1, Level = 12},
 			["Drug Lab"]					= BaseWars.GSL{Model = "models/props_lab/crematorcase.mdl", Price = 35000, ClassName = "bw_druglab"},
-		
+
 		},
-		
+
 		["Defence"] = {
-		
+
 			["Ballistic Turret"] 			= BaseWars.GSL{Model = "models/Combine_turrets/Floor_turret.mdl", Price = 80000, ClassName = "bw_turret_ballistic", Limit = 2, Level = 5},
 			["Laser Turret"] 				= BaseWars.GSL{Model = "models/Combine_turrets/Floor_turret.mdl", Price = 120000, ClassName = "bw_turret_laser", Limit = 1, Level = 8},
 			["Tesla Coil"]					= BaseWars.GSL{Model = "models/props_c17/substation_transformer01d.mdl", Price = 500000, ClassName = "bw_tesla", Limit = 1, Level = 10},
-		
+
 		},
-		
+
 		["Consumables"] = {
 
 			["Repair Kit"]					= BaseWars.GSL{Model = "models/Items/car_battery01.mdl", Price = 2500, ClassName = "bw_repairkit", UseSpawnFunc = true},
@@ -475,7 +475,7 @@ BaseWars.SpawnList.Models = {
 			["Printer Paper"]				= BaseWars.GSL{Model = "models/props_junk/garbage_newspaper001a.mdl", Price = 300, ClassName = "bw_printerpaper", UseSpawnFunc = true},
 
 		},
-		
+
 		["Printers"] = {
 
 			["Basic Printer"]				= BaseWars.GSL{Model = "models/props_lab/reciever01a.mdl", Price = 2000, ClassName = "bw_base_moneyprinter"},
@@ -487,15 +487,18 @@ BaseWars.SpawnList.Models = {
 			["Nuclear Printer"]				= BaseWars.GSL{Model = "models/props_lab/reciever01a.mdl", Price = 300000, ClassName = "bw_printer_nuclear", Level = 8},
 			["Mobius Printer"]				= BaseWars.GSL{Model = "models/props_lab/reciever01a.mdl", Price = 600000, ClassName = "bw_printer_mobius", Level = 9},
 			["Dark Matter Printer"]			= BaseWars.GSL{Model = "models/props_lab/reciever01a.mdl", Price = 1000000, ClassName = "bw_printer_darkmatter", Level = 10},
+			["Red Matter Printer"]    = BaseWars.GSL{Model = "models/props_lab/reciever01a.mdl", Price = 3000000, ClassName = "bw_printer_redmatter", Level = 11},
+			["Monolith Printer"]      = BaseWars.GSL{Model = "models/props_lab/reciever01a.mdl", Price = 5000000, ClassName = "bw_printer_monolith", Level = 12},
+			["Quantum Printer"]       = BaseWars.GSL{Model = "models/props_lab/reciever01a.mdl", Price = 8000000, ClassName = "bw_printer_quantum", Level = 13},
 
 		},
 
 	},
-	
+
 	Loadout = {
-	
+
 		["Drugs"] = {
-		
+
 			["DoubleJump"] 					= BaseWars.GSL{Drug = true, Price = 25000, ClassName = "DoubleJump"},
 			["Regen"] 						= BaseWars.GSL{Drug = true, Price = 25000, ClassName = "Regen"},
 			["PainKiller"] 					= BaseWars.GSL{Drug = true, Price = 25000, ClassName = "PainKiller"},
@@ -504,36 +507,36 @@ BaseWars.SpawnList.Models = {
 			["Rage"] 						= BaseWars.GSL{Drug = true, Price = 25000, ClassName = "Rage"},
 			["Shield"] 						= BaseWars.GSL{Drug = true, Price = 25000, ClassName = "Shield"},
 			["Antidote"]					= BaseWars.GSL{Drug = true, Price = 25000, ClassName = "Antidote"},
-		
+
 		},
-		
+
 		["Weapons"] = {
-		
+
 			["USP"] 						= BaseWars.GSL{Gun = true, Model = "models/weapons/w_pist_usp.mdl", Price = 5000, ClassName = "weapon_twitch_usp"},
 			["Deagle"] 						= BaseWars.GSL{Gun = true, Model = "models/weapons/w_pist_deagle.mdl", Price = 10000, ClassName = "weapon_twitch_deagle"},
-			
+
 			["UMP"] 						= BaseWars.GSL{Gun = true, Model = "models/weapons/w_smg_ump45.mdl", Price = 10000, ClassName = "weapon_twitch_ump45"},
 			["MP5"] 						= BaseWars.GSL{Gun = true, Model = "models/weapons/w_smg_mp5.mdl", Price = 12500, ClassName = "weapon_twitch_mp5"},
-		
+
 			["AR2"] 						= BaseWars.GSL{Gun = true, Model = "models/weapons/w_irifle.mdl", Price = 13250, ClassName = "weapon_twitch_hl2pulserifle"},
 			["P90"] 						= BaseWars.GSL{Gun = true, Model = "models/weapons/w_smg_p90.mdl", Price = 13000, ClassName = "weapon_twitch_p90"},
 			["Galil"] 						= BaseWars.GSL{Gun = true, Model = "models/weapons/w_rif_galil.mdl", Price = 13000, ClassName = "weapon_twitch_galil"},
 			["AK47"] 						= BaseWars.GSL{Gun = true, Model = "models/weapons/w_rif_ak47.mdl", Price = 13250, ClassName = "weapon_twitch_ak47"},
 			["M4A1"] 						= BaseWars.GSL{Gun = true, Model = "models/weapons/w_rif_m4a1.mdl", Price = 13250, ClassName = "weapon_twitch_m4"},
-			
+
 			["M3"] 							= BaseWars.GSL{Gun = true, Model = "models/weapons/w_shot_m3super90.mdl", Price = 35000, ClassName = "weapon_twitch_m3"},
-			
+
 			["Crowbar"] 					= BaseWars.GSL{Gun = true, Model = "models/weapons/w_crowbar.mdl", Price = 3000, ClassName = "weapon_crowbar"},
 			["Frag"]						= BaseWars.GSL{Gun = true, Model = "models/weapons/w_grenade.mdl", Price = 45000, ClassName = "weapon_frag"},
-		
+
 		},
-		
+
 		["Super Weapons"] = {
-		
+
 			["Heal Gun"]					= BaseWars.GSL{Gun = true, Model = "models/weapons/w_physics.mdl", Price = 350000, ClassName = "weapon_health"},
-		
+
 		},
-	
+
 	},
 
 }
