@@ -6,7 +6,7 @@ ENT.Skin = 0
 
 ENT.Capacity 		= 600000
 ENT.PrintInterval 	= 1
-ENT.PrintAmount		= 120
+ENT.PrintAmount		= 1200
 
 ENT.PrintName = "Mobius Printer"
 

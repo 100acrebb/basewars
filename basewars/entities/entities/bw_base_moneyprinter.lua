@@ -131,7 +131,7 @@ if SERVER then
 		if self.Disabled or self:BadlyDamaged() then return end
 		local added
 
-		local level = self:GetLevel() / 1.5
+		local level = self:GetLevel() ^ 1.3
 
 		if CurTime() >= self.PrintInterval + self.time and self:GetPaper() > 0 then
 			

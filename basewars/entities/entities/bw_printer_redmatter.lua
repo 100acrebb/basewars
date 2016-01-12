@@ -6,7 +6,7 @@ ENT.Skin = 0
 
 ENT.Capacity 		= 24000000
 ENT.PrintInterval 	= 1
-ENT.PrintAmount		= 155
+ENT.PrintAmount		= 1850
 
 ENT.PrintName = "Red Matter Printer"
 
