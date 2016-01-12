@@ -14,9 +14,11 @@ function MODULE:__INIT()
 
 		__BASEWARS_FACTION_BACKUP = nil
 		
-	end
+	else
 	
-	self.FactionTable.__id = 1
+		self.FactionTable.__id = 1
+		
+	end
 
 end
 
