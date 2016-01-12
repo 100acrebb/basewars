@@ -67,16 +67,21 @@ if SERVER then
 else
 
 	function MODULE:ReadTeams()
+
 		local tbl = net.ReadTable()
-		PrintTable( tbl )
+		PrintTable(tbl)
+
 		if type(tbl[1]) == "table" then
+
 			for _, tbl2 in next, tbl do
 				local teamid = tbl2.teamid
 				local name = tbl2.name
 				local color = tbl2.color
-				team.SetUp( teamid, name, color )
+				team.SetUp(teamid, name, color)
 			end
+
 		else
+
 			local teamid = tbl.teamid
 			local name = tbl.name
 			local color = tbl.color
@@ -87,11 +92,13 @@ else
 				
 			return end
 			
-			team.SetUp( teamid, name, color )
+			team.SetUp(teamid, name, color)
+
 		end
+
 	end
 
-	net.Receive(tag..".Teams", Curry(MODULE.ReadTeams) )
+	net.Receive(tag .. ".Teams", Curry(MODULE.ReadTeams))
 
 end
 
@@ -165,7 +172,7 @@ function MODULE:Set(ply, value, password, force)
 
 	Faction.members[ply:SteamID()] = ply
 	ply:SetNW2String(tag, value)
-	ply:SetTeam( Faction.teamid )
+	ply:SetTeam(Faction.teamid)
 
 end
 local setFaction = Curry(MODULE.Set)
@@ -227,7 +234,7 @@ function MODULE:Leave(ply, disband, forcedisband)
 		end
 
 		ply:SetNW2String(tag, "")
-		ply:SetNW2Bool( tag..".Leader", false )
+		ply:SetNW2Bool(tag .. ".Leader", false)
 
 		Table[Fac] = nil
 
@@ -244,11 +251,11 @@ function MODULE:Leave(ply, disband, forcedisband)
 		end
 
 		ply:SetNW2String(tag, "")
-		ply:SetNW2Bool( tag..".Leader", false )
+		ply:SetNW2Bool(tag .. ".Leader", false)
 
 		Table[Fac].members[ply:SteamID()] = nil
 
-		ply:SetTeam( 1 )
+		ply:SetTeam(1)
 
 		if table.Count(Table[Fac].members) < 1 then
 
@@ -386,18 +393,20 @@ end
 PLAYER.IsEnemy = Curry(MODULE.IsEnemy)
 
 function MODULE:SendClientTeamData(ply)
+
 	if table.Count(BaseWars.Factions.FactionTable) == 0 then return end
 	local datas = {}
 	for name, data in next, BaseWars.Factions.FactionTable do
 	
 		if not istable(data) then continue end
 	
-		table.insert(datas, {name=name,teamid=data.teamid,color=data.color})
+		table.insert(datas, {name = name, teamid = data.teamid,color = data.color})
 		
 	end
-	net.Start(tag..".Teams")
-		net.WriteTable( datas )
-	net.Send( ply )
+	net.Start(tag .. ".Teams")
+		net.WriteTable(datas)
+	net.Send(ply)
+
 end
 hook.Add("PlayerInitialSpawn", tag .. ".Teams", Curry(MODULE.SendClientTeamData))
 
@@ -414,7 +423,7 @@ hook.Add("PlayerDisconnect", tag .. ".Clean", Curry(MODULE.Clean))
 
 function MODULE:Create(ply, name, password, color)
 
-	color = color or Color(math.random(0,255), math.random(0,255), math.random(0,255))
+	color = color or HSVToColor(math.random(359), math.Rand(0.8, 1), math.Rand(0.8, 1))
 
 	if not name or not isstring(name) or (password and not isstring(password)) then
 
@@ -469,18 +478,18 @@ function MODULE:Create(ply, name, password, color)
 		color = color,
 	}
 
-	team.SetUp( teamid, name, color )
-	self:SendFactionData( teamid, name, color )
-	ply:SetNW2Bool( tag..".Leader", true )
+	team.SetUp(teamid, name, color)
+	self:SendFactionData(teamid, name, color)
+	ply:SetNW2Bool(tag .. ".Leader", true)
 
 	ply:SetFaction(name, nil, true)
 
 end
 PLAYER.CreateFaction = Curry(MODULE.Create)
 
-function MODULE:SendFactionData( teamid, name, color )
+function MODULE:SendFactionData(teamid, name, color)
 	net.Start( tag..".Teams" )
-		net.WriteTable({teamid=teamid,name=name,color=color})
+		net.WriteTable({teamid = teamid, name = name, color = color})
 	net.Broadcast()
 end
 

@@ -7,71 +7,79 @@ local PLAYER = debug.getregistry().Player
 
 function MODULE:__INIT()
 
-  if __BASEWARS_BOUNTY_BACKUP then
+	if __BASEWARS_BOUNTY_BACKUP then
 
-    BaseWars.UTIL.Log("Detected bounty backup. ATTEMPTING TO RESTORE.")
-    self.BountyTable = table.Copy(__BASEWARS_BOUNTY_BACKUP)
+		BaseWars.UTIL.Log("Detected bounty backup. ATTEMPTING TO RESTORE.")
+		self.BountyTable = table.Copy(__BASEWARS_BOUNTY_BACKUP)
 
-    __BASEWARS_BOUNTY_BACKUP = nil
+		__BASEWARS_BOUNTY_BACKUP = nil
 
-  end
+	end
 
 end
 
 if SERVER then
 
-function MODULE:GetBountyTbl()
-  return BaseWars.Bounty.BountyTable
-end
+	function MODULE:GetBountyTbl()
+		return BaseWars.Bounty.BountyTable
+	end
 
-function MODULE:PlaceBounty( ply, who, amt )
-  if not IsValid( ply ) or not IsValid( who ) then return end
-  if who:GetMoney() < amt then return end
+	function MODULE:PlaceBounty(ply, who, amt)
 
-  local tbl = self:GetBountyTbl()
+		if not IsValid(ply) or not IsValid(who) then return end
+		if who:GetMoney() < amt then return end
 
-  who:TakeMoney( amt )
-  tbl[ply:SteamID()] = amt
+		local tbl = self:GetBountyTbl()
 
-  PrintMessage(3, "Bounty of " .. amt .. " has been placed on " .. ply:Name())
-  BaseWars.UTIL.Log( "Players " .. ply:Name() .. " bounty was set to " .. BaseWars.LANG.CURRENCY .. BaseWars.NumberFormat(amt) .. "." )
-end
-PLAYER.PlaceBounty = Curry(MODULE.PlaceBounty)
+		who:TakeMoney( amt )
+		tbl[ply:SteamID()] = amt
 
-function MODULE:RemoveBounty( ply )
-  local tbl = self:GetBountyTbl()
-  tbl[ply:SteamID()] = nil
+		PrintMessage(3, "Bounty of " .. amt .. " has been placed on " .. ply:Name())
+		BaseWars.UTIL.Log("Players " .. ply:Name() .. " bounty was set to " .. BaseWars.LANG.CURRENCY .. BaseWars.NumberFormat(amt) .. ".")
 
-  ply:SetNWInt(tag, 0)
+	end
+	PLAYER.PlaceBounty = Curry(MODULE.PlaceBounty)
 
-  PrintMessage(3, "Bounty on " .. ply:Name() .. " has been removed.")
-  BaseWars.UTIL.Log( "Players " .. ply:Name() .. " bounty was removed."  )
-end
-PLAYER.RemoveBounty = Curry(MODULE.RemoveBounty)
+	function MODULE:RemoveBounty(ply)
 
-function MODULE:PlayerDeath( victim, inflictor, attacker )
-  if not IsValid( victim ) or not IsValid( attacker ) or not victim:IsPlayer() or not attacker:IsPlayer() then return end
-	if victim == attacker then return end
+		local tbl = self:GetBountyTbl()
+		tbl[ply:SteamID()] = nil
 
-	local tbl = self:GetBountyTbl()
-  local amt = tbl[victim:SteamID()]
+		ply:SetNWInt(tag, 0)
 
-  if not amt then return end
+		PrintMessage(3, "Bounty on " .. ply:Name() .. " has been removed.")
+		BaseWars.UTIL.Log("Players " .. ply:Name() .. " bounty was removed." )
 
-  attacker:GiveMoney( amt )
-  tbl[victim:SteamID()] = nil
+	end
+	PLAYER.RemoveBounty = Curry(MODULE.RemoveBounty)
 
-  PrintMessage(3, "Bounty on " .. victim:Name() .. " has been claimed by " .. attacker:Name() .. ".")
-end
-hook.Add( "PlayerDeath", tag, Curry(MODULE.PlayerDeath) )
+	function MODULE:PlayerDeath( victim, inflictor, attacker )
+
+		if not IsValid(victim) or not IsValid(attacker) or not victim:IsPlayer() or not attacker:IsPlayer() then return end
+		if victim == attacker then return end
+
+		local tbl = self:GetBountyTbl()
+		local amt = tbl[victim:SteamID()]
+
+		if not amt then return end
+
+		attacker:GiveMoney( amt )
+		tbl[victim:SteamID()] = nil
+
+		PrintMessage(3, "Bounty on " .. victim:Name() .. " has been claimed by " .. attacker:Name() .. ".")
+
+	end
+	hook.Add("PlayerDeath", tag, Curry(MODULE.PlayerDeath))
 
 end
 
 function MODULE:GetBounty(ply)
-  if SERVER then
-    return self:GetBountyTbl()[ply:SteamID()]
-  else
-    return self:GetNW2Int(tag, 0)
-  end
+
+	if SERVER then
+		return self:GetBountyTbl()[ply:SteamID()]
+	else
+		return self:GetNW2Int(tag, 0)
+	end
+
 end
 PLAYER.GetBounty = Curry(MODULE.GetBounty)
