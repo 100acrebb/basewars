@@ -80,6 +80,13 @@ else
 			local teamid = tbl.teamid
 			local name = tbl.name
 			local color = tbl.color
+			
+			if not teamid or not name or not color then
+			
+				ErrorNoHalt("Error making team -> ", teamid, name, color)
+				
+			return end
+			
 			team.SetUp( teamid, name, color )
 		end
 	end
