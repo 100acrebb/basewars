@@ -105,8 +105,8 @@ if SERVER then
 		local neededxp = ply:GetXPNextLevel()
 		if ply:GetXP() >= neededxp then
 
-			if ply:GetLevel() == 100 then
-				ply:SetLevel( 100 )
+			if ply:GetLevel() == 5000 then
+				ply:SetLevel( 5000 )
 				ply:SetXP( 0 )
 				return
 			end
@@ -121,7 +121,7 @@ if SERVER then
 	function MODULE:Set(ply, amount)
 
 		if not isnumber(amount) or amount < 0 then amount = 0 end
-		if amount > 100 then amount = 100 end
+		if amount > 5000 then amount = 5000 end
 		
 		amount = math.Round(amount)
 		
