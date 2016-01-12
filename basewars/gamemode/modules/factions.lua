@@ -1,8 +1,6 @@
 MODULE.Name 	= "Factions"
 MODULE.Author 	= "Q2F2 & Ghosty"
-MODULE.FactionTable = {
-	__id = 1,
-}
+MODULE.FactionTable = {}
 
 local tag = "BaseWars.Factions"
 local PLAYER = debug.getregistry().Player
@@ -17,6 +15,8 @@ function MODULE:__INIT()
 		__BASEWARS_FACTION_BACKUP = nil
 		
 	end
+	
+	self.FactionTable.__id = 1
 
 end
 
@@ -380,7 +380,11 @@ function MODULE:SendClientTeamData(ply)
 	if table.Count(BaseWars.Factions.FactionTable) == 0 then return end
 	local datas = {}
 	for name, data in next, BaseWars.Factions.FactionTable do
+	
+		if not istable(data) then continue end
+	
 		table.insert(datas, {name=name,teamid=data.teamid,color=data.color})
+		
 	end
 	net.Start(tag..".Teams")
 		net.WriteTable( datas )
