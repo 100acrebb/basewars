@@ -63,13 +63,14 @@ if SERVER then
 
 else
 
-	net.Receive(tag..".Teams", function( len )
+	function MODULE:ReadTeams()
 		local tbl = net.ReadTable()
-		if IsValid(tbl[1]) then
-			for _, tbl in next, tbl do
-				local teamid = tbl.teamid
-				local name = tbl.name
-				local color = tbl.color
+		PrintTable( tbl )
+		if type(tbl[1]) == "table" then
+			for _, tbl2 in next, tbl do
+				local teamid = tbl2.teamid
+				local name = tbl2.name
+				local color = tbl2.color
 				team.SetUp( teamid, name, color )
 			end
 		else
@@ -78,7 +79,9 @@ else
 			local color = tbl.color
 			team.SetUp( teamid, name, color )
 		end
-	end )
+	end
+
+	net.Receive(tag..".Teams", Curry(MODULE.ReadTeams) )
 
 end
 
@@ -373,6 +376,7 @@ end
 PLAYER.IsEnemy = Curry(MODULE.IsEnemy)
 
 function MODULE:SendClientTeamData(ply)
+	if table.Count(BaseWars.Factions.FactionTable) == 0 then return end
 	local datas = {}
 	for name, data in next, BaseWars.Factions.FactionTable do
 		table.insert(datas, {name=name,teamid=data.teamid,color=data.color})
