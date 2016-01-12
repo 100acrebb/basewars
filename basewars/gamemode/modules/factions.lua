@@ -84,7 +84,7 @@ end
 
 function MODULE:Get(ply)
 
-	return ply:GetNWString(tag, "")
+	return ply:GetNW2String(tag, "")
 
 end
 
@@ -151,7 +151,7 @@ function MODULE:Set(ply, value, password, force)
 	end
 
 	Faction.members[ply:SteamID()] = ply
-	ply:SetNWString(tag, value)
+	ply:SetNW2String(tag, value)
 	ply:SetTeam( Faction.teamid )
 
 end
@@ -178,7 +178,8 @@ function MODULE:Leave(ply, disband, forcedisband)
 
 	if not Faction then
 
-		ply:SetNWString(tag, "")
+		ply:SetNW2String(tag, "")
+		ply:SetNW2Bool( tag..".Leader", false )
 
 		return
 
@@ -212,9 +213,12 @@ function MODULE:Leave(ply, disband, forcedisband)
 
 		end
 
-		ply:SetNWString(tag, "")
+		ply:SetNW2String(tag, "")
+		ply:SetNW2Bool( tag..".Leader", false )
 
 		Table[Fac] = nil
+
+		ply:SetTeam( 1 )
 
 	else
 
@@ -226,7 +230,8 @@ function MODULE:Leave(ply, disband, forcedisband)
 
 		end
 
-		ply:SetNWString(tag, "")
+		ply:SetNW2String(tag, "")
+		ply:SetNW2Bool( tag..".Leader", false )
 
 		Table[Fac].members[ply:SteamID()] = nil
 
@@ -376,7 +381,7 @@ function MODULE:SendClientTeamData(ply)
 		net.WriteTable( datas )
 	net.Send( ply )
 end
-hook.Add("PlayerInitialSpawn", tag .. ".Teams", Curry(Module.SendClientTeamData))
+hook.Add("PlayerInitialSpawn", tag .. ".Teams", Curry(MODULE.SendClientTeamData))
 
 function MODULE:Clean(ply)
 
@@ -390,7 +395,7 @@ end
 hook.Add("PlayerDisconnect", tag .. ".Clean", Curry(MODULE.Clean))
 
 function MODULE:Create(ply, name, password, color)
-	
+
 	color = color or Color(math.random(0,255), math.random(0,255), math.random(0,255))
 
 	if not name or not isstring(name) or (password and not isstring(password)) then
@@ -436,7 +441,7 @@ function MODULE:Create(ply, name, password, color)
 
 	BaseWars.UTIL.Log("Faction created for ", name, ". Leader: ", ply:Nick(), ". Password: ", (password ~= "" and password or "<NONE>"), ".")
 
-	local teamid = self:GetLatestTeamID() + 1
+	local teamid = self:GetEmptyTeamID() + 1
 
 	Table[name] = {
 		leader = ply:SteamID(),
@@ -448,6 +453,7 @@ function MODULE:Create(ply, name, password, color)
 
 	team.SetUp( teamid, name, color )
 	self:SendFactionData( teamid, name, color )
+	ply:SetNW2Bool( tag..".Leader", true )
 
 	ply:SetFaction(name, nil, true)
 
@@ -460,14 +466,8 @@ function MODULE:SendFactionData( teamid, name, color )
 	net.Broadcast()
 end
 
-function MODULE:GetLastestTeamID()
-	local highestid = 1
-	for name, data in next, BaseWars.Factions.FactionTable do
-		local id = data.teamid
-		if id == 1001 or id == 1002 then highestid = 1003 continue end
-		if id > highestid then
-			highestid = id
-		end
-	end
-	return highestid
+local id = 1
+function MODULE:GetEmptyTeamID()
+	id = id + 1
+	return id
 end
