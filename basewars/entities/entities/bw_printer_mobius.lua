@@ -6,7 +6,7 @@ ENT.Skin = 0
 
 ENT.Capacity 		= 600000
 ENT.PrintInterval 	= 1
-ENT.PrintAmount		= 110
+ENT.PrintAmount		= 120
 
 ENT.PrintName = "Mobius Printer"
 
@@ -14,3 +14,5 @@ ENT.FontColor = Color(255, 0, 255)
 ENT.BackColor = color_black
 
 ENT.IsValidRaidable = true
+
+ENT.PresetMaxHealth = 850

@@ -6,7 +6,7 @@ ENT.Skin = 0
 
 ENT.Capacity 		= 12000000
 ENT.PrintInterval 	= 1
-ENT.PrintAmount		= 125
+ENT.PrintAmount		= 130
 
 ENT.PrintName = "Dark Matter Printer"
 
@@ -14,3 +14,5 @@ ENT.FontColor = Color(50, 50, 50)
 ENT.BackColor = color_black
 
 ENT.IsValidRaidable = true
+
+ENT.PresetMaxHealth = 900

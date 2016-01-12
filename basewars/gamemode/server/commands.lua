@@ -188,6 +188,22 @@ BaseWars.Commands.AddCommand({"upg", "upgrade", "upgr"}, function(ply)
 	
 end, false)
 
+BaseWars.Commands.AddCommand({"tell", "msg"}, function(ply, line, who)
+
+	if not easylua then return false, "easylua is required for this command, tell your dev to change how it works or install easylua" end
+
+	if not who then return false, "Invalid player!" end
+	
+	local Targ = easylua.FindEntity(who)
+	
+	if not BaseWars.Ents:ValidPlayer(Targ) then return false, "Invalid player!" end
+
+	local Msg = line:sub(#who + 1):Trim()
+
+	Targ:ChatPrint(ply:Nick() .. " -> " .. Msg)
+	
+end, false)
+
 BaseWars.Commands.AddCommand("psa", function(ply, line, text)
 
 	if text then
