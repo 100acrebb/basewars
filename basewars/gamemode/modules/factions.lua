@@ -69,7 +69,6 @@ else
 	function MODULE:ReadTeams()
 
 		local tbl = net.ReadTable()
-		PrintTable(tbl)
 
 		if type(tbl[1]) == "table" then
 
