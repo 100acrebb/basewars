@@ -276,7 +276,7 @@ else
 			draw.RoundedBox(0, 0, 68, w, 1, self.FontColor)
 
 			draw.DrawText("CASH", fontName .. ".Big", 4, 72, self.FontColor, TEXT_ALIGN_LEFT)
-			draw.RoundedBox(0, 0, 72 + 32, w, 1, self.FontColor)
+--			draw.RoundedBox(0, 0, 72 + 32, w, 1, self.FontColor)
 			
 			local money = tonumber(self:GetMoney()) or 0
 			local cap = tonumber(self:GetCapacity()) or 0
