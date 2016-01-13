@@ -7,8 +7,8 @@ hook.Add("BaseWars_PlayerBuyEntity", "XPRewards", function(ply, ent)
 	
 	if class:match("bw_printer_") or class == "bw_base_moneyprinter" then
 
-		local lvl = (ent.CurrentValue or 0) / 5000
-		ply:AddXP(20 * lvl)
+		local lvl = (ent.CurrentValue or 0) / 1000
+		ply:AddXP(25 * lvl)
 
 	elseif class:match("bw_gen_") then
 
@@ -32,7 +32,7 @@ end) -- ok senpai -Ghosty
 
 hook.Add("BaseWars_PlayerEmptyPrinter", "XPRewards", function(ply, ent, money)
 	
-	ply:AddXP(math.max(0, money / 250))
+	ply:AddXP(math.max(0, money / 1000))
 	
 end)
 
