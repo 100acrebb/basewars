@@ -6,7 +6,7 @@ ENT.Skin = 0
 
 ENT.Capacity 		= 12000000
 ENT.PrintInterval 	= 1
-ENT.PrintAmount		= 3450
+ENT.PrintAmount		= 6450
 
 ENT.PrintName = "Dark Matter Printer"
 

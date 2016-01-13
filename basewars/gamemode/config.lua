@@ -506,11 +506,11 @@ BaseWars.SpawnList.Models = {
 		["Printers - T2"] = {
 			
 			-- T2
-			["Mobius Printer"]				= BaseWars.GSL{Model = "models/props_lab/reciever01a.mdl", Price = 6000000, ClassName = "bw_printer_mobius", Level = 20},
-			["Dark Matter Printer"]			= BaseWars.GSL{Model = "models/props_lab/reciever01a.mdl", Price = 15000000, ClassName = "bw_printer_darkmatter", Level = 25},
-			["Red Matter Printer"]    		= BaseWars.GSL{Model = "models/props_lab/reciever01a.mdl", Price = 25000000, ClassName = "bw_printer_redmatter", Level = 30},
-			["Monolith Printer"]      		= BaseWars.GSL{Model = "models/props_lab/reciever01a.mdl", Price = 35000000, ClassName = "bw_printer_monolith", Level = 35},
-			["Quantum Printer"]       		= BaseWars.GSL{Model = "models/props_lab/reciever01a.mdl", Price = 50000000, ClassName = "bw_printer_quantum", Level = 40},
+			["Mobius Printer"]				= BaseWars.GSL{Model = "models/props_lab/reciever01a.mdl", Price = 6000000, ClassName = "bw_printer_mobius", Level = 50},
+			["Dark Matter Printer"]			= BaseWars.GSL{Model = "models/props_lab/reciever01a.mdl", Price = 15000000, ClassName = "bw_printer_darkmatter", Level = 60},
+			["Red Matter Printer"]    		= BaseWars.GSL{Model = "models/props_lab/reciever01a.mdl", Price = 25000000, ClassName = "bw_printer_redmatter", Level = 70},
+			["Monolith Printer"]      		= BaseWars.GSL{Model = "models/props_lab/reciever01a.mdl", Price = 35000000, ClassName = "bw_printer_monolith", Level = 80},
+			["Quantum Printer"]       		= BaseWars.GSL{Model = "models/props_lab/reciever01a.mdl", Price = 55000000, ClassName = "bw_printer_quantum", Level = 90},
 
 		},
 

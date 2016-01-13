@@ -6,7 +6,7 @@ ENT.Skin = 0
 
 ENT.Capacity 		= 30000000
 ENT.PrintInterval 	= 1
-ENT.PrintAmount		= 18000
+ENT.PrintAmount		= 12500
 
 ENT.PrintName = "Quantum Printer"
 
