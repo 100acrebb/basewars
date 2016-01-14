@@ -1,5 +1,7 @@
 hook.Add("BaseWars_PlayerBuyEntity", "XPRewards", function(ply, ent)
 
+	if ply:GetLevel() > 20 then return end
+
 	local ent = BaseWars.Ents:Valid(ent)
 	if not ent then return end
 
