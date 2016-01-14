@@ -27,7 +27,7 @@ function ENT:GSAT(slot, name,  min, max)
 	
 	local getVar = function(minMax)
 	
-		if self[minMax] and isfunction(self[minMax]) then return function() self[minMax](self) end
+		if self[minMax] and isfunction(self[minMax]) then return self[minMax](self) end
 		if self[minMax] and isnumber(self[minMax]) then return self[minMax] end
 		
 		return minMax or 0
