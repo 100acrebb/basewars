@@ -312,6 +312,7 @@ BaseWars.AdvertTbl = {
 
 }
 
+--[[
 BaseWars.Config.RulesTbl = {
 
 	"1. Do not base with someone unless you are in a faction with them.",
@@ -319,7 +320,7 @@ BaseWars.Config.RulesTbl = {
 	"3. Do not attempt to circumvent Anti-RandomRaid or similar systems.",
 	"4. You must base in A SINGLE CONTINGOUS SPACE. NO multi-basing!",
 
-}
+}]]
 
 BaseWars.Config.Help = {
 
@@ -367,7 +368,7 @@ BaseWars.Config.Help = {
 
 	},
 
-	["Are there any rules?"] = BaseWars.Config.RulesTbl,
+	["Are there any rules?"] = {"Yes, press F3 then select the [Rules] tab!",}--BaseWars.Config.RulesTbl,
 
 	["How does the power system work?"] = {
 
