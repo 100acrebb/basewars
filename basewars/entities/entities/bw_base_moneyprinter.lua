@@ -58,7 +58,7 @@ function ENT:GSAT(slot, name,  min, max)
 
 		end
 
-		self["Set" .. name](self, self["Get" .. name](self) - Val)
+		self["Set" .. name](self, Val)
 
 	end
 
