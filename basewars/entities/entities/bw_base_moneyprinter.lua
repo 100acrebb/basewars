@@ -40,7 +40,7 @@ function ENT:GSAT(slot, name,  min, max)
 	
 			if min and max then
 				
-				Val = Clamp(tonumber(Val) or 0, getVar[min], getVar[max])
+				Val = Clamp(tonumber(Val) or 0, getVar(min), getVar(max))
 
 			end
 
@@ -54,7 +54,7 @@ function ENT:GSAT(slot, name,  min, max)
 	
 		if min and max then
 			
-			Val = Clamp(tonumber(Val) or 0, getVar[min], getVar[max])
+			Val = Clamp(tonumber(Val) or 0, getVar(min), getVar(max))
 
 		end
 
