@@ -6,7 +6,7 @@ ENT.PrintName 	= "Capacity Upgrade Kit"
 
 ENT.Model 		= "models/props_junk/cardboard_box004a.mdl"
 
-ENT.Capacity	= 25
+ENT.Capacity	= 2
 
 if CLIENT then return end
 
@@ -61,7 +61,7 @@ function ENT:PhysicsCollide(data, phys)
 	
 		ent.CapUpgraded = true
 	
-		ent:SetCapacity(ent:GetCapacity() + ent:GetCapacity() * self.Capacity)
+		ent:SetCapacity(ent:GetCapacity() * self.Capacity)
 		
 		self.Removing = true
 		self:Remove()

@@ -6,7 +6,7 @@ ENT.PrintName 	= "Battery Upgrade Kit"
 
 ENT.Model 		= "models/props_junk/cardboard_box004a.mdl"
 
-ENT.PowerAmt	= 1
+ENT.PowerAmt	= 2
 
 if CLIENT then return end
 
@@ -61,7 +61,7 @@ function ENT:PhysicsCollide(data, phys)
 	
 		ent.Battery = true
 	
-		ent:SetMaxPower(ent:GetMaxPower() + ent:GetMaxPower() * self.PowerAmt)
+		ent:SetMaxPower(ent:GetMaxPower() * self.PowerAmt)
 		
 		self.Removing = true
 		self:Remove()
