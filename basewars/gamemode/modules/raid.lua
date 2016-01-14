@@ -149,7 +149,10 @@ function MODULE:CheckRaidable(ply, nocool, fac)
 
 	if not nocool then
 
-		if CurTime() - (Faction and Faction.__RaidCoolDown or ply.__RaidCoolDown or 0) < BaseWars.Config.Raid.CoolDownTime then return false, BaseWars.LANG.OnCoolDown end
+		local Cool = CurTime() - (Faction and Faction.__RaidCoolDown or ply.__RaidCoolDown or 0)
+		local Left = math.floor(BaseWars.Config.Raid.CoolDownTime - Cool)
+	
+		if Cool < BaseWars.Config.Raid.CoolDownTime then return false, BaseWars.LANG.OnCoolDown .. " (" .. Left .. " " .. BaseWars.LANG.Seconds .. " " .. BaseWars.LANG.Remaining .. ")" end
 		
 	end
 

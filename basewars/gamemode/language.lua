@@ -7,6 +7,10 @@ BaseWars.LANG.__LANGUAGELOOK.ENGLISH = {
 	
 	Yes 					= "Yes",
 	No						= "No",
+	Level					= "Level",
+	Remaining				= "Remaining",
+	Seconds					= "Seconds",
+	Mins					= "Mins",
 
 	FactionNameTaken 		= "This faction name is already in use!",
 	FactionNotExist			= "That faction does not exist!",

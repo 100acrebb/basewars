@@ -211,6 +211,8 @@ function BaseWars.UTIL.PayOut(ent, attacker, full, ret)
 	if ret then return Val end
 
 	local Name = ent.PrintName or ent:GetClass()
+	
+	if ent.IsPrinter then Name = BaseWars.LANG.Level .. " " .. ent:GetLevel() .. " " .. Name end
 
 	if attacker == Owner then
 
