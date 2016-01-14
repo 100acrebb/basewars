@@ -368,7 +368,11 @@ BaseWars.Config.Help = {
 
 	},
 
-	["Are there any rules?"] = {"Yes, press F3 then select the [Rules] tab!"},--BaseWars.Config.RulesTbl,
+	["Are there any rules?"] = {
+	
+		"Yes, press F3 then select the [Rules] tab!",
+	
+	},
 
 	["How does the power system work?"] = {
 
