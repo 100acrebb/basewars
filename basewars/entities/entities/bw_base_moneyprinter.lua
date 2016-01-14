@@ -24,6 +24,15 @@ local Clamp = math.Clamp
 function ENT:GSAT(slot, name,  min, max)
 
 	self:NetworkVar("Int", slot, name)
+	
+	local getVar = function(minMax)
+	
+		if self[minMax] and isfunction(self[minMax]) then return function() self[minMax](self) end
+		if self[minMax] and isnumber(self[minMax]) then return self[minMax] end
+		
+		return minMax or 0
+		
+	end
 
 	self["Add" .. name] = function(_, var)
 	
@@ -31,7 +40,7 @@ function ENT:GSAT(slot, name,  min, max)
 	
 			if min and max then
 				
-				Val = Clamp(tonumber(Val) or 0, self[min] or min, self[max] or max)
+				Val = Clamp(tonumber(Val) or 0, getVar[min], getVar[max])
 
 			end
 
@@ -45,11 +54,11 @@ function ENT:GSAT(slot, name,  min, max)
 	
 		if min and max then
 			
-			Val = Clamp(tonumber(Val) or 0, self[min] or min, self[max] or max)
+			Val = Clamp(tonumber(Val) or 0, getVar[min], getVar[max])
 
 		end
 
-		self["Set" .. name](self, self["Get" .. name](self) - var)
+		self["Set" .. name](self, self["Get" .. name](self) - Val)
 
 	end
 
@@ -59,7 +68,7 @@ function ENT:StableNetwork()
 
 	self:GSAT(2, "Capacity")
 	
-	self:GSAT(3, "Money", 0, "Capacity")
+	self:GSAT(3, "Money", 0, "GetCapacity")
 	self:GSAT(4, "Paper", 0, "MaxPaper")
 	self:GSAT(5, "Level", 0, "MaxLevel")
 
