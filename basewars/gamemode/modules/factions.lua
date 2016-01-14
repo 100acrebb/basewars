@@ -14,6 +14,8 @@ function MODULE:__INIT()
 
 		__BASEWARS_FACTION_BACKUP = nil
 		
+		self.FactionTable.__id = table.Count(self.FactionTable) - 1
+		
 	else
 	
 		self.FactionTable.__id = 1
@@ -235,7 +237,7 @@ function MODULE:Leave(ply, disband, forcedisband)
 		ply:SetNW2String(tag, "")
 		ply:SetNW2Bool(tag .. ".Leader", false)
 
-		Table[Fac] = nil
+		BaseWars.Factions.FactionTable[Fac] = nil
 
 		ply:SetTeam( 1 )
 
@@ -252,7 +254,7 @@ function MODULE:Leave(ply, disband, forcedisband)
 		ply:SetNW2String(tag, "")
 		ply:SetNW2Bool(tag .. ".Leader", false)
 
-		Table[Fac].members[ply:SteamID()] = nil
+		BaseWars.Factions.FactionTable[Fac].members[ply:SteamID()] = nil
 
 		ply:SetTeam(1)
 
@@ -260,7 +262,7 @@ function MODULE:Leave(ply, disband, forcedisband)
 
 			BaseWars.UTIL.Log("Faction disband for ", Fac, ". All members left. <Leader must have D/C'ed>")
 
-			Table[Fac] = nil
+			BaseWars.Factions.FactionTable[Fac] = nil
 
 		end
 
