@@ -2,11 +2,11 @@ AddCSLuaFile()
 
 ENT.Base 		= "base_gmodentity"
 ENT.Type 		= "anim"
-ENT.PrintName 	= "Battery Upgrade Kit"
+ENT.PrintName 	= "Capacity Upgrade Kit"
 
 ENT.Model 		= "models/props_junk/cardboard_box004a.mdl"
 
-ENT.PowerAmt	= 500
+ENT.Capacity	= 25
 
 if CLIENT then return end
 
@@ -55,13 +55,13 @@ function ENT:PhysicsCollide(data, phys)
 	local ent = data.HitEntity
 	if not BaseWars.Ents:Valid(ent) then return end
 	
-	if ent.Battery then return end
+	if ent.CapUpgraded then return end
 	
-	if ent.GetMaxPower and not self.Removing then
+	if ent.GetCapacity and not self.Removing then
 	
-		ent.Battery = true
+		ent.CapUpgraded = true
 	
-		ent:SetMaxPower(ent:GetMaxPower() + self.PowerAmt)
+		ent:SetCapacity(ent:GetCapacity() + ent:GetCapacity() * self.Capacity)
 		
 		self.Removing = true
 		self:Remove()

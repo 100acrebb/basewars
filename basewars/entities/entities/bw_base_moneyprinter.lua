@@ -255,6 +255,7 @@ else
 			local disabled = self:GetNWBool("printer_disabled")
 			local Pw = self:IsPowered()
 			local Lv = self:GetLevel()
+			local Cp = self:GetCapacity()
 
 			draw.RoundedBox(4, 0, 0, w, h, Pw and self.BackColor or color_black)
 			
@@ -279,15 +280,15 @@ else
 --			draw.RoundedBox(0, 0, 72 + 32, w, 1, self.FontColor)
 			
 			local money = tonumber(self:GetMoney()) or 0
-			local cap = tonumber(self:GetCapacity()) or 0
+			local cap = tonumber(Cp) or 0
 
-			local moneyPercentage = math.Round( money / self.Capacity * 100 ,1)
+			local moneyPercentage = math.Round( money / cap * 100 ,1)
 			--Percentage done
 			draw.DrawText( moneyPercentage .."%" , fontName .. ".Big",	w - 4, 71, self.FontColor, TEXT_ALIGN_RIGHT)
 
 			--Money/Maxmoney
 			local currentMoney = BaseWars.LANG.CURRENCY .. BaseWars.NumberFormat(money)
-			local maxMoney = BaseWars.LANG.CURRENCY .. BaseWars.NumberFormat(self.Capacity)
+			local maxMoney = BaseWars.LANG.CURRENCY .. BaseWars.NumberFormat(cap)
 			local font = fontName .. ".Big"
 			if #currentMoney > 16 then
 				
@@ -332,7 +333,7 @@ else
 
 			--Time remaining counter
 			local timeRemaining = 0
-			timeRemaining = math.Round( (self.Capacity - money) / (self.PrintAmount * Lv / self.PrintInterval) )
+			timeRemaining = math.Round( (cap - money) / (self.PrintAmount * Lv / self.PrintInterval) )
 
 			if timeRemaining > 0 then
 				
