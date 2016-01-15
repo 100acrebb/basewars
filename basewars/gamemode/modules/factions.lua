@@ -389,6 +389,7 @@ function MODULE:IsEnemy(ply, ply2)
 
 	if ply == ply2 then return false end
 	if ply:InFaction() and ply2:InFaction(ply:GetFaction()) then return false end
+	if ply.UnRestricted or ply:GetNWBool("UnRestricted") then return false end
 
 	return true
 
