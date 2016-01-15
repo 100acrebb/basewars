@@ -192,7 +192,7 @@ function MODULE:Leave(ply, disband, forcedisband)
 		return
 
 	end
-
+	
 	local Table = BaseWars.Factions.FactionTable
 	local Fac = ply:GetFaction()
 	local Faction = Table[Fac]
@@ -229,6 +229,8 @@ function MODULE:Leave(ply, disband, forcedisband)
 		for k, v in next, Faction.members do
 
 			if v == ply then continue end
+			
+			if not BaseWars.Ents:ValidPlayer(v) then continue end
 
 			self:Leave(v, false)
 
