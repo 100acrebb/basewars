@@ -431,7 +431,7 @@ BaseWars.Config.Help = {
 
 	},
 }
-BaseWars.Config.Drugs = {
+BaseWars.Config.DrugHelp = {
 	["What does Regen drug do?"] = {
 		"Regen drug does exactly what it says on the tin!",
 		"You will regenerate HP(and armor) for 30 seconds",
