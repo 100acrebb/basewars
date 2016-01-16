@@ -416,14 +416,10 @@ hook.Add("PlayerInitialSpawn", tag .. ".Teams", Curry(MODULE.SendClientTeamData)
 
 function MODULE:Clean(ply)
 
-	local Table = BaseWars.Factions.FactionTable
-	local Fac = ply:GetFaction()
-	local Faction = Table[Fac]
-
-	self:Leave(ply, Faction.leader == ply:SteamID())
+	self:Leave(ply, true)
 
 end
-hook.Add("PlayerDisconnect", tag .. ".Clean", Curry(MODULE.Clean))
+hook.Add("PlayerDisconnected", tag .. ".Clean", Curry(MODULE.Clean))
 
 function MODULE:Create(ply, name, password, color)
 
