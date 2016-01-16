@@ -288,6 +288,8 @@ if SERVER then
 
 	end	
 
+	PLY.ChangeNick = PLY.SetNick
+
 else
 
 	local M = {}
@@ -393,3 +395,4 @@ else
 end
 
 PLY.GetNick = PLY.Nick
+PLY.Name = PLY.Nick
