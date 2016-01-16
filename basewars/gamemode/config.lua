@@ -369,9 +369,9 @@ BaseWars.Config.Help = {
 	},
 
 	["Are there any rules?"] = {
-	
+
 		"Yes, press F3 then select the [Rules] tab!",
-	
+
 	},
 
 	["How does the power system work?"] = {
@@ -431,40 +431,58 @@ BaseWars.Config.Help = {
 
 	},
 }
+
 BaseWars.Config.DrugHelp = {
 	["What does Regen drug do?"] = {
+
 		"Regen drug does exactly what it says on the tin!",
 		"You will regenerate HP(and armor) for 30 seconds",
+
 	},
-	--[[["What does Antidote drug do?"] = {
-		"fix the fucking antidote you fucking shit",
-		"fuck you q2",
-	},]]
+
 	["What does Steroid drug do?"] = {
+
 		"Steroid increases your move speed!",
 		"You will move 45% faster for 2 minutes.",
+
 	},
+
 	["What does Adrenaline drug do?"] = {
+
 		"Adrenaline increases your maximum health!",
 		"Your max health will be increased by 50% for 2 minutes.",
+
 	},
+
 	["What does DoubleJump drug do?"] = {
+
 		"You really need a explanation for that?",
 		"You can jump once more in air.",
+
 	},
+
 	["What does PainKiller drug do?"] = {
+
 		"Painkillers will help your survive longer in a fight.",
 		"You will experience 30% less damage.",
+
 	},
+
 	["What does Shield drug do?"] = {
+
 		"Shield will help you when you need it the most.",
 		"You will be survive one killing blow.",
+
 	},
+
 	["What does Rage drug do?"] = {
+
 		"Rage drug will help you fight other players!",
 		"You will deal 70% more damage for 2 minutes",
+
 	},
 }
+
 BaseWars.SpawnList = {}
 BaseWars.SpawnList.Models = {
 
@@ -494,11 +512,11 @@ BaseWars.SpawnList.Models = {
 			-- T1
 			["Spawnpoint"]					= BaseWars.GSL{Model = "models/props_trainstation/trainstation_clock001.mdl", Price = 15000, ClassName = "bw_spawnpoint", UseSpawnFunc = true},
 			["Drug Lab"]					= BaseWars.GSL{Model = "models/props_lab/crematorcase.mdl", Price = 35000, ClassName = "bw_druglab"},
-		
+
 		},
-		
+
 		["Structures - T2"] = {
-		
+
 			-- T2
 			["Radar"]						= BaseWars.GSL{Model = "models/props_rooftop/roof_dish001.mdl", Price = 25000000, ClassName = "bw_radar",  Limit = 1, Level = 35},
 
@@ -509,11 +527,11 @@ BaseWars.SpawnList.Models = {
 			-- T1
 			["Ballistic Turret"] 			= BaseWars.GSL{Model = "models/Combine_turrets/Floor_turret.mdl", Price = 80000, ClassName = "bw_turret_ballistic", Limit = 2, Level = 15},
 			["Laser Turret"] 				= BaseWars.GSL{Model = "models/Combine_turrets/Floor_turret.mdl", Price = 120000, ClassName = "bw_turret_laser", Limit = 1, Level = 18},
-			
+
 		},
-		
+
 		["Defence - T2"] = {
-			
+
 			-- T2
 			["Tesla Coil"]					= BaseWars.GSL{Model = "models/props_c17/substation_transformer01d.mdl", Price = 5000000, ClassName = "bw_tesla", Limit = 1, Level = 30},
 
@@ -539,11 +557,11 @@ BaseWars.SpawnList.Models = {
 			["Platinum Printer"]			= BaseWars.GSL{Model = "models/props_lab/reciever01a.mdl", Price = 75000, ClassName = "bw_printer_platinum", Level = 9},
 			["Diamond Printer"]				= BaseWars.GSL{Model = "models/props_lab/reciever01a.mdl", Price = 150000, ClassName = "bw_printer_diamond", Level = 11},
 			["Nuclear Printer"]				= BaseWars.GSL{Model = "models/props_lab/reciever01a.mdl", Price = 300000, ClassName = "bw_printer_nuclear", Level = 13},
-			
+
 		},
-		
+
 		["Printers - T2"] = {
-			
+
 			-- T2
 			["Mobius Printer"]				= BaseWars.GSL{Model = "models/props_lab/reciever01a.mdl", Price = 6000000, ClassName = "bw_printer_mobius", Level = 50},
 			["Dark Matter Printer"]			= BaseWars.GSL{Model = "models/props_lab/reciever01a.mdl", Price = 15000000, ClassName = "bw_printer_darkmatter", Level = 60},
