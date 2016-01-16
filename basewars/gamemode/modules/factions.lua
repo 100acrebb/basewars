@@ -201,6 +201,8 @@ function MODULE:Leave(ply, disband, forcedisband)
 
 		ply:SetNW2String(tag, "")
 		ply:SetNW2Bool( tag..".Leader", false )
+		
+		ply:SetTeam(1)
 
 		return
 
