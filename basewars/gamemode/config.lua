@@ -430,9 +430,41 @@ BaseWars.Config.Help = {
 		"'interactions_enabled 0' into your console.",
 
 	},
-
 }
-
+BaseWars.Config.DrugHelp = {
+	["What does Regen drug do?"] = {
+		"Regen drug does exactly what it says on the tin!",
+		"You will regenerate HP(and armor) for 30 seconds",
+	},
+	--[[["What does Antidote drug do?"] = {
+		"fix the fucking antidote you fucking shit",
+		"fuck you q2",
+	},]]
+	["What does Steroid drug do?"] = {
+		"Steroid increases your move speed!",
+		"You will move 45% faster for 2 minutes.",
+	},
+	["What does Adrenaline drug do?"] = {
+		"Adrenaline increases your maximum health!",
+		"Your max health will be increased by 50% for 2 minutes.",
+	},
+	["What does DoubleJump drug do?"] = {
+		"You really need a explanation for that?",
+		"You can jump once more in air.",
+	},
+	["What does PainKiller drug do?"] = {
+		"Painkillers will help your survive longer in a fight.",
+		"You will experience 30% less damage.",
+	},
+	["What does Shield drug do?"] = {
+		"Shield will help you when you need it the most.",
+		"You will be survive one killing blow.",
+	},
+	["What does Rage drug do?"] = {
+		"Rage drug will help you fight other players!",
+		"You will deal 70% more damage for 2 minutes",
+	},
+}
 BaseWars.SpawnList = {}
 BaseWars.SpawnList.Models = {
 
