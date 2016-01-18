@@ -13,13 +13,13 @@ function MODULE:__INIT()
 		self.FactionTable = table.Copy(__BASEWARS_FACTION_BACKUP)
 
 		__BASEWARS_FACTION_BACKUP = nil
-		
+
 		self.FactionTable.__id = table.Count(self.FactionTable) - 1
-		
+
 	else
-	
+
 		self.FactionTable.__id = 1
-		
+
 	end
 
 end
@@ -86,13 +86,13 @@ else
 			local teamid = tbl.teamid
 			local name = tbl.name
 			local color = tbl.color
-			
+
 			if not teamid or not name or not color then
-			
+
 				ErrorNoHalt("Error making team -> ", teamid, name, color)
-				
+
 			return end
-			
+
 			team.SetUp(teamid, name, color)
 
 		end
@@ -192,7 +192,7 @@ function MODULE:Leave(ply, disband, forcedisband)
 		return
 
 	end
-	
+
 	local Table = BaseWars.Factions.FactionTable
 	local Fac = ply:GetFaction()
 	local Faction = Table[Fac]
@@ -201,7 +201,7 @@ function MODULE:Leave(ply, disband, forcedisband)
 
 		ply:SetNW2String(tag, "")
 		ply:SetNW2Bool( tag..".Leader", false )
-		
+
 		ply:SetTeam(1)
 
 		return
@@ -231,7 +231,7 @@ function MODULE:Leave(ply, disband, forcedisband)
 		for k, v in next, Faction.members do
 
 			if v == ply then continue end
-			
+
 			if not BaseWars.Ents:ValidPlayer(v) then continue end
 
 			self:Leave(v, false)
@@ -400,14 +400,16 @@ PLAYER.IsEnemy = Curry(MODULE.IsEnemy)
 
 function MODULE:SendClientTeamData(ply)
 
-	if table.Count(BaseWars.Factions.FactionTable) == 0 then return end
+	if table.Count(BaseWars.Factions.FactionTable) <= 1 then return end
+
 	local datas = {}
+
 	for name, data in next, BaseWars.Factions.FactionTable do
-	
+
 		if not istable(data) then continue end
-	
+
 		table.insert(datas, {name = name, teamid = data.teamid,color = data.color})
-		
+
 	end
 	net.Start(tag .. ".Teams")
 		net.WriteTable(datas)
@@ -490,15 +492,17 @@ end
 PLAYER.CreateFaction = Curry(MODULE.Create)
 
 function MODULE:SendFactionData(teamid, name, color)
+
 	net.Start( tag..".Teams" )
 		net.WriteTable({teamid = teamid, name = name, color = color})
 	net.Broadcast()
+
 end
 
 function MODULE:GetEmptyTeamID()
 
 	self.FactionTable.__id = (self.FactionTable.__id or 1) + 1
-	
+
 	return self.FactionTable.__id
-	
+
 end
