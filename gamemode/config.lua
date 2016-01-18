@@ -302,6 +302,57 @@ BaseWars.Config = {
 
 }
 
+BaseWars.NPCTable = {
+
+	["basewars_bangclaw_v1"] = {
+
+		[1] = {
+
+			-- 0x2c272b38
+			Pos = Vector(-1006, -1441, 74),
+			-- 0x2c272b60
+			Ang = Angle(0, 135, 0),
+
+		},
+
+	},
+
+	["rp_bangclaw"] = {
+
+		[1] = {
+			Pos = Vector(-1006, -1441, 75),
+			Ang = Angle(0, 135, 0),
+		},
+
+		[2] = {
+			Pos = Vector(2055, -2289, 75),
+			Ang = Angle(0, 141, 0),
+		},
+
+		[3] = {
+			Pos = Vector(1315, 2129, 147),
+			Ang = Angle(0, -133, 0),
+		},
+
+		[4] = {
+			Pos = Vector(3619, 364, 75),
+			Ang = Angle(0, -145, 0),
+		},
+
+		[5] = {
+			Pos = Vector(51, -1924, 75),
+			Ang = Angle(0, -141, 0),
+		},
+
+		[6] = {
+			Pos = Vector(712, -90, 74),
+			Ang = Angle(0, 87, 0),
+		},
+
+	},
+
+}
+
 local NiceGreen = Color(100, 250, 125)
 local Grey = Color(200, 200, 200)
 
@@ -326,8 +377,8 @@ BaseWars.Config.Help = {
 
 	["What is this server?"] = {
 
-		"This is the HexaHedronic.ORG BaseWars server.",
-		"It runs a custom version of basewars coded by Q2F2 and Ghosty!",
+		"This is the Hexahedronic BaseWars server.",
+		"It runs a custom version of basewars!",
 		"",
 		"BaseWars is a gamemode about making money and raiding.",
 		"It also contains cool guns and ways to defend your base!",
@@ -363,7 +414,7 @@ BaseWars.Config.Help = {
 		"Watch the [Notifications] in the top left to see if they are raidable, if they were, then a raid will",
 		"have started, if not, it will tell you why not.",
 		"",
-		"Once a raid has started you can destroy any props your enemy owns, along with electronics! But be carefull!",
+		"Once a raid has started you can destroy any props your enemy owns, along with electronics! But be careful!",
 		"They can counter raid you while it is on-going!",
 
 	},
@@ -433,51 +484,51 @@ BaseWars.Config.Help = {
 }
 
 BaseWars.Config.DrugHelp = {
-	["What does Regen drug do?"] = {
+	["What does the Regen drug do?"] = {
 
-		"Regen drug does exactly what it says on the tin!",
-		"You will regenerate HP(and armor) for 30 seconds",
+		"Regen does exactly what it says on the tin!",
+		"You will regenerate HP (and armor) for 30 seconds",
 
 	},
 
-	["What does Steroid drug do?"] = {
+	["What does the Steroid drug do?"] = {
 
 		"Steroid increases your move speed!",
 		"You will move 45% faster for 2 minutes.",
 
 	},
 
-	["What does Adrenaline drug do?"] = {
+	["What does the Adrenaline drug do?"] = {
 
 		"Adrenaline increases your maximum health!",
 		"Your max health will be increased by 50% for 2 minutes.",
 
 	},
 
-	["What does DoubleJump drug do?"] = {
+	["What does the DoubleJump drug do?"] = {
 
 		"You really need a explanation for that?",
 		"You can jump once more in air.",
 
 	},
 
-	["What does PainKiller drug do?"] = {
+	["What does the PainKiller drug do?"] = {
 
 		"Painkillers will help your survive longer in a fight.",
 		"You will experience 30% less damage.",
 
 	},
 
-	["What does Shield drug do?"] = {
+	["What does the Shield drug do?"] = {
 
 		"Shield will help you when you need it the most.",
 		"You will be survive one killing blow.",
 
 	},
 
-	["What does Rage drug do?"] = {
+	["What does the Rage drug do?"] = {
 
-		"Rage drug will help you fight other players!",
+		"Rage will help you fight other players!",
 		"You will deal 70% more damage for 2 minutes",
 
 	},

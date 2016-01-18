@@ -173,6 +173,14 @@ function GM:PreCleanupMap()
 
 end
 
+function GM:PostCleanupMap()
+
+	self.BaseClass:PostCleanupMap()
+
+	BaseWars.NPCs:CreateNPCs()
+
+end
+
 function GM:GetFallDamage(ply, speed)
 
 	local Velocity = speed - 526.5
