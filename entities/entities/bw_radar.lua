@@ -14,52 +14,31 @@ if SERVER then
 	AddCSLuaFile()
 
 	function ENT:SetMinimap(ply, bool)
-	
+
 		ply:SetNW2Bool("BaseWars_HasRadar", bool)
-	
+
 	end
-	
-	function ENT:ThinkFunc(activator, caller, usetype, value)
+
+	function ENT:ThinkFuncBypass()
 
 		local Owner = BaseWars.Ents:ValidOwner(self)
-		if not Owner then return end
-	
-		local tr = {}
-			tr.start 	= self:GetPos()
-			tr.endpos 	= tr.start + Vector(0, 0, 24000)
-			tr.filter 	= self
-		tr = util.TraceLine(tr)
-	
-		if not tr.HitSky then
-	
-			if self.Enabled then
-	
-				self:SetMinimap(Owner, false)
-				self:EmitSound("ambient/machines/thumper_shutdown1.wav")
-				
-				self.Enabled = false
-				
-			end
-			
-		else
-		
-			self:SetMinimap(Owner, true)
-			
-			self.Enabled = true
-			
+		if Owner then
+
+			self:SetMinimap(Owner, self:IsPowered())
+
 		end
-		
+
 	end
 
 	function ENT:OnRemove()
 
 		local Owner = BaseWars.Ents:ValidOwner(self)
 		if Owner then
-		
+
 			self:SetMinimap(Owner, false)
-			
+
 		end
-		
+
 	end
 
 end
