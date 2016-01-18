@@ -41,7 +41,9 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
-basewars/gamemode/shared/MetaStruct/expression.lua
-basewars/gamemode/shared/MetaStruct/anime.lua
-basewars/gamemode/shared/MetaStruct/ch.lua
-basewars/gamemode/shared/MetaStruct/i own litteraly nothing in here, its just for cool shits
+
+# MetaStruct files
+gamemode/shared/MetaStruct/expression.lua
+gamemode/shared/MetaStruct/anime.lua
+gamemode/shared/MetaStruct/ch.lua
+gamemode/shared/metastruct/markup.lua
