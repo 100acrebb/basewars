@@ -318,7 +318,7 @@ if gmod then
 			--if #str == 0 then str = "" end
 
 			str = str:gsub("\t", "    ")
-			str = str:gsub("&", "¤")
+			str = str:gsub("&", "Â¤")
 
 			local w, h = surface.GetTextSize(str)
 
@@ -1064,9 +1064,9 @@ do -- tags
 				-- |     c    d - ? |
 				--
 				-- (a - ?) (d - ?) - bc = 0
-				-- ?² + (-a - d) ? + ad - bc = 0
+				-- ?Â² + (-a - d) ? + ad - bc = 0
 				--
-				--     a + d ± sqrt ((a + d)² - 4 (ad - bc))
+				--     a + d Â± sqrt ((a + d)Â² - 4 (ad - bc))
 				-- ? = -------------------------------------
 				--                      2
 
@@ -3450,7 +3450,7 @@ markup todo:
 
 		self:AddFont(small_font)
 		self:AddString("monospace\n")
-		self:AddString("¦¦¦¦¦¦¯¦¦¦¯¦¦¦¯¦¦¦¦¦¦\n¦¦¯¦¦¦¯¦¦¦¯¯¦¦¯¯¦¯¦¯¦\n¦¯¦¯¦¯¦¯¦¯¦¦¦¯¦¦¦¦¯¦¦\n")
+		self:AddString("Â¦Â¦Â¦Â¦Â¦Â¦Â¯Â¦Â¦Â¦Â¯Â¦Â¦Â¦Â¯Â¦Â¦Â¦Â¦Â¦Â¦\nÂ¦Â¦Â¯Â¦Â¦Â¦Â¯Â¦Â¦Â¦Â¯Â¯Â¦Â¦Â¯Â¯Â¦Â¯Â¦Â¯Â¦\nÂ¦Â¯Â¦Â¯Â¦Â¯Â¦Â¯Â¦Â¯Â¦Â¦Â¦Â¯Â¦Â¦Â¦Â¦Â¯Â¦Â¦\n")
 		self:AddString("it's kinda like fullwidth\n")
 		self:AddFont("markup_default")
 
@@ -3523,7 +3523,7 @@ end
 		self:AddFont("markup_default")
 		self:AddString("\n")
 		self:AddString([[
-© 2012, Author
+Â© 2012, Author
 Self publishing
 (Possibly email address or contact data)]])
 	end
