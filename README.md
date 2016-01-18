@@ -1,14 +1,77 @@
-# BaseWars
+# Hexahedronic BaseWars
+An open-source version of BaseWars designed to help drive more players into the gamemode, by offering servers a better alternative of the gamemode to run!
 
-Yeah. BaseWars. But not the shitty other version.
+## Installation
 
-## (Un-)Frequently Asked Questions
+### Prerequisites
+A CPPI Compliant prop-protection addon.
 
-#### Why did you do X?
-Because we decided to do X.
+### Installing the gamemode
+Drag it into ```garrysmod/gamemodes``` and extract it.
 
-#### how 2 config
-We don't know.
+**For a few things to work you need [EASYLUA](https://github.com/CapsAdmin/fast_addons/blob/master/lua/helpers/easylua.lua) too; it goes in ```lua/autorun```.**
 
-#### This version is gay.
-So are you. (this isn't even a question)
+## Screenshots
+
+### Help Menu
+![ScreenShot](http://puu.sh/mALs7/ad13259bff.jpg)
+### Main Menu
+![ScreenShot](http://puu.sh/mALv7/eefc81fe95.jpg)
+### Entities
+![ScreenShot](http://puu.sh/mALDK/b199a75830.jpg)
+
+## Usage for developers
+
+```
+-- Manipulating players money
+	ply:GiveMoney(amt)
+	ply:SetMoney(amt)
+	ply:TakeMoney(amt)
+
+-- Manipulating players level
+	ply:AddLevel(amt)
+	ply:SetLevel(amt)
+
+	ply:SetXP(amt)
+	ply:AddXP(amt)
+
+-- Manipulating players level
+	ply:AddKarma(amt)
+	ply:SetKarma(amt)
+
+-- Available hooks
+-- 'CanBuy' hooks can be returned as false to block buying, with the second arg being an error message
+	hook.Add("BaseWars_PlayerEmptyPrinter", "name", function(ply, ent, money) end)
+
+	hook.Add("BaseWars_PlayerCanBuyEntity", "name", function(ply, class) end)
+	hook.Add("BaseWars_PlayerCanBuyGun", "name", function(ply, class) end)
+	hook.Add("BaseWars_PlayerCanBuyDrug", "name", function(ply, class) end)
+	hook.Add("BaseWars_PlayerCanBuyProp", "name", function(ply, class) end)
+
+	hook.Add("BaseWars_PlayerBuyEntity", "name", function(ply, ent) end)
+	hook.Add("BaseWars_PlayerBuyGun", "name", function(ply, ent) end)
+	hook.Add("BaseWars_PlayerBuyDrug", "name", function(ply, ent) end)
+	hook.Add("BaseWars_PlayerBuyProp", "name", function(ply, ent) end)
+```
+
+## Contributing
+
+See [CONTRIBUTING](CONTRIBUTING.md).
+
+## Authors
+
+### Hexahedronic
+
+  **Developer:** Callum Slaney (notq2f2@gmail.com)
+
+  **Developer:** Andrew Austin (ghosty.hexahedronic@gmail.com)
+
+  **Developer:** Stepan Fedotov (admin@futuretechs.eu)
+
+### Others
+
+	Credited in the author field of the gamemode.
+
+## License
+
+See [LICENSE](LICENSE).
