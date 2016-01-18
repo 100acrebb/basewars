@@ -16,6 +16,7 @@ local lightblacklist = {
 	"f3",
 	"f4",
 	"playx",
+	"gcompute",
 }
 
 local function VGUICleanup()
@@ -32,7 +33,7 @@ local function VGUICleanup()
 				hit_blacklist = true
 				continue
 			end
-		end	
+		end
 		if hit_blacklist then continue end
 		Msg("[vgui] ") print("Removed " .. tostring(pnl))
 		pnl:Remove()
