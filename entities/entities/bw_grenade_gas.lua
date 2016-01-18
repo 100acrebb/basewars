@@ -1,16 +1,21 @@
-AddCSLuaFile("cl_init.lua")
-AddCSLuaFile("shared.lua")
-include("shared.lua")
+AddCSLuaFile()
 
-local col = Color(50, 255, 50, 255)
+ENT.Base = "base_gmodentity"
+ENT.Type = "anim"
+ENT.PrintName = "Gas Grenade"
+
+ENT.Model = "models/weapons/w_eq_flashbang.mdl"
+
+ENT.Color = Color(50, 255, 50, 255)
+
 if SERVER then
 
 function ENT:Initialize()
 
-	self:SetModel("models/weapons/w_eq_flashbang.mdl")
+	self:SetModel(self.Model)
 	self:SetMaterial("models/dav0r/hoverball")
 
-	self:SetColor(col)
+	self:SetColor(self.Color)
 
 	self:PhysicsInit(SOLID_VPHYSICS)
 	self:SetMoveType(MOVETYPE_VPHYSICS)
@@ -36,7 +41,7 @@ function ENT:Initialize()
 
 			if not self:IsValid() then return end
 
-			local Owner = BaseWars.Ents:ValidOwner(self)
+			local Owner = self.Owner
 
 			if not Owner then return end
 
