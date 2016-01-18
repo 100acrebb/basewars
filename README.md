@@ -8,11 +8,20 @@ This also ships with a modified version of twitch weaponry 2 (credited in the ga
 * Easy to setup!
 * Easy to configure!
 * Easy to use entity bases!
+* Crashes recover lost player money! (Most of the time, it's not perfect)
+* Progression via a leveling system! (Also configurable!)
+* Automated Anti-SpawnKill!
+* Automated raiding! No more 'random raids'!
+* Custom chatbox! (People sell stuff like this ALONE for money...)
+* Built in Textscreens! (Better than the public version; parser based, no fixed line amt, ect, but no gui as of yet...)
+* Language support! (Per-server, sorry, it would be a pain to make it per-client now.)
+
 
 ## Installation
 
 ### Prerequisites
 * A CPPI Compliant prop-protection addon.
+* A fading door addon.
 
 ### Installing the gamemode
 * Drag it into ```garrysmod/gamemodes``` and extract it.
@@ -27,6 +36,10 @@ This also ships with a modified version of twitch weaponry 2 (credited in the ga
 ![ScreenShot](http://puu.sh/mALv7/eefc81fe95.jpg)
 ### Entities
 ![ScreenShot](http://puu.sh/mALDK/b199a75830.jpg)
+### Chatbox
+![ScreenShot](http://puu.sh/mANRz/5577d91aa3.jpg)
+### Textscreens
+![ScreenShot](http://puu.sh/mAOmT/370b971f4f.jpg)
 
 ## Usage for developers
 
