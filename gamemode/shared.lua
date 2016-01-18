@@ -1,24 +1,18 @@
 ﻿GM.Name 		= "BaseWars"
 GM.Author 		= "Q2F2, Ghosty, Liquid, Tenrys, TrIxter, User4992"
-GM.Website 		= "http://hexahedronic.org/"
+GM.Website 		= "http://hexahedronic.org/, http://hexahedronic.github.io/"
 GM.Credits		= [[
 Thanks to the following people:
-	Q2F2			- Main backend dev.
+	Q2F2				- Main backend dev.
 	Ghosty			- Main frontent dev.
-	TrIxter			- Frontend + Serveral entities.
+	Trixter			- Frontend + Serveral entities.
 	Liquid			- Misc dev, good friend.
 	Tenrys			- Misc dev, good friend also.
 	Pyro-Fire		- Owner of LagNation, ideas ect.
 	Devenger		- Twitch Weaponry 2
 	User4992		- Fixes for random stuff.
 
-This GM has been built from scratch with almost no
-traces of the original BaseWars existing outside of maybe
-a few miscellaneous entities, albiet, in heavily modified
-form. Due to this, anybody trying to dispute
-our ownership of the gamemode (as I remember happening on
-the previous version I made) will be told where to
-stick it.
+This GM has been built from scratch with almost no traces of the original BaseWars existing.
 ]]
 GM.License = [[
 Copyright (c) 2015 Hexahedronic, ]] .. GM.Author .. [[
@@ -30,6 +24,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ]]
 
+-- Thanks to whoever posted this, can't remember source.
 function ents.FindInCone(cone_origin, cone_direction, cone_radius, cone_angle)
 
 	local entities = ents.FindInSphere(cone_origin, cone_radius)
@@ -211,7 +206,7 @@ function BaseWars.UTIL.PayOut(ent, attacker, full, ret)
 	if ret then return Val end
 
 	local Name = ent.PrintName or ent:GetClass()
-	
+
 	if ent.IsPrinter then Name = BaseWars.LANG.Level .. " " .. ent:GetLevel() .. " " .. Name end
 
 	if attacker == Owner then
