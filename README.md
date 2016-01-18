@@ -12,10 +12,10 @@ This also ships with a modified version of twitch weaponry 2 (credited in the ga
 ## Installation
 
 ### Prerequisites
-A CPPI Compliant prop-protection addon.
+* A CPPI Compliant prop-protection addon.
 
 ### Installing the gamemode
-Drag it into ```garrysmod/gamemodes``` and extract it.
+* Drag it into ```garrysmod/gamemodes``` and extract it.
 
 **For a few things to work you need [EASYLUA](https://github.com/CapsAdmin/fast_addons/blob/master/lua/helpers/easylua.lua) too; it goes in ```lua/autorun```.**
 
@@ -85,7 +85,7 @@ See [CONTRIBUTING](CONTRIBUTING.md).
 
 ### Others
 
-	*Credited in the author field of the gamemode.*
+	Credited in the author field of the gamemode.
 
 ## License
 
