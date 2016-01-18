@@ -23,8 +23,8 @@ if (phys:IsValid()) then
 		gas:SetOrigin(self:GetPos())
 		util.Effect("gasnade_gas",gas)
 		timer.Create("GasNade"..tostring(self.Entity),0.10,138,function()
-		if not BaseWars.Ents:ValidPlayer(v) or not v:Alive() then continue end
-		if not self.Owner:IsEnemy(v) then continue end
+		if not BaseWars.Ents:ValidPlayer(v) or not v:Alive() then return end
+		if not self.Owner:IsEnemy(v) then return end
 		local Plys = ents.FindInSphere(self:GetPos(), 220)
 		local Pos = self:GetPos()
 		if !self.Entity then return end
@@ -39,12 +39,12 @@ if (phys:IsValid()) then
 			v:TakeDamageInfo(d)
 			v:ApplyDrug("Poison", 4,self.Owner,self.Owner)
 			v:ScreenFade(SCREENFADE.IN, Color(20,200,20,100), 0.1, 0)
-			
+
 			local e = EffectData()
 			e:SetStart(v:GetPos()+Vector(0,0,32))
 			e:SetOrigin(v:GetPos()+Vector(0,0,32))
-			e:SetScale(4) 
-			
+			e:SetScale(4)
+
 			util.Effect("AntlionGib", e)
 		end
 		end)
@@ -53,7 +53,7 @@ if (phys:IsValid()) then
 		end)
 		end
 		end
-		timer.Simple(4,GasTheJews) 
+		timer.Simple(4,GasTheJews)
 		end
 end
 
