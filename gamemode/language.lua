@@ -4,7 +4,7 @@ BaseWars.LANG.__LANGUAGELOOK = {}
 
 BaseWars.LANG.__LANGUAGELOOK.ENGLISH = {
 	CURRENCY				= CURRENCY,
-	
+
 	Yes 					= "Yes",
 	No						= "No",
 	Level					= "Level",
@@ -18,15 +18,15 @@ BaseWars.LANG.__LANGUAGELOOK.ENGLISH = {
 	FactionWrongPass		= "That is not the correct password!",
 	FactionCantLeaveLeader	= "You cannot leave the faction as its leader, you must disband it!",
 	FactionCantPassword		= "Only the faction leader can re-password the faction!",
-	
+
 	GenericCheat 			= "Nice try! That doesn't work clientside :)",
-	
+
 	PayDay					= "PayDay! You received " .. CURRENCY .. "%s!",
-	
+
 	DontBuildSpawn			= "Do not build props around spawn.",
 	SpawnKill				= "Do not attempt to spawnkill.",
 	SpawnCamp				= "Do not attempt to spawncamp.",
-	
+
 	RaidOngoing				= "There is allready a raid ongoing!",
 	RaidSelfUnraidable		= "You are not raidable yourself! (%s)",
 	RaidTargetUnraidable	= "Your target is not raidable! (%s)",
@@ -36,15 +36,15 @@ BaseWars.LANG.__LANGUAGELOOK.ENGLISH = {
 	RaidSelfNoFac			= "You cannot raid a faction as a factionless player!",
 	RaidNoFaction			= "Cannot use faction functions during a raid!",
 	CantRaidSelf			= "You can't raid yourself or your faction!",
-	
+
 	CannotPurchaseRaid		= "You cannot purchase that in a raid!",
-	
+
 	NoPrinters				= "Not enough raidable printers!",
 	OnCoolDown				= "Currently on CoolDown from being raided!",
-	
+
 	PayOutOwner				= "You got " .. CURRENCY .. "%s for the destruction of your %s!",
 	PayOut					= "You got " .. CURRENCY .. "%s for destroying a %s!",
-	
+
 	SteroidEffect			= "You feel full of energy...",
 	SteroidRemove			= "Your energy passes...",
 	RegenEffect				= "You feel your wounds healing by themselves...",
@@ -62,12 +62,12 @@ BaseWars.LANG.__LANGUAGELOOK.ENGLISH = {
 	ShieldSave				= "The person you attacked was saved by an energy shield.",
 	RageEffect				= "FUCKING KIIIIIIILLLLLLLLLLLL!!!",
 	RageRemove				= "Whoa, that was a bit much wasn't it...",
-	
+
 	PowerFailure			= "POWER FAILURE!",
 	HealthFailure			= "CRITICAL DAMAGE!",
-	
+
 	NewSpawnPoint			= "New SpawnPoint has been set!",
-	
+
 	UseSpawnMenu			= "Use the BaseWars spawnlist!",
 	SpawnMenuMoney			= "You don't have enough money for that.",
 	SpawnMenuBuy			= "You bought a(n) \"%s\" for " .. CURRENCY .. "%s.",
@@ -75,28 +75,34 @@ BaseWars.LANG.__LANGUAGELOOK.ENGLISH = {
 	SpawnMenuConf			= "Purchase Confirmation",
 	DeadBuy					= "Dead people buy nothing.",
 	EntLimitReached			= "You have reached the limit of \"%s\"s.",
-	
+
 	StuckText				= "You are stuck inside a wall, prop, or player! Remain calm and press [CTRL], if it does not work press [SPACE].",
 
 	FailedToAuth			= "Steam failed to authenticate your SteamID, uh oh!",
-	
+
 	MainMenuControl			= "F3 - Open Main Menu (Rules, Factions, Raids)",
 	SpawnMenuControl		= " - Open Buy Menu (Entities, Weapons)",
 	KarmaText				= "Your Karma is currently %s",
 	LevelText               = "Level: %s",
 	XPText                  = "%s/%s XP",
-	
+
 	AFKFor					= "You have been AFK for",
 	RespawnIn				= "You can respawn in",
-	
+
 	UpgradeNoMoney			= "You don't have enough money to upgrade!",
 	UpgradeMaxLevel			= "You can't upgrade this printer any more!",
-	
+
 	WelcomeBackCrash		= "Welcome back, the last time you played we crashed.",
 	Refunded				= "You have been refunded " .. CURRENCY .. "%s.",
-	
+
 	GivenMoney				= "%s gave you " .. CURRENCY .. "%s.",
 	GaveMoney				= "You gave %s " .. CURRENCY .. "%s.",
+
+	BountyNotEnoughMoney = "You don't have enough money to place bounty.",
+
+	InvalidPlayer = "Invalid Player!",
+	InvalidAmount = "Invalid Amount!",
+	TooPoor = "You're too poor for this transaction!",
 }
 
 local INVALID_LANGUAGE 	= "INVALID LANGUAGE SELECTED! NOTIFY THE SERVER ADMIN!"
@@ -105,11 +111,11 @@ local ERROR_UNKNOWN 	= "UKNOWN ERROR IN TRANSLATION SYSTEM!"
 
 setmetatable(BaseWars.LANG, {
 	__index = function(t, k)
-		
+
 		return 	(not BaseWars.LANG.__LANGUAGELOOK[BASEWARS_CHOSEN_LANGUAGE] and INVALID_LANGUAGE) or
 				(not BaseWars.LANG.__LANGUAGELOOK[BASEWARS_CHOSEN_LANGUAGE][k] and INVALID_STRING) or
 					BaseWars.LANG.__LANGUAGELOOK[BASEWARS_CHOSEN_LANGUAGE][k] or
 					ERROR_UNKNOWN
-		
+
 	end
 })

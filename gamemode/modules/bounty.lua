@@ -26,15 +26,15 @@ if SERVER then
 
 	function MODULE:PlaceBounty(ply, who, amt)
 
-		if not IsValid(ply) or not IsValid(who) then return end
-		if who:GetMoney() < amt then return end
+		if not IsValid(ply) or not IsValid(who) then return false, BaseWars.LANG.InvalidPlayer end
+		if who:GetMoney() < amt then return false, BaseWars.LANG.BountyNotEnoughMoney end
 
 		local tbl = self:GetBountyTbl()
 
 		who:TakeMoney( amt )
 		tbl[ply:SteamID()] = amt
 
-		PrintMessage(3, "Bounty of " .. amt .. " has been placed on " .. ply:Name())
+		PrintMessage(3, "Bounty of " .. BaseWars.LANG.CURRENCY .. BaseWars.NumberFormat(amt) .. " has been placed on " .. ply:Name())
 		BaseWars.UTIL.Log("Players " .. ply:Name() .. " bounty was set to " .. BaseWars.LANG.CURRENCY .. BaseWars.NumberFormat(amt) .. ".")
 
 	end
