@@ -60,10 +60,22 @@ This also ships with a modified version of twitch weaponry 2 (credited in the ga
 	ply:AddKarma(amt)
 	ply:SetKarma(amt)
 	
+-- Utility global functions
+	BaseWars.Raid:IsOnGoing()
+	
+	BaseWars.UTIL.Log(...)
+	BaseWars.UTIL.RefundAll(ply, returnAsTable) -- Call with no arg to do full server refund, with arg to refund only them, call with second arg to REFUND NO-ONE but get a 'UID = Money' table
+	
+	BaseWars.NumberFormat(number) -- Converts to scale suffixed, eg 8,100,000 -> 8.1 Million
+	
+	
 -- Utility metamethods
 	ply:InFaction(name, leader) -- args optional, ply:InFaction() for ANY faction, ply:InFaction(nil, true) if LEADER of ANY faction, ect
+	
 	ply:InRaid()
 	ply:Raidable(ignoreCooldown)
+	
+	ply:Notify(string, color) -- For strings try and keep them localised using BaseWars.LANG, and there are some global color enums, BASEWARS_NOTIFCATION_*
 	
 	
 -- Available hooks
