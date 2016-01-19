@@ -17,6 +17,10 @@ function ENT:ThinkFunc()
 
 end
 
+function ENT:ThinkFuncBypass()
+
+end
+
 function ENT:UseFunc()
 
 end
