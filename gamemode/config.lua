@@ -487,7 +487,7 @@ BaseWars.Config.DrugHelp = {
 	["What does the Regen drug do?"] = {
 
 		"Regen does exactly what it says on the tin!",
-		"You will regenerate HP (and armor) for 30 seconds",
+		"You will regenerate HP (and armor) for 30 seconds.",
 
 	},
 
@@ -507,7 +507,7 @@ BaseWars.Config.DrugHelp = {
 
 	["What does the DoubleJump drug do?"] = {
 
-		"You really need a explanation for that?",
+		"Do you really need a explanation for that?",
 		"You can jump once more in air.",
 
 	},
@@ -539,7 +539,7 @@ BaseWars.SpawnList.Models = {
 
 	Entities = {
 
-		["Generators - T1"] = {
+		["Generators (T1)"] = {
 
 			["Solar Panel"]					= BaseWars.GSL{Model = "models/props_lab/miniteleport.mdl", Price = 1500, ClassName = "bw_gen_solar"},
 			["Coal Fired Generator"]		= BaseWars.GSL{Model = "models/props_wasteland/laundry_washer003.mdl", Price = 20000, ClassName = "bw_gen_coalfired", Level = 3},
@@ -548,7 +548,7 @@ BaseWars.SpawnList.Models = {
 
 		},
 
-		["Dispensers - T1"] = {
+		["Dispensers (T1)"] = {
 
 			["Vending Machine"]				= BaseWars.GSL{Model = "models/props_interiors/VendingMachineSoda01a.mdl", Price = 20000, ClassName = "bw_vendingmachine"},
 			["Ammo Dispenser"]				= BaseWars.GSL{Model = "models/props_lab/reciever_cart.mdl", Price = 55000, ClassName = "bw_dispenser_ammo"},
@@ -558,7 +558,7 @@ BaseWars.SpawnList.Models = {
 
 		},
 
-		["Structures - T1"] = {
+		["Structures (T1)"] = {
 
 			-- T1
 			["Spawnpoint"]					= BaseWars.GSL{Model = "models/props_trainstation/trainstation_clock001.mdl", Price = 15000, ClassName = "bw_spawnpoint", UseSpawnFunc = true},
@@ -566,14 +566,14 @@ BaseWars.SpawnList.Models = {
 
 		},
 
-		["Structures - T2"] = {
+		["Structures (T2)"] = {
 
 			-- T2
 			["Radar"]						= BaseWars.GSL{Model = "models/props_rooftop/roof_dish001.mdl", Price = 25000000, ClassName = "bw_radar",  Limit = 1, Level = 35},
 
 		},
 
-		["Defence - T1"] = {
+		["Defense (T1)"] = {
 
 			-- T1
 			["Ballistic Turret"] 			= BaseWars.GSL{Model = "models/Combine_turrets/Floor_turret.mdl", Price = 80000, ClassName = "bw_turret_ballistic", Limit = 2, Level = 15},
@@ -581,14 +581,14 @@ BaseWars.SpawnList.Models = {
 
 		},
 
-		["Defence - T2"] = {
+		["Defense (T2)"] = {
 
 			-- T2
 			["Tesla Coil"]					= BaseWars.GSL{Model = "models/props_c17/substation_transformer01d.mdl", Price = 5000000, ClassName = "bw_tesla", Limit = 1, Level = 30},
 
 		},
 
-		["Consumables - T1"] = {
+		["Consumables (T1)"] = {
 
 			["Repair Kit"]					= BaseWars.GSL{Model = "models/Items/car_battery01.mdl", Price = 2500, ClassName = "bw_repairkit", UseSpawnFunc = true},
 			["Armour Kit"]					= BaseWars.GSL{Model = "models/props_junk/cardboard_box004a.mdl", Price = 22500, ClassName = "bw_entityarmor", UseSpawnFunc = true},
@@ -598,7 +598,7 @@ BaseWars.SpawnList.Models = {
 
 		},
 
-		["Printers - T1"] = {
+		["Printers (T1)"] = {
 
 			-- T1
 			["Basic Printer"]				= BaseWars.GSL{Model = "models/props_lab/reciever01a.mdl", Price = 2000, ClassName = "bw_base_moneyprinter"},
@@ -611,7 +611,7 @@ BaseWars.SpawnList.Models = {
 
 		},
 
-		["Printers - T2"] = {
+		["Printers (T2)"] = {
 
 			-- T2
 			["Mobius Printer"]				= BaseWars.GSL{Model = "models/props_lab/reciever01a.mdl", Price = 6000000, ClassName = "bw_printer_mobius", Level = 50},
