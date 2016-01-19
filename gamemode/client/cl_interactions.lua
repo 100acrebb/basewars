@@ -111,7 +111,7 @@ hook.Add("HUDPaint", "LookEnt.Paint", LookEnt.Paint)
 local color1, color2 = Color(128, 255, 0), Color(255, 255, 21)
 local color3 = Color(255, 0, 0)
 
-local UseBing = input.LookupBinding("+use")
+local UseBind = input.LookupBinding("+use")
 
 --The awful part down here
 LookEnt:RegisterEnt("prop_door_rotating", UseBind, function(aimEnt)
