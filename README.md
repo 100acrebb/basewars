@@ -59,20 +59,34 @@ This also ships with a modified version of twitch weaponry 2 (credited in the ga
 -- Manipulating players level
 	ply:AddKarma(amt)
 	ply:SetKarma(amt)
-
+	
+-- Utility metamethods
+	ply:InFaction(name, leader) -- args optional, ply:InFaction() for ANY faction, ply:InFaction(nil, true) if LEADER of ANY faction, ect
+	ply:InRaid()
+	ply:Raidable(ignoreCooldown)
+	
+	
 -- Available hooks
--- 'CanBuy' hooks can be returned as false to block buying, with the second arg being an error message
 	hook.Add("BaseWars_PlayerEmptyPrinter", "name", function(ply, ent, money) end)
-
-	hook.Add("BaseWars_PlayerCanBuyEntity", "name", function(ply, class) end)
-	hook.Add("BaseWars_PlayerCanBuyGun", "name", function(ply, class) end)
-	hook.Add("BaseWars_PlayerCanBuyDrug", "name", function(ply, class) end)
-	hook.Add("BaseWars_PlayerCanBuyProp", "name", function(ply, class) end)
-
+	
 	hook.Add("BaseWars_PlayerBuyEntity", "name", function(ply, ent) end)
 	hook.Add("BaseWars_PlayerBuyGun", "name", function(ply, ent) end)
 	hook.Add("BaseWars_PlayerBuyDrug", "name", function(ply, ent) end)
 	hook.Add("BaseWars_PlayerBuyProp", "name", function(ply, ent) end)
+
+-- 'CanBuy' hooks can be returned as false to block buying, with the second arg being an error message
+	hook.Add("BaseWars_PlayerCanBuyEntity", "name", function(ply, class) end)
+	hook.Add("BaseWars_PlayerCanBuyGun", "name", function(ply, class) end)
+	hook.Add("BaseWars_PlayerCanBuyDrug", "name", function(ply, class) end)
+	hook.Add("BaseWars_PlayerCanBuyProp", "name", function(ply, class) end)
+	
+-- Similar to the 'CanBuy', you can return false with an error message.
+	hook.Add("CanCreateFaction", "name", function(ply, name, password) end)
+	hook.Add("CanJoinFaction", "name", function(ply, name, password) end)
+	hook.Add("CanLeaveFaction", "name", function(ply, disband) end)
+	
+-- Same as above, false to make them unraidable, followed by a reason why.
+	hook.Add("PlayerIsRaidable", "name", function(ply) end)
 
 -- Deriving entities
 	ENT.Base = "bw_base" -- Generic electronic
