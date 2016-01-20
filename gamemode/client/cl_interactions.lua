@@ -179,8 +179,14 @@ end)
 
 LookEnt:RegisterEnt("bw_drink_drug", UseBind, function(aimEnt)
 	return "Use", aimEnt:GetDrugEffect() or "Drug"
+end,
+function(aimEnt)
+	return color1, color2
 end)
 
 LookEnt:RegisterEnt("bw_drink_vendingsoda", UseBind, function(aimEnt)
 	return "Drink", "Soda"
+end,
+function(aimEnt)
+	return color1, color2
 end)
