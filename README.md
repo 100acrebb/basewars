@@ -1,7 +1,7 @@
 # Hexahedronic BaseWars
 An open-source version of BaseWars designed to help drive more players into the gamemode, by offering servers a better alternative of the gamemode to run!
 
-This also ships with a modified version of twitch weaponry 2 (credited in the gamemodes credits), if this is in some way voilating someones rights, let us know. :)
+This also ships with a modified version of Twitch Weaponry 2 (credited in the gamemode's credits), if this is in some way violating someones rights, let us know. :)
 
 ## Features
 
