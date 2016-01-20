@@ -127,7 +127,10 @@ function SWEP:Holster()
 	if SERVER then
 		self.Owner:GetActiveWeapon():SetMaterial("")
 	else
-		self.Owner:GetViewModel():SetSubMaterial(0, nil)
+		local viewmodel = self.Owner:GetViewModel()
+		if viewmodel and IsValid(viewmodel) then
+			viewmodel:SetSubMaterial(0, nil)
+		end
 	end
 
 	return true
