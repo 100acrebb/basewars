@@ -35,7 +35,7 @@ local deshou = {
 	darkGrey	= Color( 45,  45,  45, 255),
 	highGrey	= Color( 78,  78,  78, 255),
 	lightGrey	= Color(204, 204, 202, 255),
-	
+
 	pink		= Color(217, 191, 194, 255),
 	pink2		= Color(169, 141, 155, 255),
 
@@ -47,7 +47,7 @@ function qchat:CreateChatTab()
 	self.chatTab.Paint 	= function(self, w, h)
 		surface.SetDrawColor(deshou.subGrey)
 		surface.DrawRect(0, 0, w, h)
-	end 
+	end
 
 	-- The text entry for the chat.
 	self.chatTab.pTBase = vgui.Create("DPanel", self.chatTab)
@@ -58,7 +58,7 @@ function qchat:CreateChatTab()
 
 	self.chatTab.pText 	= vgui.Create("DTextEntry", self.chatTab.pTBase)
 	self.chatTab.pText:SetHistoryEnabled(true)
-	
+
 	self.chatTab.pGr 	= vgui.Create("DPanel", self.chatTab.pTBase)
 	self.chatTab.pGr.Paint 	= function(self, w, h)
 		surface.SetDrawColor(deshou.darkGrey)
@@ -66,15 +66,15 @@ function qchat:CreateChatTab()
 	end
 
 	self.chatTab.pText.OnKeyCodeTyped = function(pan, key)
-	
+
 		local txt = pan:GetText():Trim()
 		hook.Run("ChatTextChanged", txt)
-		
+
 		if (key == KEY_ENTER) then
 			if (txt != "") then
 				pan:AddHistory(txt)
 				pan:SetText("")
-				
+
 				pan.HistoryPos = 0
 
 				if chitchat and chitchat.Say then
@@ -89,24 +89,24 @@ function qchat:CreateChatTab()
 
 		if (key == KEY_TAB) then
 			local tab = hook.Run("OnChatTab", txt)
-			
+
 			if (tab and isstring(tab)) then
 				pan:SetText(tab)
 			end
-			
+
 			timer.Simple(0, function() pan:RequestFocus() pan:SetCaretPos((tab or txt):len()) end)
 		end
-		
+
 		if (key == KEY_UP) then
 			pan.HistoryPos = pan.HistoryPos - 1
 			pan:UpdateFromHistory()
 		end
-		
-		if (key == KEY_DOWN) then	
+
+		if (key == KEY_DOWN) then
 			pan.HistoryPos = pan.HistoryPos + 1
 			pan:UpdateFromHistory()
 		end
-		
+
 	end
 
 	self.chatTab.pText.Paint = function(pan, w, h)
@@ -123,7 +123,7 @@ function qchat:CreateChatTab()
 
 	self.chatTab.pGr:Dock(LEFT)
 	self.chatTab.pText:Dock(FILL)
-	
+
 	self.chatTab.pGr.OnMousePressed = function(pan)
 		local mousex = math.Clamp(gui.MouseX(), 1, ScrW() - 1)
 		local mousey = math.Clamp(gui.MouseY(), 1, ScrH() - 1)
@@ -167,7 +167,7 @@ function qchat:BuildPanels()
 
 	self.pPanel:SetSizable(true)
 	self.pPanel:ShowCloseButton(false)
-	
+
 	self.pPanel.Think 	= function(self)
 		local mousex = math.Clamp(gui.MouseX(), 1, ScrW() - 1)
 		local mousey = math.Clamp(gui.MouseY(), 1, ScrH() - 1)
@@ -246,7 +246,7 @@ function qchat:SetUpChat()
 	self.chatTab.pGrLab:SetTextColor(deshou.pink)
 	self.chatTab.pGrLab:SetText(qchat.isTeamChat and "(TEAM)" or "(GLOBAL)")
 	self.chatTab.pText:SetText("")
-	
+
 	self.chatTab.pText:RequestFocus()
 
 	gamemode.Call("StartChat")
@@ -321,27 +321,27 @@ end
 
 function qchat:AppendText(txt)
 	local function linkAppend(islink, text)
-	
+
 		if islink then
-		
+
 			self.chatTab.pFeed:InsertClickableTextStart(text)
 				self.chatTab.pFeed:AppendText(text)
 			self.chatTab.pFeed:InsertClickableTextEnd()
-		
+
 		return end
-	
+
 		self.chatTab.pFeed:AppendText(text)
-	
+
 	end
 
 	local res = AppendTextLink(txt, linkAppend)
-	
+
 	if not res then
-	
+
 		self.chatTab.pFeed:AppendText(txt)
-		
+
 	end
-	
+
 end
 
 function qchat:ParseChatLine(tbl)
@@ -349,39 +349,39 @@ function qchat:ParseChatLine(tbl)
 	self:BuildIfNotExist()
 
 	if isstring(tbl) then
-	
+
 		self.chatTab.pFeed:InsertColorChange(120, 240, 140, 255)
 
 		self.chatTab.pFeed:AppendText(tbl)
 		self.chatTab.pFeed:AppendText("\n")
-		
+
 	return end
 
 	for i = 1, #tbl do
-	
+
 		local v = tbl[i]
 
 		if IsColor(v) or istable(v) then
-		
+
 			self.chatTab.pFeed:InsertColorChange(v.r, v.g, v.b, 255)
 
 		elseif isentity(v) and v:IsPlayer() then
-		
+
 			local col = GAMEMODE:GetTeamColor(v)
 			self.chatTab.pFeed:InsertColorChange(col.r, col.g, col.b, 255)
 
 			self.chatTab.pFeed:AppendText(v:Nick())
 
 		else
-		
+
 			self:AppendText(tostring(v))
-			
+
 		end
-		
+
 	end
 
 	self.chatTab.pFeed:AppendText("\n")
-	
+
 end
 
 function qchat.ChatBind(ply, bind)
@@ -418,6 +418,7 @@ hook.Add("PreRender", "qchat.PreRenderEscape", qchat.PreRenderEscape)
 
 function qchat:Close()
 	self.pPanel:SetVisible(false)
+	self.chatTab.pText.HistoryPos = 0
 
 	gamemode.Call("FinishChat")
 	self:SaveCookies()
@@ -530,6 +531,6 @@ if chatsounds then
 			chatsounds.ac.render(x, y, w, h)
 		end
 	end
-	
+
 	hook.Add("PostRenderVGUI", "chatsounds_autocomplete", f)
 end

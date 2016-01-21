@@ -120,7 +120,7 @@ local function MakePlayerList(pnl)
 	plyList:Dock(FILL)
 
 	plyList.PlayerLines = {}
-	
+
 	local function GetPlayer(t)
 
 		for _,ply in next, player.GetAll() do
@@ -129,23 +129,23 @@ local function MakePlayerList(pnl)
 			return ply end
 
 		end
-		
+
 		return false
 
-	end	
+	end
 
 	function plyList:UpdatePlayers()
 
 		local plys = player.GetAll()
 
 		for _, ply in pairs(plys) do
-			
+
 			if ply == me then continue end
 
 			local plyInFaction, plyFaction = ply:InFaction(), ply:GetFaction()
 
 			if not self.PlayerLines[ply] then
-				
+
 				local line = self:AddLine(ply:Nick(), plyInFaction and plyFaction or "<NONE>")
 				self.PlayerLines[ply] = line
 
@@ -156,21 +156,21 @@ local function MakePlayerList(pnl)
 		for ply, pnl in pairs(self.PlayerLines) do
 
 			if not IsValid(pnl) then
-				
+
 				pnl:Remove()
 				continue
 
 			end
 
 			if not pnl.SetColumnText then
-				
+
 				pnl:Remove()
 				continue
 
 			end
-			
+
 			if not IsValid(ply) then
-				
+
 				local id = pnl:GetID()
 				self:RemoveLine(id)
 				self.PlayerLines[ply] = nil
@@ -192,13 +192,13 @@ local function MakePlayerList(pnl)
 		self:UpdatePlayers()
 
 	end
-	
+
 	function plyList:OnRowSelected(id, panel)
-	
+
 		if not panel or not IsValid(panel) then return end
-	
+
 		self.SelectedPly = GetPlayer(panel:GetColumnText(1))
-	
+
 	end
 
 	plyList:UpdatePlayers()
@@ -297,14 +297,14 @@ local dialogs = {
 
 				self:SetDisabled(false)
 
-				if 
+				if
 					(#name < 5 or #name > 36)
-					or 
-					(#pw > 0 and (#pw < 5 or #pw > 20)) 
+					or
+					(#pw > 0 and (#pw < 5 or #pw > 20))
 				then
 
-					self:SetDisabled(true) 
-					return 
+					self:SetDisabled(true)
+					return
 
 				end
 
@@ -400,14 +400,14 @@ local dialogs = {
 
 				self:SetDisabled(false)
 
-				if 
+				if
 					(#name < 5 or #name > 36)
-					or 
-					(#pw > 0 and (#pw < 5 or #pw > 20)) 
+					or
+					(#pw > 0 and (#pw < 5 or #pw > 20))
 				then
 
-					self:SetDisabled(true) 
-					return 
+					self:SetDisabled(true)
+					return
 
 				end
 
@@ -483,7 +483,7 @@ local dialogs = {
 
 			pnl:SetSize(270, 162 - 8 - 40)
 
-		end,		
+		end,
 
 	}
 
@@ -525,7 +525,7 @@ local function CreatePopupDialog(c, id, ...)
 	function bgPanel:OnMouseReleased()
 
 		if not IsValid(pnl) then
-			
+
 			self:Remove()
 			return
 
@@ -558,16 +558,16 @@ local function CreatePopupDialog(c, id, ...)
 	local w, h = pnl:GetSize()
 
 	if x + w > ScrW() then
-		
+
 		pnl.x = ScrW() - w
 
 	end
 
 	if y + h > ScrH() then
-		
+
 		pnl.y = ScrH() - h
 
-	end	
+	end
 
 	pnl:MakePopup()
 
@@ -583,7 +583,7 @@ local function MakeMenu(mainFrame, tabPanel, ftionTab, raidsTab, rulesTab)
 	function mainFrame:OpenMenuThing(c, i, ...)
 
 		if IsValid(self.menuthing) then
-			
+
 			self.menuthing:Remove()
 			self.menuthing = nil
 
@@ -596,7 +596,7 @@ local function MakeMenu(mainFrame, tabPanel, ftionTab, raidsTab, rulesTab)
 	function mainFrame:OnClose()
 
 		if IsValid(self.menuthing) then
-			
+
 			self.menuthing:Remove()
 			self.menuthing = nil
 
@@ -612,8 +612,8 @@ local function MakeMenu(mainFrame, tabPanel, ftionTab, raidsTab, rulesTab)
 		ftionLabel:Dock(TOP)
 		ftionLabel:SetText("Factions")
 		ftionLabel:SetFont(bigFont)
-		ftionLabel:SetBright(true)
-		ftionLabel:SetExpensiveShadow(2, shadowColor)
+		ftionLabel:SetDark(true)
+		-- ftionLabel:SetExpensiveShadow(2, shadowColor)
 		ftionLabel:SizeToContents()
 
 		local yourfLabel = ftionTab:Add("DLabel")
@@ -629,11 +629,11 @@ local function MakeMenu(mainFrame, tabPanel, ftionTab, raidsTab, rulesTab)
 			local inFaction, myFaction = me:InFaction(), me:GetFaction()
 
 			if not inFaction then
-				
+
 				self:SetText("You're not currently in a faction.")
-				
+
 			else
-				
+
 				self:SetText("Your faction: " .. myFaction)
 
 			end
@@ -679,7 +679,7 @@ local function MakeMenu(mainFrame, tabPanel, ftionTab, raidsTab, rulesTab)
 			local sel = plyList:GetLine(plyList:GetSelectedLine())
 
 			if IsValid(sel) then
-				
+
 				val = sel:GetColumnText(2)
 
 			end
@@ -709,7 +709,7 @@ local function MakeMenu(mainFrame, tabPanel, ftionTab, raidsTab, rulesTab)
 		end
 
 	end
-	
+
 	do -- Raids tab
 
 		raidsTab:DockPadding(16, 8, 16, 16)
@@ -718,8 +718,8 @@ local function MakeMenu(mainFrame, tabPanel, ftionTab, raidsTab, rulesTab)
 		raidLabel:Dock(TOP)
 		raidLabel:SetText("Raids")
 		raidLabel:SetFont(bigFont)
-		raidLabel:SetBright(true)
-		raidLabel:SetExpensiveShadow(2, shadowColor)
+		raidLabel:SetDark(true)
+		-- raidLabel:SetExpensiveShadow(2, shadowColor)
 		raidLabel:SizeToContents()
 
 		local yourfLabel = raidsTab:Add("DLabel")
@@ -735,11 +735,11 @@ local function MakeMenu(mainFrame, tabPanel, ftionTab, raidsTab, rulesTab)
 			local inFaction, myFaction = me:InFaction(), me:GetFaction()
 
 			if not inFaction then
-				
+
 				self:SetText("You're not currently in a faction.")
-				
+
 			else
-				
+
 				self:SetText("Your faction: " .. myFaction)
 
 			end
@@ -770,19 +770,19 @@ local function MakeMenu(mainFrame, tabPanel, ftionTab, raidsTab, rulesTab)
 			me:StartRaid(self.Enemy)
 
 		end
-		
+
 		function btnStart:Think()
 
 			local Enemy 	= plyList.SelectedPly
 			Enemy = BaseWars.Ents:ValidPlayer(Enemy) and Enemy
-			
+
 			local InFac 	= me:InFaction()
 			local InFac2 	= Enemy and Enemy:InFaction() and not (Enemy:InFaction(me:GetFaction()))
-		
+
 			if not Enemy or (InFac and not InFac2) or (InFac2 and not InFac) then self:SetDisabled(true) else self:SetDisabled(false) self.Enemy = Enemy end
-			
+
 		end
-		
+
 		local btnConceed = btns:Add("DButton")
 
 		btnConceed:DockMargin(8, 0, 0, 0)
@@ -792,21 +792,21 @@ local function MakeMenu(mainFrame, tabPanel, ftionTab, raidsTab, rulesTab)
 		btnConceed:SetText("Conceed Raid")
 
 		function btnConceed:DoClick()
-		
+
 			me:ConceedRaid()
 
 		end
-		
+
 		function btnConceed:Think()
-		
-			local Disabled = not (me:InRaid() and (not me:InFaction() or me:InFaction(nil, true))) 
-			
+
+			local Disabled = not (me:InRaid() and (not me:InFaction() or me:InFaction(nil, true)))
+
 			self:SetDisabled(Disabled)
-			
+
 		end
 
 	end
-	
+
 	do -- Rules tab
 
 		rulesTab:DockPadding(16, 8, 16, 16)
@@ -815,24 +815,24 @@ local function MakeMenu(mainFrame, tabPanel, ftionTab, raidsTab, rulesTab)
 		rulesLabel:Dock(TOP)
 		rulesLabel:SetText("Server Rules")
 		rulesLabel:SetFont(bigFont)
-		rulesLabel:SetBright(true)
-		rulesLabel:SetExpensiveShadow(2, shadowColor)
+		rulesLabel:SetDark(true)
+		-- rulesLabel:SetExpensiveShadow(2, shadowColor)
 		rulesLabel:SizeToContents()
-		
+
 		local rulesHTML = rulesTab:Add("DHTML")
 		rulesHTML:Dock(FILL)
 		if BaseWars.Config.Rules.IsHTML then
-		
+
 			rulesHTML:SetHTML(BaseWars.Config.Rules.HTML or [[Error Loading HTML]])
-			
+
 		else
-		
+
 			rulesHTML:OpenURL(BaseWars.Config.Rules.HTML)
-			
+
 		end
-		
+
 	end
-	
+
 	mainFrame:SetVisible(false)
 
 	return mainFrame
@@ -847,7 +847,7 @@ local function MakeNotExist()
 
 	pnl = MakeMenu(PrepMenu())
 	pnl:Hide()
-	
+
 end
 
 local a
@@ -857,15 +857,15 @@ hook.Add("Think", "BaseWars.Menu.Open", function()
 	me = LocalPlayer()
 
 	if input.IsKeyDown(KEY_F3) then
-		
+
 		if not a then
-			
+
 			MakeNotExist()
-			
+
 			a = true
 
 			if pnl:IsVisible() then
-				
+
 				pnl:Close()
 
 			else

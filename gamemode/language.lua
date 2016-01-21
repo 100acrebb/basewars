@@ -86,7 +86,7 @@ BaseWars.LANG.__LANGUAGELOOK.ENGLISH = {
 	LevelText               = "Level: %s",
 	XPText                  = "%s/%s XP",
 
-	AFKFor					= "You have been AFK for",
+	AFKFor					= "You have been away for",
 	RespawnIn				= "You can respawn in",
 
 	UpgradeNoMoney			= "You don't have enough money to upgrade!",

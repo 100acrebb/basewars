@@ -2,7 +2,7 @@
 --does this count -Ghosty
 LookEnt = {}
 
-LookEnt.Key = Material("custom/key.png", "noclamp nocull smooth")
+LookEnt.Key = Material("custom/key.png")
 LookEnt.Dist = 150
 
 LookEnt.ConVarName = "interactions_enabled"
@@ -14,12 +14,13 @@ surface.CreateFont("LookEnt.Key", {
 	font = "Roboto",
 	size = 28,
 	weight = 800,
+	antialias = false
 })
 
 surface.CreateFont("LookEnt.Text", {
 	font = "Roboto",
 	size = 24,
-	weight = 400,
+	weight = 800,
 })
 
 function LookEnt:RegisterEnt(class, key, action, color, cansee)
@@ -53,62 +54,52 @@ function LookEnt:Paint()
 
 		local key = tbl.key
 		local action, name = tbl.action(aimEnt)
-		local actioncolor, namecolor = tbl.color(aimEnt)
+		local actionCol, nameCol = tbl.color(aimEnt)
 
 		local sW = ScrW()
 		local sH = ScrH()
 
-		--added spacing here instead
-		action = "   ".. action .." "
-
 		surface.SetFont("LookEnt.Key")
-		local keyX, keyY = surface.GetTextSize(key)
+		local keyW, keyH = surface.GetTextSize(key)
 
 		surface.SetFont("LookEnt.Text")
-		local actionX, actionY = surface.GetTextSize(action)
+		local actionW, actionH = surface.GetTextSize(action)
 
 		surface.SetFont("LookEnt.Text")
-		local nameX, nameY = surface.GetTextSize(name)
+		local nameW, nameH = surface.GetTextSize(name)
+
+		local keySize = 40
 
 		surface.SetMaterial(LookEnt.Key)
-		surface.SetDrawColor(255, 255, 255, 255)
-		surface.DrawTexturedRect(sW / 2 - keyX/2 - 20 - actionX/2 , sH / 2 + 40 / 2, 40, 40)
+		surface.SetDrawColor(Color(255, 255, 225))
+		surface.DrawTexturedRect(sW / 2 - keySize - (actionW + nameW + 6)/2 - 12, sH / 2 + 32, keySize, keySize)
 
 		surface.SetFont("LookEnt.Key")
-		surface.SetTextColor(0, 0, 0, 255)
-		surface.SetTextPos(sW / 2 - keyX - actionX/2 + 1 , sH / 2 + 40 / 2 + 40 / 2 - keyY / 2 + 1)
-		surface.DrawText(key)
-
-		surface.SetFont("LookEnt.Key")
-		surface.SetTextColor(0, 0, 0, 255)
-		surface.SetTextPos(sW / 2 - keyX - actionX/2 , sH / 2 + 40 / 2 + 40 / 2 - keyY / 2)
+		surface.SetTextColor(Color(0, 0, 0, 255))
+		surface.SetTextPos(sW / 2 - keySize / 2 - (actionW + nameW + 6)/2 - 12 - keyW / 2, sH / 2 + 32 + keyH / 2 - 7)
 		surface.DrawText(key)
 
 		surface.SetFont("LookEnt.Text")
-		surface.SetTextColor(0, 0, 0, 255)
-		surface.SetTextPos(sW / 2 - actionX/2 + 1 , sH / 2 + 40 / 2 + 40 / 2 - actionY / 2 + 1)
+
+		surface.SetTextColor(Color(0, 0, 0, 127))
+		surface.SetTextPos(sW / 2 - keySize + 2, sH / 2 + 32 + keyH / 2 - 5 + 2)
+		surface.DrawText(action)
+		surface.SetTextColor(actionCol)
+		surface.SetTextPos(sW / 2 - keySize, sH / 2 + 32 + keyH / 2 - 5)
 		surface.DrawText(action)
 
-		surface.SetFont("LookEnt.Text")
-		surface.SetTextColor(actioncolor)
-		surface.SetTextPos(sW / 2 - actionX/2 , sH / 2 + 40 / 2 + 40 / 2 - actionY / 2)
-		surface.DrawText(action)
-
-		surface.SetFont("LookEnt.Text")
-		surface.SetTextColor(0, 0, 0, 255)
-		surface.SetTextPos(sW / 2 + actionX /2 + 1 , sH / 2 + 40 / 2 + 40 / 2 - actionY / 2 + 1)
+		surface.SetTextColor(Color(0, 0, 0, 127))
+		surface.SetTextPos(sW / 2 - keySize + actionW + 6 + 2, sH / 2 + 32 + keyH / 2 - 5 + 2)
 		surface.DrawText(name)
-
-		surface.SetFont("LookEnt.Text")
-		surface.SetTextColor(namecolor)
-		surface.SetTextPos(sW / 2 + actionX /2 , sH / 2 + 40 / 2 + 40 / 2 - actionY / 2)
+		surface.SetTextColor(nameCol)
+		surface.SetTextPos(sW / 2 - keySize + actionW + 6, sH / 2 + 32 + keyH / 2 - 5)
 		surface.DrawText(name)
 	end
 end
 
 hook.Add("HUDPaint", "LookEnt.Paint", LookEnt.Paint)
 
-local color1, color2 = Color(128, 255, 0), Color(255, 255, 21)
+local color1, color2 = Color(255, 255, 21), Color(128, 255, 0)
 local color3 = Color(255, 0, 0)
 
 local UseBind = input.LookupBinding("+use")

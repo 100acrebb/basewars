@@ -1,3 +1,5 @@
+ModuleAutism()
+
 MODULE.Name 	= "HUD"
 MODULE.Author 	= "Q2F2 & Ghosty"
 MODULE.Realm 	= 2
@@ -19,10 +21,10 @@ function MODULE:__INIT()
 		weight = 1200,
 	})
 
-	surface.CreateFont("SysFont", {
-		font = "FixedSys",
-		size = 30,
-		weight = 1000,
+	surface.CreateFont(tag .. ".Time", {
+		font = "Roboto",
+		size = 28,
+		weight = 800,
 	})
 
 end
@@ -234,7 +236,7 @@ function MODULE:Paint()
 	draw.DrawText(BaseWars.LANG.MainMenuControl, tag, sW - 5, (BaseWars.PSAText and 20 or 3), red, TEXT_ALIGN_RIGHT)
 	draw.DrawText(Key .. BaseWars.LANG.SpawnMenuControl, tag, sW - 5, (BaseWars.PSAText and 33 or 16), red, TEXT_ALIGN_RIGHT)
 
-	draw.DrawText(os.date("%H:%M"), "SysFont", sW / 2, (BaseWars.PSAText and 20 or 3), trans, TEXT_ALIGN_CENTER)
+	draw.DrawText(os.date("%H:%M"), tag .. ".Time", sW / 2, (BaseWars.PSAText and 20 or 3), trans, TEXT_ALIGN_CENTER)
 
 	draw.DrawText(KarmaText, tag, 64 + 26 + pbarW / 2, sH - 128 - 48 - 8, shade, TEXT_ALIGN_CENTER)
 	draw.DrawText(KarmaText, tag, 64 + 24 + pbarW / 2, sH - 128 - 48 - 10, trans, TEXT_ALIGN_CENTER)
