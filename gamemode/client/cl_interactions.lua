@@ -68,31 +68,33 @@ function LookEnt:Paint()
 		surface.SetFont("LookEnt.Text")
 		local nameW, nameH = surface.GetTextSize(name)
 
+		local wholeW = actionW + nameW + 6
+
 		local keySize = 40
 
 		surface.SetMaterial(LookEnt.Key)
 		surface.SetDrawColor(Color(255, 255, 225))
-		surface.DrawTexturedRect(sW / 2 - keySize - (actionW + nameW + 6)/2 - 12, sH / 2 + 32, keySize, keySize)
+		surface.DrawTexturedRect(sW / 2 - keySize - wholeW/2 - 12, sH / 2 + 32, keySize, keySize)
 
 		surface.SetFont("LookEnt.Key")
 		surface.SetTextColor(Color(0, 0, 0, 255))
-		surface.SetTextPos(sW / 2 - keySize / 2 - (actionW + nameW + 6)/2 - 12 - keyW / 2, sH / 2 + 32 + keyH / 2 - 7)
+		surface.SetTextPos(sW / 2 - keySize / 2 - wholeW/2 - 12 - keyW / 2, sH / 2 + 32 + keyH / 2 - 7)
 		surface.DrawText(key)
 
 		surface.SetFont("LookEnt.Text")
 
 		surface.SetTextColor(Color(0, 0, 0, 127))
-		surface.SetTextPos(sW / 2 - keySize + 2, sH / 2 + 32 + keyH / 2 - 5 + 2)
+		surface.SetTextPos(sW / 2 - keySize / 2 - wholeW/2 + 18 + 2, sH / 2 + 32 + keyH / 2 - 5 + 2)
 		surface.DrawText(action)
 		surface.SetTextColor(actionCol)
-		surface.SetTextPos(sW / 2 - keySize, sH / 2 + 32 + keyH / 2 - 5)
+		surface.SetTextPos(sW / 2 - keySize / 2 - wholeW/2 + 18, sH / 2 + 32 + keyH / 2 - 5)
 		surface.DrawText(action)
 
 		surface.SetTextColor(Color(0, 0, 0, 127))
-		surface.SetTextPos(sW / 2 - keySize + actionW + 6 + 2, sH / 2 + 32 + keyH / 2 - 5 + 2)
+		surface.SetTextPos(sW / 2 - keySize / 2 - wholeW/2 + 18 + 6 + actionW + 2, sH / 2 + 32 + keyH / 2 - 5 + 2)
 		surface.DrawText(name)
 		surface.SetTextColor(nameCol)
-		surface.SetTextPos(sW / 2 - keySize + actionW + 6, sH / 2 + 32 + keyH / 2 - 5)
+		surface.SetTextPos(sW / 2 - keySize / 2 - wholeW/2 + 18 + 6 + actionW, sH / 2 + 32 + keyH / 2 - 5)
 		surface.DrawText(name)
 	end
 end
