@@ -1,5 +1,3 @@
-ModuleAutism()
-
 MODULE.Name 	= "HUD"
 MODULE.Author 	= "Q2F2 & Ghosty"
 MODULE.Realm 	= 2
