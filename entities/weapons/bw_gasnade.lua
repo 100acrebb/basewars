@@ -112,9 +112,15 @@ function SWEP:Deploy()
 
 	timer.Simple(0,function()
 		if SERVER then
-			self.Owner:GetActiveWeapon():SetMaterial("models/dav0r/hoverball")
+			local weapon = self.Owner:GetActiveWeapon()
+			if weapon and IsValid(weapon) then
+				weapon:SetMaterial("models/dav0r/hoverball")
+			end
 		else
-			self.Owner:GetViewModel():SetSubMaterial(0,"models/dav0r/hoverball")
+			local viewmodel = self.Owner:GetViewModel()
+			if viewmodel and IsValid(viewmodel) then
+				viewmodel:SetSubMaterial(0,"models/dav0r/hoverball")
+			end
 		end
 	end)
 
@@ -125,7 +131,10 @@ end
 function SWEP:Holster()
 
 	if SERVER then
-		self.Owner:GetActiveWeapon():SetMaterial("")
+		local weapon = self.Owner:GetActiveWeapon()
+		if weapon and IsValid(weapon) then
+			weapon:SetMaterial("")
+		end
 	else
 		local viewmodel = self.Owner:GetViewModel()
 		if viewmodel and IsValid(viewmodel) then
