@@ -60,7 +60,7 @@ function ENT:Initialize()
 					e:SetStart(v:GetPos() + Vector(0,0,32))
 					e:SetOrigin(v:GetPos() + Vector(0,0,32))
 					e:SetScale(4)
-				util.Effect("AntlionGib", e)
+				util.Effect("BloodImpact", e)
 
 			end
 
