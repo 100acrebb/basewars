@@ -225,15 +225,21 @@ if SERVER then
 
 	hook.Add("PlayerInitialSpawn", "nname_spawn_network", function(ply)
 
-		for _, pl in next, player.GetAll() do
-			
-			if Nicks[pl:EntIndex()] then
+		timer.Create("nname_gaymemes" .. ply:SteamID(), 0.5, 10, function()
+
+			if not IsValid(ply) then return end
+
+			for _, pl in next, player.GetAll() do
 				
-				NetworkNick(pl, ply, Nicks[pl:EntIndex()], true)
+				if Nicks[pl:EntIndex()] then
+					
+					NetworkNick(pl, ply, Nicks[pl:EntIndex()], true)
+
+				end
 
 			end
 
-		end
+		end)
 
 		local nick = ply:GetPData(Tag_pdata)
 
