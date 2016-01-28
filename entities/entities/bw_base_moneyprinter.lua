@@ -281,9 +281,10 @@ else
 			if disabled then return end
 
 			--Level
-			draw.RoundedBox(0, 0, 30, w, 1, self.FontColor)
+			surface.SetDrawColor(self.FontColor)
+			surface.DrawLine(0, 30, w, 30)--draw.RoundedBox(0, 0, 30, w, 1, self.FontColor)
 			draw.DrawText("LEVEL: " .. Lv, fontName .. ".Big", 4, 32, self.FontColor, TEXT_ALIGN_LEFT)
-			draw.RoundedBox(0, 0, 68, w, 1, self.FontColor)
+			surface.DrawLine(0, 68, w, 68)--draw.RoundedBox(0, 0, 68, w, 1, self.FontColor)
 
 			draw.DrawText("CASH", fontName .. ".Big", 4, 72, self.FontColor, TEXT_ALIGN_LEFT)
 --			draw.RoundedBox(0, 0, 72 + 32, w, 1, self.FontColor)
@@ -325,7 +326,8 @@ else
 			--Paper
 			local paper = math.floor(self:GetPaper())
 			draw.DrawText("Paper: " .. paper .. " sheets", fontName .. ".MedBig", 4, 94 + 49, self.FontColor, TEXT_ALIGN_LEFT)
-			draw.RoundedBox(0, 0, 102 + 37, w, 1, self.FontColor)
+			--draw.RoundedBox(0, 0, 102 + 37, w, 1, self.FontColor)
+			surface.DrawLine(0, 102 + 37, w, 102 + 37)
 			
 			local NextCost = BaseWars.LANG.CURRENCY .. BaseWars.NumberFormat(self:GetLevel() * self:GetNWInt("UpgradeCost"))
 			
@@ -335,10 +337,9 @@ else
 				
 			end
 			
+			surface.DrawLine(0, 142 + 25, w, 142 + 25)--draw.RoundedBox(0, 0, 142 + 25, w, 1, self.FontColor)
 			draw.DrawText("NEXT UPGRADE: " .. NextCost, fontName .. ".MedBig", 4, 84 + 78 + 10, self.FontColor, TEXT_ALIGN_LEFT)
-			draw.RoundedBox(0, 0, 142 + 25, w, 1, self.FontColor)
-
-			draw.RoundedBox(0, 0, 142 + 55, w, 1, self.FontColor)
+			surface.DrawLine(0, 142 + 25, w, 142 + 25)--draw.RoundedBox(0, 0, 142 + 55, w, 1, self.FontColor)
 
 			--Time remaining counter
 			local timeRemaining = 0
