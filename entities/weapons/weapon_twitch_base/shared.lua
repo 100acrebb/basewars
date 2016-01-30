@@ -1,16 +1,16 @@
 if SERVER then
 	AddCSLuaFile()
 	SWEP.HoldType = "ar2"
-	
+
 else
 	surface.CreateFont("HL2SelectIcons", 			{Font = "HL2MP", 	Size = ScreenScale( 60  ), Weight = 500})
 	surface.CreateFont("CSSelectIcons", 			{Font = "csd", 		Size = ScreenScale( 60  ), Weight = 500})
 	surface.CreateFont("CSKillIcons", 				{font = "csd", 		Size = ScreenScale( 120 ), Weight = 500})
 
-	function SWEP:DrawWeaponSelection (x, y, wide, tall, alpha) 
-		draw.SimpleText (self.IconLetter, self.IconLetterFont or "CSSelectIcons", x + wide/2, y + tall*0.2, Color (150, 150, 255, 255), TEXT_ALIGN_CENTER) 	 
+	function SWEP:DrawWeaponSelection (x, y, wide, tall, alpha)
+		draw.SimpleText (self.IconLetter, self.IconLetterFont or "CSSelectIcons", x + wide/2, y + tall*0.2, Color (150, 150, 255, 255), TEXT_ALIGN_CENTER)
 	end
-	
+
 end
 
 local tracerFreq = CreateClientConVar ("twitch_tracerfreq", "0", true)
@@ -71,14 +71,14 @@ SWEP.StationaryAimingOn		= false
 local pMeta = debug.getregistry().Player
 
 function pMeta:TWRecoil(pitch, yaw)
-	if SERVER and game.SinglePlayer() then 
+	if SERVER and game.SinglePlayer() then
 		self:SendLua("LocalPlayer():TWRecoil("..pitch..","..yaw..")")
 		return
 	end
-	
+
 	self:GetTable().TWRecoilYaw = self:GetTable().TWRecoilYaw or 0
 	self:GetTable().TWRecoilPitch = self:GetTable().TWRecoilPitch or 0
-	
+
 	self:GetTable().TWRecoilYaw = self:GetTable().TWRecoilYaw 		+ yaw
 	self:GetTable().TWRecoilPitch = self:GetTable().TWRecoilPitch 	+ pitch
 end
@@ -86,13 +86,13 @@ end
 function pMeta:AddTWRecoil(cmd)
 	local pitch 	= self:GetTable().TWRecoilPitch or 0
 	local yaw 		= self:GetTable().TWRecoilYaw or 0
-	
+
 	local pitch_d	= math.Approach (pitch, 0.0, 32.0 * FrameTime() * math.abs(pitch))
 	local yaw_d		= math.Approach (yaw, 0.0, 32.0 * FrameTime() * math.abs(yaw))
-	
+
 	self:GetTable().TWRecoilPitch = pitch_d
 	self:GetTable().TWRecoilYaw = yaw_d
-		
+
 	// Update eye angles
 	local eyes = cmd:GetViewAngles()
 		eyes.pitch = eyes.pitch + (pitch - pitch_d)
@@ -103,43 +103,43 @@ end
 
 function SWEP:Initialize()
 	if SERVER then
-		self:SetWeaponHoldType (self.HoldType)
+		self:SetHoldType (self.HoldType)
 	end
 end
 
 function SWEP:PrimaryAttack()
 	self.Reloading = false
-	
+
 	self.Weapon:SetNextPrimaryFire (CurTime() + self.Primary.Delay)
-	
+
 	if !self:CanPrimaryAttack() then
 		return
 	end
-	
+
 	if bulletTime:GetBool() and (self.DegreeOfZoom or 0) > 0 then
 		local pitch = 100 - self.DegreeOfZoom * (100 - (40 or self.Primary.BullettimeSoundPitch) / (1 - bulletTimeTimeScale:GetFloat()))
 		self.Weapon:EmitSound (self.Primary.BullettimeSound or self.Primary.Sound or "", 100, pitch)
 	else
 		self.Weapon:EmitSound (self.Primary.Sound or "")
 	end
-	
+
 	local cone = self.Primary.Cone
 	if self.StationaryAimingOn and self.Primary.ConeZoomed then cone = self.Primary.ConeZoomed end
-	
+
 	self:DoShootBullet (self.Primary.Damage, self.Primary.NumShots, cone)
 	local rec = recoilMul:GetFloat()
 	if self.Owner:Crouching() then rec = rec * 0.5 end
 	self.Owner:TWRecoil (math.random(-1, -0.5) * (self.Recoil or 1) * rec, math.random(-0.5, 0.5) * (self.Recoil or 1) * rec)
-	
+
 	if not (aimInfiniteAmmo:GetBool() and self.Owner:KeyDown(IN_ATTACK2) and self.Weapon:Clip1() == 1) then
 		self:TakePrimaryAmmo (1)
 	end
-	
+
 	if self.CustomPrimaryAttack then self:CustomPrimaryAttack() end
 end
 
 function SWEP:SecondaryAttack()
-	
+
 end
 
 function SWEP:SetAiming (bool)
@@ -161,13 +161,13 @@ function SWEP:Thinkie()
 			or (bulletTime:GetBool() and bulletTimeOnJump:GetBool() and not util.QuickTrace (self.Owner:GetPos(), Vector (0,0,-16), self.Owner).Hit))
 		and ((self.DrawTime or 0) + 0.8 < CurTime()))
 	end
-	
+
 	if self.StationaryAimingOn then
 		self.DegreeOfZoom = math.min((self.DegreeOfZoom or 0) + FrameTime() / self.ZoomTime, 1)
 	else
 		self.DegreeOfZoom = math.max((self.DegreeOfZoom or 0) - FrameTime() / self.ZoomTime, 0)
 	end
-	
+
 	if CLIENT then
 		self.FOVToSet = ((52 or self.FOVTargetOverride) * self.DegreeOfZoom) + (GetConVarNumber("fov_desired") or 75) * (1-self.DegreeOfZoom)
 		self.ViewModelFOV = 65 * ((GetConVarNumber("fov_desired") or 75) / 75) ^ 0.8 --<-- if I knew why this worked, I'd be a much smarter person. Or the other way round....
@@ -196,7 +196,7 @@ function SWEP:Reload()
 end
 
 function SWEP:Deploy()
-	if SERVER then self:SetWeaponHoldType (self.HoldType) end
+	if SERVER then self:SetHoldType (self.HoldType) end
 
 	if SERVER and game.SinglePlayer() then
 		timer.Simple(0.05, function() self.Owner.SendLua("if IsValid(LocalPlayer():GetActiveWeapon()) then LocalPlayer():GetActiveWeapon():Deploy() end") end)
@@ -236,7 +236,7 @@ function SWEP:DoShootBullet (dmg, numbul, cone)
 	bullet.Force	= dmg
 	bullet.Damage	= dmg * damageMul:GetFloat()
 	bullet.Callback	= self.CustomBulletCallback
-	
+
 	self.Owner:FireBullets (bullet)
 	self.Weapon:SendWeaponAnim (ACT_VM_PRIMARYATTACK)
 	self.Owner:MuzzleFlash()
@@ -284,14 +284,14 @@ end
 local function DrawTWEffects()
 	prog = LocalPlayer():GetActiveWeapon().DegreeOfZoom
 	if (not prog) or prog <= 0 then return end
-	
-	if aimHideHUD:GetBool() and WeaponUsesStationaryAiming then			
+
+	if aimHideHUD:GetBool() and WeaponUsesStationaryAiming then
 		LocalPlayer():GetActiveWeapon():DrawHUD()
 	end
-		
+
 	if bulletTime:GetBool() and bulletTimeColourDrain:GetBool() then
 		local tab = {}
- 	 
+
 		tab[ "$pp_colour_addr" ] 		= 0
 		tab[ "$pp_colour_addg" ] 		= 0
 		tab[ "$pp_colour_addb" ] 		= 0
@@ -301,9 +301,9 @@ local function DrawTWEffects()
 		tab[ "$pp_colour_mulr" ] 		= 0
 		tab[ "$pp_colour_mulg" ] 		= 0
 		tab[ "$pp_colour_mulb" ] 		= 0
-		 
+
 		DrawColorModify (tab)
-		
+
 		DrawSharpen (0.5 * prog,0.5 * prog)
 	end
 end
@@ -313,7 +313,7 @@ hook.Add ("RenderScreenspaceEffects", "Twitch_Effects", DrawTWEffects)
 local function HUDShouldDraw (name)
 	if not LocalPlayer():IsValid() then return end
 	if (hideHUD:GetBool()) and (WeaponUsesStationaryAiming) and (name != "CHudWeaponSelection") then return false end
-	if aimHideHUD:GetBool() and WeaponUsesStationaryAiming then	
+	if aimHideHUD:GetBool() and WeaponUsesStationaryAiming then
 		prog = LocalPlayer():GetActiveWeapon().DegreeOfZoom
 		if (prog and prog > 0.5) then
 			return false
@@ -343,12 +343,12 @@ local function StationaryAimingCalcView(pl, origin, angles, view)
 		view.origin = origin
 		view.angles = usefulViewAng
 		local DefPos = (pl:GetActiveWeapon().ViewModelAimPos or Vector (0,0,0)) * pl:GetActiveWeapon().DegreeOfZoom
-		
+
 		SimilarizeAngles (angles, usefulViewAng)
-		
+
 		fovratio = (LocalPlayer():GetActiveWeapon().FOVToSet or GetConVarNumber("fov_desired") or 75) / LocalPlayer():GetActiveWeapon().ViewModelFOV
 		angles = (angles * fovratio) + (usefulViewAng * (1 - fovratio))
-		
+
 		local pos = origin
 		local Right 	= angles:Right()
 		local Up 		= angles:Up()
@@ -359,9 +359,9 @@ local function StationaryAimingCalcView(pl, origin, angles, view)
 		view.vm_origin = pos
 		if pl:GetActiveWeapon().ViewModelFlip then angles.y = usefulViewAng.y + (usefulViewAng.y - angles.y) end
 		if pl:GetActiveWeapon().ViewModelAimAng then
-			angles:RotateAroundAxis( angles:Right(), 	pl:GetActiveWeapon().ViewModelAimAng.x * pl:GetActiveWeapon().DegreeOfZoom ) 
-			angles:RotateAroundAxis( angles:Up(), 		pl:GetActiveWeapon().ViewModelAimAng.y * pl:GetActiveWeapon().DegreeOfZoom ) 
-			angles:RotateAroundAxis( angles:Forward(), 	pl:GetActiveWeapon().ViewModelAimAng.z * pl:GetActiveWeapon().DegreeOfZoom ) 
+			angles:RotateAroundAxis( angles:Right(), 	pl:GetActiveWeapon().ViewModelAimAng.x * pl:GetActiveWeapon().DegreeOfZoom )
+			angles:RotateAroundAxis( angles:Up(), 		pl:GetActiveWeapon().ViewModelAimAng.y * pl:GetActiveWeapon().DegreeOfZoom )
+			angles:RotateAroundAxis( angles:Forward(), 	pl:GetActiveWeapon().ViewModelAimAng.z * pl:GetActiveWeapon().DegreeOfZoom )
 		end
 		view.vm_angles = angles
 		return view
@@ -377,15 +377,15 @@ local allowedFromCentreY = 8.5
 local function StationaryAimingCreateMove(cmd)
 	if WeaponUsesStationaryAiming() then
 		LocalPlayer():GetActiveWeapon():Thinkie()
-		
+
 		LocalPlayer():AddTWRecoil(cmd)
-		
+
 		if WeaponStationaryAimingOn() then
 			if not lockedViewAng then
 				lockedViewAng = cmd:GetViewAngles()
 				lockedViewAngOffset = angle_zero
 			end
-			
+
 			local angles = cmd:GetViewAngles()
 			if lastRealViewAng then
 				SimilarizeAngles (lastRealViewAng, angles)
@@ -393,9 +393,9 @@ local function StationaryAimingCreateMove(cmd)
 				diff = diff * (LocalPlayer():GetActiveWeapon().MouseSensitivity or 1) * aimSensitivity:GetFloat()
 				angles = lastRealViewAng + diff
 			end
-			
+
 			lastRealViewAng = angles
-			
+
 			SimilarizeAngles (lockedViewAng, angles)
 			local ydiff = (angles.y - lockedViewAng.y)
 			if ydiff > allowedFromCentreX then
@@ -412,19 +412,19 @@ local function StationaryAimingCreateMove(cmd)
 			cmd:SetViewAngles (angles)
 		elseif lockedViewAng then
 			local angles = cmd:GetViewAngles()
-			
+
 			if lastRealViewAng then
 				SimilarizeAngles (lastRealViewAng, angles)
 				local diff = angles - lastRealViewAng
 				lockedViewAng = lockedViewAng + diff
 			end
-			
+
 			if not returnJourney then
 				SimilarizeAngles (lockedViewAng, angles)
 				returnJourney = lockedViewAng - angles
 				returnJourney = returnJourney * (1/LocalPlayer():GetActiveWeapon().DegreeOfZoom)
 			end
-			
+
 			if LocalPlayer():GetActiveWeapon().DegreeOfZoom > 0 then
 				angles = angles + (returnJourney * (FrameTime() / LocalPlayer():GetActiveWeapon().ZoomTime))
 				cmd:SetViewAngles (angles)

@@ -1,12 +1,12 @@
 --[[
 
-	ChitChat 
+	ChitChat
 	script 			v 2
 	implementation  v 1
 	by Ghosty
 
 	CURRENT Features:
-		Chat modes	
+		Chat modes
 		Unlimited* chat chars
 
 	PLANNED Features:
@@ -99,7 +99,7 @@ if SERVER then
 		if msg:StartWith("//") then
 			return 7,msg:gsub("^//%s?","")
 		end
-		
+
 		if msg:StartWith("/ooc") then
 			return 7,msg:gsub("^/ooc%s?","")
 		end
@@ -115,7 +115,7 @@ if SERVER then
 			Msg("[CHCH] ") print(ply," message failed to decompress!?")
 			return
 		end
-		
+
 		(epoe and epoe.RealMsgC or MsgC)(Color(255, 255, 0, 255), ply, color_white, ": ", unmsg, "\n")
 
 		-- incoming terrible one-liners
@@ -166,7 +166,7 @@ if SERVER then
 		net.Send(plys)
 
 	end)
-	
+
 else
 
 	local timestm = CreateClientConVar("chitchat_timestamp","1")
@@ -205,18 +205,20 @@ else
 		}
 		return tbl
 	end
-	
+
 	local function NiceFormat(str)
-	
+
 		local Nice = str:lower()
 		Nice = str:gsub("^%l", string.upper)
-		
+
 		return Nice
-		
+
 	end
 
 	local white,gray = Color(255,255,255),Color(128,128,128)
 	local red, blu, green = Color(225,0,0), Color(80, 200, 255), Color(133,208,142)
+
+	local showranks = CreateConVar("cl_chitchat_showranks", "1", { FCVAR_ARCHIVE }, "Should we show player ranks when they talk? ex. \"[Owners] Q2F2: imgay\"")
 
 	function GM:OnPlayerChat(ply,msg,mode,dead)
 
@@ -229,32 +231,32 @@ else
 		tbl[#tbl + 1] = white
 		if dead then
 			tbl[#tbl + 1] = red
-			tbl[#tbl + 1] = "*DEAD* "			
+			tbl[#tbl + 1] = "*DEAD* "
 		end
 
 		if IsValid(ply) and ply:IsPlayer() then
-			if ply:IsAdmin() or (ply.IsMod and ply:IsMod()) then
-			
+			if (ply:IsAdmin() or (ply.IsMod and ply:IsMod())) and showranks:GetBool() then
+
 				tbl[#tbl + 1] = gray
 				tbl[#tbl + 1] = "["
 				tbl[#tbl + 1] = blu
 				tbl[#tbl + 1] = NiceFormat(ply:GetUserGroup())
 				tbl[#tbl + 1] = gray
 				tbl[#tbl + 1] = "] "
-				
+
 			end
-			
+
 			if ply:GetUserGroup() == "donators" then
-			
+
 				tbl[#tbl + 1] = gray
 				tbl[#tbl + 1] = "["
 				tbl[#tbl + 1] = green
 				tbl[#tbl + 1] = "$"
 				tbl[#tbl + 1] = gray
 				tbl[#tbl + 1] = "] "
-				
+
 			end
-			
+
 			tbl[#tbl + 1] = team.GetColor(ply:Team())
 			tbl[#tbl + 1] = ply:Nick()
 		else
@@ -277,7 +279,7 @@ else
 		if msg:StartWith(">") and #msg > 1 then
 			tbl[#tbl + 1] = Color(0,240,0)
 		elseif msg:match("^[\"'].+[\"']") then
-			tbl[#tbl + 1] = Color(255,200,200)		
+			tbl[#tbl + 1] = Color(255,200,200)
 		end
 		tbl[#tbl + 1] = msg
 

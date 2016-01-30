@@ -597,6 +597,12 @@ function GM:PlayerSpawn(ply)
 
 	end
 
+	if ply:HasWeapon("hands") then
+		ply:SelectWeapon("hands")
+	elseif ply:HasWeapon("none") then
+		ply:SelectWeapon("none")
+	end
+
 end
 
 ScanEntities()
