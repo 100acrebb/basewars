@@ -10,15 +10,17 @@
 ####Normal
 - [ ] Visual
     - [ ] Clientside ConVar to toggle rank tags
-- [ ] When spawning, select hands automatically
+- [ ] Make it so hands are selected automatically on spawn
 
 ---
 #####Low
 - [ ] Visual
-    - [ ] Re-do the electronics HUD (doesn't match general HUD)
+    - [ ] Make the electronics HUD match the general HUD's design
+    - [ ] Make QChat match the general HUD's design
     - [ ] Make Twitch SWEPs Free-Aim look correct with CS:S viewmodels
+    - [ ] Make a custom weapon selection HUD matching with the general HUD's design
 
 ---
-######*??? (courtesy of Tenrys)*
+######*Requests*
 - [ ] Replace aowl with mingeban (Ask Q2F2? It has support for working with aowl.AddCommand commands, but no pre-made commands done yet)
 - [ ] Replace current AFK system with Tenrys' (include AFKmera along?)
