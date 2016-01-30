@@ -22,6 +22,10 @@
     - [ ] Make a custom weapon selection HUD matching with the general HUD's design
 
 ---
+####Unknown priority
+- [ ] Quests / Positive karma (as requested as Q2F2, probably normal/high priority?)
+
+---
 ######*Requests*
 - [ ] Replace aowl with mingeban (Ask Q2F2? It has support for working with aowl.AddCommand commands, but no pre-made commands done yet)
 - [ ] Replace current AFK system with Tenrys' (include AFKmera along?)
