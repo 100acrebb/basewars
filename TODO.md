@@ -1,7 +1,7 @@
 #To-do
 
 ###High
-- [ ] Autosell on disconnect
+- [ ] Auto-sell on disconnect (10 minutes after disconnecting to allow player crashes)
 - [ ] Visual
     - [ ] Fix Interaction HUD (it only looks okay after a reload of the script... what?)
     - [ ] Set correct holdtypes on Twitch SWEPs
@@ -11,6 +11,7 @@
 - [ ] Visual
     - [ ] Clientside ConVar to toggle rank tags
 - [ ] Make it so hands are selected automatically on spawn
+- [ ] Fix Team Chat
 
 ---
 #####Low
