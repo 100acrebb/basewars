@@ -49,7 +49,7 @@ end
 
 --16:19 - Tenrys: q2f2 please add a convar to disable halos pls
 local drawhalo = CreateClientConVar("enable_halos", "1", true, false)
-local haloAdd = halo.Draw
+local haloAdd = halo.Add
 
 function halo.Add(...)
 
