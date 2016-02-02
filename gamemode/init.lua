@@ -409,7 +409,7 @@ function GM:PlayerShouldTakeDamage(ply, atk)
 
 	end
 
-	for k, v in next, ents.FindInSphere(ply:GetPos(), 300) do
+	for k, v in next, ents.FindInSphere(ply:GetPos(), 256) do
 
 		local Class = v:GetClass()
 
@@ -427,7 +427,7 @@ function GM:PlayerShouldTakeDamage(ply, atk)
 
 	end
 
-	for k, v in next, ents.FindInSphere(atk:GetPos(), 300) do
+	for k, v in next, ents.FindInSphere(atk:GetPos(), 256) do
 
 		local Class = v:GetClass()
 
@@ -514,7 +514,7 @@ function GM:Think()
 
 			end
 
-			local Ents = ents.FindInSphere(s:GetPos(), 700)
+			local Ents = ents.FindInSphere(s:GetPos(), 256)
 
 			if #Ents < 2 then
 
