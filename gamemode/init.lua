@@ -409,7 +409,7 @@ function GM:PlayerShouldTakeDamage(ply, atk)
 
 	end
 
-	for k, v in next, ents.FindInSphere(ply:GetPos(), 500) do
+	for k, v in next, ents.FindInSphere(ply:GetPos(), 300) do
 
 		local Class = v:GetClass()
 
@@ -427,7 +427,7 @@ function GM:PlayerShouldTakeDamage(ply, atk)
 
 	end
 
-	for k, v in next, ents.FindInSphere(atk:GetPos(), 500) do
+	for k, v in next, ents.FindInSphere(atk:GetPos(), 300) do
 
 		local Class = v:GetClass()
 
