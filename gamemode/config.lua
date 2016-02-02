@@ -317,6 +317,15 @@ BaseWars.NPCTable = {
 
 	},
 
+	["rp_downtown_v4c_v2"] = {
+
+		[1] = {
+			Pos = Vector(338, -1137, -193),
+			Ang = Angle(0, 135, 0),
+		},
+
+	},
+
 	["rp_bangclaw"] = {
 
 		[1] = {
