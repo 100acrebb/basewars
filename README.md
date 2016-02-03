@@ -25,6 +25,7 @@ This also ships with a modified version of Twitch Weaponry 2 (credited in the ga
 
 ### Installing the gamemode
 * Drag it into ```garrysmod/gamemodes``` and extract it.
+* Edit ```garrysmod/gamemodes/basewars/gamemode/config.lua``` to your own liking.
 
 **For a few things to work you need [EASYLUA](https://github.com/CapsAdmin/fast_addons/blob/master/lua/helpers/easylua.lua) too; it goes in ```lua/autorun```.**
 
