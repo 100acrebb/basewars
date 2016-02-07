@@ -445,7 +445,9 @@ local function BlockInteraction(ply, ent, ret)
 
 	if ent then
 
-		if not BaseWars.Ents:Valid(ent) then return end
+		if not BaseWars.Ents:Valid(ent) then return false end
+
+		if ent:IsVehicle() then return false end
 
 		local Classes = BaseWars.Config.PhysgunBlockClasses
 		if Classes[ent:GetClass()] then return false end
