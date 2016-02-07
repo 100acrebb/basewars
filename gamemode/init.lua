@@ -167,15 +167,11 @@ end
 
 function GM:PreCleanupMap()
 
-	self.BaseClass:PreCleanupMap()
-
 	BaseWars.UTIL.RefundAll()
 
 end
 
 function GM:PostCleanupMap()
-
-	self.BaseClass:PostCleanupMap()
 
 	BaseWars.NPCs:CreateNPCs()
 
