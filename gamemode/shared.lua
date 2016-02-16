@@ -447,8 +447,6 @@ local function BlockInteraction(ply, ent, ret)
 
 		if not BaseWars.Ents:Valid(ent) then return false end
 
-		if ent:IsVehicle() then return false end
-
 		local Classes = BaseWars.Config.PhysgunBlockClasses
 		if Classes[ent:GetClass()] then return false end
 
@@ -478,6 +476,8 @@ end
 function GM:PhysgunPickup(ply, ent)
 
 	local Ret = self.BaseClass:PhysgunPickup(ply, ent)
+
+	if ent:IsVehicle() then return IsAdmin(ply, ent, Ret) end
 
 	return BlockInteraction(ply, ent, Ret)
 
@@ -543,6 +543,8 @@ function GM:GravGunPunt(ply, ent)
 
 	local Ret = self.BaseClass:GravGunPunt(ply, ent)
 	local Class = ent:GetClass()
+
+	if ent:IsVehicle() then return false end
 
 	if Class == "prop_physics" then return false end
 
