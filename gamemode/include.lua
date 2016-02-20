@@ -68,6 +68,12 @@ do
 
 	end
 
+	if ulib or ulx then
+
+		IncludeCS("integration/bw_admin_ulx.lua")
+
+	end
+
 end
 
 do
@@ -102,11 +108,5 @@ do
 
 	IncludeSV("server/commands.lua")
 	IncludeSV("server/hooks.lua")
-
-	if ulib or ulx then
-
-		IncludeSV("integration/bw_admin_ulx.lua")
-
-	end
 
 end
