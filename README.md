@@ -57,7 +57,7 @@ This also ships with a modified version of Twitch Weaponry 2 (credited in the ga
 	ply:SetXP(amt)
 	ply:AddXP(amt)
 
--- Manipulating players level
+-- Manipulating players karma
 	ply:AddKarma(amt)
 	ply:SetKarma(amt)
 	
