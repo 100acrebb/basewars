@@ -85,7 +85,7 @@ do
 
 	end
 
-	if aowl then
+	if aowl and #aowl > 0 then
 
 		LoadFileCS("shared/metastruct/markup.lua")
 		LoadFileCS("shared/metastruct/expression.lua")
@@ -102,5 +102,11 @@ do
 
 	IncludeSV("server/commands.lua")
 	IncludeSV("server/hooks.lua")
+
+	if ulib or ulx then
+
+		IncludeSV("integration/bw_admin_ulx.lua")
+
+	end
 
 end
