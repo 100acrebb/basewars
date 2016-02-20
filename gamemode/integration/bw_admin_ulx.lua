@@ -88,7 +88,7 @@ end
 
 local addlevel = ulx.command(CATEGORY_NAME, "ulx addlevel", ulx.addlevel, "!addlevel")
 	addlevel:addParam{type = ULib.cmds.PlayersArg}
-	addlevel:addParam{type = ULib.cmds.NumArg, min = 0, max = 1250250, hint = "Level", ULib.cmds.round}
+	addlevel:addParam{type = ULib.cmds.NumArg, min = 0, max = 2000, hint = "Level", ULib.cmds.round}
 	addlevel:defaultAccess(ULib.ACCESS_ADMIN)
 	addlevel:help("Add levels to a player.")
 
@@ -110,7 +110,7 @@ end
 
 local setlevel = ulx.command(CATEGORY_NAME, "ulx setlevel", ulx.setlevel, "!setlevel")
 	setlevel:addParam{type = ULib.cmds.PlayersArg}
-	setlevel:addParam{type = ULib.cmds.NumArg, min = 0, max = 1250250, hint = "Level", ULib.cmds.round}
+	setlevel:addParam{type = ULib.cmds.NumArg, min = 0, max = 2000, hint = "Level", ULib.cmds.round}
 	setlevel:defaultAccess(ULib.ACCESS_ADMIN)
 	setlevel:help("Set a players level.")
 
