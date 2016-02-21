@@ -172,7 +172,7 @@ function ulx.addkarma(calling_ply, target_plys, amt)
 
 	end
 
-	ulx.fancyLogAdmin(calling_ply, "#A added #s to #T's Karma", affected_plys, amt)
+	ulx.fancyLogAdmin(calling_ply, "#A added #s to #T's karma", affected_plys, amt)
 
 end
 
@@ -196,7 +196,7 @@ function ulx.setkarma(calling_ply, target_plys, amt)
 
 	end
 
-	ulx.fancyLogAdmin(calling_ply, "#A set #T's Karma to #s", affected_plys, amt)
+	ulx.fancyLogAdmin(calling_ply, "#A set #T's karma to #s", affected_plys, amt)
 
 end
 
