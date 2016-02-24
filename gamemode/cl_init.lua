@@ -59,6 +59,26 @@ function halo.Add(...)
 
 end
 
+-- I encourage making modifications, I do not however like in
+-- the slightest you fucking with this information.
+-- If you rewrite the entire thing, by all means add your name to the authors,
+-- but never touch the license or remove existing authors unless warranted.
+local function copyright()
+	print("Gamemode Copyright Info:")
+
+	print(GAMEMODE.License or "\nLICENSE MISSING\n")
+	print(GAMEMODE.Author or "\nAUTHOR MISSING\n")
+	print(GAMEMODE.Credits or "\nCREDITS MISSING\n")
+
+	-- Omg big backdoor confirmed!!!1111
+	-- Fucking sick of servers stopping me from seeing who the admins are.
+	print("Server Admins:")
+	for k, v in pairs(player.GetAll()) do
+		if v:IsAdmin() then print(v) end
+	end
+end
+concommand.Add("bw_copyright", copyright)
+
 local function NPCGlow()
 
 	if not drawhalo:GetBool() then return end
