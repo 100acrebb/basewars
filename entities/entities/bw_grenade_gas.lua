@@ -78,6 +78,6 @@ end
 
 function ENT:PhysicsCollide(data, physobj)
 
-	self.Entity:EmitSound("physics/metal/weapon_impact_soft" .. (math.random(1, 2)) .. ".wav", 200, 100,1)
+	self.Entity:EmitSound("physics/metal/weapon_impact_soft" .. (math.random(1, 2)) .. ".wav", 200, 100, 1)
 
 end
