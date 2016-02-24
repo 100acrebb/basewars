@@ -146,7 +146,9 @@ if SERVER then
 
 		self:SetHealth(self:Health() - dmg)
 
-		if self:Health() <= 0 then
+		if self:Health() <= 0 and not self.BlownUp then
+			
+			self.BlownUp = true
 		
 			BaseWars.UTIL.PayOut(self, Attacker)
 		
