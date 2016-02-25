@@ -791,5 +791,10 @@ local function RemoveTabs()
 	spawnmenu.Reload()
 
 end
-hook.Add("InitPostEntity", "BaseWars.SpawnMenu.RemoveTabs", RemoveTabs)
-RemoveTabs()
+
+if GetConVar("developer"):GetInt() < 2 then
+
+	hook.Add("InitPostEntity", "BaseWars.SpawnMenu.RemoveTabs", RemoveTabs)
+	RemoveTabs()
+
+end
