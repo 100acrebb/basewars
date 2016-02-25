@@ -553,7 +553,7 @@ BaseWars.Config.CommandsHelp = {
   },
 
   ["Sell Items"] = {
-    "Didn't mean to buy that? Want to get rid of it? Need some your money back? Look at your item and use one of these.",
+    "Didn't mean to buy that? Want to get rid of it? Need some your money back?.",
     "Look at your item and use one of these.",
     "",
     "/sell        /destroy        /remove",
