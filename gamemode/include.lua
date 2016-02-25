@@ -74,6 +74,12 @@ do
 
 	end
 
+	if aowl and table.Count(aowl) > 0 then
+
+		IncludeCS("shared/metastruct/anime.lua")
+
+	end
+
 end
 
 do
@@ -91,7 +97,7 @@ do
 
 	end
 
-	if aowl and #aowl > 0 then
+	if aowl and table.Count(aowl) > 0 then
 
 		LoadFileCS("shared/metastruct/markup.lua")
 		LoadFileCS("shared/metastruct/expression.lua")
