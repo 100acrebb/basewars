@@ -5,8 +5,7 @@ local tag = "BaseWars.PlayTime_Money"
 
 if SERVER then
 
-	resource.AddFile("materials/icon32/clock_wh32.png")
-	resource.AddFile("materials/icon32/money_wh32.png")
+	-- FastDL stuff, it gets already automatically added
 
 	return
 	
@@ -96,6 +95,8 @@ end
 
 local green = Color(42, 255, 0)
 local red = Color(255, 0, 0)
+
+local TryAgain = true
 
 function MODULE:Paint()
 
@@ -196,5 +197,12 @@ function MODULE:Paint()
 
 	drawEffects()
 
+	if TimeMat:IsError() or MoneyMat:IsError() and TryAgain then
+		TimeMat 	= Material("icon32/clock_wh32.png", "nocull noclamp smooth")
+		MoneyMat 	= Material("icon32/money_wh32.png", "nocull noclamp smooth")
+		TryAgain = false
+		
+		timer.Simple( 3, function() TryAgain = true end )
+	end
 end
 hook.Add("HUDPaint", tag .. ".Paint", Curry(MODULE.Paint))
