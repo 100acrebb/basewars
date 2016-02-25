@@ -646,7 +646,7 @@ if CustomizableWeaponry then
 
 	}
 
-	BaseWars.SpawnList.Models.Loadout["Attachments"] = {
+	--[[BaseWars.SpawnList.Models.Loadout["Attachments"] = {
 
 		["General - Suppresors"]	= BaseWars.GSL{Model = "models/items/boxsrounds.mdl", Price = 65000, ClassName = "cw_attpack_suppressors"},
 		["General - Attachments"]	= BaseWars.GSL{Model = "models/items/boxsrounds.mdl", Price = 65000, ClassName = "cw_attpack_various"},
@@ -676,7 +676,7 @@ if CustomizableWeaponry then
 		["Misc - AK74"]		= BaseWars.GSL{Model = "models/items/boxsrounds.mdl", Price = 65000, ClassName = "cw_attpack_ak74_misc"},
 		["Misc - AR15"]		= BaseWars.GSL{Model = "models/items/boxsrounds.mdl", Price = 65000, ClassName = "cw_attpack_ar15_misc"},
 
-	}
+	}]]
 else
 	BaseWars.SpawnList.Models.Loadout["Weapons - T1"] = {
 
