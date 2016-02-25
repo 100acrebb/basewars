@@ -543,6 +543,56 @@ BaseWars.Config.DrugHelp = {
 	},
 }
 
+BaseWars.Config.CommandsHelp = {
+  ["Upgrade Items"] = {
+    "Everyone loves a little efficiency.",
+    "Look at your printer and use one of these.",
+    "",
+    "/upg        /upgrade        /upgr",
+
+  },
+
+  ["Sell Items"] = {
+    "Didn't mean to buy that? Want to get rid of it? Need some your money back? Look at your item and use one of these.",
+    "Look at your item and use one of these.",
+    "",
+    "/sell        /destroy        /remove",
+
+  },
+
+
+  ["Drop Weapons"] = {
+    "Sometimes the noobs need a little extra defense.",
+    "",
+    "/dw        /dropweapon        /dropwep",
+
+
+  },
+
+  ["Private Message"] = {
+    "Psst...",
+    "",
+    "/tell (playername)        /msg (playername)",
+
+  },
+
+  ["Give Money to Player"] = {
+    "Share the wealth!",
+    "",
+    "/givemoney (playername)        /pay (playername)        /moneygive (playername)",
+
+
+  },
+
+  ["Place a Bounty"] = {
+    "Need someone gone, but too lazy and rich? We have just the thing for you.",
+    "",
+    "/bounty  (playername)        /place (playername)        /placebounty (playername)",
+
+
+  },
+}
+
 BaseWars.SpawnList = {}
 BaseWars.SpawnList.Models = {
 
