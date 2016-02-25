@@ -134,11 +134,11 @@ local function PrepMenu(ent)
 
 	local HelpTab = tabPanel:MakeTab("Help", "icon16/help.png")
 	local DrugsTab = tabPanel:MakeTab("Drugs", "icon16/bin_closed.png")
-	local QuestsTab = tabPanel:MakeTab("Quests", "icon16/ruby_gear.png")
+	local CommsTab = tabPanel:MakeTab("Commands", "icon16/ruby_gear.png")
 	
 	PopulateFromTable(HelpTab, BaseWars.Config.Help)
 	PopulateFromTable(DrugsTab, BaseWars.Config.DrugHelp)
-	
+	PopulateFromTable(CommsTab, BaseWars.Config.CommandsHelp)
 	return mainFrame
 
 end
