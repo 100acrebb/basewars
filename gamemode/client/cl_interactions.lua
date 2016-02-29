@@ -176,3 +176,10 @@ end,
 function(aimEnt)
 	return color1, color2
 end)
+
+LookEnt:RegisterEnt("bw_npc", UseBind, function(aimEnt)
+	return "Talk to", "help NPC"
+end,
+function(aimEnt)
+	return color1, color2
+end)
