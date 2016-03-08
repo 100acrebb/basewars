@@ -7,9 +7,9 @@ qchat = {
 	Contact = "notq2f2@gmail.com",
 }
 
-local HaxrCorp = CreateConVar("qchat_use_haxrcorp", "0", true)
-local FontSize = CreateConVar("qchat_fontsize", HaxrCorp:GetBool() and "21" or "17", true)
-local TransBack = CreateConVar("qchat_use_transback", "1", true)
+local HaxrCorp = CreateClientConVar("qchat_use_haxrcorp", "0", true)
+local FontSize = CreateClientConVar("qchat_fontsize", HaxrCorp:GetBool() and "21" or "17", true)
+local TransBack = CreateClientConVar("qchat_use_transback", "1", true)
 
 function qchat.CreateFonts()
 	surface.CreateFont("QChatFont", {
