@@ -11,7 +11,6 @@ local function RemoveProps()
 end
 
 hook.Add( "InitPostEntity", "RemoveProps", function()
-	//print( "MPR: Initialization Hook Called" )
 	if BaseWars.Config.CleanProps then
 	RemoveProps()
 	end
