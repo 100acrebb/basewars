@@ -68,6 +68,18 @@ do
 
 	end
 
+	if ulib or ulx then
+
+		IncludeCS("integration/bw_admin_ulx.lua")
+
+	end
+
+	if aowl and not ulx then
+
+		IncludeCS("shared/metastruct/anime.lua")
+
+	end
+
 end
 
 do
@@ -85,7 +97,7 @@ do
 
 	end
 
-	if aowl then
+	if aowl and not ulx then
 
 		LoadFileCS("shared/metastruct/markup.lua")
 		LoadFileCS("shared/metastruct/expression.lua")

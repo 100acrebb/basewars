@@ -86,6 +86,50 @@ chitchat.MessageModes = {
 	},
 }
 
+--[[
+["donators"] = {
+	["STEAM_0:1:66541847"] = "Mitzuya",
+},
+["moderators"] = {
+	["STEAM_0:1:11838714"] = "TaillyLaundis",
+	["STEAM_0:1:61234140"] = "creb",
+	["STEAM_0:1:54664121"] = "TyroneMufasa",
+},
+["managers"] = {
+	["STEAM_0:0:54576316"] = "AlanSugartits",
+},
+["owners"] = {
+	["STEAM_0:1:74836666"] = "Trixter",
+	["STEAM_0:1:62445445"] = "Q2F2",
+	["STEAM_0:0:133411986"] = "MorganDrunkmanIWantedMilitia",
+},
+["developers"] = {
+	["STEAM_0:0:80997988"] = "oplexz",
+	["STEAM_0:1:32476157"] = "Tenrys",
+	["STEAM_0:0:80669850"] = "user4992",
+	["STEAM_0:0:155546951"] = "notoplex",
+	["STEAM_0:0:42138604"] = "Liquid",
+	["STEAM_0:0:62588856"] = "Ghosty",
+	["STEAM_0:1:29543208"] = "ToastyEngineer",
+},
+]]
+
+chitchat.Devs = {
+	--Owners
+	["STEAM_0:1:74836666"] = "Trixter",
+	["STEAM_0:1:62445445"] = "Q2F2",
+	["STEAM_0:0:133411986"] = "MorganDrunkmanIWantedMilitia", --Trixter alt acc
+	
+	--Devs
+	["STEAM_0:0:80997988"] = "oplexz",
+	["STEAM_0:1:32476157"] = "Tenrys",
+	["STEAM_0:0:80669850"] = "user4992",
+	["STEAM_0:0:155546951"] = "notoplex",
+	["STEAM_0:0:42138604"] = "Liquid",
+	["STEAM_0:0:62588856"] = "Ghosty",
+	["STEAM_0:1:29543208"] = "ToastyEngineer",
+}
+
 if SERVER then
 
 	AddCSLuaFile()
@@ -235,7 +279,16 @@ else
 		end
 
 		if IsValid(ply) and ply:IsPlayer() then
-			if (ply:IsAdmin() or (ply.IsMod and ply:IsMod())) and showranks:GetBool() then
+			if chitchat.Devs[ply:SteamID()] then
+			
+				tbl[#tbl + 1] = gray
+				tbl[#tbl + 1] = "["
+				tbl[#tbl + 1] = green
+				tbl[#tbl + 1] = "GM-Dev"
+				tbl[#tbl + 1] = gray
+				tbl[#tbl + 1] = "] "
+			
+			elseif (ply:IsAdmin() or (ply.IsMod and ply:IsMod())) and showranks:GetBool() then
 
 				tbl[#tbl + 1] = gray
 				tbl[#tbl + 1] = "["

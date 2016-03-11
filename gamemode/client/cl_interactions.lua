@@ -8,6 +8,8 @@ LookEnt.Dist = 150
 LookEnt.ConVarName = "interactions_enabled"
 LookEnt.ConVar = CreateConVar(LookEnt.ConVarName, 1, FCVAR_ARCHIVE, "Enable the indicators for entities? 1 = Enabled, 0 = Disabled")
 
+LookEnt.Draw = true
+
 LookEnt.Ents = {}
 
 surface.CreateFont("LookEnt.Key", {
@@ -32,9 +34,11 @@ end
 local me = LocalPlayer()
 
 function LookEnt:Paint()
+	if not LookEnt.Draw then return end
 	if not IsValid(me) then me = LocalPlayer() end
 	if not IsValid(me) then return end
 	if not tobool(LookEnt.ConVar:GetInt()) then return end
+	if LookEnt.Key:IsError() and NoDL then LookEnt.Key = Material("custom/key.png") LookEnt.Draw = false timer.Simple( 3, function() LookEnt.Draw = true end ) return end
 	local aimEnt = me:GetEyeTrace().Entity
 	if not BaseWars.Ents:Valid(aimEnt) then return end
 	if aimEnt:GetClass() == "worldspawn" then return end
@@ -168,6 +172,13 @@ end)
 
 LookEnt:RegisterEnt("bw_drink_vendingsoda", UseBind, function(aimEnt)
 	return "Drink", "Soda"
+end,
+function(aimEnt)
+	return color1, color2
+end)
+
+LookEnt:RegisterEnt("bw_npc", UseBind, function(aimEnt)
+	return "Talk to", "help NPC"
 end,
 function(aimEnt)
 	return color1, color2

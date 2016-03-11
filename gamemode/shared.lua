@@ -395,7 +395,7 @@ local NumTable = {
 	[4] = {10^9 , "Billion"},
 	[3] = {10^12, "Trillion"},
 	[2] = {10^15, "Quadrillion"},
-	[1] = {10^18, "Pentillion"},
+	[1] = {10^18, "Quintillion"},
 }
 
 function BaseWars.NumberFormat(num)

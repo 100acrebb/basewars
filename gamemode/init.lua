@@ -22,8 +22,12 @@ function BaseWars.AddFastDLDir(dir)
 	for k, v in next, Files do
 
 		if not v:find(".", 1, true) then continue end
-
-		resource.AddFile(Dir .. "/" .. v)
+	
+		if NoDL then
+			resource.AddFile(dir .. "/" .. v)
+		else
+			resource.AddFile(Dir .. "/" .. v)
+		end
 
 	end
 
@@ -76,7 +80,7 @@ function GM:PlayerInitialSpawn(ply)
 
 	end
 
-	ply:SetTeam(1)
+	timer.Simple( 0, function() ply:SetTeam(1) end )
 
 end
 

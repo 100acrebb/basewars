@@ -2,6 +2,12 @@ BaseWars.Commands = {
 	cmds = {},
 }
 
+if ulx or ulib then
+	BaseWars.Commands.Pattern = "[/|%.]"
+else
+	BaseWars.Commands.Pattern = "[!|/|%.]"
+end
+
 function BaseWars.Commands.ParseArgs(str)
 
 	local ret 		= {}
@@ -127,10 +133,10 @@ end
 
 function BaseWars.Commands.SayCommand(ply, txt, team)
 
-	if not txt:sub(1, 1):find("[!|/|%.]") then return end
+	if not txt:sub(1, 1):find(BaseWars.Commands.Pattern) then return end
 
-	local cmd 	= txt:match("[!|/|%.](.-) ") or txt:match("[!|/|%.](.+)") or ""
-	local line 	= txt:match("[!|/|%.].- (.+)")
+	local cmd 	= txt:match(BaseWars.Commands.Pattern .. "(.-) ") or txt:match(BaseWars.Commands.Pattern .. "(.+)") or ""
+	local line 	= txt:match(BaseWars.Commands.Pattern .. ".- (.+)")
 
 	cmd = cmd:lower()
 
