@@ -1,3 +1,5 @@
+AddCSLuaFile()
+
 -- todo: make bw_base_bomb
 ENT.Base = "base_gmodentity"
 ENT.Type = "anim"
