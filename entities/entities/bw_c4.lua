@@ -1,6 +1,5 @@
 AddCSLuaFile()
 
--- todo: make bw_base_bomb
 ENT.Base = "base_gmodentity"
 ENT.Type = "anim"
 
@@ -12,6 +11,8 @@ ENT.ShowTimer = true
 ENT.Counter = 0
 ENT.RealCounter = 0
 
+ENT.RenderGroup = RENDERGROUP_TRANSLUCENT
+
 if SERVER then
 
 	function ENT:Initialize()
@@ -21,6 +22,7 @@ if SERVER then
 		self:PhysicsInit(SOLID_VPHYSICS)
 		self:SetSolid(SOLID_VPHYSICS)
 		self:SetMoveType(MOVETYPE_VPHYSICS)
+		self:SetRenderMode(RENDERMODE_TRANSALPHA)
 
 		self.CountingDown = false
 		self.u = 0
@@ -64,7 +66,7 @@ if SERVER then
 		self:EmitSound(defuse)
 		self:StopCountdown()
 		self.Defused = true
-		SafeRemoveEntityDelayed(self, 1)
+
 	end
 
 	function ENT:Explode()
@@ -106,10 +108,27 @@ if SERVER then
 		self:SetNW2Int("defuseprogress",0)
 	end
 
+	function ENT:AlphaDec()
+		local al = self:GetColor().a
+		al = al - 5
+		if al <= 0 then
+			SafeRemoveEntity(self)
+		return end
+		self:SetColor(ColorAlpha(self:GetColor(), al))
+	end
+
 	function ENT:Think()
+
+		if self.ddd and self.ddd <= CurTime() then
+			self:AlphaDec()
+			self:NextThink(CurTime() + 0.01)
+		return true end
+
+		if self.ddd then return end
 
 		if self.Defused then
 			self:SetNW2String("counter","0")
+			self.ddd = CurTime() + 1
 		return end
 		self:SetNW2String("counter", tostring(math.ceil(self.RealCounter or 0)))
 
@@ -190,7 +209,7 @@ else
 		if not IsValid(LocalPlayer()) then return end
 
 		for _, ent in pairs(ents.GetAll()) do
-			if IsValid(ent) and (ent:GetClass() == "bw_base_bomb" or ent.Base == "bw_base_bomb") and ent.ShowTimer and ent:GetNW2Bool("show") then
+			if IsValid(ent) and (ent:GetClass() == "bw_c4" or ent.Base == "bw_c4") and ent.ShowTimer and ent:GetNW2Bool("show") then
 
 				local pos = ent:GetPos()
 
