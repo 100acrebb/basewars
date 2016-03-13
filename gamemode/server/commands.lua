@@ -326,7 +326,7 @@ BaseWars.Commands.AddCommand({"givemoney", "pay", "moneygive"}, function(caller,
 
 	if amount > 0 and caller:GetMoney() < amount then return false, BaseWars.LANG.TooPoor end
 
-	if amount == = then return false, "Fuck you Broly" end
+	if amount == 0 then return false, "Fuck you Broly" end
 
 	if ply ~= "" and ply ~= nil then
 
