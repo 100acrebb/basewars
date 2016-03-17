@@ -352,9 +352,7 @@ function qchat:ParseChatLine(tbl)
 		self.chatTab.pFeed:AppendText("\n")
 	return end
 
-	for i = 1, #tbl do
-		local v = tbl[i]
-
+	for i, v in pairs(tbl) do
 		if IsColor(v) or istable(v) then
 			self.chatTab.pFeed:InsertColorChange(v.r, v.g, v.b, 255)
 		elseif isentity(v) and v:IsPlayer() then
@@ -362,7 +360,7 @@ function qchat:ParseChatLine(tbl)
 			self.chatTab.pFeed:InsertColorChange(col.r, col.g, col.b, 255)
 
 			self.chatTab.pFeed:AppendText(v:Nick())
-		else
+		elseif v ~= nil then
 			self:AppendText(tostring(v))
 		end
 	end
