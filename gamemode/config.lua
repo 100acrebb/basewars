@@ -45,7 +45,7 @@ BaseWars.Config = {
 		Antidote = {
 
 		},
-		CookTime	= 60 * 3,
+		CookTime	= 60 * 2,
 	},
 
 	Notifications = {
@@ -58,7 +58,7 @@ BaseWars.Config = {
 	Raid = {
 		Time 			= 60 * 5,
 		CoolDownTime	= 60 * 15,
-		NeededPrinters	= 3,
+		NeededPrinters	= 1,
 	},
 
 	AFK  = {
@@ -282,8 +282,8 @@ BaseWars.Config = {
 
 	AllowFriendlyFire	= false,
 
-	DefaultWalk			= 200,
-	DefaultRun			= 400,
+	DefaultWalk			= 180,
+	DefaultRun			= 300,
 
 	DefaultLimit		= 4,
 	SpawnOffset			= Vector(0, 0, 40),
@@ -364,14 +364,20 @@ BaseWars.NPCTable = {
 }
 
 local NiceGreen = Color(100, 250, 125)
+local NiceBlue = Color(100, 125, 250)
 local Grey = Color(200, 200, 200)
 
 BaseWars.AdvertTbl = {
 
 	{Grey, "Remember to join our ", NiceGreen, "Steam Group", Grey, "! (/steam)"},
-	{Grey, "You can find out more on the ",  NiceGreen, "Forums", Grey, "! (/forums)"}
+	{Grey, "You can find out more on the ", NiceGreen, "Forums", Grey, "! (/forums)"},
 
 }
+
+if aowl and GLib and not ulx then
+	BaseWars.AdvertTbl[#BaseWars.AdvertTbl+1] = {Grey, "You are playing on the ", NiceBlue, "OFFICAL", Grey, " HexaHedronic BaseWars server! (bw_copyright)"}
+	BaseWars.AdvertTbl[#BaseWars.AdvertTbl+1] = {Grey, "This server is powered by ", NiceBlue, "aowl", Grey, " and ", NiceGreen, "GCompute", Grey, "."}
+end
 
 --[[
 BaseWars.Config.RulesTbl = {
