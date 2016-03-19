@@ -6,7 +6,7 @@ ENT.Skin = 0
 
 ENT.Capacity 		= 90000
 ENT.PrintInterval 	= 1
-ENT.PrintAmount		= 65
+ENT.PrintAmount		= 18
 
 ENT.PrintName = "Gold Printer"
 

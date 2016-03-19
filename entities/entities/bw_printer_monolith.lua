@@ -6,7 +6,7 @@ ENT.Skin = 0
 
 ENT.Capacity 		= 24000000
 ENT.PrintInterval 	= 1
-ENT.PrintAmount		= 18500
+ENT.PrintAmount		= 5500
 
 ENT.PrintName = "Monolith Printer"
 

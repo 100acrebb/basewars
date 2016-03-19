@@ -6,7 +6,7 @@ ENT.Skin = 0
 
 ENT.Capacity 		= 250000
 ENT.PrintInterval 	= 1
-ENT.PrintAmount		= 190
+ENT.PrintAmount		= 32
 
 ENT.PrintName = "Diamond Printer"
 
