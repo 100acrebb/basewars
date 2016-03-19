@@ -55,10 +55,11 @@ if SERVER then
 
 			local value = net.ReadString()
 			local password = net.ReadString()
+			local color = net.ReadTable()
 
 			if password:Trim() == "" then password = nil end
 
-			self:Create(ply, value, password)
+			self:Create(ply, value, password, color)
 
 		end
 
@@ -427,7 +428,7 @@ hook.Add("PlayerDisconnected", tag .. ".Clean", Curry(MODULE.Clean))
 
 function MODULE:Create(ply, name, password, color)
 
-	color = color or HSVToColor(math.random(359), math.Rand(0.8, 1), math.Rand(0.8, 1))
+	color = color or {r=math.random(359), g=math.Rand(0.8, 1), b=math.Rand(0.8, 1)}
 
 	if not name or not isstring(name) or (password and not isstring(password)) then
 
@@ -444,6 +445,7 @@ function MODULE:Create(ply, name, password, color)
 			net.WriteUInt(2, 2)
 			net.WriteString(name)
 			net.WriteString(password or "")
+			net.WriteTable(color)
 		net.SendToServer()
 
 		return
