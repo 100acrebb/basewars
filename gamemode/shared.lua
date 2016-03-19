@@ -1,5 +1,5 @@
 ﻿GM.Name 		= "BaseWars"
-GM.Author 		= "Q2F2, Ghosty, Liquid, Tenrys, TrIxter, User4992"
+GM.Author 		= "Q2F2, Ghosty, Liquid, Tenrys, Trixter, User4992"
 GM.Website 		= "http://hexahedronic.org/, http://hexahedronic.github.io/"
 GM.Credits		= [[
 Thanks to the following people:
