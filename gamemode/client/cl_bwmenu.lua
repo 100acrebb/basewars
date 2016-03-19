@@ -250,6 +250,7 @@ local dialogs = {
 			local nameInput = pnl:Add("DTextEntry")
 
 			nameInput:Dock(TOP)
+            nameInput:DockMargin(0, 0, 260, 0)
 
 			local pwLabel = pnl:Add("DLabel")
 
@@ -262,6 +263,50 @@ local dialogs = {
 			local pwInput = pnl:Add("DTextEntry")
 
 			pwInput:Dock(TOP)
+            pwInput:DockMargin(0, 0, 260, 0)
+
+            local colorpanel = pnl:Add("DPanel")
+
+            colorpanel:SetPos( 480, 35 + 160 + 10 )
+            colorpanel:SetSize( 160 + 10 + 25, 25 )
+            colorpanel:SetBackgroundColor( Color( 255, 0, 0 ) ) -- Default: red
+
+            local oldPaint = colorpanel.Paint
+            function colorpanel:Paint( w, h )
+
+                oldPaint( self, w, h )
+                surface.SetDrawColor( Color( 30, 30, 30 ) )
+                surface.DrawOutlinedRect( 0, 0, w, h )
+
+            end
+
+            local colorcube = pnl:Add("DColorCube")
+
+            --Im sorry i hate derma
+            colorcube:SetPos( 480, 35 )
+            colorcube:SetSize( 160, 160 )
+            colorcube.CurColor = Color( 255, 0, 0 )
+
+            function colorcube:OnUserChanged( col )
+
+                colorpanel:SetBackgroundColor( col )
+                colorcube.CurColor = col
+
+            end
+
+            local colorpicker = pnl:Add("DRGBPicker")
+
+            --Im sorry again
+            colorpicker:SetPos( 480 + 160 + 10, 35 )
+            colorpicker:SetSize( 25, 160 )
+
+            function colorpicker:OnChange( col )
+
+                colorcube:SetColor( col )
+                colorpanel:SetBackgroundColor( col )
+                colorcube.CurColor = col
+
+            end
 
 			local buttonpar = pnl:Add("Panel")
 
@@ -279,11 +324,11 @@ local dialogs = {
 
 			function createButton:DoClick()
 
-				local name, pw = nameInput:GetValue(), pwInput:GetValue()
+				local name, pw, clrtbl = nameInput:GetValue(), pwInput:GetValue()
 
 				name, pw = name:Trim(), pw:Trim()
 
-				me:CreateFaction(name, (#pw > 0 and pw), true)
+				me:CreateFaction(name, (#pw > 0 and pw), colorcube.CurColor)
 
 				pnl:Close()
 
@@ -509,7 +554,13 @@ local function CreatePopupDialog(c, id, ...)
 
 	local mX, mY = gui.MousePos()
 
-	pnl:SetSize(500, 300)
+    local sizex, sizey = 500, 300
+
+    if c == "Factions" and id == "Create" then --"Factions","Create"
+        sizex, sizey = 700, 300
+    end
+
+	pnl:SetSize(sizex, sizey)
 
 	function pnl:Paint(w, h)
 
@@ -855,6 +906,9 @@ local a
 hook.Add("Think", "BaseWars.Menu.Open", function()
 
 	me = LocalPlayer()
+
+    local wep = me:GetActiveWeapon()
+	if wep ~= NULL and wep.CW20Weapon and wep.dt.State == (CW_CUSTOMIZE or 4) then return end
 
 	if input.IsKeyDown(KEY_F3) then
 
