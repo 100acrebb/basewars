@@ -84,6 +84,16 @@ chitchat.MessageModes = {
 	 -- OOC
 		PrintName 	= "OOC",
 	},
+	{
+	 -- LOOC, yell radius
+		PrintName 	= "LOOC",
+		ShowRank    = false,
+		Color 			= Color(142, 142, 142),
+		ChatColor 	= Color(232, 192, 192),
+		Filter = function( s, r )
+			return s:GetPos():DistToSqr(r:GetPos()) < 112500
+		end,
+	},
 }
 
 --[[
@@ -118,7 +128,7 @@ chitchat.Devs = {
 	--Owners
 	["STEAM_0:1:74836666"] = "Trixter",
 	["STEAM_0:1:62445445"] = "Q2F2",
-	["STEAM_0:0:133411986"] = "MorganDrunkmanIWantedMilitia", --Trixter alt acc
+	["STEAM_0:0:133411986"] = "CakeShaked", --Trixter alt acc
 	
 	--Devs
 	["STEAM_0:0:80997988"] = "oplexz",
@@ -138,14 +148,18 @@ if SERVER then
 
 	function GM:ChangeChatMode(ply,msg,msgmode)
 		if msg:StartWith("@") then
-			return 6,msg:gsub("^@","")
+			return 5,msg:gsub("^@","")
 		end
 		if msg:StartWith("//") then
-			return 7,msg:gsub("^//%s?","")
+			return 6,msg:gsub("^//%s?","")
 		end
 
 		if msg:StartWith("/ooc") then
-			return 7,msg:gsub("^/ooc%s?","")
+			return 6,msg:gsub("^/ooc%s?","")
+		end
+		
+		if msg:StartWith(".//") then
+			return 7,msg:gsub("^%.// ?%s?","")
 		end
 	end
 
