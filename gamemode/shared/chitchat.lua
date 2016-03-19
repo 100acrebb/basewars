@@ -44,6 +44,9 @@ chitchat.MessageModes = {
 	{ -- Global Chat
 		PrintName 	= "GLOBAL",
 		HideTag 	= true,
+		Filter = function( s, r )
+			return true	
+		end,
 	},
 	{ -- Team Chat
 		PrintName 	= "TEAM",
@@ -63,6 +66,9 @@ chitchat.MessageModes = {
 		PrintName 	= "ANNOUNCEMENT",
 		Color 		= Color(255, 51, 0),
 		ChatColor	= Color(255, 152, 152),
+		Filter = function( s, r )
+			return true	
+		end,
 	},
 	{ -- Whisper (only people in a 72 unit radius can hear you)
 		PrintName 	= "WHISPER",
@@ -83,6 +89,9 @@ chitchat.MessageModes = {
 	{
 	 -- OOC
 		PrintName 	= "OOC",
+		Filter = function( s, r )
+			return true	
+		end,
 	},
 	{
 	 -- LOOC, yell radius
@@ -190,11 +199,9 @@ if SERVER then
 		if not msgmodefilt then return end -- silently fail
 		msgmodefilt = msgmodefilt.Filter
 
-		local plys = player.GetHumans()
+		local plys = {}
 
 		if msgmodefilt then
-			local plys = {ply}
-
 			for _,pl in next,player.GetHumans() do
 				if msgmodefilt(ply,pl) then
 					if table.HasValue(plys,pl) then continue end
