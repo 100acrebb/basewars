@@ -324,7 +324,7 @@ local dialogs = {
 
 			function createButton:DoClick()
 
-				local name, pw, clrtbl = nameInput:GetValue(), pwInput:GetValue()
+				local name, pw = nameInput:GetValue(), pwInput:GetValue()
 
 				name, pw = name:Trim(), pw:Trim()
 
