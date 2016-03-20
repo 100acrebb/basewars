@@ -1,4 +1,4 @@
-local CURRENCY = "£"
+local CURRENCY = "$"
 BaseWars.LANG = {}
 BaseWars.LANG.__LANGUAGELOOK = {}
 
