@@ -1,8 +1,8 @@
 BASEWARS_CHOSEN_LANGUAGE = "ENGLISH"
 
 BaseWars.Config = {
-	Forums 		= "http://www.hexahedronic.org/forum",
-	SteamGroup 	= "http://steamcommunity.com/groups/hexahedronic",
+	Forums 		= "http://steamcommunity.com/groups/100acrebb/discussions",
+	SteamGroup 	= "http://steamcommunity.com/groups/100acrebb",
 
 	Ents = {
 		Electronics = {
