@@ -26,7 +26,7 @@ function BaseWars.AddFastDLDir(dir)
 		if NoDL then
 			resource.AddFile(dir .. "/" .. v)
 		else
-			resource.AddFile(Dir .. "/" .. v)
+			resource.AddFile(dir .. "/" .. v)
 		end
 
 	end
