@@ -141,6 +141,7 @@ BaseWars.Config = {
 		["wire_hsholoemitter"] = true,
 		["wire_painter"] = true,
 		["wire_field_device"] = true,
+		["wire_user"] = true,
 	},
 
 	ModelBlacklist = {
