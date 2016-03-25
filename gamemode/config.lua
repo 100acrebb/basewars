@@ -681,6 +681,7 @@ if CustomizableWeaponry then
 		["Kit"]		= BaseWars.GSL{Model = "models/items/boxsrounds.mdl", Price = 5000, ClassName = "cw_ammo_kit_small"},
 		["Crate"]	= BaseWars.GSL{Model = "models/items/boxsrounds.mdl", Price = 35000, ClassName = "cw_ammo_crate_small"},
 		["40mm Grenades"]	= BaseWars.GSL{Model = "models/items/boxsrounds.mdl", Price = 35000, ClassName = "cw_ammo_40mm"},
+		["Frag Grenades"] = BaseWars.GSL{Model = "models/items/boxsrounds.mdl", Price = 45000, ClassName = "cw_ammo_fraggrenades"},
 
 	}
 
