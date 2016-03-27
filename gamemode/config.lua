@@ -276,7 +276,7 @@ BaseWars.Config = {
 
 	StartMoney 			= 5000,
 
-	CustomChat			= true,
+	CustomChat			= false,
 	ExtraStuff			= true,
 	CleanProps			= false, -- Finds all physics props on the map and removes them when all the entities are frist initialized (AKA: When the map first loads).
 
