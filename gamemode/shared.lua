@@ -5,7 +5,7 @@ GM.Credits		= [[
 Thanks to the following people:
 	Q2F2				- Main backend dev.
 	Ghosty			- Main frontent dev.
-	Trixter			- Frontend + Serveral entities.
+	Trixter			- Frontend + Several entities.
 	Liquid			- Misc dev, good friend.
 	Tenrys			- Misc dev, good friend also.
 	Pyro-Fire		- Owner of LagNation, ideas ect.

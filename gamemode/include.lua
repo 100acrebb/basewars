@@ -44,11 +44,6 @@ do
 
 	IncludeCS("shared/spawnmenu.lua")
 
-	--IncludeCS("shared/player_util.lua")
-	--IncludeCS("shared/karma.lua")
-	--IncludeCS("shared/factions.lua")
-	--IncludeCS("shared/money.lua")
-
 	IncludeCS("shared/cppi.lua")
 	IncludeCS("shared/admin.lua")
 
@@ -104,9 +99,6 @@ do
 		LoadFileCS("shared/metastruct/ch.lua")
 
 	end
-
-	--LoadFileCS("client/hud.lua")
-	--LoadFileCS("client/playtime_money.lua")
 
 end
 
