@@ -109,6 +109,39 @@ BaseWars.Config = {
 		["thruster"] = true,
 		["paint"] = true,
 		["edgeglow"] = true,
+		["wire_expression2"] = true,
+		["wire_cpu"] = true,
+		["wire_gpu"] = true,
+		["wire_spu"] = true,
+		["wire_lamp"] = true,
+		["wire_light"] = true,
+		["wire_7seg"] = true,
+		["wire_hudindicator"] = true,
+		["wire_indicator"] = true,
+		["wire_pixel"] = true,
+		["wire_holoemitter"] = true,
+		["wire_hologrid"] = true,
+		["wire_cam"] = true,
+		["wire_colorer"] = true,
+		["wire_fx_emitter"] = true,
+		["wire_gpulib_switcher"] = true,
+		["wire_trail"] = true,
+		["wire_waypoint"] = true,
+		["wire_eyepod"] = true,
+		["wire_vehicle"] = true,
+		["wire_exit_point"] = true,
+		["wire_explosive"] = true,
+		["wire_simple_explosive"] = true,
+		["wire_igniter"] = true,
+		["wire_spawner"] = true,
+		["wire_teleporter"] = true,
+		["wire_turret"] = true,
+		["wire_door"] = true,
+		["wire_door_controller"] = true,
+		["wire_hsholoemitter"] = true,
+		["wire_painter"] = true,
+		["wire_field_device"] = true,
+		["wire_user"] = true,
 	},
 
 	ModelBlacklist = {
@@ -381,12 +414,10 @@ end
 
 --[[
 BaseWars.Config.RulesTbl = {
-
 	"1. Do not base with someone unless you are in a faction with them.",
 	"2. Do not propblock OTHER peoples bases (You CAN block your own).",
 	"3. Do not attempt to circumvent Anti-RandomRaid or similar systems.",
 	"4. You must base in A SINGLE CONTINGOUS SPACE. NO multi-basing!",
-
 }]]
 
 BaseWars.Config.Help = {
@@ -650,39 +681,33 @@ if CustomizableWeaponry then
 		["Kit"]		= BaseWars.GSL{Model = "models/items/boxsrounds.mdl", Price = 5000, ClassName = "cw_ammo_kit_small"},
 		["Crate"]	= BaseWars.GSL{Model = "models/items/boxsrounds.mdl", Price = 35000, ClassName = "cw_ammo_crate_small"},
 		["40mm Grenades"]	= BaseWars.GSL{Model = "models/items/boxsrounds.mdl", Price = 35000, ClassName = "cw_ammo_40mm"},
+		["Frag Grenades"] = BaseWars.GSL{Model = "models/items/boxsrounds.mdl", Price = 45000, ClassName = "cw_ammo_fraggrenades"},
 
 	}
 
 	--[[BaseWars.SpawnList.Models.Loadout["Attachments"] = {
-
 		["General - Suppresors"]	= BaseWars.GSL{Model = "models/items/boxsrounds.mdl", Price = 65000, ClassName = "cw_attpack_suppressors"},
 		["General - Attachments"]	= BaseWars.GSL{Model = "models/items/boxsrounds.mdl", Price = 65000, ClassName = "cw_attpack_various"},
 		["General - Rails"]				= BaseWars.GSL{Model = "models/items/boxsrounds.mdl", Price = 65000, ClassName = "x_cw_extra_g4p_railpack"},
 		["General - UECW"]				= BaseWars.GSL{Model = "models/items/boxsrounds.mdl", Price = 65000, ClassName = "x_cw_extra_g4p_attpack"},
-
 		["Sights - Long"]			= BaseWars.GSL{Model = "models/items/boxsrounds.mdl", Price = 65000, ClassName = "cw_attpack_sights_longrange"},
 		["Sights - Mid"]			= BaseWars.GSL{Model = "models/items/boxsrounds.mdl", Price = 65000, ClassName = "cw_attpack_sights_midrange"},
 		["Sights - Sniper"]		= BaseWars.GSL{Model = "models/items/boxsrounds.mdl", Price = 65000, ClassName = "cw_attpack_sights_sniper"},
 		["Sights - CQC"]			= BaseWars.GSL{Model = "models/items/boxsrounds.mdl", Price = 65000, ClassName = "cw_attpack_sights_cqb"},
-
 		["Ammo - Shotgun"]		= BaseWars.GSL{Model = "models/items/boxsrounds.mdl", Price = 65000, ClassName = "cw_attpack_ammotypes_shotguns"},
 		["Ammo - General"]		= BaseWars.GSL{Model = "models/items/boxsrounds.mdl", Price = 65000, ClassName = "cw_attpack_ammotypes_rifles"},
-
 		["Barrels - AK74"]		= BaseWars.GSL{Model = "models/items/boxsrounds.mdl", Price = 65000, ClassName = "cw_attpack_ak74_barrels"},
 		["Barrels - AR15"]		= BaseWars.GSL{Model = "models/items/boxsrounds.mdl", Price = 65000, ClassName = "cw_attpack_ar15_barrels"},
 		["Barrels - AR15 (Long)"]		= BaseWars.GSL{Model = "models/items/boxsrounds.mdl", Price = 65000, ClassName = "cw_attpack_ar15_barrels_large"},
 		["Barrels - Deagle"]	= BaseWars.GSL{Model = "models/items/boxsrounds.mdl", Price = 65000, ClassName = "cw_attpack_deagle_barrels"},
 		["Barrels - MP5"]			= BaseWars.GSL{Model = "models/items/boxsrounds.mdl", Price = 65000, ClassName = "cw_attpack_mp5_barrels"},
 		["Barrels - MR96"]		= BaseWars.GSL{Model = "models/items/boxsrounds.mdl", Price = 65000, ClassName = "cw_attpack_mr96_barrels"},
-
 		["Stocks - MP5"]		= BaseWars.GSL{Model = "models/items/boxsrounds.mdl", Price = 65000, ClassName = "cw_attpack_mp5_stocks"},
 		["Stocks - AR15"]		= BaseWars.GSL{Model = "models/items/boxsrounds.mdl", Price = 65000, ClassName = "cw_attpack_ar15_stocks"},
 		["Stocks - AK74"]		= BaseWars.GSL{Model = "models/items/boxsrounds.mdl", Price = 65000, ClassName = "cw_attpack_ak74_stocks"},
-
 		["Misc - MP5"]		= BaseWars.GSL{Model = "models/items/boxsrounds.mdl", Price = 65000, ClassName = "cw_attpack_mp5_misc"},
 		["Misc - AK74"]		= BaseWars.GSL{Model = "models/items/boxsrounds.mdl", Price = 65000, ClassName = "cw_attpack_ak74_misc"},
 		["Misc - AR15"]		= BaseWars.GSL{Model = "models/items/boxsrounds.mdl", Price = 65000, ClassName = "cw_attpack_ar15_misc"},
-
 	}]]
 else
 	BaseWars.SpawnList.Models.Loadout["Weapons - T1"] = {
@@ -809,4 +834,3 @@ BaseWars.SpawnList.Models.Loadout["Weapons - T2"] = {
 	["Gas grenade"]						= BaseWars.GSL{Gun = true, Model = "models/weapons/w_eq_flashbang_thrown.mdl", Price = 150000, ClassName = "bw_gasnade", Level = 50},
 
 }
-
