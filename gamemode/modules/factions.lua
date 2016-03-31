@@ -429,6 +429,7 @@ hook.Add("PlayerDisconnected", tag .. ".Clean", Curry(MODULE.Clean))
 function MODULE:Create(ply, name, password, color)
 
 	color = color or HSVToColor(math.random(359), math.Rand(0.8, 1), math.Rand(0.8, 1))
+	color = Color(color.r, color.g, color.b, color.a)
 
 	if not name or not isstring(name) or (password and not isstring(password)) then
 
